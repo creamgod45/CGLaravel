@@ -7,6 +7,7 @@ use App\Lib\Type\String\CGString;
 enum ELanguageText
 {
     // Hello World
+    case placeholder_memberHelloText;
     case HelloWorld;
     case af_ZA;     // 南非荷兰语（南非）
     case am_ET;     // 阿姆哈拉语（埃塞俄比亚）

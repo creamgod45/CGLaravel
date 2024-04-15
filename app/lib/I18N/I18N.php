@@ -301,7 +301,7 @@ class I18N implements II18N
             }
             //Utils::pinv($languageYaml, "after: ".$case->name);
             if ($change > 0) {
-                Utils::pinv($change, "2");
+                //Utils::pinv($change, "2");
                 $dump = Yaml::dump($languageYaml);
                 FileSystem::write("lib/I18N/languages/" . $case->name . ".yml", $dump);
             }

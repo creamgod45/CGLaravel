@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Member extends Model
+class Member extends Authenticatable
 {
     protected $table = 'members'; // 指定模型对应的表
     protected $primaryKey = 'id'; // 主键，Laravel 默认也是 id，此行可省略

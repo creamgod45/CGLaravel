@@ -1,7 +1,19 @@
-@extends('layouts.app')
+@use (App\Lib\I18N\I18N);
+@php
+    /***
+     * @var string[] $router \
+     * @var I18N $i18N
+     */
+    $menu=true;
+    $footer=true;
+@endphp
+@extends('layouts.default')
 @section('title', '首頁')
 @section('content')
-    <h1>Welcome to Our Application!</h1>
-    <p>This is a content section.</p>
+    @foreach($members as $key => $item)
+        @foreach($item as $k => $v)
+
+        @endforeach
+    @endforeach
 @endsection
-{{ debug($members) }}
+

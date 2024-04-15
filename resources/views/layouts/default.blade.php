@@ -1,5 +1,5 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,9 @@
 </head>
 <body>
 <header>
-    @include('layouts.menu')
+    @if($menu)
+        @include('Components.menu')
+    @endif
 </header>
 
 <div class="container">
@@ -17,7 +19,9 @@
 </div>
 
 <footer>
-    @include('layouts.footer')
+    @if($footer)
+        @include('Components.footer')
+    @endif
 </footer>
 </body>
 </html>

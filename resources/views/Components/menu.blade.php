@@ -1,16 +1,29 @@
-<?php
+@php
 /***
  * @var string[] $router \
  * @var I18N $i18N
  */
-?>
-@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Utils\Utils)
+@endphp
+@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Type\Array\CGArray;use App\Lib\Utils\Utils)
 
 <script>
     function changeLanguage(el) {
         let value = el.value;
-        console.log(location);
-        location.assign("<?= Utils::getInstanceAddress(true) ?>/<?= Utils::default($router[1], \App\Lib\I18N\ELanguageCode::en_US->name) ?>/" + value);
+        let formData = new FormData();
+        formData.append('csrf_token', "{{csrf_token()}}");
+        formData.append('lang', value);
+        fetch('/setlanguage', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': "{{csrf_token()}}"  // Laravel CSRF token
+            },
+            body: formData,
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            }
+            throw new Error('Network response was not ok.');
+        })
     }
 </script>
 <header class="float-menu">
@@ -111,15 +124,29 @@
                     </div>
                     <select aria-label="language select bar" onchange="changeLanguage(this);">
                         <option selected
-                                value="<?= $i18N->getLanguageCode()->name ?>"><?= $i18N->getLanguage(ELanguageText::valueof($i18N->getLanguageCode()->name)) ?></option>
+                                value="{{ $i18N->getLanguageCode()->name }}">{{ $i18N->getLanguage(ELanguageText::valueof($i18N->getLanguageCode()->name)) }}</option>
+                        @php
+                            $list = $i18N->getELanguageCodeList();
+                            foreach ($list as $key=> $item){
+                                if($item === $i18N->getLanguageCode()) {
+                                    array_splice($list, $key, 1);
+                                    break;
+                                }
+                            }
+                        @endphp
+                        @foreach($list as $lang)
+                            <option value="{{$lang->name}}">
+                                {{$i18N->getLanguage(ELanguageText::valueof($lang->name))}}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="item">
                     <div class="image lazy-loaded-image" style="background-position-y: center"
-                         data-src="<?= Utils::resources("images/article1.webp") ?>">
+                         data-src="{{asset("assets/images/article1.webp")}}">
                     </div>
                     <div class="timestamp">
-                        <?= Utils::timeStamp(time()) ?>
+                        {{Utils::timeStamp(time())}}
                         <div class="tag">永續</div>
                     </div>
                     <div class="title">

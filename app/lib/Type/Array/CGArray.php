@@ -2,6 +2,8 @@
 
 namespace App\Lib\Type\Array;
 
+use function Laravel\Prompts\search;
+
 class CGArray implements CGArrayInterface
 {
     protected array $array = [];
@@ -185,6 +187,17 @@ class CGArray implements CGArrayInterface
     public function Contains($Mixed): bool
     {
         return in_array($Mixed, $this->array, true);
+    }
+
+    public function search($Mixed): int
+    {
+        return array_search($Mixed, $this->array, true);
+    }
+
+    public function searchRemove($Mixed)
+    {
+        $this->Remove($this->search($Mixed));
+        return $this;
     }
 
     /**

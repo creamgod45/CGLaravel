@@ -9,6 +9,8 @@ use App\Models\Member;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
@@ -17,77 +19,63 @@ class MemberController extends Controller
      */
     public function index(Request $request)
     {
-        // 获取完整的 URL
-        $url = $request->url();
-
-        // 获取路径部分，即去除域名和协议部分
-        $path = parse_url($url, PHP_URL_PATH);
-
-        // 将路径分割成数组
-        $pathParts = explode('/', $path);
-
-        // 移除数组中的空元素
-        $pathParts = array_filter($pathParts);
-        $i18n=new I18N(Utils::default(ELanguageCode::valueof($pathParts[1]), ELanguageCode::en_US),
-            limitMode: [
-            ELanguageCode::zh_TW,
-            ELanguageCode::zh_CN,
-            ELanguageCode::en_US,
-            ELanguageCode::en_GB
-        ]);
-
         $members = Member::all();
-        foreach ($members as $member) {
-            echo $member->username;
-        }
         return view('members', $this->baseGlobalVariable($request, ['members' => $members]));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function loginPage(Request $request){
+        return view('login', $this->baseGlobalVariable($request));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreMemberRequest $request)
-    {
-        //
+    public function login(Request $request){
+        $data = $request->all();
+        $user = Member::where("username", $data["username"])->first();
+        if(Hash::check($data["password"], $user["password"])){
+            Auth::login($user);
+            return redirect(route("index"));
+        }
+        return '登入失敗';
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Member $member)
+    public function logout(Request $request)
     {
-        //
+        Auth::logout();
+        return redirect(route('login'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Member $member)
+    public function showRegistrationForm(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('register', $this->baseGlobalVariable($request));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateMemberRequest $request, Member $member)
+    public function register(Request $request): \Illuminate\Http\RedirectResponse
     {
-        //
+        $validate = $request->validate([
+            'username' => [ 'required', 'string', 'max:255', 'unique:members'],
+            'email' => [ 'required', 'string', 'email', 'max:255', 'unique:members'],
+            'password' => [ 'required', 'string', 'min:8', 'confirmed'],
+            'phone' => [ 'required', 'string', 'max:255', 'unique:members'],
+        ]);
+
+        if (!empty($validate)) {
+            $user = $this->create($validate);
+
+            // 可以在这里实现登录逻辑，或者重定向到登录页面
+            Auth::login($user);
+        }
+        return redirect('register');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Member $member)
+    protected function create(array $data)
     {
-        //
+        return Member::create([
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'password' => Hash::make($data['password']),
+            'enable' => 'true',
+            'administrator' => 'false'
+        ]);
     }
 }
+

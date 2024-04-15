@@ -340,19 +340,6 @@ class Utils
     }
 
     /**
-     * 釘選物件
-     *
-     * @param Mixed $mixed
-     * @param string $string
-     * @return Boolean
-     */
-    public static function pinv($mixed, string $string = "Default"): bool
-    {
-        bdump($mixed, $string);
-        return true;
-    }
-
-    /**
      * md5 訊息摘要演算法
      *
      * @param String $string

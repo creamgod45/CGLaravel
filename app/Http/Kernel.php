@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EMiddleWareAliases;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -53,16 +54,16 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
-        'precognitive' => \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
-        'signed' => \App\Http\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        EMiddleWareAliases::auth->name => \App\Http\Middleware\Authenticate::class,
+        EMiddleWareAliases::auth_basic->name => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        EMiddleWareAliases::auth_session->name => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        EMiddleWareAliases::cache_headers->name=>\Illuminate\Http\Middleware\SetCacheHeaders::class,
+        EMiddleWareAliases::can->name=> \Illuminate\Auth\Middleware\Authorize::class,
+        EMiddleWareAliases::guest->name=> \App\Http\Middleware\RedirectIfAuthenticated::class,
+        EMiddleWareAliases::password_confirm->name=> \Illuminate\Auth\Middleware\RequirePassword::class,
+        EMiddleWareAliases::precognitive->name=> \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
+        EMiddleWareAliases::signed->name=> \App\Http\Middleware\ValidateSignature::class,
+        EMiddleWareAliases::throttle->name=> \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        EMiddleWareAliases::verified->name=> \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 }

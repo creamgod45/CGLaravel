@@ -8,34 +8,22 @@
     $footer=true;
 @endphp
 @extends('layouts.default')
-@section('title', '註冊')
+@section('title', '登入')
 @section('content')
     <div class="register-frame">
-        <form class="register" method="POST" action="{{ route('register') }}">
+        <form class="register" method="POST" action="{{ route('login') }}">
             @csrf
-            <div class="title">註冊</div>
+            <div class="title">登入</div>
             <div class="row">
                 <label class="col">帳號</label>
                 <input class="col" type="text" name="username" required>
             </div>
             <div class="row">
-                <label class="col">信箱</label>
-                <input class="col" type="email" name="email" required>
-            </div>
-            <div class="row">
                 <label class="col">密碼</label>
                 <input class="col" type="password" name="password" required>
             </div>
-            <div class="row">
-                <label class="col">確認密碼</label>
-                <input class="col" type="password" name="password_confirmation" required>
-            </div>
-            <div class="row">
-                <label class="col">電話</label>
-                <input class="col" type="password" name="phone" required>
-            </div>
             <div class="button">
-                <button type="submit">註冊會員</button>
+                <button type="submit">登入</button>
             </div>
             @if ($errors->any())
                 <div class="alert alert-danger">
