@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+//@tailwind utilities;
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "scrollbar";
+@import "menu";
+@import "register";
+
+.register-frame{
+    height: calc(100vh - 72px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .register{
+        @apply bg-neutral-100 shadow-xl border-[0.5px] border-solid border-neutral-200 p-4 w-[500px];
+        .title{
+            @apply text-center text-xl;
+        }
+        .row{
+            @apply flex flex-nowrap space-y-2;
+            .col{
+                @apply flex items-center text-xl;
+                flex: 0 0 auto;
+            }
+            label{
+                @apply w-[25%] text-right columns-10;
+            }
+            input{
+                @apply w-[75%] bg-white text-black outline-none p-2;
+            }
+        }
+        .button{
+            @apply mt-3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            button{
+                @apply bg-emerald-400 rounded px-2 py-1 hover:bg-emerald-300 text-white p-2;
+            }
+        }
+    }
+}

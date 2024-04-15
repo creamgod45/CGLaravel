@@ -1,0 +1,234 @@
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+@tailwind base;
+@tailwind components;
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #000000 #58acbd;
+}
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #DFE9EB;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: #B8C0C2;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #000000;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #646464;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #6A6A6A;
+}
+
+.float-menu {
+  @apply top-0 left-0 w-screen fixed;
+}
+.float-menu .btn-group {
+  @apply bg-neutral-100 shadow-lg;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  position: relative;
+  z-index: 10;
+}
+.float-menu .btn-group .icon {
+  @apply inline items-center gap-x-1 size-14 rounded-[50%] my-2 ms-5;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.float-menu .btn-group .float-menu-btn {
+  @apply inline-flex items-center gap-x-1 text-sm my-5 mx-5 text-gray-900;
+}
+.float-menu .float-menu-panel.active {
+  @apply grid relative z-0 shadow-xl;
+  animation: ease-in-out sliderDown 0.5s;
+}
+.float-menu .float-menu-panel.off {
+  @apply grid relative z-0 shadow-xl;
+  animation: ease-in-out sliderUp 0.5s;
+}
+.float-menu #float1 .float-menu-panel-columns {
+  @apply grid-cols-1;
+}
+.float-menu #float1 .float-menu-panel-columns .menu {
+  @apply xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 grid-cols-1;
+}
+.float-menu #float2 .float-menu-panel-columns {
+  @apply xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1;
+}
+.float-menu .float-menu-panel {
+  @apply hidden z-0 overflow-y-auto overflow-x-hidden backdrop-blur-[10px] absolute;
+  max-height: 425px;
+  background-color: rgba(229, 229, 229, 0.29);
+}
+.float-menu .float-menu-panel .float-menu-panel-columns {
+  @apply gap-2 px-5 grid;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .single {
+  @apply grid-cols-1;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .menu {
+  @apply xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .news {
+  @apply xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col {
+  @apply gap-2 grid;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item {
+  @apply py-5 space-y-2;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item select {
+  @apply bg-transparent outline-0 hover:border-b-2 border-solid border-neutral-800;
+  width: 100%;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item .title {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item .title .tag {
+  @apply bg-neutral-300 rounded-4xl px-2 ms-4 tracking-widest hover:bg-neutral-200 hover:ring-1 ring-neutral-600 select-none cursor-pointer;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item .timestamp {
+  @apply text-neutral-600 text-xs;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item .timestamp .tag {
+  @apply bg-neutral-300 rounded-4xl px-2 py-0.5 ms-4 tracking-widest hover:bg-neutral-200 hover:ring-1 ring-neutral-600 select-none cursor-pointer;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item .menu-btn {
+  @apply px-2 py-1 hover:shadow-2xl hover:bg-neutral-300 rounded cursor-pointer select-none flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item .menu-btn svg {
+  @apply flex-auto w-4;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item .menu-btn span {
+  @apply flex-auto w-9/12;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item .image {
+  @apply rounded aspect-video object-cover border-[1px] border-solid border-neutral-300;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+}
+.float-menu .float-menu-panel .float-menu-panel-columns .columns-col .item .article {
+  @apply text-ellipsis overflow-y-auto max-h-14;
+}
+
+@keyframes sliderDownLittle {
+  0% {
+    box-shadow: unset;
+    top: -100%;
+    transform: translateY(-100%);
+  }
+  25% {
+    top: -100%;
+    transform: translateY(-98%);
+  }
+  50% {
+    top: 0;
+    transform: translateY(-98%);
+  }
+  75% {
+    top: -100%;
+    transform: translateY(-98%);
+  }
+  100% {
+    box-shadow: unset;
+    top: -100%;
+    transform: translateY(-100%);
+  }
+}
+@keyframes sliderDown {
+  0% {
+    box-shadow: unset;
+    top: -100%;
+    transform: translateY(-100%);
+  }
+  50% {
+    top: -100%;
+    transform: translateY(0);
+  }
+  100% {
+    top: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes sliderUp {
+  0% {
+    top: 0;
+    transform: translateY(0);
+  }
+  50% {
+    top: -100%;
+    transform: translateY(0);
+  }
+  100% {
+    box-shadow: unset;
+    top: -100%;
+    transform: translateY(-100%);
+  }
+}
+.register-frame {
+  height: calc(100vh - 72px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.register-frame .register {
+  @apply bg-neutral-100 shadow-xl border-[0.5px] border-solid border-neutral-200 p-4 w-[500px];
+}
+.register-frame .register .title {
+  @apply text-center text-xl;
+}
+.register-frame .register .row {
+  @apply flex flex-nowrap space-y-2;
+}
+.register-frame .register .row .col {
+  @apply flex items-center text-xl;
+  flex: 0 0 auto;
+}
+.register-frame .register .row label {
+  @apply w-[25%] text-right columns-10;
+}
+.register-frame .register .row input {
+  @apply w-[75%] bg-white text-black outline-none p-2;
+}
+.register-frame .register .button {
+  @apply mt-3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.register-frame .register .button button {
+  @apply bg-emerald-400 rounded px-2 py-1 hover:bg-emerald-300 text-white p-2;
+}
+
+/*# sourceMappingURL=app.css.map */
