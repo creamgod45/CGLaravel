@@ -6,5 +6,7 @@ php artisan view:cache
 php artisan key:generate
 php artisan optimize
 php artisan config:clear &&  composer dump-autoload -o
+npm install
 npm run build
 echo Done
+REM config/app.php debugbar
