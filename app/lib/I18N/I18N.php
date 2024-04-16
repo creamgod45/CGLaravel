@@ -284,7 +284,7 @@ class I18N implements II18N
     {
         foreach ($ELanguageCodeList as $case) {
             if (!file_exists("lib/I18N/languages/" . $case->name . ".yml")) {
-                Utils::pinv("1");
+                //Utils::pinv("1");
                 $dump = Yaml::dump($this->languageTextList);
                 FileSystem::write("lib/I18N/languages/" . $case->name . ".yml", $dump);
                 continue;
