@@ -27,16 +27,16 @@
 </script>
 <header class="float-menu">
     <div class="btn-group">
-        <div class="icon lazy-loaded-image" data-src="<?= Utils::resources("images/logo.webp") ?>"></div>
+        <a href="/" class="icon lazy-loaded-image" data-src="{{asset("assets/images/logo.webp")}}"></a>
         <a href="/" type="button" class="float-menu-btn" aria-expanded="false">
-            <span>首頁</span>
+            <span>{{$i18N->getLanguage(ELanguageText::menu_frontpage)}}</span>
         </a>
         <button type="button" class="float-menu-btn" aria-expanded="false" data-target="#float1">
-            <span>產品</span>
+            <span>{{$i18N->getLanguage(ELanguageText::menu_product)}}</span>
             <i class="fa-solid fa-caret-down"></i>
         </button>
         <button type="button" class="float-menu-btn" aria-expanded="false" data-target="#float2">
-            <span>資訊</span>
+            <span>{{$i18N->getLanguage(ELanguageText::menu_information)}}</span>
             <i class="fa-solid fa-caret-down"></i>
         </button>
     </div>
@@ -44,18 +44,18 @@
         <div class="float-menu-panel-columns">
             <div class="menu columns-col">
                 <div class="item">
-                    <div class="title">雲端計算</div>
+                    <div class="title">{{$i18N->getLanguage(ELanguageText::menu_cloudComputing)}}</div>
                     <a href="" class="menu-btn">
                         <i class="fa-solid fa-cloud"></i>
-                        <span>&nbsp;Google Cloud</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_googleCloud)}}</span>
                     </a>
                     <a href="" class="menu-btn">
                         <i class="fa-brands fa-aws"></i>
-                        <span>&nbsp;AWS</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_aws)}}</span>
                     </a>
                     <a href="" class="menu-btn">
                         <i class="fa-brands fa-microsoft"></i>
-                        <span>&nbsp;Microsoft Azure</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_MicrosoftAzure)}}</span>
                     </a>
                 </div>
                 <div class="item">
@@ -79,14 +79,31 @@
                 </div>
                 <div class="item">
                     <div class="title">客戶案例</div>
-                    <a href="" class="menu-btn">
+                    <a href="https://cgimager.blaetoan.cyou/index.php" class="menu-btn">
                         <i class="fa-solid fa-shop"></i>
                         <span>&nbsp;CGIMAGER</span>
                     </a>
-                    <a href="" class="menu-btn">
+                    <a href="https://cgphp01.blaetoan.cyou/" class="menu-btn">
                         <i class="fa-solid fa-shop"></i>
                         <span>&nbsp;串串幸福</span>
                     </a>
+                    <div class="title">廠商操作</div>
+                    @guest
+                    <a href="/login" class="menu-btn">
+                        <i class="fa-solid fa-shop"></i>
+                        <span>&nbsp;登入</span>
+                    </a>
+                    <a href="/register" class="menu-btn">
+                        <i class="fa-solid fa-shop"></i>
+                        <span>&nbsp;註冊</span>
+                    </a>
+                    @endguest
+                    @auth
+                        <a href="/logout" class="menu-btn">
+                            <i class="fa-solid fa-shop"></i>
+                            <span>&nbsp;登出</span>
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -115,7 +132,7 @@
             <div class="columns-col news">
                 <div class="item">
                     <div class="image lazy-loaded-image" style="background-position-y: center"
-                         data-src="<?= Utils::resources("images/internationalization.webp") ?>">
+                         data-src="{{asset("assets/images/internationalization.webp")}}">
                     </div>
                     <div class="title">
                         <i class="fa-solid fa-language"></i>&nbsp;語言

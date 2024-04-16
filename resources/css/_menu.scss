@@ -1,5 +1,5 @@
 .float-menu {
-    @apply top-0 left-0 w-screen fixed;
+    @apply top-0 left-0 w-screen fixed z-10;
     .btn-group{
         @apply  bg-neutral-100 shadow-lg;
         display: flex;
@@ -48,9 +48,9 @@
     }
 
     .float-menu-panel {
-        @apply hidden z-0 overflow-y-auto overflow-x-hidden backdrop-blur-[10px] absolute;
+        @apply hidden z-[2] overflow-y-auto overflow-x-hidden backdrop-blur-[10px] absolute;
         max-height: 425px;
-        background-color: rgba(229, 229, 229, 0.29);
+        background-color: rgba(229, 229, 229, 0.75);
 
         .float-menu-panel-columns {
             @apply gap-2 px-5 grid;

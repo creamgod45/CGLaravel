@@ -7,10 +7,38 @@
 @import "register";
 body{
     @apply relative;
-    .container{
-        @apply mt-[50px];
+    .container, .container1{
+        @apply mt-[48px];
+        .home{
+            .banner{
+                @apply relative w-full z-[1] bg-fixed bg-origin-border bg-repeat-y;
+                background-color: rgba(255, 255, 255, 0.6);
+                background-size: cover;
+                height: calc(100vh - 72px);
+                .row{
+                    backdrop-filter: blur(10px);
+                    @apply absolute w-full h-full text-white left-0 top-0 flex flex-nowrap;
+                    .col{
+                        position: relative;
+                        flex: 0 0 auto;
+                        width: 50%;
+                    }
+                    .left{
+                        position: absolute;
+                        top: 25%;
+                        left: 25%;
+                        .title{
+                            @apply text-4xl text-nowrap w-fit;
+                        }
+                        .description{
+                            @apply mt-5 text-center w-fit;
+                        }
+                    }
+                }
+            }
+        }
     }
     footer{
-        @apply absolute bottom-0 left-0 flex items-center justify-center w-full;
+        @apply absolute z-0 bottom-0 left-0 flex items-center justify-center w-full;
     }
 }

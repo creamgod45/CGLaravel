@@ -139,3 +139,12 @@ zh_SG: 'Traditional Chinese (Singapore)'
 zh_MO: 'Traditional Chinese (Singapore)'
 zu_ZA: 'Zulu (South Africa)'
 placeholder_memberHelloText: 'Hello, %name%!'
+menu_frontpage: Home
+menu_product: Products
+menu_information: Information
+menu_cloudComputing: 'Cloud Computing'
+menu_facebook: Facebook
+menu_googleCloud: 'Google Cloud'
+menu_aws: AWS
+menu_MicrosoftAzure: 'Microsoft Azure'
+welcome_title: 'CGCenter Network Center Service Provider'

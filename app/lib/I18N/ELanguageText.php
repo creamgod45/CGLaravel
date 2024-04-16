@@ -8,6 +8,15 @@ enum ELanguageText
 {
     // Hello World
     case placeholder_memberHelloText;
+    case menu_frontpage;
+    case menu_product;
+    case menu_information;
+    case menu_cloudComputing;
+    case menu_googleCloud;
+    case menu_aws;
+    case menu_MicrosoftAzure;
+    case menu_facebook;
+    case welcome_title;
     case HelloWorld;
     case af_ZA;     // 南非荷兰语（南非）
     case am_ET;     // 阿姆哈拉语（埃塞俄比亚）

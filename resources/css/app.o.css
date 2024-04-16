@@ -8616,52 +8616,6 @@ video {
   --tw-contain-style: 
 }
 
-.container{
-  width:100%
-}
-
-@media (min-width: 320px){
-  .container{
-    max-width:320px
-  }
-}
-
-@media (min-width: 480px){
-  .container{
-    max-width:480px
-  }
-}
-
-@media (min-width: 768px){
-  .container{
-    max-width:768px
-  }
-}
-
-@media (min-width: 976px){
-  .container{
-    max-width:976px
-  }
-}
-
-@media (min-width: 1120px){
-  .container{
-    max-width:1120px
-  }
-}
-
-@media (min-width: 1440px){
-  .container{
-    max-width:1440px
-  }
-}
-
-@media (min-width: 1536px){
-  .container{
-    max-width:1536px
-  }
-}
-
 /* Firefox */
 
 * {
@@ -8707,6 +8661,7 @@ video {
   position:fixed;
   top:0px;
   left:0px;
+  z-index:10;
   width:100vw
 }
 
@@ -8857,7 +8812,7 @@ video {
 
 .float-menu .float-menu-panel{
   position:absolute;
-  z-index:0;
+  z-index:2;
   display:none;
   overflow-y:auto;
   overflow-x:hidden;
@@ -8865,7 +8820,7 @@ video {
   -webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
           backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
   max-height: 425px;
-  background-color: rgba(229, 229, 229, 0.29)
+  background-color: rgba(229, 229, 229, 0.75)
 }
 
 .float-menu .float-menu-panel .float-menu-panel-columns{
@@ -9263,14 +9218,68 @@ body{
   position:relative
 }
 
-body .container{
-  margin-top:50px
+body .container, body .container1{
+  margin-top:48px
+}
+
+body .container .home .banner, body .container1 .home .banner{
+  position:relative;
+  z-index:1;
+  width:100%;
+  background-attachment:fixed;
+  background-repeat:repeat-y;
+  background-origin:border-box;
+  background-color: rgba(255, 255, 255, 0.6);
+  background-size: cover;
+  height: calc(100vh - 72px)
+}
+
+body .container .home .banner .row, body .container1 .home .banner .row {
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  position:absolute;
+  left:0px;
+  top:0px;
+  display:flex;
+  height:100%;
+  width:100%;
+  flex-wrap:nowrap;
+  --tw-text-opacity:1;
+  color:rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+body .container .home .banner .row .col, body .container1 .home .banner .row .col {
+  position: relative;
+  flex: 0 0 auto;
+  width: 50%;
+}
+
+body .container .home .banner .row .left, body .container1 .home .banner .row .left {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+}
+
+body .container .home .banner .row .left .title, body .container1 .home .banner .row .left .title{
+  width:-moz-fit-content;
+  width:fit-content;
+  text-wrap:nowrap;
+  font-size:2.25rem;
+  line-height:2.5rem
+}
+
+body .container .home .banner .row .left .description, body .container1 .home .banner .row .left .description{
+  margin-top:1.25rem;
+  width:-moz-fit-content;
+  width:fit-content;
+  text-align:center
 }
 
 body footer{
   position:absolute;
   bottom:0px;
   left:0px;
+  z-index:0;
   display:flex;
   width:100%;
   align-items:center;

@@ -10,3 +10,4 @@ npm install
 npm run build
 echo Done
 REM config/app.php debugbar
+REM public copy to root

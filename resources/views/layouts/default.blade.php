@@ -13,7 +13,7 @@
     @endif
 </header>
 
-<div class="container">
+<div class="container1">
     @yield('content')
 </div>
 

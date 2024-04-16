@@ -139,3 +139,12 @@ zh_SG: 繁体中文（新加坡）
 zh_MO: 繁体中文（新加坡）
 zu_ZA: 祖鲁语（南非）
 placeholder_memberHelloText: '嗨啰, %name%!'
+menu_frontpage: 首页
+menu_product: 产品
+menu_information: 信息
+menu_cloudComputing: 云端计算
+menu_facebook: Facebook
+menu_googleCloud: 'Google Cloud'
+menu_aws: AWS
+menu_MicrosoftAzure: 'Microsoft Azure'
+welcome_title: 'CGCenter 网路中心服务商'
