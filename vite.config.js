@@ -7,7 +7,6 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-                'resources/js/Home.js',
             ],
             refresh: true,
         }),
@@ -23,5 +22,10 @@ export default defineConfig({
                 }
             }
         }
-    }
+    },
+    server: {
+        hmr: {
+            host: 'localhost',
+        },
+    },
 });
