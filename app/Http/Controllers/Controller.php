@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\I18N;
+use App\Lib\Type\String\CGString;
 use App\Lib\Utils\Utils;
 use http\Cookie;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -41,8 +42,11 @@ class Controller extends BaseController
     {
         $url = $request->url();
         $path = parse_url($url, PHP_URL_PATH);
-        $pathParts = explode('/', $path);
-        $router = array_filter($pathParts);
+        $router=[];
+        if($path!==null){
+            $pathParts = explode('/', $path);
+            $router = array_filter($pathParts);
+        }
         $lang = $request->cookie('lang', ELanguageCode::en_US->name);
         //debugbar()->info($lang);
         $i18N = new I18N(ELanguageCode::valueof($lang), limitMode: [ELanguageCode::zh_TW, ELanguageCode::zh_CN, ELanguageCode::en_US, ELanguageCode::en_GB]);
