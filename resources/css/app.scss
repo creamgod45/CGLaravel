@@ -40,5 +40,17 @@ body{
     }
     footer{
         @apply absolute z-0 bottom-0 left-0 flex items-center justify-center w-full;
+        a {
+            @apply text-blue-500;
+            &:hover{
+                @apply text-blue-400;
+            }
+        }
+        .laravel{
+            color: #f4382e;
+            &:hover{
+                color: #ea807b;
+            }
+        }
     }
 }

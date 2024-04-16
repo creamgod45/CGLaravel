@@ -266,5 +266,17 @@ body .container .home .banner .row .left .description, body .container1 .home .b
 body footer {
   @apply absolute z-0 bottom-0 left-0 flex items-center justify-center w-full;
 }
+body footer a {
+  @apply text-blue-500;
+}
+body footer a:hover {
+  @apply text-blue-400;
+}
+body footer .laravel {
+  color: #f4382e;
+}
+body footer .laravel:hover {
+  color: #ea807b;
+}
 
 /*# sourceMappingURL=app.css.map */

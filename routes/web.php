@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (Request $request) {
     return view('welcome', Controller::baseControllerInit($request));
-});
+})->name('home');
 
 Route::post('/language', function (Request $request){
     $cookie = Cookie::make("lang", $request["lang"], 60);
@@ -29,12 +29,12 @@ Route::post('/language', function (Request $request){
 
 Route::middleware(EMiddleWareAliases::auth->name)->group(function () {
     Route::get('logout', [MemberController::class, 'logout'])->name('logout');
-    Route::get('members', [MemberController::class, 'index'])->name("index");
+    Route::get('members', [MemberController::class, 'index']);
 });
 
 Route::middleware(EMiddleWareAliases::guest->name)->group(function () {
-    Route::get('login', [MemberController::class, 'loginPage']);
-    Route::post('login', [MemberController::class, 'login'])->name('login');
+    Route::get('login', [MemberController::class, 'loginPage'])->name('login');
+    Route::post('login', [MemberController::class, 'login']);
     Route::get('register', [MemberController::class, 'showRegistrationForm'])->name('register');
     Route::post('register', [MemberController::class, 'register']);
 });

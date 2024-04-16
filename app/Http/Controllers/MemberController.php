@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateMemberRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class MemberController extends Controller
 {
@@ -19,8 +20,9 @@ class MemberController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         $members = Member::all();
-        return view('members', $this::baseGlobalVariable($request, ['members' => $members]));
+        return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user]));
     }
 
     public function loginPage(Request $request){
@@ -31,8 +33,10 @@ class MemberController extends Controller
         $data = $request->all();
         $user = Member::where("username", $data["username"])->first();
         if(Hash::check($data["password"], $user["password"])){
+            Log::info($user->username.": Logging in");
             Auth::login($user);
-            return redirect(route("index"));
+            Log::info($user->username.": logined");
+            return redirect('members');
         }
         return '登入失敗';
     }
@@ -62,7 +66,10 @@ class MemberController extends Controller
             $user = $this->create($validate);
 
             // 可以在这里实现登录逻辑，或者重定向到登录页面
+            Log::info($user->username.": registering");
             Auth::login($user);
+            Log::info($user->username.": registered");
+            return redirect(route("home"));
         }
         return redirect('register');
     }
