@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,17 +18,17 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (Request $request) {
+    return view('welcome', Controller::baseControllerInit($request));
 });
 
-Route::post('/setlanguage', function (Request $request){
+Route::post('/language', function (Request $request){
     $cookie = Cookie::make("lang", $request["lang"], 60);
     return response()->json(['message' => 'Data received successfully'])->cookie($cookie);
 });
 
 Route::middleware(EMiddleWareAliases::auth->name)->group(function () {
-    //Route::get('logout', [MemberController::class, 'logout'])->name('logout');
+    Route::get('logout', [MemberController::class, 'logout'])->name('logout');
     Route::get('members', [MemberController::class, 'index'])->name("index");
 });
 

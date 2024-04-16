@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    .register{
+    .register, .login, .logout{
         @apply bg-neutral-100 shadow-xl border-[0.5px] border-solid border-neutral-200 p-4 w-[500px];
         .title{
             @apply text-center text-xl;

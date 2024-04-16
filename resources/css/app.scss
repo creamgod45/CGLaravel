@@ -5,3 +5,12 @@
 @import "scrollbar";
 @import "menu";
 @import "register";
+body{
+    @apply relative;
+    .container{
+        @apply mt-[50px];
+    }
+    footer{
+        @apply absolute bottom-0 left-0 flex items-center justify-center w-full;
+    }
+}

@@ -17,12 +17,27 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
 
+    public static function baseControllerInit(Request $request, array ...$params): array
+    {
+        return (new Controller)->extracted($request, $params);
+    }
+
     /**
      * @param Request $request
      * @param array $params
      * @return array
      */
     public function baseGlobalVariable(Request $request, array $params = []): array
+    {
+        return $this->extracted($request, $params);
+    }
+
+    /**
+     * @param Request $request
+     * @param array $params
+     * @return array
+     */
+    public function extracted(Request $request, array $params): array
     {
         $url = $request->url();
         $path = parse_url($url, PHP_URL_PATH);

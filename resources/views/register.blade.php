@@ -1,3 +1,4 @@
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 @use (App\Lib\I18N\I18N);
 @php
     /***

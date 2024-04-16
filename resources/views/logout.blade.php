@@ -11,10 +11,10 @@
 @extends('layouts.default')
 @section('title', '首頁')
 @section('content')
-    @foreach($members as $key => $item)
-        @foreach($item as $k => $v)
-
-        @endforeach
-    @endforeach
+    <div class="register-frame">
+        <div class="login">
+            <div class="title">登出</div>
+            <div class="context">已經登出三秒後跳轉頁面!!</div>
+        </div>
+    </div>
 @endsection
-

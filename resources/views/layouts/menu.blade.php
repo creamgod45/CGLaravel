@@ -10,9 +10,8 @@
     function changeLanguage(el) {
         let value = el.value;
         let formData = new FormData();
-        formData.append('csrf_token', "{{csrf_token()}}");
         formData.append('lang', value);
-        fetch('/setlanguage', {
+        fetch('/language', {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': "{{csrf_token()}}"  // Laravel CSRF token
@@ -29,9 +28,9 @@
 <header class="float-menu">
     <div class="btn-group">
         <div class="icon lazy-loaded-image" data-src="<?= Utils::resources("images/logo.webp") ?>"></div>
-        <button type="button" class="float-menu-btn" aria-expanded="false">
+        <a href="/" type="button" class="float-menu-btn" aria-expanded="false">
             <span>首頁</span>
-        </button>
+        </a>
         <button type="button" class="float-menu-btn" aria-expanded="false" data-target="#float1">
             <span>產品</span>
             <i class="fa-solid fa-caret-down"></i>

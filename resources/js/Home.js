@@ -1,3 +1,6 @@
+import './bootstrap';
+import '@fortawesome/fontawesome-free/js/all.js';
+
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
 } else {

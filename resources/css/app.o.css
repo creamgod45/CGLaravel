@@ -9177,7 +9177,7 @@ video {
   align-items: center;
 }
 
-.register-frame .register{
+.register-frame .register, .register-frame .login, .register-frame .logout{
   width:500px;
   border-width:0.5px;
   border-style:solid;
@@ -9191,24 +9191,24 @@ video {
   box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
 }
 
-.register-frame .register .title{
+.register-frame .register .title, .register-frame .login .title, .register-frame .logout .title{
   text-align:center;
   font-size:1.25rem;
   line-height:1.75rem
 }
 
-.register-frame .register .row{
+.register-frame .register .row, .register-frame .login .row, .register-frame .logout .row{
   display:flex;
   flex-wrap:nowrap
 }
 
-.register-frame .register .row > :not([hidden]) ~ :not([hidden]){
+.register-frame .register .row > :not([hidden]) ~ :not([hidden]), .register-frame .login .row > :not([hidden]) ~ :not([hidden]), .register-frame .logout .row > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse:0;
   margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))
 }
 
-.register-frame .register .row .col{
+.register-frame .register .row .col, .register-frame .login .row .col, .register-frame .logout .row .col{
   display:flex;
   align-items:center;
   font-size:1.25rem;
@@ -9216,14 +9216,14 @@ video {
   flex: 0 0 auto
 }
 
-.register-frame .register .row label{
+.register-frame .register .row label, .register-frame .login .row label, .register-frame .logout .row label{
   width:25%;
   -moz-columns:10;
        columns:10;
   text-align:right
 }
 
-.register-frame .register .row input{
+.register-frame .register .row input, .register-frame .login .row input, .register-frame .logout .row input{
   width:75%;
   --tw-bg-opacity:1;
   background-color:rgb(255 255 255 / var(--tw-bg-opacity));
@@ -9234,14 +9234,14 @@ video {
   outline-offset:2px
 }
 
-.register-frame .register .button{
+.register-frame .register .button, .register-frame .login .button, .register-frame .logout .button{
   margin-top:0.75rem;
   display: flex;
   justify-content: center;
   align-items: center
 }
 
-.register-frame .register .button button{
+.register-frame .register .button button, .register-frame .login .button button, .register-frame .logout .button button{
   border-radius:0.25rem;
   --tw-bg-opacity:1;
   background-color:rgb(52 211 153 / var(--tw-bg-opacity));
@@ -9254,9 +9254,27 @@ video {
   color:rgb(255 255 255 / var(--tw-text-opacity))
 }
 
-.register-frame .register .button button:hover{
+.register-frame .register .button button:hover, .register-frame .login .button button:hover, .register-frame .logout .button button:hover{
   --tw-bg-opacity:1;
   background-color:rgb(110 231 183 / var(--tw-bg-opacity))
+}
+
+body{
+  position:relative
+}
+
+body .container{
+  margin-top:50px
+}
+
+body footer{
+  position:absolute;
+  bottom:0px;
+  left:0px;
+  display:flex;
+  width:100%;
+  align-items:center;
+  justify-content:center
 }
 
 /*# sourceMappingURL=app.o.css.map */

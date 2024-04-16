@@ -202,33 +202,43 @@
   justify-content: center;
   align-items: center;
 }
-.register-frame .register {
+.register-frame .register, .register-frame .login, .register-frame .logout {
   @apply bg-neutral-100 shadow-xl border-[0.5px] border-solid border-neutral-200 p-4 w-[500px];
 }
-.register-frame .register .title {
+.register-frame .register .title, .register-frame .login .title, .register-frame .logout .title {
   @apply text-center text-xl;
 }
-.register-frame .register .row {
+.register-frame .register .row, .register-frame .login .row, .register-frame .logout .row {
   @apply flex flex-nowrap space-y-2;
 }
-.register-frame .register .row .col {
+.register-frame .register .row .col, .register-frame .login .row .col, .register-frame .logout .row .col {
   @apply flex items-center text-xl;
   flex: 0 0 auto;
 }
-.register-frame .register .row label {
+.register-frame .register .row label, .register-frame .login .row label, .register-frame .logout .row label {
   @apply w-[25%] text-right columns-10;
 }
-.register-frame .register .row input {
+.register-frame .register .row input, .register-frame .login .row input, .register-frame .logout .row input {
   @apply w-[75%] bg-white text-black outline-none p-2;
 }
-.register-frame .register .button {
+.register-frame .register .button, .register-frame .login .button, .register-frame .logout .button {
   @apply mt-3;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.register-frame .register .button button {
+.register-frame .register .button button, .register-frame .login .button button, .register-frame .logout .button button {
   @apply bg-emerald-400 rounded px-2 py-1 hover:bg-emerald-300 text-white p-2;
+}
+
+body {
+  @apply relative;
+}
+body .container {
+  @apply mt-[50px];
+}
+body footer {
+  @apply absolute bottom-0 left-0 flex items-center justify-center w-full;
 }
 
 /*# sourceMappingURL=app.css.map */

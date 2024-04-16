@@ -20,11 +20,11 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $members = Member::all();
-        return view('members', $this->baseGlobalVariable($request, ['members' => $members]));
+        return view('members', $this::baseGlobalVariable($request, ['members' => $members]));
     }
 
     public function loginPage(Request $request){
-        return view('login', $this->baseGlobalVariable($request));
+        return view('login', $this::baseControllerInit($request));
     }
 
     public function login(Request $request){
@@ -40,12 +40,13 @@ class MemberController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect(route('login'));
+        Utils::goto_page(['/login', 3]);
+        return view('logout', $this::baseControllerInit($request));
     }
 
     public function showRegistrationForm(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('register', $this->baseGlobalVariable($request));
+        return view('register', $this::baseControllerInit($request));
     }
 
     public function register(Request $request): \Illuminate\Http\RedirectResponse
