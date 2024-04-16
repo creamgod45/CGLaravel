@@ -15,10 +15,16 @@
         <div class="banner lazy-loaded-image" data-src="{{asset("assets/images/welcome_banner1.jpg")}}">
             <div class="row">
                 <div class="col left">
-                    <div class="title">{{$i18N->getLanguage(ELanguageText::welcome_title)}}</div>
-                    <div class="description">{{$i18N->getLanguage(ELanguageText::welcome_description)}}</div>
+                    <div class="box">
+                        <div class="title">{{$i18N->getLanguage(ELanguageText::welcome_title)}}</div>
+                        <div class="description">{{$i18N->getLanguage(ELanguageText::welcome_description)}}</div>
+                    </div>
                 </div>
-                <div class="col right"></div>
+                <div class="col right">
+                    <div class="card">
+                        <div class="card"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

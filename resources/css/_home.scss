@@ -1,4 +1,5 @@
 .container1 {
+    @apply mt-[72px];
     .home {
         .banner {
             @apply relative w-full z-[1] bg-fixed bg-origin-border bg-repeat-y;
@@ -8,24 +9,16 @@
 
             .row {
                 backdrop-filter: blur(10px);
-                @apply absolute w-full h-full text-white left-0 top-0 flex flex-nowrap;
-                .col {
-                    position: relative;
-                    flex: 0 0 auto;
-                    width: 50%;
-                }
+                @apply absolute w-full h-full text-white left-0 top-0 grid xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 grid-cols-1;
 
                 .left {
-                    position: absolute;
-                    top: 25%;
-                    left: 25%;
-
+                    @apply flex justify-center items-center;
                     .title {
-                        @apply text-4xl text-nowrap w-fit;
+                        @apply xs:text-2xl sm:text-2xl md:text-2xl lg:text-4xl text-nowrap w-full text-center;
                     }
 
                     .description {
-                        @apply mt-5 text-center w-fit;
+                        @apply mt-5 text-center w-full text-center;
                     }
                 }
             }

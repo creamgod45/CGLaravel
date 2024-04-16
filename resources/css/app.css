@@ -231,6 +231,9 @@
   @apply bg-emerald-400 rounded px-2 py-1 hover:bg-emerald-300 text-white p-2;
 }
 
+.container1 {
+  @apply mt-[72px];
+}
 .container1 .home .banner {
   @apply relative w-full z-[1] bg-fixed bg-origin-border bg-repeat-y;
   background-color: rgba(255, 255, 255, 0.6);
@@ -239,30 +242,23 @@
 }
 .container1 .home .banner .row {
   backdrop-filter: blur(10px);
-  @apply absolute w-full h-full text-white left-0 top-0 flex flex-nowrap;
-}
-.container1 .home .banner .row .col {
-  position: relative;
-  flex: 0 0 auto;
-  width: 50%;
+  @apply absolute w-full h-full text-white left-0 top-0 grid xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 grid-cols-1;
 }
 .container1 .home .banner .row .left {
-  position: absolute;
-  top: 25%;
-  left: 25%;
+  @apply flex justify-center items-center;
 }
 .container1 .home .banner .row .left .title {
-  @apply text-4xl text-nowrap w-fit;
+  @apply xs:text-2xl sm:text-2xl md:text-2xl lg:text-4xl text-nowrap w-full text-center;
 }
 .container1 .home .banner .row .left .description {
-  @apply mt-5 text-center w-fit;
+  @apply mt-5 text-center w-full text-center;
 }
 
 .notification {
-  @apply fixed right-5 top-5 w-fit h-fit z-20 space-y-5;
+  @apply fixed right-5 bottom-10 w-fit h-fit z-20 space-y-5;
 }
 .notification .item {
-  @apply bg-white border-solid border-s-[6px] border-emerald-400 flex justify-center items-center px-4 py-2 space-x-5 shadow-2xl;
+  @apply relative bg-white border-solid border-s-[6px] border-emerald-400 flex justify-center items-center px-4 py-2 space-x-5 shadow-2xl;
 }
 .notification .item .icon {
   @apply text-2xl;
@@ -271,17 +267,17 @@
   @apply font-bold;
 }
 .notification .item .close-btn {
-  @apply size-4 bg-red-400 hover:bg-red-300 text-white flex justify-center items-center rounded-4xl cursor-pointer;
+  @apply absolute -top-4 -right-4 size-8 bg-red-400 hover:bg-red-300 text-white flex justify-center items-center rounded-4xl cursor-pointer;
 }
 
 body {
   @apply relative;
 }
 body .container1 {
-  @apply mt-[48px];
+  @apply mt-[72px];
 }
 body footer {
-  @apply absolute z-0 bottom-0 left-0 flex items-center justify-center w-full;
+  @apply absolute z-20 text-white bottom-0 left-0 flex items-center justify-center w-full;
 }
 body footer a {
   @apply text-blue-500;
