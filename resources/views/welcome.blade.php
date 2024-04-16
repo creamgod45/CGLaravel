@@ -16,10 +16,28 @@
             <div class="row">
                 <div class="col left">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::welcome_title)}}</div>
-                    <div class="description">你有需求我們提供專業服務!!</div>
+                    <div class="description">{{$i18N->getLanguage(ELanguageText::welcome_description)}}</div>
                 </div>
                 <div class="col right"></div>
             </div>
+        </div>
+    </div>
+    <div class="notification">
+        <div id="A16H5A" class="item">
+            <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="context">
+                <div class="title">目前版面製作中</div>
+                <div class="description">請稍待至完成頁面時光臨!!</div>
+            </div>
+            <div class="close-btn" onclick="document.getElementById('A16H5A').remove()">&times;</div>
+        </div>
+        <div id="A16H5B" class="item">
+            <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="context">
+                <div class="title">目前版面製作中</div>
+                <div class="description">請稍待至完成頁面時光臨!!</div>
+            </div>
+            <div class="close-btn" onclick="document.getElementById('A16H5B').remove()">&times;</div>
         </div>
     </div>
 @endsection
