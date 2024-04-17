@@ -22,11 +22,14 @@
                 </div>
                 <div class="col right">
                     <div class="card">
-                        <div class="card"></div>
+                        <div class="card">
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class=""></div>
     </div>
     <div class="notification">
         <div id="A16H5A" class="item">

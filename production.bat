@@ -11,3 +11,4 @@ npm run build
 echo Done
 REM config/app.php debugbar
 REM public copy to root
+REM Remove all hot file is laravel dected local server or server assets 

@@ -9,8 +9,10 @@ lib/
 /storage/*.key
 /vendor
 .env
+.env.local
 .env.backup
 .env.production
+example.htaccess
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
