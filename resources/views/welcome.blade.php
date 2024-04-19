@@ -25,7 +25,9 @@
                                         ->body("NCSP")
                                         ->attr("class", "tooltip-gen")
                                         ->attr("data-direction", "tooltip-top")
-                                        ->attr("data-tooltip", $i18N->getLanguage(ELanguageText::welcome_title_tooltip)
+                                        ->attr(
+                                            "data-tooltip",
+                                            $i18N->getLanguage(ELanguageText::welcome_title_tooltip)
                                         )
                                         ->build()
                                 )

@@ -1,3 +1,5 @@
+import * as LZString from "lz-string";
+
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
 } else {
@@ -9,20 +11,14 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
 if (localStorage.getItem('theme') === undefined) {
     localStorage.theme = 'light'
 }
-let obj = "Web:HTML, CSS3(sass,scss), JS(nodeJs,commonJs, jQuery, AJAX), PHP(8.2~7.0), RWD, 基本程式, 資料庫, API, Websocket, 聊天室(非websocket技術), JWT, 自研框架, 資訊安全防護(IDE: PHPStorm)Android Studio(手機軟體設計) 基本程式, toast, Form, API, 通知, 相機(QRcode), 資料庫,執行緒, 檔案GitC#(.NET Framework, MAUI 8) / C++ / C （Arduino）基本程式Java 執行緒,基本程式,資料庫,介面, APIPython 爬蟲,資料庫,基本程式P.S 基本程式（程式必學技能迴圈,變數,陣列,類型,類別）";
-let t = encodeContext(obj);
-//console.log(t.hash);
-console.log(t.encode);
-let a = decodeContext(t.encode, t.hash);
-console.log(a);
 
 function encodeContext(data) {
-    let hash = [];
+    let hash = "";
     let encodeBase64 = btoa(encodeURIComponent(data));
     let source= encodeBase64;
     //console.log(encodeBase64);
     let length = encodeBase64.length;
-    let randomNumbers = generateRandomNumbers(0, length - 1, (length - 1) / 4);
+    let randomNumbers = generateRandomNumbers(0, length - 1, (length - 1) / 6);
     //console.log(randomNumbers);
     randomNumbers.forEach((value, k) => {
         //console.log(k, value);
@@ -38,11 +34,16 @@ function encodeContext(data) {
     return {
         source: source,
         hash: hash,
-        encode: encodeBase64
+        encode: encodeBase64,
+        compress: LZString.compressToUTF16(encodeBase64+"."+hash),
     };
 }
 
-function decodeContext(data, hash) {
+function decodeContext(compress) {
+    let raw_data = LZString.decompressFromUTF16(compress);
+    let strings = raw_data.split('.');
+    let data = strings[0];
+    let hash = strings[1];
     let hashChunk = hash.split("$");
     let hashChunk2 =[];
     for (let hashChunkElement of hashChunk) {
@@ -233,11 +234,39 @@ function load1() {
         lazyImageObserver.observe(lazyImage);
     }
 }
+function load4(){
+    let obj = "Web:HTML, CSS3(sass,scss), JS(nodeJs,commonJs, jQuery, AJAX), PHP(8.2~7.0), RWD, 基本程式, 資料庫, API, Websocket, 聊天室(非websocket技術), JWT, 自研框架, 資訊安全防護(IDE: PHPStorm)Android Studio(手機軟體設計) 基本程式, toast, Form, API, 通知, 相機(QRcode), 資料庫,執行緒, 檔案GitC#(.NET Framework, MAUI 8) / C++ / C （Arduino）基本程式Java 執行緒,基本程式,資料庫,介面, APIPython 爬蟲,資料庫,基本程式P.S 基本程式（程式必學技能迴圈,變數,陣列,類型,類別）";
+    let t = encodeContext(obj);
+    console.log(t.compress);
+    console.log(t.compress.length);
+    //console.log(t.encode);
+    //let a = decodeContext(t.compress);
+    //console.log(a);
+    let formData = new FormData();
+    formData.append('a', t.compress);
+    fetch('api/lzstring.json', {
+        body: formData,
+        method: "POST",
+    }).then((response) => {
+        if (response.ok) {
+            return;
+        }
+    })
+    fetch('api/user', {
+        method: "GET",
+    }).then((response) => {
+        if (response.ok) {
+            let promise = response.json();
+            promise.then(console.log);
+        }
+    })
+}
 
 function loader() {
     load1();
     load2();
     load3();
+    //load4();
 }
 
 window.addEventListener("resize", load3);

@@ -4,7 +4,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,11 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function (Request $request) {
     return view('welcome', Controller::baseControllerInit($request));
 })->name('home');
-
-Route::post('/language', function (Request $request){
-    $cookie = Cookie::make("lang", $request["lang"], 60);
-    return response()->json(['message' => 'Data received successfully'])->cookie($cookie);
-});
 
 Route::middleware(EMiddleWareAliases::auth->name)->group(function () {
     Route::get('logout', [MemberController::class, 'logout'])->name('logout');
