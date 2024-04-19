@@ -13,13 +13,14 @@ let obj = "Web:HTML, CSS3(sass,scss), JS(nodeJs,commonJs, jQuery, AJAX), PHP(8.2
 let t = encodeContext(obj);
 //console.log(t.hash);
 console.log(t.encode);
-decodeContext(t.encode, t.hash);
+let a = decodeContext(t.encode, t.hash);
+console.log(a);
 
 function encodeContext(data) {
     let hash = [];
     let encodeBase64 = btoa(encodeURIComponent(data));
     let source= encodeBase64;
-    console.log(encodeBase64);
+    //console.log(encodeBase64);
     let length = encodeBase64.length;
     let randomNumbers = generateRandomNumbers(0, length - 1, (length - 1) / 4);
     //console.log(randomNumbers);
@@ -52,8 +53,9 @@ function decodeContext(data, hash) {
         let a = string_move_shift(data, i, hashChunk2[i]);
         data = a.str;
     }
-    console.log(data);
-    console.log(data === t.source);
+    //console.log(data);
+    //console.log(data === t.source);
+    return decodeURIComponent(atob(data));
 }
 
 function generateRandomNumbers(rangeStart, rangeEnd, numNumbers) {

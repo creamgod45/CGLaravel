@@ -46,7 +46,6 @@
                 </div>
             </div>
         </div>
-        {{$i18N->getLanguage(ELanguageText::welcome_test, true)->Replace("%test%", $i18N->getLanguage(ELanguageText::welcome_test_placeholder))->toString()}}
         <div class="service lazy-loaded-image" data-src="{{asset("assets/images/welcome_banner2.png")}}">
             <div class="cards-flex">
                 <div class="card">

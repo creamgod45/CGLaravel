@@ -150,5 +150,5 @@ menu_MicrosoftAzure: 'Microsoft Azure'
 welcome_title: 'CGCenter %NCSP%'
 welcome_title_tooltip: 網路中心服務商
 welcome_description: 開始您的數位轉型之旅
-welcome_test: '測試文字 %test%'
-welcome_test_placeholder: '佔位符 在這裡'
+welcome_test: 'testText %test%'
+welcome_test_placeholder: 'placeholder here'
