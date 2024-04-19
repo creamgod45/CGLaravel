@@ -150,5 +150,18 @@ menu_MicrosoftAzure: 'Microsoft Azure'
 welcome_title: 'CGCenter %NCSP%'
 welcome_title_tooltip: 網路中心服務商
 welcome_description: 開始您的數位轉型之旅
-welcome_test: 'testText %test%'
-welcome_test_placeholder: 'placeholder here'
+welcome_test: '測試文字 %test%'
+welcome_test_placeholder: 佔位符這裡
+validator_field_username: 帳號
+validator_field_email: 信箱
+validator_field_password: 密碼
+validator_field_passwordConfirmed: 確認密碼
+validator_field_phone: 手機
+validator_required: ':attribute 欄位是必需提填寫的。'
+validator_string: ':attribute 欄位必須是字串。'
+validator_min: ':attribute 欄位必須至少包含 :min 個字元。'
+validator_max: ':attribute 欄位最多只能有 :max 個字元。'
+validator_confirmed: ':attribute 和 %validator_field_passwordConfirmed% 不相同。'
+validator_unique: ':attribute 已經被使用了'
+register_title: 註冊
+register_btn: 送出

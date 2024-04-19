@@ -215,10 +215,10 @@
   flex: 0 0 auto;
 }
 .register-frame .register .row label, .register-frame .login .row label, .register-frame .logout .row label {
-  @apply w-[25%] text-right columns-10;
+  @apply w-[40%] text-right columns-10;
 }
 .register-frame .register .row input, .register-frame .login .row input, .register-frame .logout .row input {
-  @apply w-[75%] bg-white text-black outline-none p-2;
+  @apply w-[60%] bg-white text-black outline-none p-2;
 }
 .register-frame .register .button, .register-frame .login .button, .register-frame .logout .button {
   @apply mt-3;

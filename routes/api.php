@@ -20,11 +20,3 @@ Route::middleware(EMiddleWareAliases::auth->name)->get('/user', function (Reques
     return $request->user();
 });
 
-Route::post('lzstring.json', function (Request $request){
-    return response()->json(['message' => 'Data received successfully', 'raw'=>$request["a"]]);
-});
-
-Route::post('language', function (Request $request){
-    $cookie = Cookie::make("lang", $request["lang"], 60);
-    return response()->json(['message' => 'Data received successfully'])->cookie($cookie);
-});

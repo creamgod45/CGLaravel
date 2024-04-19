@@ -21,7 +21,7 @@
                 <div class="col left">
                     <div class="box">
                         <div class="title">
-                                <?= $i18N->getLanguage(ELanguageText::welcome_title, true)
+                            <?= $i18N->getLanguage(ELanguageText::welcome_title, true)
                                 ->Replace("%NCSP%",
                                     (new Htmlv2("span"))
                                         ->close(true)
@@ -35,7 +35,9 @@
                                         )
                                         ->build()
                                 )
-                                ->toString() ?></div>
+                                ->toString()
+                            ?>
+                        </div>
                         <div class="description">{{$i18N->getLanguage(ELanguageText::welcome_description)}}</div>
                     </div>
                 </div>

@@ -9171,14 +9171,14 @@ video {
 }
 
 .register-frame .register .row label, .register-frame .login .row label, .register-frame .logout .row label{
-  width:25%;
+  width:40%;
   -moz-columns:10;
        columns:10;
   text-align:right
 }
 
 .register-frame .register .row input, .register-frame .login .row input, .register-frame .logout .row input{
-  width:75%;
+  width:60%;
   --tw-bg-opacity:1;
   background-color:rgb(255 255 255 / var(--tw-bg-opacity));
   padding:0.5rem;

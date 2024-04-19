@@ -21,6 +21,19 @@ enum ELanguageText
     case welcome_description;
     case welcome_test;
     case welcome_test_placeholder;
+    case validator_field_username;
+    case validator_field_email;
+    case validator_field_password;
+    case validator_field_passwordConfirmed;
+    case validator_field_phone;
+    case validator_required;
+    case validator_string;
+    case validator_min;
+    case validator_max;
+    case validator_confirmed;
+    case validator_unique;
+    case register_title;
+    case register_btn;
     case HelloWorld;
     case af_ZA;     // 南非荷兰语（南非）
     case am_ET;     // 阿姆哈拉语（埃塞俄比亚）

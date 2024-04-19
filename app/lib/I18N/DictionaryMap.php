@@ -24,5 +24,18 @@ class DictionaryMap
         $i->setLanguagev2(ELanguageText::welcome_description, "Start your digital transformation journey");
         $i->setLanguagev2(ELanguageText::welcome_test, "testText %test%");
         $i->setLanguagev2(ELanguageText::welcome_test_placeholder, "placeholder here");
+        $i->setLanguagev2(ELanguageText::validator_field_username, "Account");
+        $i->setLanguagev2(ELanguageText::validator_field_email, "Email");
+        $i->setLanguagev2(ELanguageText::validator_field_password, "Password");
+        $i->setLanguagev2(ELanguageText::validator_field_passwordConfirmed, "Confirm Password");
+        $i->setLanguagev2(ELanguageText::validator_field_phone, "Phone");
+        $i->setLanguagev2(ELanguageText::validator_required, "The :attribute field is required.");
+        $i->setLanguagev2(ELanguageText::validator_string, "The :attribute field must be a string.");
+        $i->setLanguagev2(ELanguageText::validator_min, "The :attribute field must be at least :min characters.");
+        $i->setLanguagev2(ELanguageText::validator_max, "The :attribute field must be at most :max characters.");
+        $i->setLanguagev2(ELanguageText::validator_confirmed, "The :attribute and %validator_field_passwordConfirmed% does not match.");
+        $i->setLanguagev2(ELanguageText::validator_unique, "The :attribute has already used.");
+        $i->setLanguagev2(ELanguageText::register_title, "Register");
+        $i->setLanguagev2(ELanguageText::register_btn, "Submit");
     }
 }

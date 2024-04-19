@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Lib\I18N\ELanguageCode;
+use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
-use App\Lib\Permission\cases\AdministratorPermission;
-use App\Lib\Utils\Utils;
 use App\Models\Member;
-use App\Http\Requests\StoreMemberRequest;
-use App\Http\Requests\UpdateMemberRequest;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 
 class MemberController extends Controller
 {
@@ -54,14 +55,44 @@ class MemberController extends Controller
         return view('register', $this::baseControllerInit($request));
     }
 
-    public function register(Request $request): \Illuminate\Http\RedirectResponse
+    /**
+     * @throws JsonException
+     * @throws Exception
+     */
+    public function register(Request $request)
     {
-        $validate = $request->validate([
+        $baseControllerInit = self::baseControllerInit($request);
+        $i18N = $baseControllerInit['i18N'];
+        if(!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $rules = [
             'username' => [ 'required', 'string', 'max:255', 'unique:members'],
-            'email' => [ 'required', 'string', 'email', 'max:255', 'unique:members'],
+            'email'    => [ 'required', 'string', 'email', 'max:255', 'unique:members'],
             'password' => [ 'required', 'string', 'min:8', 'confirmed'],
-            'phone' => [ 'required', 'string', 'max:255', 'unique:members'],
-        ]);
+            'phone'    => [ 'required', 'string', 'min:10', 'max:255', 'unique:members'],
+        ];
+        $customMessages = [
+            'required' => $i18N->getLanguage(ELanguageText::validator_required),
+            'string' => $i18N->getLanguage(ELanguageText::validator_string),
+            'min' => $i18N->getLanguage(ELanguageText::validator_min),
+            'max' => $i18N->getLanguage(ELanguageText::validator_max),
+            'confirmed' => $i18N->getLanguage(ELanguageText::validator_confirmed, true)
+                ->Replace("%validator_field_passwordConfirmed%", $i18N->getLanguage(ELanguageText::validator_field_passwordConfirmed))
+                ->toString(),
+            'unique' => $i18N->getLanguage(ELanguageText::validator_unique),
+        ];
+        $atters=[
+            'username' => $i18N->getLanguage(ELanguageText::validator_field_username),
+            'email'    => $i18N->getLanguage(ELanguageText::validator_field_email),
+            'password' => $i18N->getLanguage(ELanguageText::validator_field_password),
+            'phone'    => $i18N->getLanguage(ELanguageText::validator_field_phone),
+        ];
+
+        try {
+            $validator = Validator::make($request->all(), $rules, $customMessages, $atters);
+            $validate = $validator->validate();
+        } catch (ValidationException $e) {
+            Log::info($request->ip().": ".PHP_EOL."    ValidationException=".$e->getMessage().",".PHP_EOL."    Request(Json)=".Json::encode($request->all()));
+        }
 
         if (!empty($validate)) {
             $user = $this->create($validate);
@@ -72,7 +103,7 @@ class MemberController extends Controller
             Log::info($user->username.": registered");
             return redirect(route("home"));
         }
-        return redirect('register');
+        return redirect('register')->withErrors($validator->errors())->withInput();
     }
 
     protected function create(array $data)

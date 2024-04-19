@@ -11,7 +11,7 @@
         let value = el.value;
         let formData = new FormData();
         formData.append('lang', value);
-        fetch('/language', {
+        fetch('language', {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': "{{csrf_token()}}"  // Laravel CSRF token

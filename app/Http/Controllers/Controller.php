@@ -48,10 +48,10 @@ class Controller extends BaseController
             $router = array_filter($pathParts);
         }
         $lang = $request->cookie('lang', ELanguageCode::en_US->name);
-        //debugbar()->info($lang);
+        debugbar()->info($lang);
         $i18N = new I18N(ELanguageCode::valueof($lang), limitMode: [ELanguageCode::zh_TW, ELanguageCode::zh_CN, ELanguageCode::en_US, ELanguageCode::en_GB]);
-        //debugbar()->info($i18N->getLanguageCode()->name);
+        debugbar()->info($i18N->getLanguageCode()->name);
         $i18N->setLanguageCode($i18N->getLanguageCode());
-        return ['router' => $router, 'i18N' => $i18N, ...$params, 'request' => $request];
+        return ['router' => $router, 'i18N' => $i18N, ...$params];
     }
 }

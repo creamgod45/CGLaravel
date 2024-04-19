@@ -152,3 +152,16 @@ welcome_description: 'We provide professional services if you need them!!'
 welcome_title_tooltip: 'Network Center Service Provider'
 welcome_test: 'testText %test%'
 welcome_test_placeholder: 'placeholder here'
+validator_field_username: Account
+validator_field_email: Email
+validator_field_password: Password
+validator_field_passwordConfirmed: 'Confirm Password'
+validator_field_phone: Phone
+validator_required: 'The :attribute field is required.'
+validator_string: 'The :attribute field must be a string.'
+validator_min: 'The :attribute field must be at least :min characters.'
+validator_max: 'The :attribute field must be at most :max characters.'
+validator_confirmed: 'The :attribute and %validator_field_passwordConfirmed% does not match.'
+validator_unique: 'The :attribute has already used.'
+register_title: Register
+register_btn: Submit

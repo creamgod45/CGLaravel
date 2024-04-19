@@ -16,10 +16,10 @@
                 flex: 0 0 auto;
             }
             label{
-                @apply w-[25%] text-right columns-10;
+                @apply w-[40%] text-right columns-10;
             }
             input{
-                @apply w-[75%] bg-white text-black outline-none p-2;
+                @apply w-[60%] bg-white text-black outline-none p-2;
             }
         }
         .button{

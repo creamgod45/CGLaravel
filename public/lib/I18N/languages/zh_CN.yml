@@ -141,14 +141,27 @@ zu_ZA: 祖鲁语（南非）
 placeholder_memberHelloText: '嗨啰, %name%!'
 menu_frontpage: 首页
 menu_product: 产品
-menu_information: 信息
-menu_cloudComputing: 云端计算
+menu_information: 资讯
+menu_cloudComputing: 云端运算
 menu_facebook: Facebook
 menu_googleCloud: 'Google Cloud'
 menu_aws: AWS
 menu_MicrosoftAzure: 'Microsoft Azure'
 welcome_title: 'CGCenter %NCSP%'
-welcome_description: 开始您的数位转型之旅
 welcome_title_tooltip: 网路中心服务商
-welcome_test: 'testText %test%'
-welcome_test_placeholder: 'placeholder here'
+welcome_description: 开始您的数位转型之旅
+welcome_test: '测试文字 %test%'
+welcome_test_placeholder: 占位符这里
+validator_field_username: 帐号
+validator_field_email: 信箱
+validator_field_password: 密码
+validator_field_passwordConfirmed: 确认密码
+validator_field_phone: 手机
+validator_required: ':attribute 栏位是必需提填写的。 '
+validator_string: ':attribute 栏位必须是字串。 '
+validator_min: ':attribute 栏位必须至少包含 :min 个字元。 '
+validator_max: ':attribute 栏位最多只能有 :max 个字元。 '
+validator_confirmed: ':attribute 和 %validator_field_passwordConfirmed% 不相同。'
+validator_unique: ':attribute 已经被使用了'
+register_title: 注册
+register_btn: 送出
