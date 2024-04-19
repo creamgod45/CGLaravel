@@ -1,9 +1,10 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Utils\Htmlv2)
+@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Permission\cases\AdministratorPermission;use App\Lib\Utils\Htmlv2;use Illuminate\Support\Facades\Log)
 @php
     /***
      * @var string[] $router \
      * @var I18N $i18N
+     * @var \Illuminate\Support\Facades\Request $request
      */
     $menu=true;
     $footer=true;
@@ -11,13 +12,16 @@
 @extends('layouts.default')
 @section('title', '首頁')
 @section('content')
+    @auth
+        {{debugbar()->info($request->user()->permissions)}}
+    @endauth
     <div class="home">
         <div class="banner lazy-loaded-image" data-src="{{asset("assets/images/welcome_banner1.jpg")}}">
             <div class="row">
                 <div class="col left">
                     <div class="box">
                         <div class="title">
-                            <?= $i18N->getLanguage(ELanguageText::welcome_title, true)
+                                <?= $i18N->getLanguage(ELanguageText::welcome_title, true)
                                 ->Replace("%NCSP%",
                                     (new Htmlv2("span"))
                                         ->close(true)
@@ -31,8 +35,7 @@
                                         )
                                         ->build()
                                 )
-                                ->toString() ?>
-                        </div>
+                                ->toString() ?></div>
                         <div class="description">{{$i18N->getLanguage(ELanguageText::welcome_description)}}</div>
                     </div>
                 </div>
@@ -62,6 +65,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="asset2">
+
             </div>
             <div class="asset1 lazy-loaded-image"
                  data-src="{{asset("assets/images/welcome_banner2_programming.svg")}}"></div>

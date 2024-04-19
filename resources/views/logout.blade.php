@@ -17,4 +17,7 @@
             <div class="context">已經登出三秒後跳轉頁面!!</div>
         </div>
     </div>
+    <script>
+        setTimeout(()=>location.assign("/login"), 3000);
+    </script>
 @endsection

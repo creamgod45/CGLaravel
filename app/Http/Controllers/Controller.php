@@ -52,6 +52,6 @@ class Controller extends BaseController
         $i18N = new I18N(ELanguageCode::valueof($lang), limitMode: [ELanguageCode::zh_TW, ELanguageCode::zh_CN, ELanguageCode::en_US, ELanguageCode::en_GB]);
         //debugbar()->info($i18N->getLanguageCode()->name);
         $i18N->setLanguageCode($i18N->getLanguageCode());
-        return ['router' => $router, 'i18N' => $i18N, ...$params];
+        return ['router' => $router, 'i18N' => $i18N, ...$params, 'request' => $request];
     }
 }

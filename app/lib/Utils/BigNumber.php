@@ -87,8 +87,8 @@ class BigNumber
     }
 
     public function cbrt() {
-        $quotient = gmp_($this->value);
-        return new BigNumber($quotient);
+        //$quotient = gmp_($this->value);
+        //return new BigNumber($quotient);
     }
 
 }

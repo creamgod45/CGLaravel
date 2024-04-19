@@ -52,9 +52,16 @@ class PermissionManager
         /**
          * @var Permission[] $permissions
          */
+        //debugbar()->info($permissions);
+        $permission->setSubPermission([]);
+        $arr[$permission->getName()] = $permission;
         foreach ($permissions as $p) {
-            $p->setSubPermission([]);
-            $arr [$p->getName()] = $p;
+            if($p->getName() !== $permission->getName()) {
+                $p->setSubPermission([]);
+                $p->setPage($permissions[$permission->getName()]->getPage());
+                $p->setDescription($permissions[$permission->getName()]->getDescription(). "_" . $p->getDescription());
+                $arr [$p->getName()] = $p;
+            }
         }
         return $arr;
     }

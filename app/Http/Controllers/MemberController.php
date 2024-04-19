@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\I18N;
+use App\Lib\Permission\cases\AdministratorPermission;
 use App\Lib\Utils\Utils;
 use App\Models\Member;
 use App\Http\Requests\StoreMemberRequest;
@@ -38,13 +39,13 @@ class MemberController extends Controller
             Log::info($user->username.": logined");
             return redirect('members');
         }
-        return '登入失敗';
+        return redirect(route('login'));
     }
 
     public function logout(Request $request)
     {
+        Log::info($request->user()["username"].": logout");
         Auth::logout();
-        Utils::goto_page(['/login', 3]);
         return view('logout', $this::baseControllerInit($request));
     }
 
