@@ -8,17 +8,75 @@
             height: calc(100vh - 72px);
 
             .row {
-                backdrop-filter: blur(10px);
-                @apply absolute w-full h-full text-white left-0 top-0 grid xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 grid-cols-1;
-
+                @apply absolute flex-auto1 w-full h-full text-white left-0 top-0 grid xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 grid-cols-1;
                 .left {
                     @apply flex justify-center items-center;
                     .title {
-                        @apply xs:text-2xl sm:text-2xl md:text-2xl lg:text-4xl text-nowrap w-full text-center;
+                        @apply text-white xs:text-2xl sm:text-2xl md:text-2xl lg:text-4xl text-nowrap w-full text-center;
                     }
 
                     .description {
-                        @apply mt-5 text-center w-full text-center;
+                        @apply mt-5 text-center w-full;
+                    }
+                }
+                .right{
+                    @apply relative flex justify-center items-center;
+                    .card{
+                        width: 100%;
+                        height: 500px;
+                        //backdrop-filter: blur(10px);
+                        //background-color: rgba(15, 195, 202, 0.39);
+                        @apply px-4 py-2 rounded-4xl absolute bottom-0;
+                        .item-frame{
+                            @apply bg-no-repeat bg-contain;
+                            width: 100%;
+                            height: 100%;
+                            .item{
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .service{
+            @apply relative w-full h-[80vh] pt-32;
+            background-size: 90%;
+            background-color: #d7f5fd;
+            .asset1{
+                @apply scale-50 sm:scale-75 transform-gpu xs:bottom-0 right-0 xs:scale-50 absolute sm:bottom-10 z-[1] bg-contain bg-no-repeat overflow-hidden flex;
+                width: 880px;
+                min-width: 0;
+                height: 576px;
+                min-height: 0;
+            }
+            .cards-flex{
+                @apply z-[2] pb-32 space-x-10 flex h-full max-w-full overflow-x-hidden hover:overflow-x-auto;
+                scrollbar-color: #1aeeef transparent;
+
+                .card{
+                    --tw-border-opacity: 0.5;
+                    @apply z-[2] backdrop-blur-[10px] px-4 py-4 block h-full min-w-[300px] w-[300px] border-solid shadow-2xl border-cyan-400 border-2 text-transparent hover:bg-cyan-400  hover:border-cyan-200 hover:text-black;
+
+                    .inner{
+                        .title{
+                            @apply text-xl;
+                        }
+                        .description{}
+                        ul{
+                            padding-left: 20px;
+                            li{
+                                @apply text-lg;
+                                list-style: circle;
+                            }
+                        }
+                    }
+
+                    &:first-child{
+                        @apply ms-32 xs:ms-auto sm:ms-32;
+                    }
+                    &:last-child{
+                        @apply me-32 xs:me-auto sm:me-32;
                     }
                 }
             }

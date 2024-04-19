@@ -2,12 +2,11 @@
 * {
   //scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: #000000 #58acbd;
+  scrollbar-color: #000000 transparent;
 }
 
 /* Chrome, Edge and Safari */
 *::-webkit-scrollbar {
-  display: block;
   width: 8px;
   height: 8px;
 }

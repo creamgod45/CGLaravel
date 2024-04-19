@@ -4,12 +4,11 @@
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #000000 #58acbd;
+  scrollbar-color: #000000 transparent;
 }
 
 /* Chrome, Edge and Safari */
 *::-webkit-scrollbar {
-  display: block;
   width: 8px;
   height: 8px;
 }
@@ -241,17 +240,65 @@
   height: calc(100vh - 72px);
 }
 .container1 .home .banner .row {
-  backdrop-filter: blur(10px);
-  @apply absolute w-full h-full text-white left-0 top-0 grid xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 grid-cols-1;
+  @apply absolute flex-auto1 w-full h-full text-white left-0 top-0 grid xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 grid-cols-1;
 }
 .container1 .home .banner .row .left {
   @apply flex justify-center items-center;
 }
 .container1 .home .banner .row .left .title {
-  @apply xs:text-2xl sm:text-2xl md:text-2xl lg:text-4xl text-nowrap w-full text-center;
+  @apply text-white xs:text-2xl sm:text-2xl md:text-2xl lg:text-4xl text-nowrap w-full text-center;
 }
 .container1 .home .banner .row .left .description {
-  @apply mt-5 text-center w-full text-center;
+  @apply mt-5 text-center w-full;
+}
+.container1 .home .banner .row .right {
+  @apply relative flex justify-center items-center;
+}
+.container1 .home .banner .row .right .card {
+  width: 100%;
+  height: 500px;
+  @apply px-4 py-2 rounded-4xl absolute bottom-0;
+}
+.container1 .home .banner .row .right .card .item-frame {
+  @apply bg-no-repeat bg-contain;
+  width: 100%;
+  height: 100%;
+}
+.container1 .home .service {
+  @apply relative w-full h-[80vh] pt-32;
+  background-size: 90%;
+  background-color: #d7f5fd;
+}
+.container1 .home .service .asset1 {
+  @apply scale-50 sm:scale-75 transform-gpu xs:bottom-0 right-0 xs:scale-50 absolute sm:bottom-10 z-[1] bg-contain bg-no-repeat overflow-hidden flex;
+  width: 880px;
+  min-width: 0;
+  height: 576px;
+  min-height: 0;
+}
+.container1 .home .service .cards-flex {
+  @apply z-[2] pb-32 space-x-10 flex h-full max-w-full overflow-x-hidden hover:overflow-x-auto;
+  scrollbar-color: #1aeeef transparent;
+}
+.container1 .home .service .cards-flex .card {
+  --tw-border-opacity: 0.5;
+  @apply z-[2] backdrop-blur-[10px] px-4 py-4 block h-full min-w-[300px] w-[300px] border-solid shadow-2xl border-cyan-400 border-2 text-transparent hover:bg-cyan-400  hover:border-cyan-200 hover:text-black;
+}
+.container1 .home .service .cards-flex .card .inner .title {
+  @apply text-xl;
+}
+.container1 .home .service .cards-flex .card .inner ul {
+  padding-left: 20px;
+}
+.container1 .home .service .cards-flex .card .inner ul li {
+  @apply text-lg;
+  list-style: circle;
+}
+.container1 .home .service .cards-flex .card:first-child {
+  @apply ms-32 xs:ms-auto sm:ms-32;
+}
+.container1 .home .service .cards-flex .card:last-child {
+  @apply me-32 xs:me-auto sm:me-32;
 }
 
 .notification {
@@ -270,6 +317,75 @@
   @apply absolute -top-4 -right-4 size-8 bg-red-400 hover:bg-red-300 text-white flex justify-center items-center rounded-4xl cursor-pointer;
 }
 
+.tooltip-gen {
+  @apply relative text-orange-600 cursor-help;
+  transition: 0.3s all;
+  box-sizing: border-box;
+  line-height: 1.3px;
+}
+.tooltip-gen:hover:after {
+  width: 100%;
+}
+.tooltip-gen:hover:before {
+  width: 100%;
+}
+.tooltip-gen:before {
+  @apply bg-orange-600;
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 0;
+  top: 0;
+  height: 3px;
+  transition: 0.3s all;
+  background: repeating-linear-gradient(-45deg, rgb(234, 88, 12) 0, rgb(234, 88, 12) 25%, transparent 0, transparent 50%) 0/0.6em 0.6em;
+}
+.tooltip-gen:after {
+  @apply bg-orange-600;
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 0;
+  bottom: 0;
+  height: 3px;
+  transition: 0.3s all;
+  background: repeating-linear-gradient(-45deg, rgb(234, 88, 12) 0, rgb(234, 88, 12) 25%, transparent 0, transparent 50%) 0/0.6em 0.6em;
+}
+.tooltip-gen:hover .tooltip {
+  @apply block;
+}
+.tooltip-gen .tooltip-top::after {
+  @apply border-l-neutral-800;
+  z-index: 20;
+  content: "";
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: rgb(38, 38, 38);
+  position: absolute;
+  bottom: -20px;
+  left: calc(100% - 24px);
+}
+.tooltip-gen .tooltip-left {
+  top: 0;
+}
+.tooltip-gen .tooltip-left::after {
+  @apply border-l-neutral-800;
+  z-index: 20;
+  content: "";
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-left-color: rgb(38, 38, 38);
+  position: absolute;
+  top: 7px;
+  right: -2px;
+}
+.tooltip-gen .tooltip {
+  @apply whitespace-pre-line shadow-lg absolute text-xl xs:text-sm sm:text-lg md:text-lg lg:text-lg hidden bg-neutral-800 px-2 py-1 text-white p-2 rounded;
+  box-shadow: 0 5px 1rem 5px rgba(255, 255, 255, 0.33) !important;
+}
+
 body {
   @apply relative;
 }
@@ -277,13 +393,19 @@ body .container1 {
   @apply mt-[72px];
 }
 body footer {
-  @apply absolute z-20 text-white bottom-0 left-0 flex items-center justify-center w-full;
+  @apply z-20 text-black flex items-center justify-center w-full;
 }
 body footer a {
   @apply text-blue-500;
 }
 body footer a:hover {
   @apply text-blue-400;
+}
+body footer .row {
+  @apply flex flex-row flex-wrap space-x-0 w-full;
+}
+body footer .row .col {
+  @apply flex-auto1 footer:w-1/2 sm:w-full flex justify-center items-center;
 }
 body footer .laravel {
   color: #f4382e;

@@ -19,7 +19,10 @@ class DictionaryMap
         $i->setLanguage(ELanguageText::menu_aws, "AWS");
         $i->setLanguage(ELanguageText::menu_MicrosoftAzure, "Microsoft Azure");
         $i->setLanguage(ELanguageText::menu_facebook, "Facebook");
-        $i->setLanguage(ELanguageText::welcome_title, "CGCenter Network Center Service Provider");
-        $i->setLanguage(ELanguageText::welcome_description, "We provide professional services if you need them!!");
+        $i->setLanguage(ELanguageText::welcome_title_tooltip, "Network Center Service Provider");
+        $i->setLanguage(ELanguageText::welcome_title, "CGCenter %NCSP%");
+        $i->setLanguage(ELanguageText::welcome_description, "Start your digital transformation journey");
+        $i->setLanguage(ELanguageText::welcome_test, "testText %test%");
+        $i->setLanguage(ELanguageText::welcome_test_placeholder, "placeholder here");
     }
 }

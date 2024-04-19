@@ -7,23 +7,33 @@
 @import "register";
 @import "home";
 @import "notification";
-body{
+@import "tooltip";
+body {
     @apply relative;
 
-    .container1{
+    .container1 {
         @apply mt-[72px];
     }
-    footer{
-        @apply absolute z-20 text-white bottom-0 left-0 flex items-center justify-center w-full;
+
+    footer {
+        @apply z-20 text-black flex items-center justify-center w-full;
         a {
             @apply text-blue-500;
-            &:hover{
+            &:hover {
                 @apply text-blue-400;
             }
         }
-        .laravel{
+        .row{
+            @apply flex flex-row flex-wrap space-x-0 w-full;
+            .col{
+                @apply flex-auto1 footer:w-1/2 sm:w-full flex justify-center items-center;
+            }
+        }
+
+        .laravel {
             color: #f4382e;
-            &:hover{
+
+            &:hover {
                 color: #ea807b;
             }
         }

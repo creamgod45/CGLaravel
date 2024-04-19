@@ -17,7 +17,10 @@ enum ELanguageText
     case menu_MicrosoftAzure;
     case menu_facebook;
     case welcome_title;
+    case welcome_title_tooltip;
     case welcome_description;
+    case welcome_test;
+    case welcome_test_placeholder;
     case HelloWorld;
     case af_ZA;     // 南非荷兰语（南非）
     case am_ET;     // 阿姆哈拉语（埃塞俄比亚）

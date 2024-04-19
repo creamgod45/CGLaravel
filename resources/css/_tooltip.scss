@@ -1,0 +1,87 @@
+.tooltip-gen {
+    @apply relative text-orange-600 cursor-help;
+    transition: .3s all;
+    box-sizing: border-box;
+    line-height: 1.3px;
+
+    &:hover:after {
+        width: 100%;
+    }
+    &:hover:before {
+        width: 100%;
+    }
+
+    //&:before {
+    //    content: "";
+    //    position: absolute;
+    //    right: 0;
+    //    width: 100%;
+    //    bottom: 0;
+    //    height: 4px;
+    //    background-color: #505050;
+    //    transition: .3s all;
+    //}
+    &:before {
+        @apply bg-orange-600;
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 0;
+        top: 0;
+        height: 3px;
+        transition: .3s all;
+        background: repeating-linear-gradient(-45deg, rgba(234, 88, 12, 1) 0, rgba(234, 88, 12, 1) 25%, transparent 0, transparent 50%) 0 / .6em .6em;
+    }
+    &:after {
+        @apply bg-orange-600;
+        content: "";
+        position: absolute;
+        right: 0;
+        width: 0;
+        bottom: 0;
+        height: 3px;
+        transition: .3s all;
+        background: repeating-linear-gradient(-45deg, rgba(234, 88, 12, 1) 0, rgba(234, 88, 12, 1) 25%, transparent 0, transparent 50%) 0 / .6em .6em;
+    }
+
+    &:hover .tooltip {
+        @apply block;
+    }
+
+    .tooltip-top {
+        &::after {
+            @apply border-l-neutral-800;
+            z-index: 20;
+            content: '';
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-top-color: rgb(38, 38, 38);
+            position: absolute;
+            bottom: -20px;
+            left: calc(100% - 24px);
+        }
+    }
+
+    .tooltip-left {
+        top: 0;
+
+        &::after {
+            @apply border-l-neutral-800;
+            z-index: 20;
+            content: '';
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-left-color: rgb(38, 38, 38);
+            position: absolute;
+            top: 7px;
+            right: -2px;
+        }
+    }
+
+    .tooltip {
+        @apply whitespace-pre-line shadow-lg absolute text-xl xs:text-sm sm:text-lg md:text-lg lg:text-lg hidden bg-neutral-800 px-2 py-1 text-white p-2 rounded;
+        box-shadow: 0 5px 1rem 5px rgba(255, 255, 255, 0.33) !important;
+    }
+}

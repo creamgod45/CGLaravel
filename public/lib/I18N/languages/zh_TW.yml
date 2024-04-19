@@ -142,10 +142,13 @@ placeholder_memberHelloText: '嗨囉, %name%!'
 menu_frontpage: 首頁
 menu_product: 產品
 menu_information: 資訊
-menu_cloudComputing: 雲端計算
+menu_cloudComputing: 雲端運算
 menu_facebook: Facebook
 menu_googleCloud: 'Google Cloud'
 menu_aws: AWS
 menu_MicrosoftAzure: 'Microsoft Azure'
-welcome_title: 'CGCenter 網路中心服務商'
-welcome_description: '你有需求我們提供專業服務!!'
+welcome_title: 'CGCenter %NCSP%'
+welcome_title_tooltip: 網路中心服務商
+welcome_description: 開始您的數位轉型之旅
+welcome_test: '測試文字 %test%'
+welcome_test_placeholder: '佔位符 在這裡'

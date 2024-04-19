@@ -16,8 +16,7 @@
             <div class="row">
                 <div class="col left">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::welcome_title)}}</div>
-                    <div
-                        class="description">{{$i18N->getLanguage(ELanguageText::placeholder_memberHelloText, true)->Replace("%name%", $user['username'])->toString()}}</div>
+                    <div class="description">{{$i18N->getLanguage(ELanguageText::placeholder_memberHelloText, true)->Replace("%name%", $user['username'])->toString()}}</div>
                 </div>
                 <div class="col right"></div>
             </div>
