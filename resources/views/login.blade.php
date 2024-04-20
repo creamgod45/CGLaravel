@@ -1,5 +1,5 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-@use (App\Lib\I18N\I18N)
+@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N)
 @php
     /***
      * @var string[] $router \
@@ -9,22 +9,22 @@
     $footer=true;
 @endphp
 @extends('layouts.default')
-@section('title', '登入')
+@section('title', $i18N->getLanguage(ELanguageText::login_title))
 @section('content')
     <div class="register-frame">
         <form class="register" method="POST" action="{{ route('login') }}">
             @csrf
-            <div class="title">登入</div>
+            <div class="title">{{$i18N->getLanguage(ELanguageText::login_title)}}</div>
             <div class="row">
-                <label class="col">帳號</label>
-                <input class="col" type="text" name="username" required>
+                <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_username)}}</label>
+                <input class="col" type="text" name="username" value="{{old('username')}}" required>
             </div>
             <div class="row">
-                <label class="col">密碼</label>
+                <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_password)}}</label>
                 <input class="col" type="password" name="password" required>
             </div>
             <div class="button">
-                <button type="submit">登入</button>
+                <button type="submit">{{$i18N->getLanguage(ELanguageText::login_btn)}}</button>
             </div>
             @if ($errors->any())
                 <div class="alert alert-danger">

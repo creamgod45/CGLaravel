@@ -165,3 +165,8 @@ validator_confirmed: 'The :attribute and %validator_field_passwordConfirmed% doe
 validator_unique: 'The :attribute has already used.'
 register_title: Register
 register_btn: Submit
+login_title: Login
+login_btn: Submit
+login_faild: 'Login Faild. Maybe is wrong %validator_field_username% or %validator_field_password%'
+logout_title: Logout
+logout_context: 'The page will redirect after %s% seconds after logging out!!Click to go'

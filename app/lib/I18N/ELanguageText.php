@@ -34,6 +34,11 @@ enum ELanguageText
     case validator_unique;
     case register_title;
     case register_btn;
+    case login_title;
+    case login_btn;
+    case login_faild;
+    case logout_title;
+    case logout_context;
     case HelloWorld;
     case af_ZA;     // 南非荷兰语（南非）
     case am_ET;     // 阿姆哈拉语（埃塞俄比亚）

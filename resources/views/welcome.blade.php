@@ -10,7 +10,7 @@
     $footer=true;
 @endphp
 @extends('layouts.default')
-@section('title', '首頁')
+@section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
 @section('content')
     @auth
         {{debugbar()->info($request->user()->permissions)}}

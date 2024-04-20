@@ -141,7 +141,7 @@ zu_ZA: 祖鲁语（南非）
 placeholder_memberHelloText: '嗨啰, %name%!'
 menu_frontpage: 首页
 menu_product: 产品
-menu_information: 资讯
+menu_information: 信息
 menu_cloudComputing: 云端运算
 menu_facebook: Facebook
 menu_googleCloud: 'Google Cloud'
@@ -163,5 +163,10 @@ validator_min: ':attribute 栏位必须至少包含 :min 个字元。 '
 validator_max: ':attribute 栏位最多只能有 :max 个字元。 '
 validator_confirmed: ':attribute 和 %validator_field_passwordConfirmed% 不相同。'
 validator_unique: ':attribute 已经被使用了'
-register_title: 注册
+register_title: 注册会员
 register_btn: 送出
+login_title: 登入会员
+login_btn: 送出
+login_faild: '登入失败。 %validator_field_username% 或 %validator_field_password% 其中一个可能是错误'
+logout_title: 登出
+logout_context: 已经登出三秒后跳转页面!!点击前往

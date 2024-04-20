@@ -11,6 +11,37 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|static query()
+ * @method static static make(array $attributes = [])
+ * @method static static create(array $attributes = [])
+ * @method static static forceCreate(array $attributes)
+ * @method \App\Models\Member firstOrNew(array $attributes = [], array $values = [])
+ * @method \App\Models\Member firstOrFail($columns = ['*'])
+ * @method \App\Models\Member firstOrCreate(array $attributes, array $values = [])
+ * @method \App\Models\Member firstOr($columns = ['*'], \Closure $callback = null)
+ * @method \App\Models\Member firstWhere($column, $operator = null, $value = null, $boolean = 'and')
+ * @method \App\Models\Member updateOrCreate(array $attributes, array $values = [])
+ * @method null|static first($columns = ['*'])
+ * @method static static findOrFail($id, $columns = ['*'])
+ * @method static static findOrNew($id, $columns = ['*'])
+ * @method static null|static find($id, $columns = ['*'])
+ *
+ * @property-read int $id
+ *
+ * @property string $username
+ * @property string $email
+ * @property string $password
+ * @property string $phone
+ * @property string $enable
+ * @property string $administrator
+ * @property string $remember_token
+ *
+ * @property-read \Illuminate\Support\Carbon $created_at
+ * @property-read \Illuminate\Support\Carbon $updated_at
+ */
 class Member extends Authenticatable
 {
     protected $table = 'members'; // 指定模型对应的表
@@ -19,7 +50,7 @@ class Member extends Authenticatable
     protected $keyType = 'int'; // 主键类型
 
     protected $fillable = [
-        'username', 'email', 'password', 'phone', 'enable', 'administrator', 'remember_token'
+        'username', 'email', 'password', 'phone', 'enable', 'administrator'
     ]; // 允许批量赋值的字段
 
     protected $hidden = [

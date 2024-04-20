@@ -37,5 +37,10 @@ class DictionaryMap
         $i->setLanguagev2(ELanguageText::validator_unique, "The :attribute has already used.");
         $i->setLanguagev2(ELanguageText::register_title, "Register");
         $i->setLanguagev2(ELanguageText::register_btn, "Submit");
+        $i->setLanguagev2(ELanguageText::login_title, "Login");
+        $i->setLanguagev2(ELanguageText::login_btn, "Submit");
+        $i->setLanguagev2(ELanguageText::login_faild, "Login Faild. Maybe is wrong %validator_field_username% or %validator_field_password%");
+        $i->setLanguagev2(ELanguageText::logout_title, "Logout");
+        $i->setLanguagev2(ELanguageText::logout_context, "The page will redirect after %s% seconds logging out!!Click to go");
     }
 }

@@ -9,7 +9,7 @@
     $footer=true;
 @endphp
 @extends('layouts.default')
-@section('title', '首頁')
+@section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
 @section('content')
     <div class="home">
         <div class="banner lazy-loaded-image" data-src="{{asset("assets/images/welcome_banner1.jpg")}}">
