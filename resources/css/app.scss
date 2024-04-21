@@ -8,6 +8,10 @@
 @import "home";
 @import "notification";
 @import "tooltip";
+@import "alert";
+@import "pagination";
+@import "table";
+
 body {
     @apply relative;
 
@@ -16,7 +20,7 @@ body {
     }
 
     footer {
-        @apply z-20 text-black flex items-center justify-center w-full;
+        @apply z-10 text-black flex items-center justify-center w-full;
         a {
             @apply text-blue-500;
             &:hover {

@@ -16,4 +16,9 @@ class Utilsv2
         }
         return false;
     }
+
+    public static function getValidator()
+    {
+
+    }
 }

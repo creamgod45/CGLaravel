@@ -3,8 +3,12 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
+use App\Http\Requests\StoreMemberRequest;
+use App\Lib\I18N\ELanguageCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +30,11 @@ Route::post('lzstring.json', function (Request $request){
 });
 
 Route::post('language', function (Request $request){
-    $cookie = Cookie::make("lang", $request["lang"], 60);
-    return response()->json(['message' => 'Data received successfully'])->cookie($cookie);
+    if (ELanguageCode::isVaild($request['lang'])) {
+        $cookie = Cookie::make("lang", $request["lang"], 60);
+        return response()->json(['message' => 'Data received successfully'])->cookie($cookie);
+    }
+    return response()->json(['message' => 'Error'], ResponseHTTP::HTTP_BAD_REQUEST);
 });
 
 Route::middleware(EMiddleWareAliases::auth->name)->group(function () {

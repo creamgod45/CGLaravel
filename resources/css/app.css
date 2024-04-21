@@ -270,7 +270,7 @@
   background-color: #d7f5fd;
 }
 .container1 .home .service .asset1 {
-  @apply scale-50 sm:scale-75 transform-gpu xs:bottom-0 right-0 xs:scale-50 absolute sm:bottom-10 z-[1] bg-contain bg-no-repeat overflow-hidden flex;
+  @apply scale-50 sm:scale-75 transform-gpu xs:bottom-0 left-0 xs:scale-20 absolute sm:bottom-10 z-[1] bg-contain bg-no-repeat overflow-hidden flex;
   width: 880px;
   min-width: 0;
   height: 576px;
@@ -386,6 +386,76 @@
   box-shadow: 0 5px 1rem 5px rgba(255, 255, 255, 0.33) !important;
 }
 
+.alert {
+  @apply px-4 py-2 border-solid border-[1px] mt-3;
+}
+
+.alert-danger {
+  @apply border-red-500 text-red-500 font-bold;
+}
+
+.pagination-frame {
+  @apply pt-3 px-2 rounded-t-2xl bg-neutral-50 relative -top-4 z-10;
+}
+.pagination-frame .pagination {
+  @apply flex w-fit mt-3 ms-3;
+}
+.pagination-frame .pagination > div {
+  @apply border-r-2 border-solid border-black;
+}
+.pagination-frame .pagination > div:last-child {
+  @apply border-r-0;
+}
+.pagination-frame .pagination .previous {
+  @apply rounded-l-xl;
+}
+.pagination-frame .pagination .next {
+  @apply rounded-r-xl;
+}
+.pagination-frame .pagination .previous:not(.active), .pagination-frame .pagination .next:not(.active) {
+  @apply bg-neutral-500;
+}
+.pagination-frame .pagination .previous a, .pagination-frame .pagination .next a {
+  @apply px-4 py-2 text-lg flex justify-center items-center w-full h-full;
+}
+.pagination-frame .pagination .active {
+  @apply bg-emerald-400;
+}
+.pagination-frame .pagination .page-info {
+  @apply bg-white px-4 py-2;
+}
+.pagination-frame .pagination .item {
+  @apply bg-cyan-400 px-4 py-2 flex justify-center items-center;
+}
+
+.table {
+  @apply border-2 border-solid w-full;
+}
+.table thead {
+  @apply bg-neutral-900 text-white;
+}
+.table thead tr th {
+  @apply border-r-2 border-solid border-white cursor-pointer hover:bg-neutral-700;
+}
+.table thead tr th svg {
+  vertical-align: top;
+}
+
+.table-row-hover tbody tr:hover {
+  background: white !important;
+}
+
+.table-col-hover tbody tr th {
+  @apply hover:bg-white;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+  @apply bg-neutral-200;
+}
+.table-striped tbody tr:nth-child(even) {
+  @apply bg-neutral-300;
+}
+
 body {
   @apply relative;
 }
@@ -393,7 +463,7 @@ body .container1 {
   @apply mt-[72px];
 }
 body footer {
-  @apply z-20 text-black flex items-center justify-center w-full;
+  @apply z-10 text-black flex items-center justify-center w-full;
 }
 body footer a {
   @apply text-blue-500;

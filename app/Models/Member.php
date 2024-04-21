@@ -18,12 +18,12 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static static make(array $attributes = [])
  * @method static static create(array $attributes = [])
  * @method static static forceCreate(array $attributes)
- * @method \App\Models\Member firstOrNew(array $attributes = [], array $values = [])
- * @method \App\Models\Member firstOrFail($columns = ['*'])
- * @method \App\Models\Member firstOrCreate(array $attributes, array $values = [])
- * @method \App\Models\Member firstOr($columns = ['*'], \Closure $callback = null)
- * @method \App\Models\Member firstWhere($column, $operator = null, $value = null, $boolean = 'and')
- * @method \App\Models\Member updateOrCreate(array $attributes, array $values = [])
+ * @method Member firstOrNew(array $attributes = [], array $values = [])
+ * @method Member firstOrFail($columns = ['*'])
+ * @method Member firstOrCreate(array $attributes, array $values = [])
+ * @method Member firstOr($columns = ['*'], \Closure $callback = null)
+ * @method Member firstWhere($column, $operator = null, $value = null, $boolean = 'and')
+ * @method Member updateOrCreate(array $attributes, array $values = [])
  * @method null|static first($columns = ['*'])
  * @method static static findOrFail($id, $columns = ['*'])
  * @method static static findOrNew($id, $columns = ['*'])
@@ -44,13 +44,18 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class Member extends Authenticatable
 {
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * @var AdministratorPermission|mixed
+     */
     protected $table = 'members'; // 指定模型对应的表
     protected $primaryKey = 'id'; // 主键，Laravel 默认也是 id，此行可省略
     public $incrementing = true; // 因为 id 是自增的
     protected $keyType = 'int'; // 主键类型
 
     protected $fillable = [
-        'username', 'email', 'password', 'phone', 'enable', 'administrator'
+        'username', 'email', 'password', 'phone', 'enable', 'administrator', 'remember_token'
     ]; // 允许批量赋值的字段
 
     protected $hidden = [
@@ -58,19 +63,7 @@ class Member extends Authenticatable
     ];
 
     protected $casts = [
-        'enable' => 'boolean',
-        'administrator' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
-
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::creating(function ($member) {
-            $member->UUID = Utils::uid();
-        });
-    }
 }

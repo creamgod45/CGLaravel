@@ -44,7 +44,7 @@
             background-size: 90%;
             background-color: #d7f5fd;
             .asset1{
-                @apply scale-50 sm:scale-75 transform-gpu xs:bottom-0 right-0 xs:scale-50 absolute sm:bottom-10 z-[1] bg-contain bg-no-repeat overflow-hidden flex;
+                @apply scale-50 sm:scale-75 transform-gpu xs:bottom-0 left-0 xs:scale-20 absolute sm:bottom-10 z-[1] bg-contain bg-no-repeat overflow-hidden flex;
                 width: 880px;
                 min-width: 0;
                 height: 576px;

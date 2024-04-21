@@ -32,7 +32,7 @@ class I18N
      * @param bool $CompileMode 直接編譯模式(忽略沒有編譯過的詞條) Direct compilation mode (ignoring uncompiled entries)
      * @param ELanguageCode[] $limitMode 允許編譯的語言 Languages that allow compilation
      */
-    public function __construct(?ELanguageCode $languageCode = null, bool $CompileMode= false, array $limitMode=[])
+    public function __construct(?ELanguageCode $languageCode = ELanguageCode::en_US, bool $CompileMode= false, array $limitMode=[])
     {
         $this->ELanguageCodeList=$limitMode;
         $this->buildFirstLanguageFile($CompileMode, $limitMode);

@@ -14,7 +14,7 @@
     <div class="register-frame">
         <div class="login">
             <div class="title">{{$i18N->getLanguage(ELanguageText::logout_title)}}</div>
-            <a href="/login" class="context">{{$i18N->getLanguage(ELanguageText::logout_context)}}</a>
+            <a href="/login" class="context">{{$i18N->getLanguage(ELanguageText::logout_context, true)->Replace("%s%", 3)->toString()}}</a>
         </div>
     </div>
     <script>

@@ -147,6 +147,27 @@ menu_facebook: Facebook
 menu_googleCloud: 'Google Cloud'
 menu_aws: AWS
 menu_MicrosoftAzure: 'Microsoft Azure'
+menu_WebDesign: 網頁設計
+menu_PromotionalPage: 宣傳頁面
+menu_BrandingWebsite: 品牌網站
+menu_CMS: 'CMS 內容管理系統'
+menu_POS: 'POS 機器整合'
+menu_ClientCaseStudies: 客戶案例
+menu_VendorOperations: 廠商操作
+menu_SocialMedia: 社群媒體
+menu_X: X
+menu_Youtube: Youtube
+menu_Instagram: Instagram
+menu_resource: 資源
+menu_community: 社群
+menu_Partner: 合作夥伴
+menu_guide: 指導書
+menu_WIKI: WIKI
+menu_Privacy: 隱私權
+menu_language: 語言
+menu_tag_global: 全球
+menu_tag_Sustainable: 永續
+menu_membersBtn: 會員頁面
 welcome_title: 'CGCenter %NCSP%'
 welcome_title_tooltip: 網路中心服務商
 welcome_description: 開始您的數位轉型之旅
@@ -157,6 +178,8 @@ validator_field_email: 信箱
 validator_field_password: 密碼
 validator_field_passwordConfirmed: 確認密碼
 validator_field_phone: 手機
+validator_field_enable: 啟用
+validator_field_administrator: 管理員
 validator_required: ':attribute 欄位是必需提填寫的。'
 validator_string: ':attribute 欄位必須是字串。'
 validator_min: ':attribute 欄位必須至少包含 :min 個字元。'
@@ -170,3 +193,12 @@ login_btn: 送出
 login_faild: '登入失敗。 %validator_field_username% 或 %validator_field_password% 其中一個可能是錯誤'
 logout_title: 登出
 logout_context: 已經登出三秒後跳轉頁面!!點擊前往
+login_username_notfound: '登入失敗。 %validator_field_username% 不存在'
+pagination_firstPage: 首頁
+pagination_previous: 上一頁
+pagination_next: 下一頁
+pagination_lastPage: 尾頁
+pagination_CurrentPage: 當前頁數
+pagination_TotalPages: 總頁數
+notification_title: 目前版面製作中
+notification_description: 請稍待至完成頁面時光臨!!

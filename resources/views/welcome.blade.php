@@ -12,9 +12,11 @@
 @extends('layouts.default')
 @section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
 @section('content')
-    @auth
-        {{debugbar()->info($request->user()->permissions)}}
-    @endauth
+    @env('local')
+        @auth
+            {{debugbar()->info($request->user()->permissions)}}
+        @endauth
+    @endenv
     <div class="home">
         <div class="banner lazy-loaded-image" data-src="{{asset("assets/images/welcome_banner1.jpg")}}">
             <div class="row">
@@ -54,20 +56,6 @@
             </div>
         </div>
         <div class="service lazy-loaded-image" data-src="{{asset("assets/images/welcome_banner2.png")}}">
-            <div class="cards-flex">
-                <div class="card">
-                    <div class="inner">
-                        <div class="title">{{$i18N->getLanguage(ELanguageText::menu_cloudComputing)}}</div>
-                        <div class="description">
-                            <ul>
-                                <li>{{$i18N->getLanguage(ELanguageText::menu_googleCloud)}}</li>
-                                <li>{{$i18N->getLanguage(ELanguageText::menu_aws)}}</li>
-                                <li>{{$i18N->getLanguage(ELanguageText::menu_MicrosoftAzure)}}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="asset2">
 
             </div>
@@ -79,8 +67,8 @@
         <div id="A16H5A" class="item">
             <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
             <div class="context">
-                <div class="title">目前版面製作中</div>
-                <div class="description">請稍待至完成頁面時光臨!!</div>
+                <div class="title">{{$i18N->getLanguage(ELanguageText::notification_title)}}</div>
+                <div class="description">{{$i18N->getLanguage(ELanguageText::notification_description)}}</div>
             </div>
             <div class="close-btn" onclick="document.getElementById('A16H5A').remove()">&times;</div>
         </div>

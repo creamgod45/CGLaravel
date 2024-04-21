@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
+use App\Lib\Permission\cases\AdministratorPermission;
+use App\Lib\Utils\EValidatorType;
+use App\Lib\Utils\ValidatorBuilder;
 use App\Models\Member;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,7 +27,8 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $members = Member::all();
+        $members = Member::paginate(10);
+        //debugbar()->info($members);
         return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user]));
     }
 
@@ -37,27 +41,10 @@ class MemberController extends Controller
         $i18N = $baseControllerInit['i18N'];
         if(!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
         $data = $request->all();
-        $rules = [
-            'username' => [ 'required', 'string', 'max:255'],
-            'password' => [ 'required', 'string', 'min:8'],
-        ];
-        $customMessages = [
-            'required' => $i18N->getLanguage(ELanguageText::validator_required),
-            'string' => $i18N->getLanguage(ELanguageText::validator_string),
-            'min' => $i18N->getLanguage(ELanguageText::validator_min),
-            'max' => $i18N->getLanguage(ELanguageText::validator_max),
-            'confirmed' => $i18N->getLanguage(ELanguageText::validator_confirmed, true)
-                ->Replace("%validator_field_passwordConfirmed%", $i18N->getLanguage(ELanguageText::validator_field_passwordConfirmed))
-                ->toString()
-        ];
-        $atters=[
-            'username' => $i18N->getLanguage(ELanguageText::validator_field_username),
-            'password' => $i18N->getLanguage(ELanguageText::validator_field_password),
-        ];
-
+        $validatorBuilder = new ValidatorBuilder($i18N, EValidatorType::LOGIN);
 
         try {
-            $validator = Validator::make($data, $rules, $customMessages, $atters);
+            $validator = Validator::make($data, $validatorBuilder->getRules(), $validatorBuilder->getCustomMessages(), $validatorBuilder->getAtters());
             $validate = $validator->validate();
         } catch (ValidationException $e) {
             Log::info($request->ip().": ".PHP_EOL."    ValidationException=".$e->getMessage().",".PHP_EOL."    Request(Json)=".Json::encode($request->all()));
@@ -66,21 +53,28 @@ class MemberController extends Controller
             if(!$validator->fails()){
                 if (isset($validate)) {
                     $user = Member::where("username", $validate["username"])->first();
-                    if(Hash::check($validate["password"], $user["password"])){
-                        Log::info($user->username.": Logging in");
-                        Auth::login($user);
-                        Log::info($user->username.": logined");
-                        return redirect('members');
+                    if ($user !== null) {
+                        if(Hash::check($validate["password"], $user["password"])){
+                            Log::info($user->username.": Logging in");
+                            Auth::login($user);
+                            Log::info($user->username.": logined");
+                            return redirect('members');
+                        }else{
+                            // 自訂錯誤訊息
+                            $validator->errors()->add("login_faild",
+                                $i18N->getLanguage(ELanguageText::login_faild, true)
+                                    ->Replace("%validator_field_username%", $i18N->getLanguage(ELanguageText::validator_field_username))
+                                    ->Replace("%validator_field_password%", $i18N->getLanguage(ELanguageText::validator_field_password))
+                                    ->toString()
+                            );
+                            Log::info($request->ip().": ".PHP_EOL."    ValidationException=asd,".PHP_EOL."    Request(Json)=".Json::encode($request->all()));
+                        }
                     }else{
-                        // 自訂錯誤訊息
-                        $validator->errors()->add("login_faild",
-                            $i18N->getLanguage(ELanguageText::login_faild, true)
+                        $validator->errors()->add("login_username_notfound",
+                            $i18N->getLanguage(ELanguageText::login_username_notfound, true)
                                 ->Replace("%validator_field_username%", $i18N->getLanguage(ELanguageText::validator_field_username))
-                                ->Replace("%validator_field_password%", $i18N->getLanguage(ELanguageText::validator_field_password))
                                 ->toString()
                         );
-                        Log::info($request->ip().": ".PHP_EOL."    ValidationException=asd,".PHP_EOL."    Request(Json)=".Json::encode($request->all()));
-
                     }
                 }
             }
@@ -140,7 +134,14 @@ class MemberController extends Controller
         }
 
         if (!empty($validate)) {
-            $user = $this->create($validate);
+            $user = Member::create([
+                'username' => $validate['username'],
+                'email' => $validate['email'],
+                'phone' => $validate['phone'],
+                'password' => Hash::make($validate['password']),
+                'enable' => 'true',
+                'administrator' => 'false'
+            ]);
             // 可以在这里实现登录逻辑，或者重定向到登录页面
             Log::info($user->username.": registering");
             Auth::login($user);
@@ -148,18 +149,6 @@ class MemberController extends Controller
             return redirect(route("home"));
         }
         return redirect('register')->withErrors($validator->errors())->withInput();
-    }
-
-    protected function create(array $data)
-    {
-        return Member::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'password' => Hash::make($data['password']),
-            'enable' => 'true',
-            'administrator' => 'false'
-        ]);
     }
 }
 

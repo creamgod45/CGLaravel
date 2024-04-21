@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimalController;
 use App\Http\Middleware\EMiddleWareAliases;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -19,4 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(EMiddleWareAliases::auth->name)->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('animal', AnimalController::class);
 

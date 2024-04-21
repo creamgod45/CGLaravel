@@ -141,12 +141,33 @@ zu_ZA: 祖鲁语（南非）
 placeholder_memberHelloText: '嗨啰, %name%!'
 menu_frontpage: 首页
 menu_product: 产品
-menu_information: 信息
+menu_information: 资讯
 menu_cloudComputing: 云端运算
 menu_facebook: Facebook
 menu_googleCloud: 'Google Cloud'
 menu_aws: AWS
 menu_MicrosoftAzure: 'Microsoft Azure'
+menu_WebDesign: 网页设计
+menu_PromotionalPage: 宣传页面
+menu_BrandingWebsite: 品牌网站
+menu_CMS: 'CMS 内容管理系统'
+menu_POS: 'POS 机器整合'
+menu_ClientCaseStudies: 客户案例
+menu_VendorOperations: 厂商操作
+menu_SocialMedia: 社群媒体
+menu_X: X
+menu_Youtube: Youtube
+menu_Instagram: Instagram
+menu_resource: 资源
+menu_community: 社群
+menu_Partner: 合作伙伴
+menu_guide: 指导书
+menu_WIKI: WIKI
+menu_Privacy: 隐私权
+menu_language: 语言
+menu_tag_global: 全球
+menu_tag_Sustainable: 永续
+menu_membersBtn: 会员页面
 welcome_title: 'CGCenter %NCSP%'
 welcome_title_tooltip: 网路中心服务商
 welcome_description: 开始您的数位转型之旅
@@ -157,11 +178,13 @@ validator_field_email: 信箱
 validator_field_password: 密码
 validator_field_passwordConfirmed: 确认密码
 validator_field_phone: 手机
+validator_field_enable: 启用
+validator_field_administrator: 管理员
 validator_required: ':attribute 栏位是必需提填写的。 '
 validator_string: ':attribute 栏位必须是字串。 '
 validator_min: ':attribute 栏位必须至少包含 :min 个字元。 '
 validator_max: ':attribute 栏位最多只能有 :max 个字元。 '
-validator_confirmed: ':attribute 和 %validator_field_passwordConfirmed% 不相同。'
+validator_confirmed: ':attribute 和 %validator_field_passwordConfirmed% 不相同。 '
 validator_unique: ':attribute 已经被使用了'
 register_title: 注册会员
 register_btn: 送出
@@ -170,3 +193,12 @@ login_btn: 送出
 login_faild: '登入失败。 %validator_field_username% 或 %validator_field_password% 其中一个可能是错误'
 logout_title: 登出
 logout_context: 已经登出三秒后跳转页面!!点击前往
+login_username_notfound: '登入失败。 %validator_field_username% 不存在'
+pagination_firstPage: 首页
+pagination_previous: 上一页
+pagination_next: 下一页
+pagination_lastPage: 尾页
+pagination_CurrentPage: 当前页数
+pagination_TotalPages: 总页数
+notification_title: 目前版面制作中
+notification_description: 请稍待至完成页面时光临!!

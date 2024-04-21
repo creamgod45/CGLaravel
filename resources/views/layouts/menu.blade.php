@@ -59,49 +59,53 @@
                     </a>
                 </div>
                 <div class="item">
-                    <div class="title">網頁設計</div>
+                    <div class="title">{{$i18N->getLanguage(ELanguageText::menu_WebDesign)}}</div>
                     <a href="" class="menu-btn">
                         <i class="fa-regular fa-newspaper"></i>
-                        <span>&nbsp;宣傳頁面</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_PromotionalPage)}}</span>
                     </a>
                     <a href="" class="menu-btn">
                         <i class="fa-solid fa-shop"></i>
-                        <span>&nbsp;形象網頁</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_BrandingWebsite)}}</span>
                     </a>
                     <a href="" class="menu-btn">
                         <i class="fa-solid fa-server"></i>
-                        <span>&nbsp;CMS 內容管理平台</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_CMS)}}</span>
                     </a>
                     <a href="" class="menu-btn">
                         <i class="fa-solid fa-cash-register"></i>
-                        <span>&nbsp;POS 機器整合</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_POS)}}</span>
                     </a>
                 </div>
                 <div class="item">
-                    <div class="title">客戶案例</div>
-                    <a href="https://cgimager.blaetoan.cyou/index.php" class="menu-btn">
+                    <div class="title">{{$i18N->getLanguage(ELanguageText::menu_ClientCaseStudies)}}</div>
+                    <a href="https://cgimager.blaetoan.cyou/index.php" target="_blank" class="menu-btn">
                         <i class="fa-solid fa-shop"></i>
-                        <span>&nbsp;CGIMAGER</span>
+                        <span>&nbsp;CGIMAGER <i class="fa-solid fa-square-arrow-up-right"></i></span>
                     </a>
-                    <a href="https://cgphp01.blaetoan.cyou/" class="menu-btn">
+                    <a href="https://cgphp01.blaetoan.cyou/" target="_blank" class="menu-btn">
                         <i class="fa-solid fa-shop"></i>
-                        <span>&nbsp;串串幸福</span>
+                        <span>&nbsp;串串幸福 <i class="fa-solid fa-square-arrow-up-right"></i></span>
                     </a>
-                    <div class="title">廠商操作</div>
+                    <div class="title">{{$i18N->getLanguage(ELanguageText::menu_VendorOperations)}}</div>
                     @guest
                     <a href="/login" class="menu-btn">
                         <i class="fa-solid fa-shop"></i>
-                        <span>&nbsp;登入</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::login_title)}}</span>
                     </a>
                     <a href="/register" class="menu-btn">
                         <i class="fa-solid fa-shop"></i>
-                        <span>&nbsp;註冊</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::register_title)}}</span>
                     </a>
                     @endguest
                     @auth
+                        <a href="/members" class="menu-btn">
+                            <i class="fa-solid fa-shop"></i>
+                            <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_membersBtn)}}</span>
+                        </a>
                         <a href="/logout" class="menu-btn">
                             <i class="fa-solid fa-shop"></i>
-                            <span>&nbsp;登出</span>
+                            <span>&nbsp;{{$i18N->getLanguage(ELanguageText::logout_title)}}</span>
                         </a>
                     @endauth
                 </div>
@@ -112,21 +116,21 @@
         <div class="float-menu-panel-columns">
             <div class="menu columns-col">
                 <div class="item">
-                    <div class="title">社群媒體</div>
+                    <div class="title">{{$i18N->getLanguage(ELanguageText::menu_SocialMedia)}}</div>
                     <a href="" class="menu-btn"><i class="fa-brands fa-facebook"></i>
-                        <span>&nbsp;Facebook</span>
+                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_facebook)}}</span>
                     </a>
-                    <div class="menu-btn"><i class="fa-brands fa-x-twitter"></i><span>&nbsp;X</span></div>
-                    <div class="menu-btn"><i class="fa-brands fa-youtube"></i><span>&nbsp;Youtube</span></div>
-                    <div class="menu-btn"><i class="fa-brands fa-instagram"></i><span>&nbsp;Instagram</span></div>
+                    <div class="menu-btn"><i class="fa-brands fa-x-twitter"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_X)}}</span></div>
+                    <div class="menu-btn"><i class="fa-brands fa-youtube"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Youtube)}}</span></div>
+                    <div class="menu-btn"><i class="fa-brands fa-instagram"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Instagram)}}</span></div>
                 </div>
                 <div class="item">
-                    <div class="title">資源</div>
-                    <div class="menu-btn"><i class="fa-solid fa-users"></i><span>&nbsp;社群</span></div>
-                    <div class="menu-btn"><i class="fa-solid fa-globe"></i><span>&nbsp;合作夥伴</span></div>
-                    <div class="menu-btn"><i class="fa-solid fa-book-open"></i><span>&nbsp;教學</span></div>
-                    <div class="menu-btn"><i class="fa-brands fa-wikipedia-w"></i><span>&nbsp;WIKI</span></div>
-                    <div class="menu-btn"><i class="fa-solid fa-shield-halved"></i><span>&nbsp;隱私權</span></div>
+                    <div class="title">{{$i18N->getLanguage(ELanguageText::menu_resource)}}</div>
+                    <div class="menu-btn"><i class="fa-solid fa-users"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_community)}}</span></div>
+                    <div class="menu-btn"><i class="fa-solid fa-globe"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Partner)}}</span></div>
+                    <div class="menu-btn"><i class="fa-solid fa-book-open"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_guide)}}</span></div>
+                    <div class="menu-btn"><i class="fa-brands fa-wikipedia-w"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_WIKI)}}</span></div>
+                    <div class="menu-btn"><i class="fa-solid fa-shield-halved"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Privacy)}}</span></div>
                 </div>
             </div>
             <div class="columns-col news">
@@ -135,8 +139,8 @@
                          data-src="{{asset("assets/images/internationalization.webp")}}">
                     </div>
                     <div class="title">
-                        <i class="fa-solid fa-language"></i>&nbsp;語言
-                        <div class="tag">全球</div>
+                        <i class="fa-solid fa-language"></i>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_language)}}
+                        <div class="tag">{{$i18N->getLanguage(ELanguageText::menu_tag_global)}}</div>
                     </div>
                     <select aria-label="language select bar" onchange="changeLanguage(this);">
                         <option selected
@@ -163,7 +167,7 @@
                     </div>
                     <div class="timestamp">
                         {{Utils::timeStamp(time())}}
-                        <div class="tag">永續</div>
+                        <div class="tag">{{$i18N->getLanguage(ELanguageText::menu_tag_Sustainable)}}</div>
                     </div>
                     <div class="title">
                         勵志推廣舒適的環保環境

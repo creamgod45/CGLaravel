@@ -1,0 +1,32 @@
+.table{
+    @apply border-2 border-solid w-full;
+    thead{
+        @apply bg-neutral-900 text-white;
+        tr{
+            th{
+                @apply border-r-2 border-solid border-white cursor-pointer hover:bg-neutral-700;
+                svg{
+                    vertical-align: top;
+                }
+            }
+        }
+    }
+}
+.table-row-hover{
+    tbody tr:hover{
+        background: white !important;
+    }
+}
+.table-col-hover{
+    tbody tr th{
+        @apply hover:bg-white;
+    }
+}
+.table-striped{
+    tbody tr:nth-child(odd){
+        @apply bg-neutral-200;
+    }
+    tbody tr:nth-child(even){
+        @apply bg-neutral-300;
+    }
+}

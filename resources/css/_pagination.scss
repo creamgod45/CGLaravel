@@ -1,0 +1,37 @@
+.pagination-frame{
+    @apply pt-3 px-2 rounded-t-2xl bg-neutral-50 relative -top-4 z-10;
+    .pagination{
+        @apply flex w-fit mt-3 ms-3;
+
+        & > div{
+            @apply border-r-2 border-solid border-black;
+        }
+        & > div:last-child{
+            @apply border-r-0;
+        }
+
+        .previous{
+            @apply rounded-l-xl;
+        }
+        .next{
+            @apply rounded-r-xl;
+        }
+        .previous, .next{
+            &:not(.active){
+                @apply bg-neutral-500;
+            }
+            a{
+                @apply px-4 py-2 text-lg flex justify-center items-center w-full h-full;
+            }
+        }
+        .active{
+            @apply bg-emerald-400;
+        }
+        .page-info{
+            @apply bg-white px-4 py-2;
+        }
+        .item{
+            @apply bg-cyan-400 px-4 py-2 flex justify-center items-center;
+        }
+    }
+}
