@@ -1,3 +1,4 @@
+AddHandler application/x-httpd-php82 .php
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -18,4 +19,17 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    RewriteRule ^temp/ - [F,L]
+    RewriteRule ^vendor/ - [F,L]
+    RewriteRule ^storage/ - [F,L]
+    RewriteRule ^routes/ - [F,L]
+    RewriteRule ^resources/ - [F,L]
+    RewriteRule ^public/ - [F,L]
+    RewriteRule ^lib/ - [F,L]
+    RewriteRule ^database/ - [F,L]
+    RewriteRule ^config/ - [F,L]
+    RewriteRule ^build/ - [F,L]
+    RewriteRule ^bootstrap/ - [F,L]
+    RewriteRule ^assets/ - [F,L]
+    RewriteRule ^app/ - [F,L]
 </IfModule>

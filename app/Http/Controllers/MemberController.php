@@ -9,6 +9,8 @@ use App\Lib\Utils\EValidatorType;
 use App\Lib\Utils\ValidatorBuilder;
 use App\Models\Member;
 use Exception;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -142,9 +144,12 @@ class MemberController extends Controller
                 'enable' => 'true',
                 'administrator' => 'false'
             ]);
+
             // 可以在这里实现登录逻辑，或者重定向到登录页面
             Log::info($user->username.": registering");
-            Auth::login($user);
+
+            event(new Registered($user));
+
             Log::info($user->username.": registered");
             return redirect(route("home"));
         }

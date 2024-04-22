@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Lib\Permission\cases\AdministratorPermission;
 use App\Lib\Utils\Utils;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +43,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read \Illuminate\Support\Carbon $created_at
  * @property-read \Illuminate\Support\Carbon $updated_at
  */
-class Member extends Authenticatable
+class Member extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
