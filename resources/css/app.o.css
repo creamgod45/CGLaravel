@@ -9131,7 +9131,7 @@ video {
   align-items: center;
 }
 
-.register-frame .register, .register-frame .login, .register-frame .logout{
+.register-frame .register, .register-frame .login, .register-frame .logout, .register-frame .from{
   width:500px;
   border-width:0.5px;
   border-style:solid;
@@ -9145,24 +9145,34 @@ video {
   box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
 }
 
-.register-frame .register .title, .register-frame .login .title, .register-frame .logout .title{
+.register-frame .register .link, .register-frame .login .link, .register-frame .logout .link, .register-frame .from .link{
+  --tw-text-opacity:1;
+  color:rgb(59 130 246 / var(--tw-text-opacity))
+}
+
+.register-frame .register .link:hover, .register-frame .login .link:hover, .register-frame .logout .link:hover, .register-frame .from .link:hover{
+  --tw-text-opacity:1;
+  color:rgb(96 165 250 / var(--tw-text-opacity))
+}
+
+.register-frame .register .title, .register-frame .login .title, .register-frame .logout .title, .register-frame .from .title{
   text-align:center;
   font-size:1.25rem;
   line-height:1.75rem
 }
 
-.register-frame .register .row, .register-frame .login .row, .register-frame .logout .row{
+.register-frame .register .row, .register-frame .login .row, .register-frame .logout .row, .register-frame .from .row{
   display:flex;
   flex-wrap:nowrap
 }
 
-.register-frame .register .row > :not([hidden]) ~ :not([hidden]), .register-frame .login .row > :not([hidden]) ~ :not([hidden]), .register-frame .logout .row > :not([hidden]) ~ :not([hidden]){
+.register-frame .register .row > :not([hidden]) ~ :not([hidden]), .register-frame .login .row > :not([hidden]) ~ :not([hidden]), .register-frame .logout .row > :not([hidden]) ~ :not([hidden]), .register-frame .from .row > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse:0;
   margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))
 }
 
-.register-frame .register .row .col, .register-frame .login .row .col, .register-frame .logout .row .col{
+.register-frame .register .row .col, .register-frame .login .row .col, .register-frame .logout .row .col, .register-frame .from .row .col{
   display:flex;
   align-items:center;
   font-size:1.25rem;
@@ -9170,14 +9180,14 @@ video {
   flex: 0 0 auto
 }
 
-.register-frame .register .row label, .register-frame .login .row label, .register-frame .logout .row label{
+.register-frame .register .row label, .register-frame .login .row label, .register-frame .logout .row label, .register-frame .from .row label{
   width:40%;
   -moz-columns:10;
        columns:10;
   text-align:right
 }
 
-.register-frame .register .row input, .register-frame .login .row input, .register-frame .logout .row input{
+.register-frame .register .row input, .register-frame .login .row input, .register-frame .logout .row input, .register-frame .from .row input{
   width:60%;
   --tw-bg-opacity:1;
   background-color:rgb(255 255 255 / var(--tw-bg-opacity));
@@ -9188,14 +9198,14 @@ video {
   outline-offset:2px
 }
 
-.register-frame .register .button, .register-frame .login .button, .register-frame .logout .button{
+.register-frame .register .button, .register-frame .login .button, .register-frame .logout .button, .register-frame .from .button{
   margin-top:0.75rem;
   display: flex;
   justify-content: center;
   align-items: center
 }
 
-.register-frame .register .button button, .register-frame .login .button button, .register-frame .logout .button button{
+.register-frame .register .button button, .register-frame .login .button button, .register-frame .logout .button button, .register-frame .from .button button{
   border-radius:0.25rem;
   --tw-bg-opacity:1;
   background-color:rgb(52 211 153 / var(--tw-bg-opacity));
@@ -9208,7 +9218,7 @@ video {
   color:rgb(255 255 255 / var(--tw-text-opacity))
 }
 
-.register-frame .register .button button:hover, .register-frame .login .button button:hover, .register-frame .logout .button button:hover{
+.register-frame .register .button button:hover, .register-frame .login .button button:hover, .register-frame .logout .button button:hover, .register-frame .from .button button:hover{
   --tw-bg-opacity:1;
   background-color:rgb(110 231 183 / var(--tw-bg-opacity))
 }

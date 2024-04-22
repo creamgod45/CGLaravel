@@ -72,5 +72,66 @@
             </div>
             <div class="close-btn" onclick="document.getElementById('A16H5A').remove()">&times;</div>
         </div>
+        @if(session('invaild') !== null)
+            @php
+                $title=$i18N->getLanguage(ELanguageText::notification_invaild_title);
+                $description=$i18N->getLanguage(ELanguageText::notification_invaild_description);
+                if($errors->any()){
+                    foreach ($errors->all() as $item) {
+                        $description.="<br>".$item;
+                    }
+                }
+            @endphp
+            <div id="a1gk9d8f" class="item">
+                <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="context">
+                    <div class="title">{{$title}}</div>
+                    <div class="description">{!! $description !!}</div>
+                </div>
+                <div class="close-btn" onclick="document.getElementById('a1gk9d8f').remove()">&times;</div>
+            </div>
+        @endif
+        @if(session('mail') !== null)
+            @php
+                $title=$i18N->getLanguage(ELanguageText::notification_email_verifyTitle);
+                $description="";
+                if(session('mail_result') === true){
+                    $description = $i18N->getLanguage(ELanguageText::notification_email_description);
+                }elseif(session('mail_result') === false){
+                    $description = $i18N->getLanguage(ELanguageText::notification_email_fail_description);
+                }
+            @endphp
+            <div id="45a1g89s" class="item">
+                <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="context">
+                    <div class="title">{{$title}}</div>
+                    <div class="description">{{$description}}</div>
+                </div>
+                <div class="close-btn" onclick="document.getElementById('45a1g89s').remove()">&times;</div>
+            </div>
+        @endif
+        @if(session('mail_result') !== null)
+            @php
+                $title=$i18N->getLanguage(ELanguageText::notification_email_verifyTitle);
+                $description="";
+                if(session('mail_result') === 0){
+                    $description = $i18N->getLanguage(ELanguageText::notification_email_failedAppendText);
+                    $description .= $i18N->getLanguage(ELanguageText::notification_email_InvalidVerificationLink);
+                }elseif(session('mail_result') === 1){
+                    $description = $i18N->getLanguage(ELanguageText::notification_email_failedAppendText);
+                    $description .= $i18N->getLanguage(ELanguageText::notification_email_hasVerifiedEmail);
+                }elseif(session('mail_result') === 2){
+                    $description = $i18N->getLanguage(ELanguageText::notification_email_markEmailAsVerified);
+                }
+            @endphp
+            <div id="41859ags89" class="item">
+                <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="context">
+                    <div class="title">{{$title}}</div>
+                    <div class="description">{{$description}}</div>
+                </div>
+                <div class="close-btn" onclick="document.getElementById('41859ags89').remove()">&times;</div>
+            </div>
+        @endif
     </div>
 @endsection

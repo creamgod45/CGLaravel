@@ -69,6 +69,8 @@
                         <i class="fa-solid fa-sort-down"></i></span></th>
                 <th>{{$i18N->getLanguage(ELanguageText::validator_field_administrator)}} <span><i
                             class="fa-solid fa-sort-down"></i></span></th>
+                <th>{{$i18N->getLanguage(ELanguageText::validator_field_email_verified_at)}} <span><i
+                            class="fa-solid fa-sort-down"></i></span></th>
             </tr>
             </thead>
             <tbody>
@@ -80,6 +82,7 @@
                     <th>{{ $member->phone }}</th>
                     <th>{{ $member->enable }}</th>
                     <th>{{ $member->administrator }}</th>
+                    <th>{{ $member->email_verified_at }}</th>
                 </tr>
             @endforeach
             </tbody>

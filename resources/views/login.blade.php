@@ -23,6 +23,7 @@
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_password)}}</label>
                 <input class="col" type="password" name="password" required>
             </div>
+            <a class="link" href="{{route('password.request')}}">忘記密碼</a>
             <div class="button">
                 <button type="submit">{{$i18N->getLanguage(ELanguageText::login_btn)}}</button>
             </div>

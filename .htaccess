@@ -25,11 +25,8 @@ AddHandler application/x-httpd-php82 .php
     RewriteRule ^routes/ - [F,L]
     RewriteRule ^resources/ - [F,L]
     RewriteRule ^public/ - [F,L]
-    RewriteRule ^lib/ - [F,L]
     RewriteRule ^database/ - [F,L]
     RewriteRule ^config/ - [F,L]
-    RewriteRule ^build/ - [F,L]
     RewriteRule ^bootstrap/ - [F,L]
-    RewriteRule ^assets/ - [F,L]
     RewriteRule ^app/ - [F,L]
 </IfModule>

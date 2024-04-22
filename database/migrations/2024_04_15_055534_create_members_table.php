@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid("UUID");
             $table->string("username")->unique();
             $table->string("email")->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->text("password");
             $table->string("phone")->unique();
             $table->enum("enable", ["false", "true"])->default("false");

@@ -311,10 +311,13 @@ class I18N
             //Utils::pinv($languageYaml, "before: ".$case->name);
             $change = 0;
             $cgkeys = new CGArray($languageYaml);
+            //debugbar()->info($this->languageTextList);
             foreach ($this->languageTextList as $key => $c) {
-                if (!$cgkeys->hasKey($key) || $this->languageTextList[$key][1]) {
-                    $languageYaml[$key] = $this->languageTextList[$key][0];
-                    $change++;
+                if (is_array($c)) {
+                    if (!$cgkeys->hasKey($key) || $this->languageTextList[$key][1]) {
+                        $languageYaml[$key] = $this->languageTextList[$key][0];
+                        $change++;
+                    }
                 }
             }
             //Utils::pinv($languageYaml, "after: ".$case->name);

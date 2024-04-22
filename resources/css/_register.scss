@@ -4,8 +4,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    .register, .login, .logout{
+    .register, .login, .logout, .from{
         @apply bg-neutral-100 shadow-xl border-[0.5px] border-solid border-neutral-200 p-4 w-[500px];
+        .link{
+            @apply text-blue-500 hover:text-blue-400;
+        }
         .title{
             @apply text-center text-xl;
         }

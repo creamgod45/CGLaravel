@@ -201,32 +201,35 @@
   justify-content: center;
   align-items: center;
 }
-.register-frame .register, .register-frame .login, .register-frame .logout {
+.register-frame .register, .register-frame .login, .register-frame .logout, .register-frame .from {
   @apply bg-neutral-100 shadow-xl border-[0.5px] border-solid border-neutral-200 p-4 w-[500px];
 }
-.register-frame .register .title, .register-frame .login .title, .register-frame .logout .title {
+.register-frame .register .link, .register-frame .login .link, .register-frame .logout .link, .register-frame .from .link {
+  @apply text-blue-500 hover:text-blue-400;
+}
+.register-frame .register .title, .register-frame .login .title, .register-frame .logout .title, .register-frame .from .title {
   @apply text-center text-xl;
 }
-.register-frame .register .row, .register-frame .login .row, .register-frame .logout .row {
+.register-frame .register .row, .register-frame .login .row, .register-frame .logout .row, .register-frame .from .row {
   @apply flex flex-nowrap space-y-2;
 }
-.register-frame .register .row .col, .register-frame .login .row .col, .register-frame .logout .row .col {
+.register-frame .register .row .col, .register-frame .login .row .col, .register-frame .logout .row .col, .register-frame .from .row .col {
   @apply flex items-center text-xl;
   flex: 0 0 auto;
 }
-.register-frame .register .row label, .register-frame .login .row label, .register-frame .logout .row label {
+.register-frame .register .row label, .register-frame .login .row label, .register-frame .logout .row label, .register-frame .from .row label {
   @apply w-[40%] text-right columns-10;
 }
-.register-frame .register .row input, .register-frame .login .row input, .register-frame .logout .row input {
+.register-frame .register .row input, .register-frame .login .row input, .register-frame .logout .row input, .register-frame .from .row input {
   @apply w-[60%] bg-white text-black outline-none p-2;
 }
-.register-frame .register .button, .register-frame .login .button, .register-frame .logout .button {
+.register-frame .register .button, .register-frame .login .button, .register-frame .logout .button, .register-frame .from .button {
   @apply mt-3;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.register-frame .register .button button, .register-frame .login .button button, .register-frame .logout .button button {
+.register-frame .register .button button, .register-frame .login .button button, .register-frame .logout .button button, .register-frame .from .button button {
   @apply bg-emerald-400 rounded px-2 py-1 hover:bg-emerald-300 text-white p-2;
 }
 

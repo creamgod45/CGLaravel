@@ -5,6 +5,8 @@ use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
 use App\Http\Requests\StoreMemberRequest;
 use App\Lib\I18N\ELanguageCode;
+use App\Models\Member;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
@@ -37,10 +39,24 @@ Route::post('language', function (Request $request){
     return response()->json(['message' => 'Error'], ResponseHTTP::HTTP_BAD_REQUEST);
 });
 
-Route::middleware(EMiddleWareAliases::auth->name)->group(function () {
-    Route::get('logout', [MemberController::class, 'logout'])->name('logout');
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('members', [MemberController::class, 'index']);
 });
+Route::middleware('auth')->group(function () {
+    Route::get('logout', [MemberController::class, 'logout'])->name('logout');
+    Route::get('resendemail', [MemberController::class, 'resendEmail'])->name('resendEmail');
+});
+
+// password reset
+Route::get('passwordreset', [MemberController::class, 'passwordreset'])->name('password.reset');
+Route::post('passwordreset', [MemberController::class, 'passwordresetpost'])->name('password.resetpost');
+
+// forgot password
+Route::get('forgot-password',  [MemberController::class, 'forgetpassword'])->name('password.request');
+Route::post('forget-password', [MemberController::class, 'forgetpasswordpost'])->name('password.email');
+
+// email verify
+Route::get('/email/verify/{id}/{hash}', [MemberController::class, 'emailVerify'])->name('verification.verify');
 
 Route::middleware(EMiddleWareAliases::guest->name)->group(function () {
     Route::get('login', [MemberController::class, 'loginPage'])->name('login');
