@@ -1,11 +1,3 @@
-@php
-    /***
-     * @var I18N $i18N
-     * @var LengthAwarePaginator $elements
-     */
-    use App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use Illuminate\Pagination\LengthAwarePaginator;$menu=true;
-    $footer=true;
-@endphp
 @if ($elements->hasPages())
     <div class="pagination-frame">
         {{-- Pagination Elements --}}

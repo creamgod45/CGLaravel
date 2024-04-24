@@ -1,5 +1,4 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Permission\cases\AdministratorPermission;use App\Lib\Utils\Htmlv2;use Illuminate\Support\Facades\Log)
 @php
     /***
      * @var string[] $router \
@@ -12,11 +11,6 @@
 @extends('layouts.default')
 @section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
 @section('content')
-    @env('local')
-        @auth
-            {{debugbar()->info($request->user()->permissions)}}
-        @endauth
-    @endenv
     <div class="register-frame">
         <form class="register" method="POST" action="{{ route('password.email') }}">
             @csrf

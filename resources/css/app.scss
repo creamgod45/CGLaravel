@@ -2,6 +2,8 @@
 @tailwind components;
 //@tailwind utilities;
 @import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "googlefont";
+@import "colors";
 @import "scrollbar";
 @import "menu";
 @import "register";
@@ -11,6 +13,10 @@
 @import "alert";
 @import "pagination";
 @import "table";
+@import "button";
+
+
+
 
 body {
     @apply relative;

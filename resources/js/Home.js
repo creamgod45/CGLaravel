@@ -1,9 +1,77 @@
 import * as LZString from "lz-string";
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import {func} from "three/addons/nodes/code/FunctionNode.js";
 
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
 } else {
     document.documentElement.classList.remove('dark')
+}
+
+let scene, camera, renderer, asset1=null;
+
+function reset(){
+    if(asset1!==null){
+        scene.remove(asset1.scene);
+    }
+    scene=null;
+    camera=null;
+    renderer=null;
+    asset1=null;
+}
+
+function init() {
+    // 創建場景
+    scene = new THREE.Scene();
+
+    // 設置相機
+    camera = new THREE.PerspectiveCamera(120, 1, 0.1, 1000);
+    camera.position.z = 5;
+    //camera.position.y += 2;
+
+    // 創建渲染器
+    renderer = new THREE.WebGLRenderer({ alpha: true });  // 啟用透明
+    renderer.setClearColor(0x000000, 0); // 背景色設為透明
+    renderer.setSize(document.querySelector("#_3DModel").clientWidth, document.querySelector("#_3DModel").clientHeight);
+    document.querySelector("#_3DModel").innerHTML="";
+    document.querySelector("#_3DModel").appendChild(renderer.domElement);
+
+    // 加載GLB模型
+    const loader = new GLTFLoader();
+    loader.load('/assets/images/welcome_banner2_programming.glb', function(gltf) {
+        scene.add(gltf.scene);
+        // 初始縮放
+        asset1 = gltf;
+        //gltf.scene.scale.set(15, 15, 15); // 將模型放大到原始大小的1.5倍
+        //document.addEventListener('mousemove', onMouseMove, false);
+    }, undefined, function(error) {
+        console.error(error);
+    });
+
+    // 添加燈光
+    const light = new THREE.AmbientLight(0xffffff, 2); // 軟光
+    scene.add(light);
+}
+
+function onMouseMove(event) {
+    // 計算滑鼠位置
+    const mouseX = (event.clientX / window.innerWidth) * 2+2;
+    const mouseY = -(event.clientY / window.innerHeight) * 2-1;
+    console.log(mouseX, mouseY)
+
+    // 根據滑鼠位置平移物件
+    if(asset1!==null){
+        if(asset1['scene']!==undefined){
+            asset1.scene.rotation.x = -mouseY*0.25;
+            asset1.scene.rotation.y = mouseX*0.25;
+        }
+    }
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
 }
 
 
@@ -234,7 +302,7 @@ function load1() {
         lazyImageObserver.observe(lazyImage);
     }
 }
-function load4(){
+function load5(){
     let obj = "Web:HTML, CSS3(sass,scss), JS(nodeJs,commonJs, jQuery, AJAX), PHP(8.2~7.0), RWD, 基本程式, 資料庫, API, Websocket, 聊天室(非websocket技術), JWT, 自研框架, 資訊安全防護(IDE: PHPStorm)Android Studio(手機軟體設計) 基本程式, toast, Form, API, 通知, 相機(QRcode), 資料庫,執行緒, 檔案GitC#(.NET Framework, MAUI 8) / C++ / C （Arduino）基本程式Java 執行緒,基本程式,資料庫,介面, APIPython 爬蟲,資料庫,基本程式P.S 基本程式（程式必學技能迴圈,變數,陣列,類型,類別）";
     let t = encodeContext(obj);
     console.log(t.compress);
@@ -261,15 +329,53 @@ function load4(){
         }
     })
 }
+function rotateElement(event, element) {
+    // get mouse position
+    const x = event.clientX;
+    const y = event.clientY;
+    // console.log(x, y)
+
+    // find the middle
+    const middleX = window.innerWidth / 2;
+    const middleY = window.innerHeight / 2;
+    // console.log(middleX, middleY)
+
+    // get offset from middle as a percentage
+    // and tone it down a little
+    const offsetX = ((x - middleX) / middleX) * 45;
+    const offsetY = ((y - middleY) / middleY) * 45;
+    // console.log(offsetX, offsetY);
+
+    // set rotation
+    element.style.setProperty("--rotateX", offsetX + "deg");
+    element.style.setProperty("--rotateY", -1 * offsetY + "deg");
+}
+
+function load6() {
+    document.addEventListener("mousemove", function (e) {
+        rotateElement(e, document.querySelector("#_3DModel1"));
+        rotateElement(e, document.querySelector("#_3DModel2"));
+    });
+}
+
+function load4(){
+    reset();
+    init();
+    animate();
+}
 
 function loader() {
     load1();
     load2();
     load3();
     //load4();
+    //load6();
 }
 
-window.addEventListener("resize", load3);
+window.addEventListener("resize", ()=>{
+    load3();
+    //load4();
+});
 
 document.addEventListener("DOMContentLoaded", loader);
 

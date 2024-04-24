@@ -1,5 +1,5 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N)
+@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N)
 @php
     /***
      * @var string[] $router \
@@ -28,7 +28,7 @@
                 <button type="submit">{{$i18N->getLanguage(ELanguageText::login_btn)}}</button>
             </div>
             @if ($errors->any())
-                <x-alert type="danger" :messages="$errors->all()" />
+                <x-alert type="danger" :messages="$errors->all()"/>
             @endif
         </form>
     </div>

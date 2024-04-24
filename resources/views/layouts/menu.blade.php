@@ -26,7 +26,7 @@
     }
 </script>
 <header class="float-menu">
-    <div class="btn-group">
+    <div class="float-btn-group">
         <a href="/" class="icon lazy-loaded-image" data-src="{{asset("assets/images/logo.webp")}}"></a>
         <a href="/" type="button" class="float-menu-btn" aria-expanded="false">
             <span>{{$i18N->getLanguage(ELanguageText::menu_frontpage)}}</span>

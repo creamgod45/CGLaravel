@@ -1,6 +1,48 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 @tailwind base;
 @tailwind components;
+.noto-serif-tc-extralight {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.noto-serif-tc-light {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.noto-serif-tc-regular {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.noto-serif-tc-medium {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.noto-serif-tc-semibold {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.noto-serif-tc-bold {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.noto-serif-tc-black {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
 /* Firefox */
 * {
   scrollbar-width: thin;
@@ -42,21 +84,22 @@
 .float-menu {
   @apply top-0 left-0 w-screen fixed z-10;
 }
-.float-menu .btn-group {
+.float-menu .float-btn-group {
   @apply bg-neutral-100 shadow-lg;
+  background-color: #5866a6;
   display: flex;
   align-items: center;
   height: fit-content;
   position: relative;
   z-index: 10;
 }
-.float-menu .btn-group .icon {
+.float-menu .float-btn-group .icon {
   @apply inline items-center gap-x-1 size-14 rounded-[50%] my-2 ms-5;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
 }
-.float-menu .btn-group .float-menu-btn {
+.float-menu .float-btn-group .float-menu-btn {
   @apply inline-flex items-center gap-x-1 text-sm my-5 mx-5 text-gray-900;
 }
 .float-menu .float-menu-panel.active {
@@ -236,9 +279,12 @@
 .container1 {
   @apply mt-[72px];
 }
+.container1 .home .a456sgt {
+  @apply space-x-7 space-y-2 w-1/2;
+}
 .container1 .home .banner {
   @apply relative w-full z-[1] bg-fixed bg-origin-border bg-repeat-y;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: #e6bc40;
   background-size: cover;
   height: calc(100vh - 72px);
 }
@@ -267,17 +313,48 @@
   width: 100%;
   height: 100%;
 }
+.container1 .home .banner .row .right ._3DModel {
+  @apply mt-20 mr-20 w-full h-full bg-contain bg-no-repeat;
+  background-size: 80%;
+  transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+}
 .container1 .home .service {
   @apply relative w-full h-[80vh] pt-32;
   background-size: 90%;
-  background-color: #d7f5fd;
+  background-color: #405ee6;
 }
 .container1 .home .service .asset1 {
-  @apply scale-50 sm:scale-75 transform-gpu xs:bottom-0 left-0 xs:scale-20 absolute sm:bottom-10 z-[1] bg-contain bg-no-repeat overflow-hidden flex;
-  width: 880px;
-  min-width: 0;
-  height: 576px;
-  min-height: 0;
+  @apply w-full h-full transform-gpu z-[1] bg-contain bg-no-repeat overflow-hidden;
+}
+.container1 .home .service .row {
+  @apply absolute flex-auto1 w-full h-full text-white left-0 top-0 grid xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 grid-cols-1;
+}
+.container1 .home .service .row .left {
+  @apply flex justify-center items-center;
+}
+.container1 .home .service .row .left .title {
+  @apply text-white xs:text-2xl sm:text-2xl md:text-2xl lg:text-4xl text-nowrap w-full text-center;
+}
+.container1 .home .service .row .left .description {
+  @apply mt-5 text-center w-full;
+}
+.container1 .home .service .row .right {
+  @apply relative flex justify-center items-center;
+}
+.container1 .home .service .row .right .card {
+  width: 100%;
+  height: 500px;
+  @apply px-4 py-2 rounded-4xl absolute bottom-0;
+}
+.container1 .home .service .row .right .card .item-frame {
+  @apply bg-no-repeat bg-contain;
+  width: 100%;
+  height: 100%;
+}
+.container1 .home .service ._3DModel {
+  @apply mt-20 ml-20 w-full h-full bg-contain bg-no-repeat;
+  background-size: 80%;
+  transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
 }
 .container1 .home .service .cards-flex {
   @apply z-[2] pb-32 space-x-10 flex h-full max-w-full overflow-x-hidden hover:overflow-x-auto;
@@ -308,7 +385,7 @@
   @apply fixed right-5 bottom-10 w-fit h-fit z-20 space-y-5;
 }
 .notification .item {
-  @apply relative bg-white border-solid border-s-[6px] border-emerald-400 flex justify-center items-center px-4 py-2 space-x-5 shadow-2xl;
+  @apply relative bg-white border-solid border-s-[6px] flex justify-center items-center px-4 py-2 space-x-5 shadow-2xl;
 }
 .notification .item .icon {
   @apply text-2xl;
@@ -318,6 +395,22 @@
 }
 .notification .item .close-btn {
   @apply absolute -top-4 -right-4 size-8 bg-red-400 hover:bg-red-300 text-white flex justify-center items-center rounded-4xl cursor-pointer;
+}
+
+.notification-info {
+  @apply border-neutral-500;
+}
+
+.notification-error {
+  @apply border-red-500;
+}
+
+.notification-warning {
+  @apply border-yellow-500;
+}
+
+.notification-success {
+  @apply border-green-500;
 }
 
 .tooltip-gen {
@@ -457,6 +550,99 @@
 }
 .table-striped tbody tr:nth-child(even) {
   @apply bg-neutral-300;
+}
+
+.btn-group {
+  @apply flex cursor-pointer;
+}
+.btn-group .btn:first-child {
+  @apply rounded-l-lg rounded-r-none;
+}
+.btn-group .btn:not(:first-child, :last-child) {
+  border-radius: unset !important;
+}
+.btn-group .btn:last-child {
+  @apply rounded-r-lg rounded-l-none;
+}
+
+.btn {
+  @apply border-2 border-solid cursor-pointer px-2 py-1 rounded select-none w-fit hover:shadow-2xl;
+}
+
+.btn-ok {
+  @apply bg-green-600 border-green-500 hover:bg-green-500;
+}
+
+.btn-cancel {
+  @apply bg-neutral-200 border-neutral-100 hover:bg-neutral-100;
+}
+
+.btn-error {
+  @apply bg-red-500 border-red-400 hover:bg-red-400;
+}
+
+.btn-warning {
+  @apply bg-yellow-400 border-yellow-300 hover:bg-yellow-300;
+}
+
+.btn-max {
+  @apply w-full;
+}
+
+.btn-center {
+  @apply text-center;
+}
+
+.btn-bold {
+  @apply font-bold;
+}
+
+.btn-color1 {
+  background-color: #e6bc40;
+  border-color: rgb(248, 202, 68);
+}
+.btn-color1:hover {
+  background-color: rgb(248, 202, 68);
+}
+
+.btn-color2 {
+  background-color: #5866a6;
+  border-color: #697ac6;
+}
+.btn-color2:hover {
+  background-color: #697ac6;
+}
+
+.btn-color3 {
+  background-color: #405ee6;
+  border-color: #4768fa;
+}
+.btn-color3:hover {
+  background-color: #4768fa;
+}
+
+.btn-color4 {
+  background-color: #918259;
+  border-color: #b2a06e;
+}
+.btn-color4:hover {
+  background-color: #b2a06e;
+}
+
+.btn-color5 {
+  background-color: #505466;
+  border-color: #747a94;
+}
+.btn-color5:hover {
+  background-color: #747a94;
+}
+
+.btn-color6 {
+  background-color: #3c3933;
+  border-color: #666056;
+}
+.btn-color6:hover {
+  background-color: #666056;
 }
 
 body {

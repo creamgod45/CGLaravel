@@ -1,0 +1,78 @@
+.btn-group{
+    @apply flex cursor-pointer;
+    .btn:first-child{
+        @apply rounded-l-lg rounded-r-none;
+    }
+    .btn:not(:first-child,:last-child){
+        border-radius: unset !important;
+    }
+    .btn:last-child{
+        @apply rounded-r-lg rounded-l-none;
+    }
+}
+.btn{
+    @apply border-2 border-solid cursor-pointer px-2 py-1 rounded select-none w-fit hover:shadow-2xl;
+}
+.btn-ok{
+    @apply bg-green-600 border-green-500 hover:bg-green-500;
+}
+.btn-cancel{
+    @apply bg-neutral-200 border-neutral-100 hover:bg-neutral-100;
+}
+.btn-error{
+    @apply bg-red-500 border-red-400 hover:bg-red-400;
+}
+.btn-warning{
+    @apply bg-yellow-400 border-yellow-300 hover:bg-yellow-300;
+}
+.btn-max{
+    @apply w-full;
+}
+.btn-center{
+    @apply text-center;
+}
+.btn-bold{
+    @apply font-bold;
+}
+.btn-color1{
+    background-color: $color1;
+    border-color: rgb(248, 202, 68);
+    &:hover{
+        background-color: rgb(248, 202, 68);
+    }
+}
+.btn-color2{
+    background-color: #5866a6;
+    border-color: #697ac6;
+    &:hover{
+        background-color: #697ac6;
+    }
+}
+.btn-color3{
+    background-color: #405ee6;
+    border-color: #4768fa;
+    &:hover{
+        background-color: #4768fa;
+    }
+}
+.btn-color4{
+    background-color: #918259;
+    border-color: #b2a06e;
+    &:hover{
+        background-color: #b2a06e;
+    }
+}
+.btn-color5{
+    background-color: #505466;
+    border-color: #747a94;
+    &:hover{
+        background-color: #747a94;
+    }
+}
+.btn-color6{
+    background-color: #3c3933;
+    border-color: #666056;
+    &:hover{
+        background-color: #666056;
+    }
+}
