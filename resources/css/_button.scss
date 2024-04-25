@@ -1,78 +1,149 @@
-.btn-group{
+.btn-group {
     @apply flex cursor-pointer;
-    .btn:first-child{
-        @apply rounded-l-lg rounded-r-none;
+    .btn:first-child {
+        @apply rounded-l rounded-r-none;
     }
-    .btn:not(:first-child,:last-child){
+
+    .btn:not(:first-child,:last-child) {
         border-radius: unset !important;
     }
-    .btn:last-child{
-        @apply rounded-r-lg rounded-l-none;
+
+    .btn:last-child {
+        @apply rounded-r rounded-l-none;
     }
 }
-.btn{
+
+.btn-md {
+    padding: 0.5rem 1rem !important;
+}
+
+.btn-md-strip {
+    padding: 0.25rem 1rem !important;
+}
+
+.btn {
     @apply border-2 border-solid cursor-pointer px-2 py-1 rounded select-none w-fit hover:shadow-2xl;
 }
-.btn-ok{
+
+.btn-ok, .btn-success {
     @apply bg-green-600 border-green-500 hover:bg-green-500;
 }
-.btn-cancel{
+
+.btn-cancel {
     @apply bg-neutral-200 border-neutral-100 hover:bg-neutral-100;
 }
-.btn-error{
+
+.btn-error {
     @apply bg-red-500 border-red-400 hover:bg-red-400;
 }
-.btn-warning{
+
+.btn-warning {
     @apply bg-yellow-400 border-yellow-300 hover:bg-yellow-300;
 }
-.btn-max{
+
+.btn-max {
     @apply w-full;
 }
-.btn-center{
+
+.btn-text-center {
     @apply text-center;
 }
-.btn-bold{
+
+.btn-right-center {
+    @apply text-end;
+}
+
+.btn-bold {
     @apply font-bold;
 }
-.btn-color1{
+
+.btn-color1 {
     background-color: $color1;
     border-color: rgb(248, 202, 68);
-    &:hover{
+
+    &:hover {
         background-color: rgb(248, 202, 68);
     }
 }
-.btn-color2{
+
+.btn-color2 {
     background-color: #5866a6;
     border-color: #697ac6;
-    &:hover{
+
+    &:hover {
         background-color: #697ac6;
     }
 }
-.btn-color3{
+
+.btn-color3 {
     background-color: #405ee6;
     border-color: #4768fa;
-    &:hover{
+
+    &:hover {
         background-color: #4768fa;
     }
 }
-.btn-color4{
+
+.btn-color4 {
     background-color: #918259;
     border-color: #b2a06e;
-    &:hover{
+
+    &:hover {
         background-color: #b2a06e;
     }
 }
-.btn-color5{
+
+.btn-color5 {
     background-color: #505466;
     border-color: #747a94;
-    &:hover{
+
+    &:hover {
         background-color: #747a94;
     }
 }
-.btn-color6{
+
+.btn-color6 {
     background-color: #3c3933;
     border-color: #666056;
-    &:hover{
+
+    &:hover {
         background-color: #666056;
+    }
+}
+
+.btn-circle {
+    @apply flex justify-center items-center size-12 border-2 border-solid rounded-4xl cursor-pointer select-none;
+}
+
+.btn-border-0 {
+    border: 0 !important;
+}
+
+.btn-transition{
+    transition: background 400ms;
+}
+
+.btn-ripple {
+    position: relative;
+    overflow: hidden;
+    outline: 0;
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3); /* black with 30% opacity */
+    cursor: pointer;
+}
+
+span.ripple {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 600ms linear;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
     }
 }

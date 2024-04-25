@@ -339,3 +339,6 @@ passwords_sent: 'We have emailed your password reset link.'
 passwords_throttled: 'Please wait before retrying.'
 passwords_token: 'This password reset token is invalid.'
 passwords_user: "We can't find a user with that email address."
+notification_login_title: 'Login Status'
+notification_login_success: 'You have successfully logged in!!'
+notification_login_failed: 'Your login failed!!'

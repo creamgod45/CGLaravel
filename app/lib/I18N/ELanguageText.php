@@ -201,13 +201,16 @@ enum ELanguageText
     case notification_email_InvalidVerificationLink;
     case notification_email_hasVerifiedEmail;
     case notification_email_markEmailAsVerified;
+    case notification_invaild_title;
+    case notification_invaild_description;
+    case notification_login_title;
+    case notification_login_success;
+    case notification_login_failed;
     case passwords_reset     ;
     case passwords_sent      ;
     case passwords_throttled ;
     case passwords_token     ;
     case passwords_user      ;
-    case notification_invaild_title;
-    case notification_invaild_description;
     case HelloWorld;
     case af_ZA;     // 南非荷兰语（南非）
     case am_ET;     // 阿姆哈拉语（埃塞俄比亚）

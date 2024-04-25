@@ -333,9 +333,12 @@ notification_email_hasVerifiedEmail: 电子邮件已验证
 notification_email_markEmailAsVerified: 验证电子邮件成功
 notification_email_fail_description: 请前往您的邮箱验证您的电子邮件，然后才能访问网站的其他功能。
 notification_invaild_title: 错误
-notification_invaild_description: '输入的信息无效'
+notification_invaild_description: 输入的信息无效
 passwords_reset: '您的密码已重设。 '
 passwords_sent: '我们已经将密码重设连结发送至您的电子邮箱。 '
 passwords_throttled: '请稍候再试。 '
 passwords_token: '此密码重设令牌无效。 '
 passwords_user: '我们找不到使用该电子邮件地址的用户。 '
+notification_login_title: 'Login Status'
+notification_login_success: 'You have successfully logged in!!'
+notification_login_failed: 'Your login failed!!'

@@ -211,5 +211,8 @@ class DictionaryMap
         $i->setLanguagev2(ELanguageText::notification_invaild_title     , "Error");
         $i->setLanguagev2(ELanguageText::notification_invaild_description     , "Invalid information entered");
         $i->setLanguagev2(ELanguageText::validator_field_token     , "Token");
+        $i->setLanguagev2(ELanguageText::notification_login_title, "Login Status");
+        $i->setLanguagev2(ELanguageText::notification_login_success, "You have successfully logged in!!");
+        $i->setLanguagev2(ELanguageText::notification_login_failed, "Your login failed!!");
     }
 }

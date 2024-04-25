@@ -7,22 +7,21 @@
 @import "scrollbar";
 @import "menu";
 @import "register";
-@import "home";
 @import "notification";
 @import "tooltip";
 @import "alert";
 @import "pagination";
 @import "table";
 @import "button";
-
-
-
+@import "card";
+@import "placeholder";
+@import "home";
 
 body {
     @apply relative;
 
-    .container1 {
-        @apply mt-[72px];
+    *{
+        transition: all 500ms;
     }
 
     footer {

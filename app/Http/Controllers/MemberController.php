@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
+use App\Lib\Utils\ENotificationType;
 use App\Lib\Utils\EValidatorType;
 use App\Lib\Utils\ValidatorBuilder;
 use App\Models\Member;
@@ -255,7 +256,11 @@ class MemberController extends Controller
                             Log::info($user->username . ": Logging in");
                             Auth::login($user);
                             Log::info($user->username . ": logined");
-                            return redirect('members');
+                            return redirect(route('home'))->with('custom_message', [
+                                $i18N->getLanguage(ELanguageText::notification_login_title),
+                                $i18N->getLanguage(ELanguageText::notification_login_success),
+                                ENotificationType::success
+                            ]);
                         } else {
                             // 自訂錯誤訊息
                             $validator->errors()->add("login_faild",
@@ -276,7 +281,11 @@ class MemberController extends Controller
                 }
             }
         }
-        return redirect(route('login'))->withInput()->withErrors($validator->errors());
+        return redirect(route('login'))->with('custom_message', [
+            $i18N->getLanguage(ELanguageText::notification_login_title),
+            $i18N->getLanguage(ELanguageText::notification_login_failed),
+            ENotificationType::error
+        ])->withInput()->withErrors($validator->errors());
     }
 }
 

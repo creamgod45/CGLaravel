@@ -339,3 +339,6 @@ passwords_sent: 我們已經將密碼重設連結發送至您的電子郵箱。
 passwords_throttled: 請稍候再試。
 passwords_token: 此密碼重設令牌無效。
 passwords_user: 我們找不到使用該電子郵件地址的用戶。
+notification_login_title: '登入狀態'
+notification_login_success: '您已成功登入！'
+notification_login_failed: '您登入失敗！'
