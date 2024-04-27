@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Member;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,5 +14,6 @@ class MemberSeeder extends Seeder
     public function run(): void
     {
         //
+        Member::factory()->count(200)->create(); // 生成 50 個假帳號
     }
 }

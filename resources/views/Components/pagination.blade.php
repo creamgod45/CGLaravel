@@ -1,43 +1,61 @@
+@use(App\Lib\I18N\ELanguageText)
 @if ($elements->hasPages())
     <div class="pagination-frame">
         {{-- Pagination Elements --}}
         {{$slot}}
         <div class="pagination">
-            {{-- Previous Page Link --}}
-            @if ($elements->onFirstPage())
-                <div class="previous item-btn" aria-label="{{$i18N->getLanguage(ELanguageText::pagination_previous)}}">
-                    <a aria-hidden="true">{{$i18N->getLanguage(ELanguageText::pagination_previous)}}</a>
-                </div>
-            @else
-                <div class="previous active item-btn">
-                    <a href="{{ $elements->previousPageUrl() }}" rel="prev"
-                       aria-label="{{$i18N->getLanguage(ELanguageText::pagination_previous)}}">{{$i18N->getLanguage(ELanguageText::pagination_previous)}}</a>
-                </div>
-            @endif
-            @for($i = 1; $i <= $elements->lastPage(); $i++)
-                <div class="item item-btn">
-                    <a href="{{ $elements->url($i) }}">{{ $i }}</a>
-                </div>
-            @endfor
-            <div class="page-info item-btn">
-                <div>
-                    {{$i18N->getLanguage(ELanguageText::pagination_CurrentPage)}}: {{ $elements->currentPage() }}
-                </div>
-                <div>
-                    {{$i18N->getLanguage(ELanguageText::pagination_TotalPages)}}: {{ $elements->lastPage() }}
-                </div>
+            <div class="btn-group btn-group-border-2-slate">
+                <a class="btn btn-center btn-md btn-dead tracking-widest !break-keep !bg-color1 btn-border-0">{{ $elements->currentPage() }}/{{ $elements->lastPage() }}</a>
+                @if ($elements->onFirstPage())
+                    <a aria-label="{{$i18N->getLanguage(ELanguageText::pagination_previous)}}"
+                       class="btn btn-center btn-dead btn-md btn-border-0"><i class="fa-solid fa-left-long"></i></a>
+                @else
+                    <a href="{{ $elements->previousPageUrl() }}"
+                       rel="prev"
+                       aria-label="{{$i18N->getLanguage(ELanguageText::pagination_previous)}}"
+                       class="btn btn-center btn-ripple btn-md btn-color1 btn-border-0"><i class="fa-solid fa-left-long"></i></a>
+                @endif
+                @php
+                    $division3=$elements->lastPage()/4;
+                    $once=false;
+                    $hidestart = $division3;
+                    $hideend = $division3*3.5;
+                @endphp
+                @for($i = 1; $i <= $elements->lastPage(); $i++)
+                    @if($elements->lastPage()>=10)
+                        @if($elements->currentPage() === $i)
+                            <a class="btn btn-center btn-md btn-dead btn-border-0">{{ $i }}</a>
+                        @elseif($i <= $division3 || ($i <= $elements->currentPage()+2 && $i >= $elements->currentPage()))
+                            @php
+                                $once=true;
+                            @endphp
+                            <a href="{{ $elements->url($i) }}"
+                               class="btn btn-center btn-ripple btn-md btn-color1 btn-border-0">{{ $i }}</a>
+                        @elseif($i>=$hideend || ($i >= $elements->currentPage()-2 && $i <= $elements->currentPage()))
+                            <a href="{{ $elements->url($i) }}"
+                               class="btn btn-center btn-ripple btn-md btn-color1 btn-border-0">{{ $i }}</a>
+                        @elseif($once===true)
+                            @php
+                                $once=false;
+                            @endphp
+                            <a class="btn btn-center btn-md btn-dead btn-border-0">...</a>
+                        @endif
+                    @else
+                        <a href="{{ $elements->url($i) }}"
+                           class="btn btn-center btn-ripple btn-md btn-color1 btn-border-0">{{ $i }}</a>
+                    @endif
+                @endfor
+                @if ($elements->hasMorePages())
+                    <a href="{{ $elements->nextPageUrl() }}"
+                       rel="next"
+                       aria-label="{{$i18N->getLanguage(ELanguageText::pagination_next)}}"
+                       class="btn btn-center btn-ripple btn-md btn-color1 btn-border-0"><i class="fa-solid fa-right-long"></i></a>
+                @else
+                    <a aria-label="{{$i18N->getLanguage(ELanguageText::pagination_next)}}"
+                       aria-hidden="true"
+                       class="btn btn-center btn-dead btn-md btn-border-0"><i class="fa-solid fa-right-long"></i></a>
+                @endif
             </div>
-            {{-- Next Page Link --}}
-            @if ($elements->hasMorePages())
-                <div class="next active item-btn">
-                    <a href="{{ $elements->nextPageUrl() }}" rel="next"
-                       aria-label="{{$i18N->getLanguage(ELanguageText::pagination_next)}}">{{$i18N->getLanguage(ELanguageText::pagination_next)}}</a>
-                </div>
-            @else
-                <div class="next item-btn" aria-label="{{$i18N->getLanguage(ELanguageText::pagination_next)}}">
-                    <a aria-hidden="true">{{$i18N->getLanguage(ELanguageText::pagination_next)}}</a>
-                </div>
-            @endif
         </div>
     </div>
 @else

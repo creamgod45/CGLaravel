@@ -1,21 +1,21 @@
 .float-menu {
     @apply top-0 left-0 w-screen fixed z-10;
     .float-btn-group{
-        @apply  bg-neutral-100 shadow-lg;
-        background-color: $color2;
+        @apply  bg-neutral-100 shadow-lg sm:space-x-10 xs:space-x-3 space-x-3;
+        background-color: $color1;
         display: flex;
         align-items: center;
         height: fit-content;
         position: relative;
         z-index: 10;
         .icon{
-            @apply inline items-center gap-x-1 size-14 rounded-[50%] my-2 ms-5;
+            @apply size-0 xs:size-6 sm:size-14 footer:size-14 inline items-center gap-x-1 md:size-14 rounded-[50%] my-2 ms-5;
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
         }
         .float-menu-btn {
-            @apply inline-flex items-center gap-x-1 text-sm my-5 mx-5 text-gray-900;
+            @apply transition-all inline-flex items-center gap-x-1 text-sm my-5 shadow-black hover:text-shadow-sm;
         }
     }
 

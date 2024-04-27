@@ -27,7 +27,7 @@
 </script>
 <nav class="float-menu">
     <div class="float-btn-group">
-        <a href="/" aria-label="首頁連接圖片" aria class="icon lazy-loaded-image" data-src="{{asset("assets/images/logo.webp")}}"></a>
+        <a href="/" aria-label="首頁連接圖片" class="icon placeholder placeholder-circle lazy-loaded-image" data-src="{{asset("assets/images/logo.webp")}}"></a>
         <a href="/" type="button" class="float-menu-btn" aria-expanded="false">
             <span>{{$i18N->getLanguage(ELanguageText::menu_frontpage)}}</span>
         </a>
@@ -135,7 +135,7 @@
             </div>
             <div class="columns-col news">
                 <div class="item">
-                    <div class="image lazy-loaded-image" style="background-position-y: center"
+                    <div class="image placeholder lazy-loaded-image" style="background-position-y: center"
                          data-src="{{asset("assets/images/internationalization.webp")}}">
                     </div>
                     <div class="title">
@@ -162,7 +162,7 @@
                     </select>
                 </div>
                 <div class="item">
-                    <div class="image lazy-loaded-image" style="background-position-y: center"
+                    <div class="image placeholder lazy-loaded-image" style="background-position-y: center"
                          data-src="{{asset("assets/images/article1.webp")}}">
                     </div>
                     <div class="timestamp">

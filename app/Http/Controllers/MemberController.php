@@ -37,7 +37,7 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $members = Member::paginate(10);
+        $members = Member::paginate(30);
         //debugbar()->info($members);
         return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user]));
     }

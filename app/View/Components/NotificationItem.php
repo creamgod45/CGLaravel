@@ -23,7 +23,7 @@ class NotificationItem extends Component
         public ENotificationType $type = ENotificationType::info,
     )
     {
-        $this->id=Str::random(7);
+        $this->id="N".Str::random(7);
         //
     }
 

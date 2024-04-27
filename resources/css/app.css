@@ -1,6 +1,7 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 @tailwind base;
 @tailwind components;
+@tailwind utilities;
 .noto-serif-tc-extralight {
   font-family: "Noto Serif TC", serif;
   font-weight: 200;
@@ -85,8 +86,8 @@
   @apply top-0 left-0 w-screen fixed z-10;
 }
 .float-menu .float-btn-group {
-  @apply bg-neutral-100 shadow-lg;
-  background-color: #5866a6;
+  @apply bg-neutral-100 shadow-lg sm:space-x-10 xs:space-x-3 space-x-3;
+  background-color: #e6bc40;
   display: flex;
   align-items: center;
   height: fit-content;
@@ -94,13 +95,13 @@
   z-index: 10;
 }
 .float-menu .float-btn-group .icon {
-  @apply inline items-center gap-x-1 size-14 rounded-[50%] my-2 ms-5;
+  @apply size-0 xs:size-6 sm:size-14 footer:size-14 inline items-center gap-x-1 md:size-14 rounded-[50%] my-2 ms-5;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 .float-menu .float-btn-group .float-menu-btn {
-  @apply inline-flex items-center gap-x-1 text-sm my-5 mx-5 text-gray-900;
+  @apply transition-all inline-flex items-center gap-x-1 text-sm my-5 shadow-black hover:text-shadow-sm;
 }
 .float-menu .float-menu-panel.active {
   @apply grid relative z-0 shadow-xl;
@@ -296,13 +297,29 @@
 .notification .item .close-btn {
   @apply absolute -top-4 -right-4 size-8 bg-red-400 hover:bg-red-300 text-white flex justify-center items-center rounded-4xl cursor-pointer;
 }
+.notification .item::after {
+  @apply w-full absolute bottom-0 left-0 h-1 bg-red-500;
+  content: "";
+  -webkit-animation-duration: 5s;
+  animation-duration: 5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  animation: notificationtimeline 5s ease-in-out;
+}
+.notification .item.done::after {
+  width: 0 !important;
+}
+.notification .item.fadeOut {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  animation: fadeOut 1s ease-in-out;
+}
 
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
+@keyframes notificationtimeline {
   to {
-    opacity: 1;
+    width: 0;
   }
 }
 @keyframes fadeIn {
@@ -311,6 +328,14 @@
   }
   to {
     opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 .notification-info {
@@ -524,6 +549,28 @@
   color: black;
 }
 
+.tooltip-color1 {
+  color: #e6bc40 !important;
+}
+.tooltip-color1 .tooltip-left::after {
+  border-left-color: #e6bc40 !important;
+}
+.tooltip-color1 .tooltip-top::after {
+  border-top-color: #e6bc40 !important;
+}
+.tooltip-color1 .tooltip-bottom::after {
+  border-bottom-color: #e6bc40 !important;
+}
+.tooltip-color1 .tooltip-right::after {
+  border-right-color: #e6bc40 !important;
+}
+.tooltip-color1 .tooltip {
+  @apply border-solid border-2;
+  border-color: #e6bc40;
+  background-color: white !important;
+  color: black;
+}
+
 .tooltip-gen {
   @apply relative cursor-help text-blue-500;
   transition: 0.3s all;
@@ -557,6 +604,7 @@
 }
 .tooltip-gen .tooltip-top {
   z-index: 1;
+  bottom: 0;
   min-width: 50px;
 }
 .tooltip-gen .tooltip-top::after {
@@ -573,6 +621,7 @@
 .tooltip-gen .tooltip-left {
   z-index: 1;
   top: 0;
+  right: 0;
 }
 .tooltip-gen .tooltip-left::after {
   @apply border-l-neutral-800;
@@ -589,6 +638,7 @@
 .tooltip-gen .tooltip-right {
   z-index: 1;
   top: 0;
+  left: 0;
 }
 .tooltip-gen .tooltip-right::after {
   @apply border-l-neutral-800;
@@ -632,38 +682,10 @@
 }
 
 .pagination-frame {
-  @apply pt-3 px-2 rounded-t-2xl relative -top-4 z-[2];
+  @apply rounded-t-2xl space-y-5;
 }
 .pagination-frame .pagination {
-  @apply flex w-fit mt-3 ms-3;
-}
-.pagination-frame .pagination .item-btn {
-  @apply border-r-2 border-r-black hover:opacity-85;
-  border-right-style: solid;
-}
-.pagination-frame .pagination .item-btn:last-child {
-  border-right: none;
-}
-.pagination-frame .pagination .previous {
-  @apply rounded-l;
-}
-.pagination-frame .pagination .next {
-  @apply rounded-r;
-}
-.pagination-frame .pagination .previous:not(.active), .pagination-frame .pagination .next:not(.active) {
-  @apply bg-neutral-500;
-}
-.pagination-frame .pagination .previous a, .pagination-frame .pagination .next a {
-  @apply px-4 py-2 text-lg flex justify-center items-center w-full h-full;
-}
-.pagination-frame .pagination .active {
-  @apply bg-emerald-400;
-}
-.pagination-frame .pagination .page-info {
-  @apply bg-neutral-100 px-4 py-2;
-}
-.pagination-frame .pagination .item {
-  @apply bg-cyan-400 px-4 py-2 flex justify-center items-center;
+  @apply w-full flex justify-center items-center;
 }
 
 .table {
@@ -706,6 +728,17 @@
 .btn-group .btn:last-child {
   @apply rounded-r rounded-l-none;
 }
+.btn-group .btn:active {
+  box-shadow: none !important;
+}
+
+.btn-group-border-2-slate .btn {
+  @apply border-r-2 border-solid border-slate-200;
+  border-right: solid 2px rgb(226, 232, 240) !important;
+}
+.btn-group-border-2-slate .btn:last-child {
+  border-right: none !important;
+}
 
 .btn-md {
   padding: 0.5rem 1rem !important;
@@ -715,28 +748,61 @@
   padding: 0.25rem 1rem !important;
 }
 
+a.btn {
+  display: flex;
+  align-items: center;
+}
+
+.btn-dead {
+  @apply bg-slate-300 shadow-none cursor-not-allowed;
+  cursor: not-allowed !important;
+}
+.btn-dead:hover {
+  box-shadow: none !important;
+}
+
 .btn {
   @apply border-2 border-solid cursor-pointer px-2 py-1 rounded select-none w-fit hover:shadow-2xl;
 }
 
 .btn-ok, .btn-success {
   @apply bg-green-600 border-green-500 hover:bg-green-500;
+  transition: all 200ms !important;
+}
+.btn-ok:active, .btn-success:active {
+  @apply ring-green-600 ring-2 ring-offset-2;
 }
 
 .btn-cancel {
-  @apply bg-neutral-200 border-neutral-100 hover:bg-neutral-100;
+  @apply bg-slate-300 border-slate-200 hover:bg-slate-100;
+  transition: all 200ms !important;
+}
+.btn-cancel:active {
+  @apply ring-slate-300 ring-2 ring-offset-2;
 }
 
 .btn-error {
   @apply bg-red-500 border-red-400 hover:bg-red-400;
+  transition: all 200ms !important;
+}
+.btn-error:not(.btn-error ~ .btn-group):active {
+  @apply ring-red-500 ring-2 ring-offset-2;
 }
 
 .btn-warning {
   @apply bg-yellow-400 border-yellow-300 hover:bg-yellow-300;
+  transition: all 200ms !important;
+}
+.btn-warning:not(.btn-warning ~ .btn-group):active {
+  @apply ring-yellow-400 ring-2 ring-offset-2;
 }
 
 .btn-max {
   @apply w-full;
+}
+
+.btn-center {
+  @apply flex justify-center items-center;
 }
 
 .btn-text-center {
@@ -752,51 +818,73 @@
 }
 
 .btn-color1 {
-  background-color: #e6bc40;
-  border-color: rgb(248, 202, 68);
+  @apply bg-color1 border-color1-50;
+  transition: all 200ms !important;
 }
 .btn-color1:hover {
-  background-color: rgb(248, 202, 68);
+  @apply bg-color1-50;
+}
+.btn-color1:active:not(.btn-group) {
+  @apply ring-color1 ring-2 ring-offset-2;
 }
 
 .btn-color2 {
-  background-color: #5866a6;
-  border-color: #697ac6;
+  @apply bg-color2 border-color2-50;
+  transition: all 200ms !important;
 }
 .btn-color2:hover {
-  background-color: #697ac6;
+  @apply bg-color2-50;
+}
+.btn-color2:active:not(.btn-group) {
+  @apply ring-color2 ring-2 ring-offset-2;
 }
 
 .btn-color3 {
-  background-color: #405ee6;
-  border-color: #4768fa;
+  @apply bg-color3 border-color3-50;
+  transition: all 200ms !important;
 }
 .btn-color3:hover {
-  background-color: #4768fa;
+  @apply bg-color3-50;
+}
+.btn-color3:active:not(.btn-group) {
+  @apply ring-color3 ring-2 ring-offset-2;
 }
 
 .btn-color4 {
-  background-color: #918259;
-  border-color: #b2a06e;
+  @apply bg-color4 border-color4-50;
+  transition: all 200ms !important;
 }
 .btn-color4:hover {
-  background-color: #b2a06e;
+  @apply bg-color4-50;
+}
+.btn-color4:active:not(.btn-group) {
+  @apply ring-color4 ring-2 ring-offset-2;
 }
 
 .btn-color5 {
-  background-color: #505466;
-  border-color: #747a94;
+  @apply bg-color5 border-color5-50;
+  transition: all 200ms !important;
 }
 .btn-color5:hover {
-  background-color: #747a94;
+  @apply bg-color5-50;
+}
+.btn-color5:active:not(.btn-group) {
+  @apply ring-color5 ring-2 ring-offset-2;
 }
 
 .btn-color6 {
-  background-color: #3c3933;
-  border-color: #666056;
+  @apply bg-color6 border-color6-50;
+  transition: all 200ms !important;
 }
 .btn-color6:hover {
-  background-color: #666056;
+  @apply bg-color6-50;
+}
+.btn-color6:active:not(.btn-group) {
+  @apply ring-color6 ring-2 ring-offset-2;
+}
+
+.btn-pill {
+  @apply rounded-4xl;
 }
 
 .btn-circle {
@@ -811,11 +899,30 @@
   transition: background 400ms;
 }
 
+.btn-float-right-0-bottom-0 {
+  @apply absolute right-0 bottom-0;
+  position: absolute !important;
+}
+
+.btn-float-center-bottom-0 {
+  @apply absolute left-1/3 bottom-0;
+  position: absolute !important;
+}
+
+.-btn-float-center-bottom-16 {
+  @apply absolute left-1/3 -bottom-4;
+  position: absolute !important;
+}
+
+.-btn-float-right-16-bottom-16 {
+  @apply absolute -right-4 -bottom-4;
+  position: absolute !important;
+}
+
 .btn-ripple {
   position: relative;
   overflow: hidden;
   outline: 0;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3); /* black with 30% opacity */
   cursor: pointer;
 }
 
@@ -857,19 +964,22 @@ span.ripple {
   @apply grid grid-cols-1 xxl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 footer:grid-cols-2 sm:grid-cols-1  xs:grid-cols-1 gap-6 grid-flow-row-dense;
 }
 .card-list .card {
-  @apply h-full rounded-md shadow mb-10;
+  @apply ring-1 ring-slate-200 h-full rounded-md shadow-md mb-10;
 }
 .card-list .card .inner {
-  @apply grid grid-cols-1 gap-0 w-full h-full;
+  @apply grid grid-cols-1 w-full h-full;
 }
 .card-list .card .inner .image {
   @apply w-full aspect-video rounded-t-md flex justify-center items-center;
 }
 .card-list .card .inner .content {
-  @apply px-2 py-1 bg-white relative h-full;
+  @apply rounded-b-md px-2 py-1 bg-white relative h-full flex justify-center items-center pb-[34px];
+}
+.card-list .card .inner .content .center-border {
+  @apply w-full px-2 relative;
 }
 .card-list .card .inner .content .title {
-  @apply text-xl;
+  @apply text-xl text-center;
 }
 .card-list .card .inner .content .description {
   @apply text-lg;
@@ -878,8 +988,15 @@ span.ripple {
   @apply mt-5 relative bottom-0 left-0 w-full;
 }
 
-.placeholder {
+.placeholder-circle:after {
+  border-radius: 32px !important;
+}
+
+.placeholder-16-9 {
   @apply aspect-video;
+}
+
+.placeholder {
   position: relative;
   background: rgb(235, 235, 235) no-repeat;
 }
@@ -887,24 +1004,23 @@ span.ripple {
   visibility: hidden;
 }
 .placeholder:after {
-  @apply rounded-t-md;
+  @apply rounded-md;
   content: "";
   width: 100%;
   height: 100%;
-  background: transparent;
   position: absolute;
   top: 0;
   left: 0;
-  animation: forwards linear infinite placeholder 2.5s;
-  background: linear-gradient(to right, transparent 0%, rgba(217, 216, 216, 0.5) 75%, rgba(213, 213, 213, 0.5) 100%);
+  animation: forwards linear infinite placeholder 1.5s;
+  background-image: url("../../public/assets/images/placeholder.webp");
 }
 
 @keyframes placeholder {
   to {
-    background-position: -468px 0;
+    background-position: -1000px 0;
   }
   from {
-    background-position: 468px 0;
+    background-position: 1000px 0;
   }
 }
 .container1 {
@@ -994,11 +1110,40 @@ span.ripple {
   transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
 }
 
+.persons-circle-bar {
+  @apply w-full mt-3;
+}
+.persons-circle-bar .persons-title {
+  @apply text-neutral-500 text-sm;
+}
+.persons-circle-bar .flex-center-box {
+  @apply flex space-x-2 w-full;
+}
+.persons-circle-bar .flex-center-box .pcb-item {
+  @apply bg-cover bg-center bg-no-repeat size-10 rounded-4xl;
+}
+
+.flex-text-col {
+  @apply flex items-center justify-center mt-3;
+}
+.flex-text-col .ftc-item {
+  @apply h-max border-r-2 border-solid border-r-slate-200 break-keep px-4 w-full;
+}
+.flex-text-col .ftc-item .highlight {
+  @apply tracking-widest text-center text-color1 text-xl font-bold break-keep;
+}
+.flex-text-col .ftc-item .ftc-title {
+  @apply text-center text-neutral-500 text-sm break-keep;
+}
+.flex-text-col .ftc-item:last-child {
+  @apply border-r-0;
+}
+
 body {
   @apply relative;
 }
 body * {
-  transition: all 500ms;
+  transition: all 200ms;
 }
 body footer {
   @apply z-10 text-black flex items-center justify-center w-full;

@@ -254,6 +254,35 @@
         color: black;
     }
 }
+.tooltip-color1{
+    color: $color1 !important;
+     .tooltip-left{
+         &::after{
+             border-left-color: $color1 !important;
+         }
+     }
+     .tooltip-top{
+         &::after{
+             border-top-color: $color1 !important;
+         }
+     }
+     .tooltip-bottom{
+         &::after{
+             border-bottom-color: $color1 !important;
+         }
+     }
+     .tooltip-right{
+         &::after{
+             border-right-color: $color1 !important;
+         }
+     }
+     .tooltip{
+         @apply border-solid border-2;
+         border-color: $color1;
+         background-color: white !important;
+         color: black;
+     }
+ }
 .tooltip-gen {
     @apply relative cursor-help text-blue-500;
     transition: .3s all;
@@ -302,6 +331,7 @@
 
     .tooltip-top {
         z-index: 1;
+        bottom: 0;
         min-width: 50px;
         &::after {
             @apply border-l-neutral-800;
@@ -319,6 +349,7 @@
     .tooltip-left {
         z-index: 1;
         top: 0;
+        right: 0;
 
         &::after {
             @apply border-l-neutral-800;
@@ -337,6 +368,7 @@
     .tooltip-right {
         z-index: 1;
         top: 0;
+        left: 0;
 
         &::after {
             @apply border-l-neutral-800;

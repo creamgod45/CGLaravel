@@ -27,9 +27,9 @@
 .card-list{
     @apply grid grid-cols-1 xxl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 footer:grid-cols-2 sm:grid-cols-1  xs:grid-cols-1 gap-6 grid-flow-row-dense;
     .card{
-        @apply h-full rounded-md shadow mb-10;
+        @apply ring-1 ring-slate-200 h-full rounded-md shadow-md mb-10;
         .inner{
-            @apply grid grid-cols-1 gap-0 w-full h-full;
+            @apply grid grid-cols-1 w-full h-full;
             .image{
                 @apply w-full aspect-video rounded-t-md flex justify-center items-center;
                 .float-text{
@@ -37,10 +37,12 @@
                 }
             }
             .content{
-                @apply px-2 py-1 bg-white relative h-full;
-
+                @apply rounded-b-md px-2 py-1 bg-white relative h-full flex justify-center items-center pb-[34px];
+                .center-border{
+                    @apply w-full px-2 relative;
+                }
                 .title{
-                    @apply text-xl;
+                    @apply text-xl text-center;
                 }
                 .description{
                     @apply text-lg;

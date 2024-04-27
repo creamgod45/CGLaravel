@@ -1,5 +1,13 @@
-.placeholder{
+.placeholder-circle{
+    &:after{
+        border-radius: 32px !important;
+    }
+}
+.placeholder-16-9{
     @apply aspect-video;
+}
+
+.placeholder{
     position: relative;
     background: rgb(235, 235, 235) no-repeat;
 
@@ -8,24 +16,23 @@
     }
 
     &:after{
-        @apply rounded-t-md;
+        @apply rounded-md;
         content: '';
         width: 100%;
         height: 100%;
-        background: transparent;
         position: absolute;
         top: 0;
         left: 0;
-        animation: forwards linear infinite placeholder 2.5s;
-        background: linear-gradient(to right, transparent 0%, rgba(217,216,216,0.5) 75%, rgba(213,213,213,0.5) 100%);
+        animation: forwards linear infinite placeholder 1.5s;
+        background-image: url('../../public/assets/images/placeholder.webp');
     }
 }
 
 @keyframes placeholder{
     to{
-        background-position: -468px 0
+        background-position: -1000px 0
     }
     from{
-        background-position: 468px 0
+        background-position: 1000px 0
     }
 }

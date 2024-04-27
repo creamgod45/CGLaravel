@@ -1,6 +1,6 @@
 @tailwind base;
 @tailwind components;
-//@tailwind utilities;
+@tailwind utilities;
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 @import "googlefont";
 @import "colors";
@@ -16,12 +16,15 @@
 @import "card";
 @import "placeholder";
 @import "home";
+@import "persons_bar";
+@import "flex_text_col";
+
 
 body {
     @apply relative;
 
     *{
-        transition: all 500ms;
+        transition: all 200ms;
     }
 
     footer {

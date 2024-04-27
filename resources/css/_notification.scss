@@ -19,18 +19,37 @@
         .close-btn{
             @apply absolute -top-4 -right-4 size-8 bg-red-400 hover:bg-red-300 text-white flex justify-center items-center rounded-4xl cursor-pointer;
         }
+        &::after{
+            @apply w-full absolute bottom-0 left-0 h-1 bg-red-500;
+            content: '';
+            -webkit-animation-duration: 5s;
+            animation-duration: 5s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            animation: notificationtimeline 5s ease-in-out;
+        }
+    }
+
+    .item.done{
+        &::after{
+            width: 0 !important;
+        }
+    }
+    .item.fadeOut{
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        animation: fadeOut 1s ease-in-out;
     }
 }
 
-@-webkit-keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
+@keyframes notificationtimeline {
     to {
-        opacity: 1;
+        width: 0;
     }
 }
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -38,6 +57,16 @@
 
     to {
         opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
     }
 }
 

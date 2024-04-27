@@ -1,10 +1,12 @@
 function ripple(){
     document.querySelectorAll('.btn-ripple').forEach(button => {
-        button.addEventListener('click', createRipple);
+        //button.addEventListener('click', createRipple);
+        button.addEventListener('mouseup', createRipple);
     });
-    console.log('ripper')
+    //console.log('ripper')
 }
 function createRipple(event) {
+    //console.log(event)
     const button = event.currentTarget;
 
     const circle = document.createElement("span");
