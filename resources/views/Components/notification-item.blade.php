@@ -14,5 +14,5 @@
         <div class="title">{!! $title !!}</div>
         <div class="description">{!! $description !!}</div>
     </div>
-    <div class="close-btn" onclick="document.getElementById('{{$id}}').remove()">&times;</div>
+    <div class="close-btn">&times;</div>
 </div>

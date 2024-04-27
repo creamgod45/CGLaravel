@@ -5,4 +5,5 @@ import './lazyImageLoader.js';
 import './placerholder.js';
 import './menu.js';
 import './button.js';
+import './notification.js';
 import './Home.js';
