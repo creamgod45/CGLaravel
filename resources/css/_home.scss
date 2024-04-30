@@ -2,6 +2,15 @@
 .container1 {
     @apply mt-[100px] mx-10 border-neutral-200 border-2 border-solid shadow-2xl rounded-4xl p-5;
     .home {
+        .floatUI-demo{
+            @apply mt-5 w-full;
+        }
+        .outline-btn-demo{
+            @apply mt-5 w-full;
+        }
+        .breadcrumb-demo{
+            @apply mt-5 w-full;
+        }
         .tooltip-demo{
             @apply m-5 h-[300px] flex justify-center items-center;
         }

@@ -281,7 +281,7 @@
   @apply fixed right-5 bottom-10 w-fit h-fit z-20 space-y-5;
 }
 .notification .item {
-  @apply relative bg-white border-solid border-s-[6px] flex justify-center items-center px-4 py-2 space-x-5 shadow-2xl;
+  @apply relative bg-white border-solid border-s-[6px] flex justify-center items-start px-4 py-2 space-x-5 shadow-2xl;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
@@ -289,10 +289,13 @@
   animation: fadeIn 1s ease-in-out;
 }
 .notification .item .icon {
-  @apply text-2xl;
+  @apply text-2xl h-full flex justify-center items-center;
 }
 .notification .item .context .title {
-  @apply font-bold;
+  @apply font-bold md:text-xl sm:text-sm xs:text-sm;
+}
+.notification .item .context .description {
+  @apply md:text-lg sm:text-xs xs:text-xs;
 }
 .notification .item .close-btn {
   @apply absolute -top-4 -right-4 size-8 bg-red-400 hover:bg-red-300 text-white flex justify-center items-center rounded-4xl cursor-pointer;
@@ -716,6 +719,14 @@
   @apply bg-neutral-300;
 }
 
+.outline-btn {
+  @apply px-4 py-1 hover:ring-1 hover:ring-slate-200 hover:shadow-lg focus:ring-1 focus:ring-slate-200 focus:shadow-lg w-fit rounded-4xl checked:ring-1 checked:ring-slate-200 checked:shadow-lg select-none;
+}
+
+.outline-btn-blue {
+  @apply hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white checked:bg-blue-500 checked:text-white;
+}
+
 .btn-group {
   @apply flex cursor-pointer;
 }
@@ -973,7 +984,7 @@ span.ripple {
   @apply w-full aspect-video rounded-t-md flex justify-center items-center;
 }
 .card-list .card .inner .content {
-  @apply rounded-b-md px-2 py-1 bg-white relative h-full flex justify-center items-center pb-[34px];
+  @apply rounded-md px-2 py-1 bg-white relative h-full flex justify-center items-center pb-[34px];
 }
 .card-list .card .inner .content .center-border {
   @apply w-full px-2 relative;
@@ -982,7 +993,7 @@ span.ripple {
   @apply text-xl text-center;
 }
 .card-list .card .inner .content .description {
-  @apply text-lg;
+  @apply text-lg mt-5;
 }
 .card-list .card .inner .content .control {
   @apply mt-5 relative bottom-0 left-0 w-full;
@@ -1023,8 +1034,62 @@ span.ripple {
     background-position: 1000px 0;
   }
 }
+.persons-circle-bar {
+  @apply w-full mt-3;
+}
+.persons-circle-bar .persons-title {
+  @apply text-neutral-500 text-sm;
+}
+.persons-circle-bar .flex-center-box {
+  @apply flex space-x-2 w-full;
+}
+.persons-circle-bar .flex-center-box .pcb-item {
+  @apply bg-cover bg-center bg-no-repeat size-10 rounded-4xl;
+}
+
+.flex-text-col {
+  @apply flex items-center justify-center mt-3;
+}
+.flex-text-col .ftc-item {
+  @apply h-max border-r-2 border-solid border-r-slate-200 break-keep px-4 w-full;
+}
+.flex-text-col .ftc-item .highlight {
+  @apply tracking-widest text-center text-color1 text-xl font-bold break-keep;
+}
+.flex-text-col .ftc-item .ftc-title {
+  @apply text-center text-neutral-500 text-sm break-keep;
+}
+.flex-text-col .ftc-item:last-child {
+  @apply border-r-0;
+}
+
+.breadcrumb {
+  @apply flex w-fit rounded-lg border-slate-200 border-solid border-[1px] shadow py-1 px-1;
+}
+.breadcrumb .bcitem {
+  @apply cursor-pointer select-none px-4 py-2 flex justify-center items-center;
+}
+.breadcrumb .bcitem:last-child {
+  @apply border-r-0 rounded-lg;
+}
+.breadcrumb .bcitem:first-child {
+  @apply ps-4;
+}
+.breadcrumb .bcitem.active {
+  @apply cursor-not-allowed bg-color1;
+}
+
 .container1 {
   @apply mt-[100px] mx-10 border-neutral-200 border-2 border-solid shadow-2xl rounded-4xl p-5;
+}
+.container1 .home .floatUI-demo {
+  @apply mt-5 w-full;
+}
+.container1 .home .outline-btn-demo {
+  @apply mt-5 w-full;
+}
+.container1 .home .breadcrumb-demo {
+  @apply mt-5 w-full;
 }
 .container1 .home .tooltip-demo {
   @apply m-5 h-[300px] flex justify-center items-center;
@@ -1110,35 +1175,6 @@ span.ripple {
   transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
 }
 
-.persons-circle-bar {
-  @apply w-full mt-3;
-}
-.persons-circle-bar .persons-title {
-  @apply text-neutral-500 text-sm;
-}
-.persons-circle-bar .flex-center-box {
-  @apply flex space-x-2 w-full;
-}
-.persons-circle-bar .flex-center-box .pcb-item {
-  @apply bg-cover bg-center bg-no-repeat size-10 rounded-4xl;
-}
-
-.flex-text-col {
-  @apply flex items-center justify-center mt-3;
-}
-.flex-text-col .ftc-item {
-  @apply h-max border-r-2 border-solid border-r-slate-200 break-keep px-4 w-full;
-}
-.flex-text-col .ftc-item .highlight {
-  @apply tracking-widest text-center text-color1 text-xl font-bold break-keep;
-}
-.flex-text-col .ftc-item .ftc-title {
-  @apply text-center text-neutral-500 text-sm break-keep;
-}
-.flex-text-col .ftc-item:last-child {
-  @apply border-r-0;
-}
-
 body {
   @apply relative;
 }
@@ -1146,24 +1182,42 @@ body * {
   transition: all 200ms;
 }
 body footer {
-  @apply z-10 text-black flex items-center justify-center w-full;
+  @apply w-full px-5 justify-center items-center;
 }
-body footer a {
+body footer .footer-menu {
+  @apply grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 footer:grid-cols-1 ring-1 ring-slate-200 shadow w-full px-10 py-10 bg-white rounded-t-4xl mt-10 gap-5;
+}
+body footer .footer-menu .item {
+  @apply items-start w-fit space-y-1;
+}
+body footer .footer-menu .item .menu-btn {
+  @apply w-fit space-x-3 py-1 hover:shadow-2xl hover:bg-neutral-300 rounded cursor-pointer select-none flex flex-nowrap justify-center items-center ps-4;
+}
+body footer .footer-menu .item .menu-btn svg {
+  @apply flex-auto1 w-6 ms-3;
+}
+body footer .footer-menu .item .menu-btn span {
+  @apply flex-auto1 w-full;
+}
+body footer .footer1 {
+  @apply ring-1 ring-slate-200 shadow z-10 bg-white text-black flex items-center justify-center w-full;
+}
+body footer .footer1 a {
   @apply text-blue-500;
 }
-body footer a:hover {
+body footer .footer1 a:hover {
   @apply text-blue-400;
 }
-body footer .row {
+body footer .footer1 .row {
   @apply flex flex-row flex-wrap space-x-0 w-full;
 }
-body footer .row .col {
+body footer .footer1 .row .col {
   @apply flex-auto1 footer:w-1/2 sm:w-full flex justify-center items-center;
 }
-body footer .laravel {
+body footer .footer1 .laravel {
   color: #f4382e;
 }
-body footer .laravel:hover {
+body footer .footer1 .laravel:hover {
   color: #ea807b;
 }
 

@@ -45,65 +45,67 @@
             <div class="menu columns-col">
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_cloudComputing)}}</div>
-                    <a href="" class="menu-btn">
+                    <a href="" class="menu-btn btn-ripple">
                         <i class="fa-solid fa-cloud"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_googleCloud)}}</span>
                     </a>
-                    <a href="" class="menu-btn">
+                    <a href="" class="menu-btn btn-ripple">
                         <i class="fa-brands fa-aws"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_aws)}}</span>
                     </a>
-                    <a href="" class="menu-btn">
+                    <a href="" class="menu-btn btn-ripple">
                         <i class="fa-brands fa-microsoft"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_MicrosoftAzure)}}</span>
                     </a>
                 </div>
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_WebDesign)}}</div>
-                    <a href="" class="menu-btn">
+                    <a href="" class="menu-btn btn-ripple">
                         <i class="fa-regular fa-newspaper"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_PromotionalPage)}}</span>
                     </a>
-                    <a href="" class="menu-btn">
+                    <a href="" class="menu-btn btn-ripple">
                         <i class="fa-solid fa-shop"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_BrandingWebsite)}}</span>
                     </a>
-                    <a href="" class="menu-btn">
+                    <a href="" class="menu-btn btn-ripple">
                         <i class="fa-solid fa-server"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_CMS)}}</span>
                     </a>
-                    <a href="" class="menu-btn">
+                    <a href="" class="menu-btn btn-ripple">
                         <i class="fa-solid fa-cash-register"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_POS)}}</span>
                     </a>
                 </div>
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_ClientCaseStudies)}}</div>
-                    <a href="https://cgimager.blaetoan.cyou/index.php" target="_blank" class="menu-btn">
+                    <a href="https://cgimager.blaetoan.cyou/index.php" target="_blank" class="menu-btn btn-ripple">
                         <i class="fa-solid fa-shop"></i>
                         <span>&nbsp;CGIMAGER <i class="fa-solid fa-square-arrow-up-right"></i></span>
                     </a>
-                    <a href="https://cgphp01.blaetoan.cyou/" target="_blank" class="menu-btn">
+                    <a href="https://cgphp01.blaetoan.cyou/" target="_blank" class="menu-btn btn-ripple">
                         <i class="fa-solid fa-shop"></i>
                         <span>&nbsp;串串幸福 <i class="fa-solid fa-square-arrow-up-right"></i></span>
                     </a>
+                </div>
+                <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_VendorOperations)}}</div>
                     @guest
-                    <a href="/login" class="menu-btn">
-                        <i class="fa-solid fa-shop"></i>
-                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::login_title)}}</span>
-                    </a>
-                    <a href="/register" class="menu-btn">
-                        <i class="fa-solid fa-shop"></i>
-                        <span>&nbsp;{{$i18N->getLanguage(ELanguageText::register_title)}}</span>
-                    </a>
+                        <a href="/login" class="menu-btn btn-ripple">
+                            <i class="fa-solid fa-shop"></i>
+                            <span>&nbsp;{{$i18N->getLanguage(ELanguageText::login_title)}}</span>
+                        </a>
+                        <a href="/register" class="menu-btn btn-ripple">
+                            <i class="fa-solid fa-shop"></i>
+                            <span>&nbsp;{{$i18N->getLanguage(ELanguageText::register_title)}}</span>
+                        </a>
                     @endguest
                     @auth
-                        <a href="/members" class="menu-btn">
+                        <a href="/members" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_membersBtn)}}</span>
                         </a>
-                        <a href="/logout" class="menu-btn">
+                        <a href="/logout" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::logout_title)}}</span>
                         </a>
@@ -117,20 +119,20 @@
             <div class="menu columns-col">
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_SocialMedia)}}</div>
-                    <a href="" class="menu-btn"><i class="fa-brands fa-facebook"></i>
+                    <a href="" class="menu-btn btn-ripple"><i class="fa-brands fa-facebook"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_facebook)}}</span>
                     </a>
-                    <div class="menu-btn"><i class="fa-brands fa-x-twitter"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_X)}}</span></div>
-                    <div class="menu-btn"><i class="fa-brands fa-youtube"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Youtube)}}</span></div>
-                    <div class="menu-btn"><i class="fa-brands fa-instagram"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Instagram)}}</span></div>
+                    <div class="menu-btn btn-ripple"><i class="fa-brands fa-x-twitter"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_X)}}</span></div>
+                    <div class="menu-btn btn-ripple"><i class="fa-brands fa-youtube"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Youtube)}}</span></div>
+                    <div class="menu-btn btn-ripple"><i class="fa-brands fa-instagram"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Instagram)}}</span></div>
                 </div>
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_resource)}}</div>
-                    <div class="menu-btn"><i class="fa-solid fa-users"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_community)}}</span></div>
-                    <div class="menu-btn"><i class="fa-solid fa-globe"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Partner)}}</span></div>
-                    <div class="menu-btn"><i class="fa-solid fa-book-open"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_guide)}}</span></div>
-                    <div class="menu-btn"><i class="fa-brands fa-wikipedia-w"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_WIKI)}}</span></div>
-                    <div class="menu-btn"><i class="fa-solid fa-shield-halved"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Privacy)}}</span></div>
+                    <div class="menu-btn btn-ripple"><i class="fa-solid fa-users"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_community)}}</span></div>
+                    <div class="menu-btn btn-ripple"><i class="fa-solid fa-globe"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Partner)}}</span></div>
+                    <div class="menu-btn btn-ripple"><i class="fa-solid fa-book-open"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_guide)}}</span></div>
+                    <div class="menu-btn btn-ripple"><i class="fa-brands fa-wikipedia-w"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_WIKI)}}</span></div>
+                    <div class="menu-btn btn-ripple"><i class="fa-solid fa-shield-halved"></i><span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_Privacy)}}</span></div>
                 </div>
             </div>
             <div class="columns-col news">
@@ -140,7 +142,7 @@
                     </div>
                     <div class="title">
                         <i class="fa-solid fa-language"></i>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_language)}}
-                        <div class="tag">{{$i18N->getLanguage(ELanguageText::menu_tag_global)}}</div>
+                        <div class="tag btn-ripple">{{$i18N->getLanguage(ELanguageText::menu_tag_global)}}</div>
                     </div>
                     <select aria-label="language select bar" onchange="changeLanguage(this);">
                         <option selected
@@ -167,7 +169,7 @@
                     </div>
                     <div class="timestamp">
                         {{Utils::timeStamp(time())}}
-                        <div class="tag">{{$i18N->getLanguage(ELanguageText::menu_tag_Sustainable)}}</div>
+                        <div class="tag btn-ripple">{{$i18N->getLanguage(ELanguageText::menu_tag_Sustainable)}}</div>
                     </div>
                     <div class="title">
                         勵志推廣舒適的環保環境

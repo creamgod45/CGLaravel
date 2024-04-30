@@ -15,9 +15,10 @@
 @import "button";
 @import "card";
 @import "placeholder";
-@import "home";
 @import "persons_bar";
 @import "flex_text_col";
+@import "breadcrumb";
+@import "home";
 
 
 body {
@@ -28,25 +29,43 @@ body {
     }
 
     footer {
-        @apply z-10 text-black flex items-center justify-center w-full;
-        a {
-            @apply text-blue-500;
-            &:hover {
-                @apply text-blue-400;
+        @apply w-full px-5 justify-center items-center;
+        .footer-menu{
+            @apply grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 footer:grid-cols-1 ring-1 ring-slate-200 shadow w-full px-10 py-10 bg-white rounded-t-4xl mt-10 gap-5;
+            .item{
+                @apply items-start w-fit space-y-1;
+                .menu-btn{
+                    @apply w-fit space-x-3 py-1 hover:shadow-2xl hover:bg-neutral-300 rounded cursor-pointer select-none flex flex-nowrap justify-center items-center ps-4;
+                    svg{
+                        @apply flex-auto1 w-6 ms-3;
+                    }
+                    span{
+                        @apply flex-auto1 w-full;
+                    }
+                }
             }
         }
-        .row{
-            @apply flex flex-row flex-wrap space-x-0 w-full;
-            .col{
-                @apply flex-auto1 footer:w-1/2 sm:w-full flex justify-center items-center;
+        .footer1{
+            @apply ring-1 ring-slate-200 shadow z-10 bg-white text-black flex items-center justify-center w-full;
+            a {
+                @apply text-blue-500;
+                &:hover {
+                    @apply text-blue-400;
+                }
             }
-        }
+            .row{
+                @apply flex flex-row flex-wrap space-x-0 w-full;
+                .col{
+                    @apply flex-auto1 footer:w-1/2 sm:w-full flex justify-center items-center;
+                }
+            }
 
-        .laravel {
-            color: #f4382e;
+            .laravel {
+                color: #f4382e;
 
-            &:hover {
-                color: #ea807b;
+                &:hover {
+                    color: #ea807b;
+                }
             }
         }
     }

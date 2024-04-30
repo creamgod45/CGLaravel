@@ -37,7 +37,7 @@
                 }
             }
             .content{
-                @apply rounded-b-md px-2 py-1 bg-white relative h-full flex justify-center items-center pb-[34px];
+                @apply rounded-md px-2 py-1 bg-white relative h-full flex justify-center items-center pb-[34px];
                 .center-border{
                     @apply w-full px-2 relative;
                 }
@@ -45,7 +45,7 @@
                     @apply text-xl text-center;
                 }
                 .description{
-                    @apply text-lg;
+                    @apply text-lg mt-5;
                 }
                 .control{
                     @apply mt-5 relative bottom-0 left-0 w-full;

@@ -6,10 +6,17 @@ const init = new CustomEvent('init', {
 });
 function placerholder(){
     for (let el of document.querySelectorAll('.placeholder')) {
-        setTimeout(()=>{
-            el.classList.remove('placeholder');
-            document.dispatchEvent(init);
-        },1000);
+        if (el.dataset.placeholderdelay !== null) {
+            setTimeout(()=>{
+                el.classList.remove('placeholder');
+                document.dispatchEvent(init);
+            },Number.parseInt(el.dataset.placeholderdelay));
+        }else{
+            setTimeout(()=>{
+                el.classList.remove('placeholder');
+                document.dispatchEvent(init);
+            },1000);
+        }
     }
 }
 document.addEventListener('DOMContentLoaded', placerholder);

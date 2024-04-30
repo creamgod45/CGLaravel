@@ -1,3 +1,12 @@
+
+.outline-btn{
+    @apply px-4 py-1 hover:ring-1 hover:ring-slate-200 hover:shadow-lg focus:ring-1 focus:ring-slate-200 focus:shadow-lg w-fit rounded-4xl checked:ring-1 checked:ring-slate-200 checked:shadow-lg select-none;
+}
+
+.outline-btn-blue{
+    @apply hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white checked:bg-blue-500 checked:text-white;
+}
+
 .btn-group {
     @apply flex cursor-pointer;
     .btn:first-child {

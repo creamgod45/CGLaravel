@@ -41,8 +41,47 @@
                 <div class="btn-color1 btn-ripple btn-circle"><i class="fa-solid fa-house"></i></div>
                 <button class="btn btn-ripple btn-color1">Click Me</button>
             </div>
+            <div class="outline-btn-demo">
+                這是關於 Outline Button(Filter) 示範
+                <form>
+                    <label for="email" class="outline-btn has-[:checked]:bg-blue-500 has-[:checked]:text-white">
+                        <input id="email" class="hidden" type="checkbox" name="email">&nbsp;驗證信件</label>
+                    <label for="phone1" class="outline-btn has-[:checked]:bg-blue-500 has-[:checked]:text-white">
+                        <input id="phone1" class="hidden" type="radio" name="filter-phone">&nbsp;電話(A~Z)</label>
+                    <label for="phone2" class="outline-btn has-[:checked]:bg-blue-500 has-[:checked]:phone1:text-white">
+                        <input id="phone2" class="hidden" type="radio" name="filter-phone">&nbsp;電話(Z~A)</label>
+                </form>
+            </div>
+            <div class="floatUI-demo">
+                <button id="A" class="btn btn-color1 btn-ripple relative !z-[1]" data-for="b">
+                    FloatUI Test
+                </button>
+                <div id="B" class="absolute !invisible !z-[2] w-fit text-black bg-slate-200">
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                    testasssssssssssssssssssssssssssssssss<br>
+                </div>
+            </div>
             <div class="tooltip-demo">
-                <div class="placeholder ">
+                <div class="placeholder" data-placeholderdelay="10000">
                     這裡是關於Tooltip 示範
                     <span
                         class="tooltip-gen tooltip-bottom-left-to-right tooltip-black tooltip-top-drill-line tooltip-bottom-line tooltip-y-offset-1"
@@ -66,39 +105,10 @@
             <div class="btn-group btn-group-border-2-slate">
                 <a class="btn btn-md btn-dead tracking-widest !bg-color1 btn-border-0">1/1</a>
                 <a class="btn btn-ripple btn-md btn-color1 btn-border-0"><i class="fa-solid fa-left-long"></i></a>
-                <a class="btn btn-ripple btn-md btn-color1 btn-border-0">1</a>
+                <a class="btn btn-md btn-dead btn-border-0">1</a>
                 <a class="btn btn-ripple btn-md btn-color1 btn-border-0">2</a>
                 <a class="btn btn-ripple btn-md btn-color1 btn-border-0">3</a>
                 <a class="btn btn-ripple btn-md btn-color1 btn-border-0"><i class="fa-solid fa-right-long"></i></a>
-            </div>
-            <div class="pagination-frame">
-                <div class="pagination placeholder">
-                    <div class="previous active item-btn">
-                        <a href=""
-                           rel="prev"
-                           aria-label="{{$i18N->getLanguage(ELanguageText::pagination_previous)}}">
-                            <i class="fa-solid fa-left-long"></i>
-                        </a>
-                    </div>
-                    <div class="item item-btn">
-                        <a href="">1</a>
-                    </div>
-                    <div class="item item-btn">
-                        <a href="">2</a>
-                    </div>
-                    <div class="page-info item-btn">
-                        <div>
-                            1/ 1
-                        </div>
-                    </div>
-                    <div class="next active item-btn">
-                        <a href=""
-                           rel="next"
-                           aria-label="{{$i18N->getLanguage(ELanguageText::pagination_next)}}">
-                            <i class="fa-solid fa-right-long"></i>
-                        </a>
-                    </div>
-                </div>
             </div>
             <div class="card-demo">
                 <div>這是 Card 範例</div>
@@ -146,20 +156,6 @@
                                 <div class="float-text">100x100</div>
                             </div>
                             <div class="content">
-                                <div class="center-border">
-                                    <div class="title">控制項卡片元件</div>
-                                    <div class="description"></div>
-                                    <div class="control btn-group">
-                                        <div
-                                            class="btn btn-transition btn-border-0 btn-max btn-text-center btn-md btn-ripple btn-success">
-                                            確認
-                                        </div>
-                                        <div
-                                            class="btn btn-transition btn-border-0 btn-max btn-text-center btn-md btn-ripple btn-warning">
-                                            取消
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -183,7 +179,7 @@
                                 <div class="float-text">100x100</div>
                             </div>
                             <div class="content">
-                                <input type="file" class="block w-full text-sm text-slate-500
+                                <input type="file" multiple class="block w-full text-sm text-slate-500
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
                                   file:text-sm file:font-semibold
@@ -203,10 +199,24 @@
                     </div>
                     <div class="card placeholder">
                         <div class="inner">
-                            <div class="image placeholder lazyImg" data-src="{{asset('assets/images/100x100.svg')}}">
-                                <div class="float-text">100x100</div>
+                            <div class="content">
+                                <div class="center-border">
+                                    <div class="title">控制項卡片元件</div>
+                                    <div class="description">
+                                        這是一個問題卡片
+                                    </div>
+                                    <div class="control btn-group">
+                                        <div
+                                            class="btn btn-transition btn-border-0 btn-max btn-text-center btn-md btn-ripple btn-success">
+                                            確認
+                                        </div>
+                                        <div
+                                            class="btn btn-transition btn-border-0 btn-max btn-text-center btn-md btn-ripple btn-warning">
+                                            取消
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="content">t</div>
                         </div>
                     </div>
                 </div>
@@ -222,6 +232,26 @@
                             <div class="title"></div>
                             <div class="description"></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-demo">
+                這是 breadcrumb 示範
+                <div class="breadcrumb">
+                    <a href="{{ route('home') }}" class="bcitem">
+                        <i class="fa-solid fa-house"></i>&nbsp;Home
+                    </a>
+                    <a class="bcitem">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                    <div class="bcitem">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>&nbsp;安裝精靈
+                    </div>
+                    <div class="bcitem">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                    <div class="bcitem active">
+                        <i class="fa-solid fa-download"></i>&nbsp;安裝
                     </div>
                 </div>
             </div>
