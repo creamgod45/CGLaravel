@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 @import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "intl-tel-input/build/css/intlTelInput.min.css";
+@import "intltelinput";
 @import "googlefont";
 @import "colors";
 @import "scrollbar";
@@ -18,6 +20,7 @@
 @import "persons_bar";
 @import "flex_text_col";
 @import "breadcrumb";
+@import "form";
 @import "home";
 
 
@@ -31,7 +34,7 @@ body {
     footer {
         @apply w-full px-5 justify-center items-center;
         .footer-menu{
-            @apply grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 footer:grid-cols-1 ring-1 ring-slate-200 shadow w-full px-10 py-10 bg-white rounded-t-4xl mt-10 gap-5;
+            @apply grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 footer:grid-cols-1 ring-1 ring-slate-200 shadow w-full px-10 py-10 bg-neutral-700 text-white rounded-t-4xl mt-10 gap-5;
             .item{
                 @apply items-start w-fit space-y-1;
                 .menu-btn{
@@ -46,7 +49,7 @@ body {
             }
         }
         .footer1{
-            @apply ring-1 ring-slate-200 shadow z-10 bg-white text-black flex items-center justify-center w-full;
+            @apply ring-1 ring-slate-200 shadow z-10 bg-neutral-700 text-white flex items-center justify-center w-full;
             a {
                 @apply text-blue-500;
                 &:hover {

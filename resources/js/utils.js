@@ -10,10 +10,9 @@ export function generateRandomString(length) {
     return result;
 }
 
-
 export function encodeContext(data) {
     let hash = "";
-    let encodeBase64 = btoa(encodeURIComponent(data));
+    let encodeBase64 = btoa(encodeURIComponent(htmlencode(data)));
     let source= encodeBase64;
     //console.log(encodeBase64);
     let length = encodeBase64.length;
@@ -34,12 +33,12 @@ export function encodeContext(data) {
         source: source,
         hash: hash,
         encode: encodeBase64,
-        compress: LZString.compressToUTF16(encodeBase64+"."+hash),
+        compress: LZString.compressToBase64(encodeBase64+"."+hash),
     };
 }
 
 export function decodeContext(compress) {
-    let raw_data = LZString.decompressFromUTF16(compress);
+    let raw_data = LZString.decompressFromBase64(compress);
     let strings = raw_data.split('.');
     let data = strings[0];
     let hash = strings[1];
@@ -55,7 +54,7 @@ export function decodeContext(compress) {
     }
     //console.log(data);
     //console.log(data === t.source);
-    return decodeURIComponent(atob(data));
+    return htmldecode(decodeURIComponent(atob(data)));
 }
 
 export function generateRandomNumbers(rangeStart, rangeEnd, numNumbers) {

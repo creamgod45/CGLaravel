@@ -43,13 +43,20 @@
             </div>
             <div class="outline-btn-demo">
                 這是關於 Outline Button(Filter) 示範
-                <form>
-                    <label for="email" class="outline-btn has-[:checked]:bg-blue-500 has-[:checked]:text-white">
-                        <input id="email" class="hidden" type="checkbox" name="email">&nbsp;驗證信件</label>
-                    <label for="phone1" class="outline-btn has-[:checked]:bg-blue-500 has-[:checked]:text-white">
-                        <input id="phone1" class="hidden" type="radio" name="filter-phone">&nbsp;電話(A~Z)</label>
-                    <label for="phone2" class="outline-btn has-[:checked]:bg-blue-500 has-[:checked]:phone1:text-white">
-                        <input id="phone2" class="hidden" type="radio" name="filter-phone">&nbsp;電話(Z~A)</label>
+                <form method="post" onsubmit="return false;">
+                    <div class="form-peer">
+                        <input id="email" class="peer hidden" type="checkbox" name="email">
+                        <label for="email" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">驗證信件</label>
+                    </div>
+                    <div class="form-peer">
+                        <input id="phone1" class="peer hidden" type="radio" name="filter-phone">
+                        <label for="phone1" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(A~Z)
+                        </label>
+                    </div>
+                    <div class="form-peer">
+                        <input id="phone2" class="peer hidden" type="radio" name="filter-phone">
+                        <label for="phone2" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(Z~A)</label>
+                    </div>
                 </form>
             </div>
             <div class="floatUI-demo">
@@ -179,13 +186,6 @@
                                 <div class="float-text">100x100</div>
                             </div>
                             <div class="content">
-                                <input type="file" multiple class="block w-full text-sm text-slate-500
-                                  file:mr-4 file:py-2 file:px-4
-                                  file:rounded-full file:border-0
-                                  file:text-sm file:font-semibold
-                                  file:bg-violet-50 file:text-violet-700
-                                  hover:file:bg-violet-100
-                                "/>
                             </div>
                         </div>
                     </div>
@@ -254,6 +254,86 @@
                         <i class="fa-solid fa-download"></i>&nbsp;安裝
                     </div>
                 </div>
+            </div>
+            <div class="form-demo">
+                這是 Form 示範
+                <p>Solid</p>
+                <div class="form-group">
+                    <label for="text1">文字</label>
+                    <input id="text1" class="block form-solid" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="text2">文字(僅讀取)</label>
+                    <input id="text2" class="block form-solid" value="test" type="text" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="text42">文字(關閉)</label>
+                    <input id="text42" class="block form-solid" value="test" type="text" disabled>
+                </div>
+                <div class="form-row-nowarp">
+                    <label for="text3" class="col-1 flex justify-start items-center">文字</label>
+                    <input id="text3" class="block form-solid col-11" type="text" required>
+                </div>
+                <form class="form-group" method="post" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="text4">密碼</label>
+                        <div class="form-password-group">
+                            <input id="text4" class="block form-solid front" type="password" autocomplete="new-password" required>
+                            <div class="btn btn-ripple btn-color1 btn-border-0 back ct" data-fn="password-toggle" data-target="#text4"><i class="fa-regular fa-eye"></i></div>
+                        </div>
+                    </div>
+                    <div class="form-group-flex">
+                        <label for="file2" class="btn btn-dead btn-md min-w-fit btn-border-0">選擇檔案</label>
+                        <input id="file2" type="file" disabled multiple class="block w-full form-file btn-ripple"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" class="form-solid" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="datetime-local" class="form-solid" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="time" class="form-solid" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="color" class="form-color btn btn-cancel btn-border-0" disabled>
+                    </div>
+                    <div class="form-group">
+                        <input type="month" class="form-solid" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-solid" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="range" min="0" max="9" class="form-range" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-solid ITI" autocomplete="phone" data-btn="#phone-Validator-btn" data-msg="#phone-Validator-msg" data-true="ok" data-false="failed" required>
+                        <button id="phone-Validator-btn" class="btn btn-ripple btn-md btn-color1" type="button">驗證</button>
+                        <span id="phone-Validator-msg" class="hidden"></span>
+                    </div>
+
+                    <div class="form-group-flex">
+                        <label for="file1" class="btn btn-ripple btn-md btn-ripple btn-color1 min-w-fit btn-border-0">選擇檔案</label>
+                        <input id="file1" type="file" multiple class="block w-full form-file btn-ripple"/>
+                    </div>
+                    <div class="form-peer">
+                        <input id="email2" class="peer hidden" type="checkbox" name="email">
+                        <label for="email2" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">驗證信件 checkbox</label>
+                    </div>
+                    <div class="form-peer">
+                        <input id="phone3" class="peer hidden" type="radio" name="filter-phone">
+                        <label for="phone3" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(A~Z) radio
+                        </label>
+                    </div>
+                    <div class="form-peer">
+                        <input id="phone4" class="peer hidden" type="radio" name="filter-phone">
+                        <label for="phone4" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(Z~A) radio</label>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-warning btn-ripple btn-center btn-md-strip">送出</button>
+                    </div>
+                </form>
             </div>
         </div>
     </main>

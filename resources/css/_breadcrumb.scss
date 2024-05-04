@@ -1,7 +1,7 @@
 .breadcrumb{
-    @apply flex w-fit rounded-lg border-slate-200 border-solid border-[1px] shadow py-1 px-1;
+    @apply flex min-w-fit w-fit rounded-lg border-slate-200 border-solid border-[1px] shadow py-1 px-1;
     .bcitem{
-        @apply cursor-pointer select-none px-4 py-2 flex justify-center items-center;
+        @apply min-w-fit cursor-pointer select-none px-4 py-2 flex justify-center items-center;
         &:last-child{
             @apply border-r-0 rounded-lg;
         }

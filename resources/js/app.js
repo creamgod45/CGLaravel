@@ -6,6 +6,8 @@ import './placerholder.js';
 import './menu.js';
 import './button.js';
 import './notification.js';
+import './customTrigger.js';
+import './phone.js';
 import './Home.js';
 
 

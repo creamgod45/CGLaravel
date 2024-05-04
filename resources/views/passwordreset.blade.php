@@ -18,7 +18,7 @@
             <div class="title">重設密碼</div>
             <div class="row">
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_password)}}</label>
-                <input class="col" type="password" name="password" required>
+                <input class="col" type="password" name="password" autocomplete="new-password" required>
             </div>
             <div class="row">
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_passwordConfirmed)}}</label>
