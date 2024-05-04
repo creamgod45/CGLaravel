@@ -3,10 +3,8 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
-use App\Http\Requests\StoreMemberRequest;
 use App\Lib\I18N\ELanguageCode;
-use App\Models\Member;
-use Illuminate\Auth\Events\Verified;
+use App\Lib\Utils\Utilsv2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +26,8 @@ Route::get('/', function (Request $request) {
 })->name('home');
 
 Route::post('lzstring.json', function (Request $request){
-    return response()->json(['message' => 'Data received successfully', 'raw'=>$request["a"]]);
+    $decodeContext = Utilsv2::decodeContext($request["a"]);
+    return response()->json(['message' => 'Data received successfully', 'raw'=> $decodeContext]);
 });
 
 Route::post('language', function (Request $request){
@@ -42,9 +41,10 @@ Route::post('language', function (Request $request){
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('members', [MemberController::class, 'index']);
 });
+
 Route::middleware('auth')->group(function () {
     Route::get('logout', [MemberController::class, 'logout'])->name('logout');
-    Route::get('resendemail', [MemberController::class, 'resendEmail'])->name('resendEmail');
+    Route::get('resendemail', [MemberController::class, 'resendEmail'])->name('verification.notice');
 });
 
 // password reset

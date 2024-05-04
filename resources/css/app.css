@@ -1,7 +1,30 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "intl-tel-input/build/css/intlTelInput.min.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.iti--container .iti__a11y-text {
+  width: fit-content !important;
+  height: fit-content !important;
+  clip: unset !important;
+  color: black;
+  top: 8px;
+  right: 8px;
+  left: unset !important;
+  z-index: 30;
+}
+
+.iti__dropdown-content .iti__a11y-text {
+  width: fit-content !important;
+  height: fit-content !important;
+  clip: unset !important;
+  color: black;
+  top: 8px;
+  right: 8px;
+  left: unset !important;
+  z-index: 30;
+}
+
 .noto-serif-tc-extralight {
   font-family: "Noto Serif TC", serif;
   font-weight: 200;
@@ -115,7 +138,7 @@
   @apply grid-cols-1;
 }
 .float-menu #float1 .float-menu-panel-columns .menu {
-  @apply xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 grid-cols-1;
+  @apply xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 grid-cols-1;
 }
 .float-menu #float2 .float-menu-panel-columns {
   @apply xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1;
@@ -720,7 +743,7 @@
 }
 
 .outline-btn {
-  @apply px-4 py-1 hover:ring-1 hover:ring-slate-200 hover:shadow-lg focus:ring-1 focus:ring-slate-200 focus:shadow-lg w-fit rounded-4xl checked:ring-1 checked:ring-slate-200 checked:shadow-lg select-none;
+  @apply mx-2 px-4 py-1 hover:ring-1 hover:ring-slate-200 hover:shadow-lg focus:ring-1 focus:ring-slate-200 focus:shadow-lg w-fit rounded-4xl checked:ring-1 checked:ring-slate-200 checked:shadow-lg select-none;
 }
 
 .outline-btn-blue {
@@ -999,15 +1022,19 @@ span.ripple {
   @apply mt-5 relative bottom-0 left-0 w-full;
 }
 
+.placeholder-circle {
+  cursor: wait;
+}
 .placeholder-circle:after {
   border-radius: 32px !important;
 }
 
 .placeholder-16-9 {
-  @apply aspect-video;
+  @apply aspect-video cursor-wait;
 }
 
 .placeholder {
+  cursor: wait;
   position: relative;
   background: rgb(235, 235, 235) no-repeat;
 }
@@ -1064,10 +1091,10 @@ span.ripple {
 }
 
 .breadcrumb {
-  @apply flex w-fit rounded-lg border-slate-200 border-solid border-[1px] shadow py-1 px-1;
+  @apply flex min-w-fit w-fit rounded-lg border-slate-200 border-solid border-[1px] shadow py-1 px-1;
 }
 .breadcrumb .bcitem {
-  @apply cursor-pointer select-none px-4 py-2 flex justify-center items-center;
+  @apply min-w-fit cursor-pointer select-none px-4 py-2 flex justify-center items-center;
 }
 .breadcrumb .bcitem:last-child {
   @apply border-r-0 rounded-lg;
@@ -1079,8 +1106,111 @@ span.ripple {
   @apply cursor-not-allowed bg-color1;
 }
 
+.form-peer {
+  @apply mt-3;
+}
+
+.form-group {
+  @apply my-2;
+}
+
+.form-group-flex {
+  @apply my-1 flex justify-start items-center space-x-2;
+}
+
+.form-row-nowarp {
+  @apply flex flex-nowrap;
+}
+.form-row-nowarp > .col {
+  @apply flex-auto1 w-1/2;
+}
+.form-row-nowarp > .col-1 {
+  @apply flex-auto1 w-1/12;
+}
+.form-row-nowarp > .col-2 {
+  @apply flex-auto1 w-2/12;
+}
+.form-row-nowarp > .col-3 {
+  @apply flex-auto1 w-3/12;
+}
+.form-row-nowarp > .col-4 {
+  @apply flex-auto1 w-4/12;
+}
+.form-row-nowarp > .col-5 {
+  @apply flex-auto1 w-5/12;
+}
+.form-row-nowarp > .col-6 {
+  @apply flex-auto1 w-6/12;
+}
+.form-row-nowarp > .col-7 {
+  @apply flex-auto1 w-7/12;
+}
+.form-row-nowarp > .col-8 {
+  @apply flex-auto1 w-8/12;
+}
+.form-row-nowarp > .col-9 {
+  @apply flex-auto1 w-9/12;
+}
+.form-row-nowarp > .col-10 {
+  @apply flex-auto1 w-10/12;
+}
+.form-row-nowarp > .col-11 {
+  @apply flex-auto1 w-11/12;
+}
+.form-row-nowarp > .col-12 {
+  @apply flex-auto1 w-full;
+}
+
+.form-solid {
+  @apply disabled:bg-gray-200 disabled:ring-gray-200 bg-slate-200 autofill:bg-slate-200 ring-1 ring-slate-200 shadow rounded-md px-2 py-2 focus:outline-0 valid:ring-slate-200 invalid:ring-red-500;
+}
+.form-solid:-webkit-autofill {
+  background-color: red !important;
+}
+
+.form-solid:read-only {
+  @apply cursor-grab focus:outline-0;
+}
+
+.form-color {
+  @apply p-1 min-w-10 disabled:bg-gray-200 disabled:ring-gray-200 bg-slate-200;
+}
+.form-color:disabled {
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+}
+
+.form-file {
+  @apply disabled:text-gray-200 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:ring-gray-200 bg-slate-200 file:hidden w-fit shadow ring-1 px-4 py-2 rounded valid:ring-slate-200 invalid:ring-red-500;
+}
+
+.form-password-group {
+  @apply flex;
+}
+.form-password-group * {
+  box-shadow: unset;
+}
+.form-password-group .front {
+  border-top-right-radius: unset !important;
+  border-bottom-right-radius: unset !important;
+}
+.form-password-group .back {
+  padding: 4px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: unset !important;
+  border-bottom-left-radius: unset !important;
+}
+.form-password-group .back:active {
+  box-shadow: none !important;
+}
+
 .container1 {
   @apply mt-[100px] mx-10 border-neutral-200 border-2 border-solid shadow-2xl rounded-4xl p-5;
+}
+.container1 .home .form-demo {
+  @apply mt-5;
 }
 .container1 .home .floatUI-demo {
   @apply mt-5 w-full;
@@ -1185,7 +1315,7 @@ body footer {
   @apply w-full px-5 justify-center items-center;
 }
 body footer .footer-menu {
-  @apply grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 footer:grid-cols-1 ring-1 ring-slate-200 shadow w-full px-10 py-10 bg-white rounded-t-4xl mt-10 gap-5;
+  @apply grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 footer:grid-cols-1 ring-1 ring-slate-200 shadow w-full px-10 py-10 bg-neutral-700 text-white rounded-t-4xl mt-10 gap-5;
 }
 body footer .footer-menu .item {
   @apply items-start w-fit space-y-1;
@@ -1200,7 +1330,7 @@ body footer .footer-menu .item .menu-btn span {
   @apply flex-auto1 w-full;
 }
 body footer .footer1 {
-  @apply ring-1 ring-slate-200 shadow z-10 bg-white text-black flex items-center justify-center w-full;
+  @apply ring-1 ring-slate-200 shadow z-10 bg-neutral-700 text-white flex items-center justify-center w-full;
 }
 body footer .footer1 a {
   @apply text-blue-500;

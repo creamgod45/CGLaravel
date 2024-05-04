@@ -1,13 +1,15 @@
 .placeholder-circle{
+    cursor: wait;
     &:after{
         border-radius: 32px !important;
     }
 }
 .placeholder-16-9{
-    @apply aspect-video;
+    @apply aspect-video cursor-wait;
 }
 
 .placeholder{
+    cursor: wait;
     position: relative;
     background: rgb(235, 235, 235) no-repeat;
 
