@@ -14,6 +14,6 @@ class MemberSeeder extends Seeder
     public function run(): void
     {
         //
-        Member::factory()->count(200)->create(); // 生成 50 個假帳號
+        Member::factory()->count(200)->create(); // 生成 200 個假帳號
     }
 }
