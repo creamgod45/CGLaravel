@@ -76,6 +76,28 @@
     @apply disabled:text-gray-200 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:ring-gray-200 bg-slate-200 file:hidden w-fit shadow ring-1 px-4 py-2 rounded valid:ring-slate-200 invalid:ring-red-500;
 }
 
+.form-textarea-group{
+    @apply bg-slate-200 ring-1 ring-slate-200 shadow rounded-md min-w-fit;
+    .title-bar{
+        @apply py-2 px-4 bg-slate-300 flex space-x-2;
+    }
+    .function-bar{
+        @apply py-2 px-4 bg-slate-300 flex sm:space-x-2 relative sm:flex-nowrap xs:flex-wrap sm:space-y-0 xs:space-y-3 xs:justify-center sm:justify-start xs:space-x-0;
+        .btn{
+            @apply xs:flex-auto1 xs:w-full sm:w-12 min-w-12 min-h-12;
+            .sm-text{
+                @apply hidden sm:hidden xs:block;
+            }
+        }
+        .float-right-box{
+            @apply sm:absolute sm:right-4;
+        }
+    }
+    .form-solid{
+        @apply required:ring-0 shadow-none w-full h-[200px];
+    }
+}
+
 
 .form-password-group{
     @apply flex;

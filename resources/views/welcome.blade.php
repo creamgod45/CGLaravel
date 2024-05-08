@@ -157,11 +157,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="absolute left-0 -bottom-4 w-full flex justify-center items-center">
-                                    <button class="btn btn-md btn-ripple btn-success btn-border-0 btn-pill"><i
-                                            class="fa-solid fa-arrow-right"></i>&nbsp;查看
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="absolute left-0 -bottom-4 w-full flex justify-center items-center">
+                                <button class="btn btn-md btn-ripple btn-success btn-border-0 btn-pill"><i
+                                        class="fa-solid fa-arrow-right"></i>&nbsp;查看
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -192,10 +192,15 @@
                     </div>
                     <div class="card placeholder">
                         <div class="inner">
-                            <div class="image placeholder lazyImg" data-src="{{asset('assets/images/100x100.svg')}}">
-                                <div class="float-text">100x100</div>
+                            <div class="image-frame">
+                                <div class="image-people placeholder placeholder-circle lazyImg" data-placeholderdelay="5000" data-src="{{asset('assets/images/people2.webp')}}"></div>
                             </div>
                             <div class="content">
+                                ta
+                            </div>
+                            <div class="btn-bottom-group">
+                                <div class="btn btn-ripple btn-color1 btn-text-center"><i class="fa-solid fa-envelope"></i>&nbsp;Email</div>
+                                <div class="btn btn-ripple btn-color1 btn-text-center"><i class="fa-solid fa-phone"></i>&nbsp;Phone</div>
                             </div>
                         </div>
                     </div>
@@ -215,17 +220,11 @@
                                     <div class="description">
                                         這是一個問題卡片
                                     </div>
-                                    <div class="control btn-group">
-                                        <div
-                                            class="btn btn-transition btn-border-0 btn-max btn-text-center btn-md btn-ripple btn-success">
-                                            確認
-                                        </div>
-                                        <div
-                                            class="btn btn-transition btn-border-0 btn-max btn-text-center btn-md btn-ripple btn-warning">
-                                            取消
-                                        </div>
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="btn-bottom-group">
+                                <div class="btn btn-ripple btn-ok btn-text-center"><i class="fa-solid fa-check"></i>&nbsp;確認</div>
+                                <div class="btn btn-ripple btn-warning btn-text-center"><i class="fa-solid fa-xmark"></i>&nbsp;取消</div>
                             </div>
                         </div>
                     </div>
@@ -350,13 +349,42 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-warning btn-ripple btn-center btn-md-strip">送出</button>
                     </div>
+                    <div class="form-group">
+                        <textarea type="month" class="form-solid" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-textarea-group">
+                            <div class="title-bar">輸入文章內容</div>
+                            <textarea type="month" cols="40" class="form-solid" required></textarea>
+                            <div class="function-bar">
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple">
+                                    <i class="fa-solid fa-image"></i>
+                                    <span class="sm-text">&nbsp;圖片</span></button>
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple">
+                                    <i class="fa-solid fa-file"></i>
+                                    <span class="sm-text">&nbsp;檔案</span></button>
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple">
+                                    <i class="fa-solid fa-tag"></i>
+                                    <span class="sm-text">&nbsp;標籤</span></button>
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple">
+                                    <i class="fa-solid fa-icons"></i>
+                                    <span class="sm-text">&nbsp;Emoji</span></button>
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple float-right-box">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    <span class="sm-text">&nbsp;送出</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="feed-demo">
                 這是 feed 示範
                 <div class="feed-list">
                     <div class="feed" data-line="true">
-                        <span class="feed-line"></span>
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
                         <div class="feed-node feed-success"></div>
                         <div class="feed-content">
                             <div class="flexbox">
@@ -367,7 +395,9 @@
                         </div>
                     </div>
                     <div class="feed" data-line="true">
-                        <span class="feed-line"></span>
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
                         <div class="feed-node feed-warning"></div>
                         <div class="feed-content">
                             <div class="flexbox">
@@ -378,7 +408,9 @@
                         </div>
                     </div>
                     <div class="feed" data-line="true">
-                        <span class="feed-line"></span>
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
                         <div class="feed-node feed-danger"></div>
                         <div class="feed-content">
                             <div class="flexbox">
@@ -388,14 +420,44 @@
                             <div class="timestamp-ago">1D ago</div>
                         </div>
                     </div>
-                    <div class="feed" data-line="true">
+                    <div class="feed feed-big" data-line="true">
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
                         <div class="feed-node feed-danger">
                             <div class="feed-img lazyImg" data-src="{{asset('assets/images/people2.webp')}}"></div>
                         </div>
                         <div class="feed-content">
                             <div class="flexbox">
                                 <div class="title">creamgod45</div>
-                                <div class="subtitle">deleted the post</div>
+                                <div class="subtitle">deleted the member</div>
+                            </div>
+                            <div class="timestamp-ago">1D ago</div>
+                        </div>
+                    </div>
+                    <div class="feed feed-big" data-line="true">
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
+                        <div class="feed-node feed-danger">
+                            <div class="feed-img lazyImg" data-src="{{asset('assets/images/people2.webp')}}"></div>
+                        </div>
+                        <div class="feed-content">
+                            <div class="flexbox">
+                                <div class="title">creamgod45</div>
+                                <div class="subtitle">created the member</div>
+                            </div>
+                            <div class="timestamp-ago">1D ago</div>
+                        </div>
+                    </div>
+                    <div class="feed feed-big" data-line="true">
+                        <div class="feed-node feed-danger">
+                            <div class="feed-img lazyImg" data-src="{{asset('assets/images/people2.webp')}}"></div>
+                        </div>
+                        <div class="feed-content">
+                            <div class="flexbox">
+                                <div class="title">creamgod45</div>
+                                <div class="subtitle">update the member</div>
                             </div>
                             <div class="timestamp-ago">1D ago</div>
                         </div>

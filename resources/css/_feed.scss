@@ -1,12 +1,21 @@
 .feed-list{
     @apply w-full;
+    .feed-big{
+        margin-top: 36px !important;
+        margin-bottom: 40px !important;
+        .feed-line-box{
+            @apply mt-[6px];
+        }
+    }
     .feed{
-        @apply relative w-full mb-6 ms-5 flex justify-start items-center;
-        .feed-line{
-            @apply absolute -bottom-4 left-[5px] bg-slate-400 rounded-4xl;
-            content: '';
-            width: 2px;
-            height: 14px;
+        @apply relative w-full mb-6 ms-5 flex flex-nowrap justify-start items-center;
+        .feed-line-box{
+            @apply absolute w-fit h-full top-0 left-0;
+            .feed-line{
+                @apply h-full absolute -bottom-[26px] left-[5px] bg-slate-300 rounded-4xl;
+                content: '';
+                width: 2px;
+            }
         }
         .feed-success,.feed-ok{
             @apply bg-green-600;
@@ -18,21 +27,21 @@
             @apply bg-red-500;
         }
         .feed-node{
-            @apply mt-[3.5px] ring-1 ring-gray-500 shadow size-3 rounded-4xl content-[''] relative;
+            @apply min-w-3 min-h-3 xs:-top-[10px] sm:absolute sm:top-1 sm:left-0 mt-[3.5px] ring-1 ring-gray-500 shadow size-3 rounded-4xl content-[''] relative;
         }
         .feed-img{
-            @apply absolute -top-[11px] -left-[11px] rounded-4xl content-[''] size-8 bg-cover bg-no-repeat;
+            @apply absolute -top-[11px] -left-[10px] rounded-4xl content-[''] size-8 bg-cover bg-no-repeat;
         }
         .feed-content{
-            @apply ms-6 flex flex-wrap gap-0 w-full;
+            @apply ms-8 sm:block footer:flex footer:flex-nowrap gap-0 w-full min-w-fit overflow-hidden;
             .flexbox{
-                @apply min-w-fit flex-auto1 w-10/12 flex justify-start items-center space-x-2;
+                @apply min-w-fit flex-auto1 w-9/12 flex justify-start items-center space-x-2;
                 .subtitle{
                     @apply min-w-fit text-slate-500 text-sm;
                 }
             }
             .timestamp-ago{
-                @apply min-w-fit flex-auto1 w-2/12 text-slate-500 text-sm;
+                @apply min-w-fit flex-auto1 w-3/12 text-slate-500 text-sm;
             }
         }
     }

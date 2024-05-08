@@ -1,6 +1,6 @@
 
 .container1 {
-    @apply mt-[100px] mx-10 border-neutral-200 border-2 border-solid shadow-2xl rounded-4xl p-5;
+    @apply sm:mx-0 mt-[100px] md:mx-10 border-neutral-200 border-2 border-solid shadow-2xl rounded-4xl p-5;
     .home {
         .feed-demo{
             @apply mt-5;

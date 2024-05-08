@@ -24,11 +24,10 @@
 @import "form";
 @import "home";
 
-
 body {
     @apply relative;
 
-    *{
+    *:not(textarea){
         transition: all 200ms;
     }
 
