@@ -29,26 +29,32 @@
     .card{
         @apply ring-1 ring-slate-200 h-full rounded-md shadow-md mb-10;
         .inner{
-            @apply grid grid-cols-1 w-full h-full;
+            @apply grid grid-cols-1 auto-rows-min w-full h-full relative;
             .image{
                 @apply w-full aspect-video rounded-t-md flex justify-center items-center;
                 .float-text{
 
                 }
             }
+            .image-frame{
+                @apply w-full h-[195px] flex justify-center items-center;
+                .image-people{
+                    @apply size-32 rounded-full bg-cover bg-center;
+                }
+            }
             .content{
                 @apply rounded-md px-2 py-1 bg-white relative h-full flex justify-center items-center pb-[34px];
                 .center-border{
-                    @apply w-full px-2 relative;
+                    @apply w-full h-full px-2 relative;
                 }
                 .title{
-                    @apply text-xl text-center;
+                    @apply mt-3 text-xl text-center;
                 }
                 .description{
                     @apply text-lg mt-5;
                 }
                 .control{
-                    @apply mt-5 relative bottom-0 left-0 w-full;
+                    @apply mt-5 absolute bottom-0 left-0 w-full;
                 }
             }
         }
