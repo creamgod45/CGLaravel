@@ -11,9 +11,11 @@
         @php
             $title=$i18N->getLanguage(ELanguageText::notification_invaild_title);
             $description=$i18N->getLanguage(ELanguageText::notification_invaild_description);
-            if($errors->any()){
-                foreach ($errors->all() as $item) {
-                    $description.="<br>".$item;
+            if(isset($errors)){
+                if($errors->any()){
+                    foreach ($errors->all() as $item) {
+                        $description.="<br>".$item;
+                    }
                 }
             }
         @endphp

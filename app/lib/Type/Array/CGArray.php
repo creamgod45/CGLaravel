@@ -2,7 +2,6 @@
 
 namespace App\Lib\Type\Array;
 
-use function Laravel\Prompts\search;
 
 class CGArray implements CGArrayInterface
 {
@@ -12,6 +11,7 @@ class CGArray implements CGArrayInterface
     {
         if (empty($array)) return false;
         $this->array = $array;
+        return $this;
     }
 
     public function getKeys()
@@ -43,6 +43,7 @@ class CGArray implements CGArrayInterface
         if($deleteold){
             $this->Delete($oldKey, true);
         }
+        return $this;
     }
 
     public function Merge($string = "")
@@ -60,7 +61,7 @@ class CGArray implements CGArrayInterface
 
     public function getLastObject(){
         $k = 0;
-        foreach ($this->array as $i=> $item) {
+        foreach ($this->array as $item) {
             if(count($this->array) === $k){
                 return $item;
             }
@@ -132,12 +133,10 @@ class CGArray implements CGArrayInterface
     }
 
     public function Delete($Key, $force=false){
-        if($force){
-            unset($this->array[$Key]);
-        }else{
-            if(empty($this->array[$Key])) return;
-            unset($this->array[$Key]);
+        if(!$force) {
+            if (empty($this->array[$Key])) return null;
         }
+        unset($this->array[$Key]);
         return $this;
     }
 
@@ -236,7 +235,7 @@ class CGArray implements CGArrayInterface
     public function array_resort(array $array, int $offset = -1, int $k = 0): array
     {
         $arr = [];
-        foreach ($array as $key => $value) {
+        foreach ($array as $value) {
             if ($offset === (-1)) {
                 $arr[$k] = $value;
                 $k++;
@@ -309,10 +308,10 @@ class CGArray implements CGArrayInterface
     public function array_splice_key(array &$array, array $keyrows = null, bool $nametokey = false, bool $result = false, bool $keyint = false)
     {
         $arr = [];
-        if ($keyrows !== null && is_array($keyrows)) {
+        if (is_array($keyrows)) {
             if ($nametokey === true) {
                 $int_arr = $this->array_keytovalue($array);
-                foreach ($keyrows as $k => $v) {
+                foreach ($keyrows as $v) {
                     if ($result === true) {
                         $arr[] = $array[$int_arr[$v]];
                     }
@@ -346,17 +345,14 @@ class CGArray implements CGArrayInterface
     {
         $arr = [];
         $k = 0;
-        if (is_array($array)) {
-            foreach ($array as $key => $v) {
-                if ($value === true) {
-                    $arr[$k] = $key . $prefix . $v;
-                } else {
-                    $arr[$k] = $key;
-                }
-                $k++;
+        foreach ($array as $key => $v) {
+            if ($value === true) {
+                $arr[$k] = $key . $prefix . $v;
+            } else {
+                $arr[$k] = $key;
             }
-            return $arr;
+            $k++;
         }
-        return false;
+        return $arr;
     }
 }

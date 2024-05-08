@@ -7,7 +7,6 @@ use App\Lib\Type\Array\CGArray;
 class Htmlv2 extends HTML
 {
     private HTML $HTML;
-    private string $html = "";
     private CGArray $array;
     private mixed $newline = "";
 
@@ -43,7 +42,7 @@ class Htmlv2 extends HTML
         if (@!empty($body)) {
             if (is_array($body)) {
                 $arr = $body;
-                foreach ($mixed as $key => $value) {
+                foreach ($mixed as $value) {
                     $arr[] = $value;
                 }
                 $this->getarray()->Set("body", $arr);

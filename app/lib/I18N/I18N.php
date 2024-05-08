@@ -25,7 +25,7 @@ class I18N
     /**
      * @var ELanguageCode[] $ELanguageCodeList 限制編譯編譯的語言選項
      */
-    private array $ELanguageCodeList=[];
+    private array $ELanguageCodeList;
 
     /**
      * @param ELanguageCode|null $languageCode 設定現在語言狀態並且讀取語言檔案並覆蓋 Set the current language status and read the language file and overwrite it

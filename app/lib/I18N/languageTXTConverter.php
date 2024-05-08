@@ -7,7 +7,7 @@ date_default_timezone_set('Asia/Taipei');
 include_once 'PATH.php';
 require_once 'vendor/autoload.php';
 require_once 'autoload.php';
-\Tracy\Debugger::enable();
+//\Tracy\Debugger::enable();
 
 $language = \Nette\Utils\FileSystem::read("lib/I18N/language.txt");
 $strings="<?php // paste to lib/I18N/I18N.php \I18N\I18N::buildLanguageMap".PHP_EOL;
