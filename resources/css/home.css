@@ -1312,6 +1312,107 @@ span.ripple {
 body {
   @apply relative;
 }
+body .container1 {
+  @apply sm:mx-0 mt-[100px] md:mx-10 border-neutral-200 border-2 border-solid shadow-2xl rounded-4xl p-5;
+}
+body .container1 .home .feed-demo {
+  @apply mt-5;
+}
+body .container1 .home .form-demo {
+  @apply mt-5;
+}
+body .container1 .home .floatUI-demo {
+  @apply mt-5 w-full;
+}
+body .container1 .home .outline-btn-demo {
+  @apply mt-5 w-full;
+}
+body .container1 .home .breadcrumb-demo {
+  @apply mt-5 w-full;
+}
+body .container1 .home .tooltip-demo {
+  @apply m-5 h-[300px] flex justify-center items-center;
+}
+body .container1 .home .btn-demo {
+  @apply space-y-2 w-1/2;
+}
+body .container1 .home .card-demo {
+  @apply w-full;
+}
+body .container1 .home .banner {
+  @apply relative w-full z-[1] bg-fixed bg-origin-border bg-repeat-y;
+  background-color: #e6bc40;
+  background-size: cover;
+  height: calc(100vh - 72px);
+}
+body .container1 .home .banner .row {
+  @apply absolute flex-auto1 w-full h-full text-white left-0 top-0 grid xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 grid-cols-1;
+}
+body .container1 .home .banner .row .left {
+  @apply flex justify-center items-center;
+}
+body .container1 .home .banner .row .left .title {
+  @apply text-white xs:text-2xl sm:text-2xl md:text-2xl lg:text-4xl text-nowrap w-full text-center;
+}
+body .container1 .home .banner .row .left .description {
+  @apply mt-5 text-center w-full;
+}
+body .container1 .home .banner .row .right {
+  @apply relative flex justify-center items-center;
+}
+body .container1 .home .banner .row .right .card {
+  width: 100%;
+  height: 500px;
+  @apply px-4 py-2 rounded-4xl absolute bottom-0;
+}
+body .container1 .home .banner .row .right .card .item-frame {
+  @apply bg-no-repeat bg-contain;
+  width: 100%;
+  height: 100%;
+}
+body .container1 .home .banner .row .right ._3DModel {
+  @apply mt-20 mr-20 w-full h-full bg-contain bg-no-repeat;
+  background-size: 80%;
+  transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+}
+body .container1 .home .service {
+  @apply relative w-full h-[80vh] pt-32;
+  background-size: 90%;
+  background-color: #405ee6;
+}
+body .container1 .home .service .asset1 {
+  @apply w-full h-full transform-gpu z-[1] bg-contain bg-no-repeat overflow-hidden;
+}
+body .container1 .home .service .row {
+  @apply absolute flex-auto1 w-full h-full text-white left-0 top-0 grid xxl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 grid-cols-1;
+}
+body .container1 .home .service .row .left {
+  @apply flex justify-center items-center;
+}
+body .container1 .home .service .row .left .title {
+  @apply text-white xs:text-2xl sm:text-2xl md:text-2xl lg:text-4xl text-nowrap w-full text-center;
+}
+body .container1 .home .service .row .left .description {
+  @apply mt-5 text-center w-full;
+}
+body .container1 .home .service .row .right {
+  @apply relative flex justify-center items-center;
+}
+body .container1 .home .service .row .right .card {
+  width: 100%;
+  height: 500px;
+  @apply px-4 py-2 rounded-4xl absolute bottom-0;
+}
+body .container1 .home .service .row .right .card .item-frame {
+  @apply bg-no-repeat bg-contain;
+  width: 100%;
+  height: 100%;
+}
+body .container1 .home .service ._3DModel {
+  @apply mt-20 ml-20 w-full h-full bg-contain bg-no-repeat;
+  background-size: 80%;
+  transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+}
 body *:not(textarea) {
   transition: all 200ms;
 }
@@ -1355,4 +1456,4 @@ body footer .footer1 .laravel:hover {
   color: #ea807b;
 }
 
-/*# sourceMappingURL=app.css.map */
+/*# sourceMappingURL=home.css.map */

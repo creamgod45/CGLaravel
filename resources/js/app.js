@@ -8,7 +8,6 @@ import './button.js';
 import './notification.js';
 import './customTrigger.js';
 import './phone.js';
-import './Home.js';
 
 
 

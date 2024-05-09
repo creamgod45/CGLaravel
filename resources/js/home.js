@@ -1,9 +1,15 @@
-//import * as THREE from 'three';
-//import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import './bootstrap';
+import '@fortawesome/fontawesome-free/js/all.js';
+import './tooltip.js';
+import './lazyImageLoader.js';
+import './placerholder.js';
+import './menu.js';
+import './button.js';
+import './notification.js';
+import './customTrigger.js';
+import './phone.js';
 import * as floatUI from '@floating-ui/dom'
 import * as Utils from './utils.js'
-import {For} from "three/addons/transpiler/AST.js";
-//import functionCallNode from "three/addons/nodes/code/FunctionCallNode.js";
 
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
@@ -18,32 +24,10 @@ if (localStorage.getItem('theme') === undefined) {
 
 
 
-function rotateElement(event, element) {
-    // get mouse position
-    const x = event.clientX;
-    const y = event.clientY;
-    // console.log(x, y)
-
-    // find the middle
-    const middleX = window.innerWidth / 2;
-    const middleY = window.innerHeight / 2;
-    // console.log(middleX, middleY)
-
-    // get offset from middle as a percentage
-    // and tone it down a little
-    const offsetX = ((x - middleX) / middleX) * 45;
-    const offsetY = ((y - middleY) / middleY) * 45;
-    // console.log(offsetX, offsetY);
-
-    // set rotation
-    element.style.setProperty("--rotateX", offsetX + "deg");
-    element.style.setProperty("--rotateY", -1 * offsetY + "deg");
-}
-
 function load6() {
     document.addEventListener("mousemove", function (e) {
-        rotateElement(e, document.querySelector("#_3DModel1"));
-        rotateElement(e, document.querySelector("#_3DModel2"));
+        Utils.rotateElement(e, document.querySelector("#_3DModel1"));
+        Utils.rotateElement(e, document.querySelector("#_3DModel2"));
     });
 }
 
@@ -117,9 +101,35 @@ function load2() {
     })
 }
 
+function load3() {
+    axios.get('https://randomuser.me/api/',{
+        //URL参數放在params屬性裏面
+        params: {
+            gender: 'female',
+            nat: 'us'
+        }
+    })
+        .then((response) => {
+            console.log(response);
+            var result = response.data.results[0];
+            let name="";
+            for (let [key, entry] of Object.entries(result.name)) {
+                if(entry !== undefined) {
+                    name += entry + " ";
+                }
+            }
+            document.querySelector("#C").innerText = name;
+            document.querySelector("#C1").href = `mailto:${result.email}`;
+            document.querySelector("#C2").href = `tel:${result.phone}`;
+            document.querySelector("#C3").dataset.src = result.picture.large;
+        })
+        .catch((error) => console.log(error))
+}
+
 function loader() {
     load1();
     load2();
+    load3();
 }
 
 window.addEventListener("resize", ()=>{

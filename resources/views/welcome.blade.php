@@ -1,4 +1,4 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+@vite(['resources/css/home.css', 'resources/js/home.js'])
 @use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Utils\Htmlv2;use App\Lib\Utils\Utilsv2;use Illuminate\Support\Facades\Log)
 @php
     /***
@@ -190,17 +190,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card placeholder">
+                    <div class="card placeholder" data-placeholderdelay="2000">
                         <div class="inner">
                             <div class="image-frame">
-                                <div class="image-people placeholder placeholder-circle lazyImg" data-placeholderdelay="5000" data-src="{{asset('assets/images/people2.webp')}}"></div>
+                                <div id="C3" class="image-people placeholder placeholder-circle lazyImg" data-src=""></div>
                             </div>
                             <div class="content">
-                                ta
+                                <div class="center-border">
+                                    <div id="C" class="title"></div>
+                                    <div class="subtitle">
+                                        首席設計師
+                                    </div>
+                                </div>
                             </div>
                             <div class="btn-bottom-group">
-                                <div class="btn btn-ripple btn-color1 btn-text-center"><i class="fa-solid fa-envelope"></i>&nbsp;Email</div>
-                                <div class="btn btn-ripple btn-color1 btn-text-center"><i class="fa-solid fa-phone"></i>&nbsp;Phone</div>
+                                <a id="C1" class="btn btn-ripple btn-color1 btn-text-center !block"><i class="fa-solid fa-envelope"></i>&nbsp;寫信</a>
+                                <a id="C2" class="btn btn-ripple btn-color1 btn-text-center !block"><i class="fa-solid fa-phone"></i>&nbsp;聯絡</a>
                             </div>
                         </div>
                     </div>

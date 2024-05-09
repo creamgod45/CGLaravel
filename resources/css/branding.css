@@ -1312,47 +1312,118 @@ span.ripple {
 body {
   @apply relative;
 }
+body .frontmask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+}
+body .container1 {
+  @apply w-full p-5 mt-20;
+}
+body .container1 .hero-content {
+  @apply w-full h-fit bg-center bg-cover rounded-4xl;
+}
+body .container1 .hero-content .hero-bgdropfilter {
+  @apply backdrop-blur-md w-full h-full rounded-4xl;
+}
+body .container1 .hero-content .hero-bgdropfilter .gradable {
+  @apply h-full w-full grid auto-rows-max overflow-hidden relative
+                    footer:grid-cols-2
+                    sm:grid-cols-1
+                    xs:grid-cols-1;
+}
+body .container1 .hero-content .hero-bgdropfilter .gradable .context {
+  @apply ps-10 z-[2] break-keep overflow-hidden
+                        footer:static footer:w-fit
+                        sm:absolute sm:top-1/2 sm:left-0
+                        xs:absolute xs:top-1/2 xs:left-0;
+}
+body .container1 .hero-content .hero-bgdropfilter .gradable .context .title {
+  @apply break-all mt-10 mb-5 mr-5 bg-color1 text-black px-2 py-1
+                            xl:text-4xl
+                            lg:text-4xl
+                            md:text-3xl
+                            footer:text-2xl
+                            sm:text-xl
+                            xs:text-xl
+                            text-sm;
+}
+body .container1 .hero-content .hero-bgdropfilter .gradable .context .subtitle {
+  @apply break-all min-w-fit mb-5 mr-5 bg-color1 text-black px-2 py-1
+                            xl:text-3xl
+                            lg:text-3xl
+                            md:text-2xl
+                            footer:text-xl
+                            sm:text-lg
+                            xs:text-lg
+                            text-xs;
+}
+body .container1 .hero-content .hero-bgdropfilter .gradable ._3DModel {
+  @apply z-[1] bg-center bg-cover bg-no-repeat relative
+                        xxl:size-[1200px]
+                        xl:size-[1000px]
+                        lg:size-[800px]
+                        md:size-[600px] md:-left-32
+                        footer:size-[400px] footer:left-0
+                        sm:size-[600px]
+                        xs:size-[600px]
+                        size-44;
+  transition: unset !important;
+  background-size: 80%;
+  transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+}
 body *:not(textarea) {
   transition: all 200ms;
 }
 body footer {
-  @apply w-full px-5 justify-center items-center;
+  @apply w-full pt-[14rem] px-5 justify-center items-center;
 }
-body footer .footer-menu {
-  @apply grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 footer:grid-cols-1 ring-1 ring-slate-200 shadow w-full px-10 py-10 bg-neutral-700 text-white rounded-t-4xl mt-10 gap-5;
+body footer div.f1 {
+  @apply pt-10;
 }
-body footer .footer-menu .item {
+body footer div.f1 .footer-menu {
+  @apply grid ring-1 ring-slate-200 shadow w-full px-10 py-10 bg-neutral-700 text-white rounded-t-4xl mt-10 gap-5
+                xl:grid-cols-4
+                lg:grid-cols-2
+                md:grid-cols-2
+                footer:grid-cols-1
+                sm:grid-cols-1;
+}
+body footer div.f1 .footer-menu .item {
   @apply items-start w-fit space-y-1;
 }
-body footer .footer-menu .item .menu-btn {
+body footer div.f1 .footer-menu .item .menu-btn {
   @apply w-fit space-x-3 py-1 hover:shadow-2xl hover:bg-neutral-300 rounded cursor-pointer select-none flex flex-nowrap justify-center items-center ps-4;
 }
-body footer .footer-menu .item .menu-btn svg {
+body footer div.f1 .footer-menu .item .menu-btn svg {
   @apply flex-auto1 w-6 ms-3;
 }
-body footer .footer-menu .item .menu-btn span {
+body footer div.f1 .footer-menu .item .menu-btn span {
   @apply flex-auto1 w-full;
 }
-body footer .footer1 {
+body footer div.f1 .footer1 {
   @apply ring-1 ring-slate-200 shadow z-10 bg-neutral-700 text-white flex items-center justify-center w-full;
 }
-body footer .footer1 a {
+body footer div.f1 .footer1 a {
   @apply text-blue-500;
 }
-body footer .footer1 a:hover {
+body footer div.f1 .footer1 a:hover {
   @apply text-blue-400;
 }
-body footer .footer1 .row {
+body footer div.f1 .footer1 .row {
   @apply flex flex-row flex-wrap space-x-0 w-full;
 }
-body footer .footer1 .row .col {
+body footer div.f1 .footer1 .row .col {
   @apply flex-auto1 footer:w-1/2 sm:w-full flex justify-center items-center;
 }
-body footer .footer1 .laravel {
+body footer div.f1 .footer1 .laravel {
   color: #f4382e;
 }
-body footer .footer1 .laravel:hover {
+body footer div.f1 .footer1 .laravel:hover {
   color: #ea807b;
 }
 
-/*# sourceMappingURL=app.css.map */
+/*# sourceMappingURL=branding.css.map */

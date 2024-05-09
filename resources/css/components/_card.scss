@@ -50,6 +50,9 @@
                 .title{
                     @apply mt-3 text-xl text-center;
                 }
+                .subtitle{
+                    @apply mt-1 pt-1 text-lg text-slate-500 text-center border-t-2 border-solid border-t-slate-200;
+                }
                 .description{
                     @apply text-lg mt-5;
                 }
