@@ -31,14 +31,17 @@ class PageTester extends TestCase
     {
         $response = $this->get('/passwordreset');
 
-        $response->assertStatus(302)->assertRedirectToRoute('home')->assertInvalid();
+        $response->assertStatus(302)
+            ->assertRedirectToRoute('home')
+            ->assertInvalid();
     }
 
     public function test_the_application_member(): void
     {
         $response = $this->get('/members');
 
-        $response->assertStatus(302)->assertRedirectToRoute('login');
+        $response->assertStatus(302)
+            ->assertRedirectToRoute('login');
     }
 
     public function test_the_application_lzstring_compare()
@@ -68,20 +71,26 @@ class PageTester extends TestCase
         $user = Member::factory()->create();
 
         $response = $this->actingAs($user, 'web')->get('/resendemail');
-        $response->assertStatus(302)->assertSessionHas('mail', true)->assertRedirectToRoute('home');
+        $response->assertStatus(302)
+            ->assertSessionHas('mail', true)
+            ->assertRedirectToRoute('home');
 
         $response = $this->actingAs($user, 'web')->get('/logout');
-        $response->assertStatus(200)->assertViewIs('logout');
-
-        $user->markEmailAsVerified();
+        $response->assertStatus(200)
+            ->assertViewIs('logout');
 
         // 已經驗證過信箱
 
+        $user->markEmailAsVerified();
+
         $response = $this->actingAs($user, 'web')->get('/members');
-        $response->assertStatus(200)->assertViewIs('members');
+        $response->assertStatus(200)
+            ->assertViewIs('members');
 
         $response = $this->actingAs($user, 'web')->get('/resendemail');
-        $response->assertStatus(302)->assertSessionHas('mail_result', 1)->assertRedirectToRoute('home');
+        $response->assertStatus(302)
+            ->assertSessionHas('mail_result', 1)
+            ->assertRedirectToRoute('home');
 
         $user->delete();
     }
@@ -89,6 +98,7 @@ class PageTester extends TestCase
     public function test_the_application_resendemail()
     {
         $response = $this->get('/resendemail');
-        $response->assertStatus(302)->assertRedirectToRoute('login');
+        $response->assertStatus(302)
+            ->assertRedirectToRoute('login');
     }
 }

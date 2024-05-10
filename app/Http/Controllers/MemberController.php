@@ -25,7 +25,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Mockery\Generator\StringManipulation\Pass\Pass;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
 

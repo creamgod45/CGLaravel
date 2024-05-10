@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Utils;
+namespace App\Lib\Utils;
 
 /**
  * DID 字典資料模型

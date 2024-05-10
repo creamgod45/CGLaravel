@@ -21,9 +21,9 @@
 
 @yield('content')
 
+@include('layouts.notification')
 @if($footer)
     @include('layouts.footer')
 @endif
-@include('layouts.notification')
 </body>
 </html>

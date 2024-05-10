@@ -3,7 +3,7 @@
 use App\Http\Controllers\AnimalController;
 use App\Http\Middleware\EMiddleWareAliases;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
+//use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 
 /*

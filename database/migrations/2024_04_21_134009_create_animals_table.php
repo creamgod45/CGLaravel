@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('animals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('type_id')->comment('動物分類');
+            $table->unsignedInteger('type_id')->comment('動物分類')->unique();
             $table->string('name')->comment('動物的暱稱');
             $table->date('birthday')->nullable()->comment('生日');
             $table->string('area')->nullable()->comment('所在地區');

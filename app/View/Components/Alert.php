@@ -4,8 +4,6 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class Alert extends Component

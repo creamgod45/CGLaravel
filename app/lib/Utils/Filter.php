@@ -1,6 +1,6 @@
 <?php
 
-namespace Utils;
+namespace App\Lib\Utils;
 
 class Filter
 {
@@ -89,7 +89,6 @@ class Filter
                 }
                 if ($num > 0) return false;
                 return true;
-                break;
             case FilterType::Password:
             case 'Password':
                 /**
@@ -142,7 +141,6 @@ class Filter
             case 'BooleanString':
                 if ($value === "true" || $value === "false") return true;
                 return false;
-                break;
             default:
                 return false;
         }

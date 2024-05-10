@@ -1,6 +1,6 @@
 @use(App\Lib\I18N\ELanguageText)
 <footer>
-    <div>
+    <div class="f1">
         <div class="footer-menu">
             <div class="item">
                 <div class="title">{{$i18N->getLanguage(ELanguageText::menu_SocialMedia)}}</div>

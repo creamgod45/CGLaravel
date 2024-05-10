@@ -1,6 +1,6 @@
 <?php
 
-namespace Utils;
+namespace App\Lib\Utils;
 
 enum FilterType :int
 {

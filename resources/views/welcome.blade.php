@@ -1,5 +1,5 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
-@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Permission\cases\AdministratorPermission;use App\Lib\Utils\Htmlv2;use App\Lib\Utils\Utilsv2;use Illuminate\Support\Facades\Log)
+@vite(['resources/css/home.css', 'resources/js/home.js'])
+@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Utils\Htmlv2;use App\Lib\Utils\Utilsv2;use Illuminate\Support\Facades\Log)
 @php
     /***
      * @var string[] $router \
@@ -46,7 +46,8 @@
                 <form method="post" onsubmit="return false;">
                     <div class="form-peer">
                         <input id="email" class="peer hidden" type="checkbox" name="email">
-                        <label for="email" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">驗證信件</label>
+                        <label for="email"
+                               class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">驗證信件</label>
                     </div>
                     <div class="form-peer">
                         <input id="phone1" class="peer hidden" type="radio" name="filter-phone">
@@ -55,7 +56,8 @@
                     </div>
                     <div class="form-peer">
                         <input id="phone2" class="peer hidden" type="radio" name="filter-phone">
-                        <label for="phone2" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(Z~A)</label>
+                        <label for="phone2"
+                               class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(Z~A)</label>
                     </div>
                 </form>
             </div>
@@ -128,12 +130,16 @@
                             <div class="content">
                                 <div class="center-border">
                                     <div class="title">CGPHP01</div>
-                                    <div class="description">這是團隊歷經3年時間開發的產品，結合市場回饋經驗所以這設計的內容。</div>
+                                    <div class="description">
+                                        這是團隊歷經3年時間開發的產品，結合市場回饋經驗所以這設計的內容。
+                                    </div>
                                     <div class="persons-circle-bar">
                                         <div class="persons-title">開發人員</div>
                                         <div class="flex-center-box">
-                                            <div class="pcb-item placeholder placeholder-circle lazyImg" data-src="{{asset('assets/images/people1.webp')}}"></div>
-                                            <div class="pcb-item placeholder placeholder-circle lazyImg" data-src="{{asset('assets/images/people2.webp')}}"></div>
+                                            <div class="pcb-item placeholder placeholder-circle lazyImg"
+                                                 data-src="{{asset('assets/images/people1.webp')}}"></div>
+                                            <div class="pcb-item placeholder placeholder-circle lazyImg"
+                                                 data-src="{{asset('assets/images/people2.webp')}}"></div>
                                         </div>
                                     </div>
                                     <div class="flex-text-col">
@@ -151,9 +157,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="absolute left-0 -bottom-4 w-full flex justify-center items-center">
-                                    <button class="btn btn-md btn-ripple btn-success btn-border-0 btn-pill"><i class="fa-solid fa-arrow-right"></i>&nbsp;查看</button>
-                                </div>
+                            </div>
+                            <div class="absolute left-0 -bottom-4 w-full flex justify-center items-center">
+                                <button class="btn btn-md btn-ripple btn-success btn-border-0 btn-pill"><i
+                                        class="fa-solid fa-arrow-right"></i>&nbsp;查看
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -173,19 +181,31 @@
                             </div>
                             <div class="content">
                                 <div class="relative p-4 group">
-                                    <div class="pointer-events-auto h-6 w-10 rounded-full p-1 ring-1 ring-inset transition duration-200 ease-in-out bg-slate-900/10 ring-slate-900/5 group-active:bg-amber-300">
-                                        <div class="h-4 w-4 rounded-full bg-white shadow-sm ring-1 ring-slate-700/10 transition duration-200 ease-in-out group-active:translate-x-4"></div>
+                                    <div
+                                        class="pointer-events-auto h-6 w-10 rounded-full p-1 ring-1 ring-inset transition duration-200 ease-in-out bg-slate-900/10 ring-slate-900/5 group-active:bg-amber-300">
+                                        <div
+                                            class="h-4 w-4 rounded-full bg-white shadow-sm ring-1 ring-slate-700/10 transition duration-200 ease-in-out group-active:translate-x-4"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card placeholder">
+                    <div class="card placeholder" data-placeholderdelay="2000">
                         <div class="inner">
-                            <div class="image placeholder lazyImg" data-src="{{asset('assets/images/100x100.svg')}}">
-                                <div class="float-text">100x100</div>
+                            <div class="image-frame">
+                                <div id="C3" class="image-people placeholder placeholder-circle lazyImg" data-src=""></div>
                             </div>
                             <div class="content">
+                                <div class="center-border">
+                                    <div id="C" class="title"></div>
+                                    <div class="subtitle">
+                                        首席設計師
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-bottom-group">
+                                <a id="C1" class="btn btn-ripple btn-color1 btn-text-center !block"><i class="fa-solid fa-envelope"></i>&nbsp;寫信</a>
+                                <a id="C2" class="btn btn-ripple btn-color1 btn-text-center !block"><i class="fa-solid fa-phone"></i>&nbsp;聯絡</a>
                             </div>
                         </div>
                     </div>
@@ -205,17 +225,11 @@
                                     <div class="description">
                                         這是一個問題卡片
                                     </div>
-                                    <div class="control btn-group">
-                                        <div
-                                            class="btn btn-transition btn-border-0 btn-max btn-text-center btn-md btn-ripple btn-success">
-                                            確認
-                                        </div>
-                                        <div
-                                            class="btn btn-transition btn-border-0 btn-max btn-text-center btn-md btn-ripple btn-warning">
-                                            取消
-                                        </div>
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="btn-bottom-group">
+                                <div class="btn btn-ripple btn-ok btn-text-center"><i class="fa-solid fa-check"></i>&nbsp;確認</div>
+                                <div class="btn btn-ripple btn-warning btn-text-center"><i class="fa-solid fa-xmark"></i>&nbsp;取消</div>
                             </div>
                         </div>
                     </div>
@@ -278,8 +292,10 @@
                     <div class="form-group">
                         <label for="text4">密碼</label>
                         <div class="form-password-group">
-                            <input id="text4" class="block form-solid front" type="password" autocomplete="new-password" required>
-                            <div class="btn btn-ripple btn-color1 btn-border-0 back ct" data-fn="password-toggle" data-target="#text4"><i class="fa-regular fa-eye"></i></div>
+                            <input id="text4" class="block form-solid front" type="password" autocomplete="new-password"
+                                   required>
+                            <div class="btn btn-ripple btn-color1 btn-border-0 back ct" data-fn="password-toggle"
+                                 data-target="#text4"><i class="fa-regular fa-eye"></i></div>
                         </div>
                     </div>
                     <div class="form-group-flex">
@@ -308,8 +324,10 @@
                         <input type="range" min="0" max="9" class="form-range" required>
                     </div>
                     <div class="form-group">
-                        <input type="tel" class="form-solid ITI" autocomplete="phone" data-btn="#phone-Validator-btn" data-msg="#phone-Validator-msg" data-true="ok" data-false="failed" required>
-                        <button id="phone-Validator-btn" class="btn btn-ripple btn-md btn-color1" type="button">驗證</button>
+                        <input type="tel" class="form-solid ITI" autocomplete="phone" data-btn="#phone-Validator-btn"
+                               data-msg="#phone-Validator-msg" data-true="ok" data-false="failed" required>
+                        <button id="phone-Validator-btn" class="btn btn-ripple btn-md btn-color1" type="button">驗證
+                        </button>
                         <span id="phone-Validator-msg" class="hidden"></span>
                     </div>
 
@@ -319,21 +337,137 @@
                     </div>
                     <div class="form-peer">
                         <input id="email2" class="peer hidden" type="checkbox" name="email">
-                        <label for="email2" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">驗證信件 checkbox</label>
+                        <label for="email2" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">驗證信件
+                            checkbox</label>
                     </div>
                     <div class="form-peer">
                         <input id="phone3" class="peer hidden" type="radio" name="filter-phone">
-                        <label for="phone3" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(A~Z) radio
+                        <label for="phone3" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(A~Z)
+                            radio
                         </label>
                     </div>
                     <div class="form-peer">
                         <input id="phone4" class="peer hidden" type="radio" name="filter-phone">
-                        <label for="phone4" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(Z~A) radio</label>
+                        <label for="phone4" class="peer-checked:bg-blue-500 peer-checked:text-white outline-btn">電話(Z~A)
+                            radio</label>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-warning btn-ripple btn-center btn-md-strip">送出</button>
                     </div>
+                    <div class="form-group">
+                        <textarea type="month" class="form-solid" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-textarea-group">
+                            <div class="title-bar">輸入文章內容</div>
+                            <textarea type="month" cols="40" class="form-solid" required></textarea>
+                            <div class="function-bar">
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple">
+                                    <i class="fa-solid fa-image"></i>
+                                    <span class="sm-text">&nbsp;圖片</span></button>
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple">
+                                    <i class="fa-solid fa-file"></i>
+                                    <span class="sm-text">&nbsp;檔案</span></button>
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple">
+                                    <i class="fa-solid fa-tag"></i>
+                                    <span class="sm-text">&nbsp;標籤</span></button>
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple">
+                                    <i class="fa-solid fa-icons"></i>
+                                    <span class="sm-text">&nbsp;Emoji</span></button>
+                                <button type="button" class="btn btn-circle btn-color1-reverse btn-ripple float-right-box">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    <span class="sm-text">&nbsp;送出</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
+            </div>
+            <div class="feed-demo">
+                這是 feed 示範
+                <div class="feed-list">
+                    <div class="feed" data-line="true">
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
+                        <div class="feed-node feed-success"></div>
+                        <div class="feed-content">
+                            <div class="flexbox">
+                                <div class="title">creamgod45</div>
+                                <div class="subtitle">created the post</div>
+                            </div>
+                            <div class="timestamp-ago">1D ago</div>
+                        </div>
+                    </div>
+                    <div class="feed" data-line="true">
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
+                        <div class="feed-node feed-warning"></div>
+                        <div class="feed-content">
+                            <div class="flexbox">
+                                <div class="title">creamgod45</div>
+                                <div class="subtitle">updated the post</div>
+                            </div>
+                            <div class="timestamp-ago">1D ago</div>
+                        </div>
+                    </div>
+                    <div class="feed" data-line="true">
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
+                        <div class="feed-node feed-danger"></div>
+                        <div class="feed-content">
+                            <div class="flexbox">
+                                <div class="title">creamgod45</div>
+                                <div class="subtitle">deleted the post</div>
+                            </div>
+                            <div class="timestamp-ago">1D ago</div>
+                        </div>
+                    </div>
+                    <div class="feed feed-big" data-line="true">
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
+                        <div class="feed-node feed-danger">
+                            <div class="feed-img lazyImg" data-src="{{asset('assets/images/people2.webp')}}"></div>
+                        </div>
+                        <div class="feed-content">
+                            <div class="flexbox">
+                                <div class="title">creamgod45</div>
+                                <div class="subtitle">deleted the member</div>
+                            </div>
+                            <div class="timestamp-ago">1D ago</div>
+                        </div>
+                    </div>
+                    <div class="feed feed-big" data-line="true">
+                        <div class="feed-line-box">
+                            <span class="feed-line"></span>
+                        </div>
+                        <div class="feed-node feed-danger">
+                            <div class="feed-img lazyImg" data-src="{{asset('assets/images/people2.webp')}}"></div>
+                        </div>
+                        <div class="feed-content">
+                            <div class="flexbox">
+                                <div class="title">creamgod45</div>
+                                <div class="subtitle">created the member</div>
+                            </div>
+                            <div class="timestamp-ago">1D ago</div>
+                        </div>
+                    </div>
+                    <div class="feed feed-big" data-line="true">
+                        <div class="feed-node feed-danger">
+                            <div class="feed-img lazyImg" data-src="{{asset('assets/images/people2.webp')}}"></div>
+                        </div>
+                        <div class="feed-content">
+                            <div class="flexbox">
+                                <div class="title">creamgod45</div>
+                                <div class="subtitle">update the member</div>
+                            </div>
+                            <div class="timestamp-ago">1D ago</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

@@ -22,7 +22,7 @@ class SearchFile
     public function __construct()
     {
         $this->utils = new utils();
-        $this->AES = new AES();
+        $this->AES = new AES2("test");
         if (!file_exists('cache.bin')) {
             FS::write('cache.bin', '');
         }
