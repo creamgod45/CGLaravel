@@ -15,18 +15,23 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    //build: {
-    //    rollupOptions: {
-    //        output: {
-    //            manualChunks(id) {
-    //                if (id.includes('node_modules')) {
-    //                    // 保持第三方库不合并，按库拆分
-    //                    return id.toString().split('node_modules/')[1].split('/')[0];
-    //                }
-    //            }
-    //        },
-    //    }
-    //},
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        // 保持第三方库不合并，按库拆分
+                        return id.toString().split('node_modules/')[1].split('/')[0];
+                    }
+                }
+            },
+            external: [
+                'intl-tel-input/build/js/i18n/en/index.mjs',
+                'intl-tel-input/build/js/i18n/zh/index.mjs',
+                'intl-tel-input/build/js/i18n/zh_TW/index.mjs',
+            ]
+        }
+    },
     //server: {
     //    hmr: {
     //        host: 'localhost',
