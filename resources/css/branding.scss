@@ -89,12 +89,12 @@ body {
             }
         }
         .cloud-service{
-            @apply relative bg-fixed overflow-y-hidden;
+            @apply max-h-fit relative bg-fixed overflow-y-hidden overflow-x-hidden max-w-[100vw];
             .control{
                 @apply absolute right-4 top-4 space-x-5 flex items-center justify-center w-fit z-[3];
             }
             .cloud-frame{
-                @apply backdrop-blur-md;
+                @apply backdrop-blur-md overflow-y-hidden overflow-x-hidden;
             }
         }
     }
@@ -104,7 +104,7 @@ body {
     }
 
     footer {
-        @apply w-full pt-[14rem] sm:px-5 xs:px-0 justify-center items-center;
+        @apply w-full pt-5 sm:px-5 xs:px-0 justify-center items-center;
         div.f1{
             @apply pt-10;
             .footer-menu{

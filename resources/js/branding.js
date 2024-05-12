@@ -105,8 +105,6 @@ function load2() {
     }
     window.addEventListener('resize', e => {
         setSizes();
-        canvas.width = screenWidth;
-        canvas.height = screenHeight;
         HOLE.r = smallerSize / 4;
         HOLE.x = screenWidth / 2;
         HOLE.y = screenHeight / 2;

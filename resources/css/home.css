@@ -1057,7 +1057,6 @@ a.btn {
   position: relative;
   overflow: hidden;
   outline: 0;
-  cursor: pointer;
 }
 .rippleable span.ripple {
   position: absolute;
@@ -1070,25 +1069,25 @@ a.btn {
 }
 
 .cards-flex1 {
-  @apply flex space-x-5 p-5 w-full min-w-[900px] overflow-y-hidden overflow-x-hidden;
+  @apply flex space-x-5 p-5 w-full max-w-[100vw] overflow-y-hidden overflow-x-hidden;
 }
 .cards-flex1 .card {
-  @apply ring-1 ring-slate-200 bg-slate-100 h-80 min-w-80 rounded-md shadow-md my-14;
+  @apply min-w-80 my-14;
 }
 .cards-flex1 .card .inner {
-  @apply grid grid-cols-1 grid-rows-2 w-full h-full relative;
+  @apply w-full relative rounded-md shadow-md ring-1 ring-slate-200 bg-slate-100;
 }
 .cards-flex1 .card .inner .image {
   @apply w-full aspect-video rounded-t-md flex justify-center items-center;
 }
 .cards-flex1 .card .inner .image-frame {
-  @apply w-full flex justify-center items-center;
+  @apply w-full my-5 flex justify-center items-center;
 }
 .cards-flex1 .card .inner .image-frame .image-people {
   @apply size-32 rounded-full bg-cover bg-center;
 }
 .cards-flex1 .card .inner .content {
-  @apply rounded-md px-2 py-1 bg-white flex justify-center items-center pb-[100px] mb-96;
+  @apply rounded-md px-2 py-1 bg-white flex justify-center items-center pb-[76px];
 }
 .cards-flex1 .card .inner .content .center-border {
   @apply w-full h-full px-2 relative;

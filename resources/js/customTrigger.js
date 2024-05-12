@@ -46,7 +46,7 @@ function datalist_selector(ct, target) {
                         let el = document.querySelector(`#${string}`);
                         if (el !== null) {
                             el.scrollIntoView({behavior: 'smooth', block: 'nearest'});
-                            setTimeout(() => createRipple(el), 400);
+                            setTimeout(() => createRipple(el.children[0]), 400);
                             datalist.dataset.index = number;
                         }
                     }
@@ -65,7 +65,7 @@ function datalist_selector(ct, target) {
                         let el = document.querySelector(`#${string}`);
                         if (el !== null) {
                             el.scrollIntoView({behavior: 'smooth', block: 'nearest'});
-                            setTimeout(() => createRipple(el), 400);
+                            setTimeout(() => createRipple(el.children[0]), 400);
                             datalist.dataset.index = number;
                         }
                     }
