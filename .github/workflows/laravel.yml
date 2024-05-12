@@ -74,7 +74,9 @@ jobs:
         run: php artisan migrate --force -v
 
       - name: Test with phpunit 🧐
-        run: php artisan test --profile
+        run: |
+          php artisan test --profile
+          cat storage/logs/laravel.log
 
       - name: Run Sensiolabs security checks 🚨
         run: |
