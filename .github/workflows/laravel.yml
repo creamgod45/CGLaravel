@@ -13,15 +13,18 @@ jobs:
     env:
       DB_DATABASE: laravel
       DB_USERNAME: root
-      DB_PASSWORD: passwor
+      DB_PASSWORD: password
       DB_HOST: mysql  # 修改此行d
+      DB_PORT: 3306
 
     services:
       mysql:
         image: mysql:5.7
         env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: "laravel"
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
         ports:
           - 3306:3306
         options: >-
@@ -36,6 +39,16 @@ jobs:
           php-version: '8.2'
 
       - uses: actions/checkout@v4
+
+
+      - name: Start Mariadb
+        run: |
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -ppassword -e 'CREATE DATABASE IF NOT EXISTS laravel;'
+
+      - name: Verify MySQL connection
+        run: |
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -ppassword -e "SHOW DATABASES"
+
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
