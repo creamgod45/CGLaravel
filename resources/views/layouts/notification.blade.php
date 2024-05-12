@@ -1,4 +1,4 @@
-@use(App\Lib\I18N\ELanguageText)
+@use(App\Lib\I18N\ELanguageText;use App\Lib\Utils\ENotificationType)
 <div class="notification">
     <x-notification-item :title="$i18N->getLanguage(ELanguageText::notification_title)"
                          :description="$i18N->getLanguage(ELanguageText::notification_description)"
