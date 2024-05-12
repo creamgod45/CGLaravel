@@ -26,6 +26,8 @@ jobs:
       run: php artisan key:generate
     - name: autoload
       run: composer dump-autoload
+    - name: artisan migrate
+      run: php artisan migrate
     - name: artisan optimize
       run: php artisan optimize
     - name: Directory Permissions
