@@ -26,18 +26,18 @@
 body {
     @apply relative;
     .frontmask{
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 3;
+        width: 100%;
+        height: 100%;
+        z-index: 1 !important;
     }
 
     .container1{
-        @apply w-full p-5 mt-20;
+        @apply w-full mt-20;
         .hero-content{
-            @apply w-full h-fit bg-center bg-cover rounded-4xl;
+            @apply w-full bg-fixed h-fit bg-center bg-cover rounded-4xl;
             .hero-bgdropfilter{
                 @apply backdrop-blur-md w-full h-full rounded-4xl;
                 .gradable{
@@ -88,6 +88,15 @@ body {
                 }
             }
         }
+        .cloud-service{
+            @apply relative bg-fixed overflow-y-hidden;
+            .control{
+                @apply absolute right-4 top-4 space-x-5 flex items-center justify-center w-fit z-[3];
+            }
+            .cloud-frame{
+                @apply backdrop-blur-md;
+            }
+        }
     }
 
     *:not(textarea){
@@ -95,7 +104,7 @@ body {
     }
 
     footer {
-        @apply w-full pt-[14rem] px-5 justify-center items-center;
+        @apply w-full pt-[14rem] sm:px-5 xs:px-0 justify-center items-center;
         div.f1{
             @apply pt-10;
             .footer-menu{
@@ -120,7 +129,7 @@ body {
                 }
             }
             .footer1{
-                @apply ring-1 ring-slate-200 shadow z-10 bg-neutral-700 text-white flex items-center justify-center w-full;
+                @apply ring-1 ring-slate-200 shadow z-10 bg-neutral-700 text-white flex items-center justify-center w-full px-5;
                 a {
                     @apply text-blue-500;
                     &:hover {

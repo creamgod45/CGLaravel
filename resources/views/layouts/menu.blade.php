@@ -31,6 +31,9 @@
         <a href="/" type="button" class="float-menu-btn" aria-expanded="false">
             <span>{{$i18N->getLanguage(ELanguageText::menu_frontpage)}}</span>
         </a>
+        <a href="{{route('branding')}}" class="float-menu-btn" aria-expanded="false">
+            <span>品牌頁面</span>
+        </a>
         <button type="button" class="float-menu-btn" aria-expanded="false" data-target="#float1">
             <span>{{$i18N->getLanguage(ELanguageText::menu_product)}}</span>
             <i class="fa-solid fa-caret-down"></i>
