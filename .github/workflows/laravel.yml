@@ -47,7 +47,7 @@ jobs:
     - name: Configure DB
       run: |
         echo "DB_CONNECTION=mysql" >> .env
-        echo "DB_HOST=127.0.0.1" >> .env
+        echo "DB_HOST=172.18.0.1" >> .env
         echo "DB_PORT=3306" >> .env
         echo "DB_DATABASE=cglaravel" >> .env
         echo "DB_USERNAME=root" >> .env
