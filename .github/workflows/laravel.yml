@@ -10,6 +10,11 @@ jobs:
   laravel-tests:
 
     runs-on: ubuntu-latest
+    env:
+      DB_DATABASE: laravel
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      DB_HOST: localhost
 
     services:
       mysql:
@@ -56,17 +61,9 @@ jobs:
 
       - name: Run Migrations 💾
         run: php artisan migrate --force -v
-        env:
-          DB_PORT: ${{job.services.mysql.ports['3306']}}
-          DB_PASSWORD: password
-          DB_HOST: localhost
 
       - name: Test with phpunit 🧐
         run: vendor/bin/phpunit
-        env:
-          DB_PORT: ${{job.services.mysql.ports['3306']}}
-          DB_PASSWORD: password
-          DB_HOST: localhost
 
       - name: Run Sensiolabs security checks 🚨
         run: |
