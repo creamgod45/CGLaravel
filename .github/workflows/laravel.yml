@@ -74,7 +74,7 @@ jobs:
         run: php artisan migrate --force -v
 
       - name: Test with phpunit 🧐
-        run: vendor/bin/phpunit
+        run: php artisan test --profile
 
       - name: Run Sensiolabs security checks 🚨
         run: |
