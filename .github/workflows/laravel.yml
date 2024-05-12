@@ -26,8 +26,6 @@ jobs:
       run: php artisan key:generate
     - name: autoload
       run: composer dump-autoload
-    - name: artisan migrate
-      run: php artisan migrate
     - name: artisan optimize
       run: php artisan optimize
     - name: Directory Permissions
@@ -36,6 +34,8 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
+    - name: artisan migrate
+      run: php artisan migrate
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
       env:
         DB_CONNECTION: sqlite
