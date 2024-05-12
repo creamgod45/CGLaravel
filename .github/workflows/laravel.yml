@@ -13,8 +13,8 @@ jobs:
     env:
       DB_DATABASE: laravel
       DB_USERNAME: root
-      DB_PASSWORD: password
-      DB_HOST: localhost
+      DB_PASSWORD: passwor
+      DB_HOST: mysql  # 修改此行d
 
     services:
       mysql:
@@ -22,7 +22,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: "laravel"
-          MYSQL_HOST: localhost
         ports:
           - 3306:3306
         options: >-
@@ -32,6 +31,9 @@ jobs:
           --health-retries=3
 
     steps:
+      - name: Check MySQL Connection
+        run: mysqladmin -h mysql -u root -ppassword ping
+
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: '8.2'
