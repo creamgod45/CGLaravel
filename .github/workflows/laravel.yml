@@ -73,6 +73,12 @@ jobs:
       - name: Run Migrations 💾
         run: php artisan migrate --force -v
 
+      - name: Run NPM installer
+        run: npm install
+
+      - name: build Vite Assets
+        run: npm run build
+
       - name: Test with phpunit 🧐
         run: |
           php artisan test --profile
