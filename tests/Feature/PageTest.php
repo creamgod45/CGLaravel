@@ -6,10 +6,12 @@ namespace Tests\Feature;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\Utils\Utilsv2;
 use App\Models\Member;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PageTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic test example.
      */
