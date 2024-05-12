@@ -8,7 +8,7 @@ use App\Lib\Utils\Utilsv2;
 use App\Models\Member;
 use Tests\TestCase;
 
-class PageTester extends TestCase
+class PageTest extends TestCase
 {
     /**
      * A basic test example.
