@@ -17,6 +17,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: "laravel"
+          MYSQL_HOST: localhost
         ports:
           - 3306:3306
         options: >-
@@ -58,12 +59,14 @@ jobs:
         env:
           DB_PORT: ${{job.services.mysql.ports['3306']}}
           DB_PASSWORD: password
+          DB_HOST: localhost
 
       - name: Test with phpunit 🧐
         run: vendor/bin/phpunit
         env:
           DB_PORT: ${{job.services.mysql.ports['3306']}}
           DB_PASSWORD: password
+          DB_HOST: localhost
 
       - name: Run Sensiolabs security checks 🚨
         run: |
