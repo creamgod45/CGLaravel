@@ -31,9 +31,6 @@ jobs:
           --health-retries=3
 
     steps:
-      - name: Check MySQL Connection
-        run: mysqladmin -h mysql -u root -p password ping
-
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: '8.2'
