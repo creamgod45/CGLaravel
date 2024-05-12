@@ -15,7 +15,7 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: ""
+          MYSQL_ROOT_PASSWORD: "1a98h19a1sdh91a89s"
           MYSQL_DATABASE: "cglaravel"
         ports:
           - 3306:3306
@@ -51,7 +51,7 @@ jobs:
         echo "DB_PORT=3306" >> .env
         echo "DB_DATABASE=cglaravel" >> .env
         echo "DB_USERNAME=root" >> .env
-        echo "DB_PASSWORD=" >> .env
+        echo "DB_PASSWORD=1a98h19a1sdh91a89s" >> .env
     - name: Run Migrations
       run: php artisan migrate
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
