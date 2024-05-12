@@ -15,8 +15,8 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: "1a98h19a1sdh91a89s"
-          MYSQL_DATABASE: "cglaravel"
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: "laravel"
         ports:
           - 3306:3306
         options: >-
@@ -26,47 +26,44 @@ jobs:
           --health-retries=3
 
     steps:
-      - name: Set Up Mysql 8 ⚙️
-        run: |
-          echo -e "Enable LOAD DATA LOCAL INFILE in my.cnf\n"
-          echo -e "SETTING secure-file-priv TO EMPTY STRING\n"
-          echo -e "[mysqld]\nsecure-file-priv=''" | sudo tee -a /etc/mysql/my.cnf
-          echo -e "SETTING local_infile TO ON\n"
-          echo -e "[mysqld]\nlocal_infile='ON'" | sudo tee -a /etc/mysql/my.cnf
-          echo -e "Start MYSQL service, it is off by default\n"
-          sudo systemctl enable mysql.service
-          sudo systemctl start mysql.service
-          echo -e "Creating Laravel Database\n"
-          mysql --host 127.0.0.1 -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS laravel;'
-          echo -e "Check new settings\n"
-          mysql --host 127.0.0.1 -uroot -proot -e "SELECT @@global.secure_file_priv, @@global.local_infile"
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: '8.2'
+
       - uses: actions/checkout@v4
+
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
       - name: artisan optimize clear
         run: php artisan optimize:clear
+
       - name: Generate key
         run: php artisan key:generate
+
       - name: autoload
         run: composer dump-autoload
+
       - name: artisan optimize
         run: php artisan optimize
+
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
+
       - name: Run Migrations 💾
         run: php artisan migrate --force -v
         env:
           DB_PORT: ${{job.services.mysql.ports['3306']}}
+          DB_PASSWORD: password
 
       - name: Test with phpunit 🧐
         run: vendor/bin/phpunit
         env:
           DB_PORT: ${{job.services.mysql.ports['3306']}}
+          DB_PASSWORD: password
 
       - name: Run Sensiolabs security checks 🚨
         run: |
