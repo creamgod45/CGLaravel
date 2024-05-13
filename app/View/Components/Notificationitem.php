@@ -8,11 +8,13 @@ use Illuminate\View\Component;
 
 class notificationitem extends Component
 {
+    public string $title="";
+    public string $description="";
+    public string $type = "info";
     public function __construct(
-        public string $title="",
-        public string $description="",
-        public string $id = "",
-        public string $type = "info",
+        $title,
+        $description,
+        $type,
     )
     {
 
