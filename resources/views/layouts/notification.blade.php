@@ -1,11 +1,11 @@
 @use(App\Lib\I18N\ELanguageText)
 <div class="notification">
-    <x-notificationitem :title="$i18N->getLanguage(ELanguageText::notification_title)"
+    <x-Notificationitem :title="$i18N->getLanguage(ELanguageText::notification_title)"
                          :description="$i18N->getLanguage(ELanguageText::notification_description)"
-                         type="info"/>
+                         :type="0"/>
     @if(session('custom_message')!==null and is_array(session('custom_message')))
         @if(session('custom_message')[0] !== null && session('custom_message')[1]!==null && session('custom_message')[2]!==null)
-        <x-notificationitem :title="session('custom_message')[0]" :description="session('custom_message')[1]"
+        <x-Notificationitem :title="session('custom_message')[0]" :description="session('custom_message')[1]"
                              :type="session('custom_message')[2]"/>
         @endif
     @endif
@@ -21,7 +21,7 @@
                 }
             }
         @endphp
-        <x-notificationitem type="error" :title="$title"
+        <x-Notificationitem type="error" :title="$title"
                              :description="$description"/>
     @endif
     @if(session('mail') !== null)
@@ -37,7 +37,7 @@
                 $type= "error";
             }
         @endphp
-        <x-notificationitem :type="$type" :title="$title" :description="$description" />
+        <x-Notificationitem :type="$type" :title="$title" :description="$description" />
     @endif
     @if(session('mail_result') !== null)
         @php
@@ -57,6 +57,6 @@
                 $type= "success";
             }
         @endphp
-        <x-notificationitem :type="$type" :title="$title" :description="$description"/>
+        <x-Notificationitem :type="$type" :title="$title" :description="$description"/>
     @endif
 </div>

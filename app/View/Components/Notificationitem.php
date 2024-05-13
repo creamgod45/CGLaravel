@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class notificationitem extends Component
+class Notificationitem extends Component
 {
     public string $title="";
     public string $description="";
@@ -17,7 +17,9 @@ class notificationitem extends Component
         $type,
     )
     {
-
+        $this->title=$title;
+        $this->description=$description;
+        $this->type=$type;
     }
 
     public function render(): View|Closure|string
