@@ -1,3 +1,9 @@
+@env('testing')
+    @php
+        dump(__dir__);
+        require_once "../app/lib/utils/ENotificationType.php";
+    @endphp
+@endenv
 @use(App\Lib\I18N\ELanguageText)
 @use(App\Lib\Utils\ENotificationType)
 <div class="notification">
