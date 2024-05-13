@@ -1,4 +1,4 @@
-<div id="{{"N".Str::random(7)}}" class="item notification-{{$type->name}}">
+<div id="{{"N".Str::random(7)}}" class="item notification-{{$type}}">
     <div class="icon">
         @if($type=== "info")
             <i class="fa-solid fa-info"></i>

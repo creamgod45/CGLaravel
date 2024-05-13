@@ -37,7 +37,7 @@
                 $type= "error";
             }
         @endphp
-        <x-notification-item :type="$type" :title="$title" :description="$description"/>
+        <x-notification-item :type="$type" :title="$title" :description="$description" />
     @endif
     @if(session('mail_result') !== null)
         @php
