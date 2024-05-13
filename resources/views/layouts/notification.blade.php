@@ -4,7 +4,7 @@
                          :description="$i18N->getLanguage(ELanguageText::notification_description)"
                          type="info"/>
     @if(session('custom_message')!==null and is_array(session('custom_message')))
-        @if(session('custom_message')[0] !== null || session('custom_message')[1]!==null || session('custom_message')[2]!==null)
+        @if(session('custom_message')[0] !== null && session('custom_message')[1]!==null && session('custom_message')[2]!==null)
         <x-notification-item :title="session('custom_message')[0]" :description="session('custom_message')[1]"
                              :type="session('custom_message')[2]"/>
         @endif
