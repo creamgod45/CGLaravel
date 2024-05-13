@@ -15,6 +15,7 @@ jobs:
       DB_USERNAME: root
       DB_PASSWORD: password
       DB_PORT: 3306
+      APP_ENV: testing
 
     services:
       mysql:
