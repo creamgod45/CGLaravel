@@ -1,5 +1,5 @@
 @use(App\Lib\Utils\ENotificationType)
-<div id="{{"N".Str::random(7)}}" class="item notification-{{$type}}">
+<div id="{{"N".Str::random(7)}}" class="item notification-{{$type->name}}">
     <div class="icon">
         @if($type=== ENotificationType::info)
             <i class="fa-solid fa-info"></i>

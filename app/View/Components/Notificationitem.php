@@ -19,7 +19,7 @@ class Notificationitem extends Component
         $this->line=Utils::default($line, 0);
         $this->title=Utils::default($title, "");
         $this->description=Utils::default($description, "");
-        $this->type=Utils::default($description, ENotificationType::info);
+        $this->type=Utils::default($type, ENotificationType::info);
     }
 
     public function render(): View|Closure|string
