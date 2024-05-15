@@ -18,16 +18,16 @@ class PageTest extends TestCase
     public function test_the_application_returns_a_successful_response(): void
     {
         $response = $this->get('/');
-        $response->dumpHeaders();
-        $response->dump();
+        //$response->dumpHeaders();
+        //$response->dump();
         $response->assertStatus(200);
     }
 
     public function test_the_application_forget_password_a_successful_response(): void
     {
         $response = $this->get('/forgot-password');
-        $response->dumpHeaders();
-        $response->dump();
+        //$response->dumpHeaders();
+        //$response->dump();
         $response->assertStatus(200);
     }
 
@@ -83,14 +83,14 @@ class PageTest extends TestCase
         $user = Member::factory()->create();
 
         $response = $this->actingAs($user, 'web')->get('/resendemail');
-        $response->dumpHeaders();
+        //$response->dumpHeaders();
         $response->dump();
         $response->assertStatus(302)
             ->assertSessionHas('mail', true)
             ->assertRedirectToRoute('home');
 
         $response = $this->actingAs($user, 'web')->get('/logout');
-        $response->dumpHeaders();
+        //$response->dumpHeaders();
         $response->dump();
         $response->assertStatus(200)
             ->assertViewIs('logout');
@@ -100,13 +100,13 @@ class PageTest extends TestCase
         $user->markEmailAsVerified();
 
         $response = $this->actingAs($user, 'web')->get('/members');
-        $response->dumpHeaders();
+        //$response->dumpHeaders();
         $response->dump();
         $response->assertStatus(200)
             ->assertViewIs('members');
 
         $response = $this->actingAs($user, 'web')->get('/resendemail');
-        $response->dumpHeaders();
+        //$response->dumpHeaders();
         $response->dump();
         $response->assertStatus(302)
             ->assertSessionHas('mail_result', 1)
