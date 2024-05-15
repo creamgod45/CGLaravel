@@ -24,12 +24,17 @@ export default defineConfig({
                         return id.toString().split('node_modules/')[1].split('/')[0];
                     }
                 }
-            }
+            },
+            external: [
+                'intl-tel-input/build/js/i18n/en/index.mjs',
+                'intl-tel-input/build/js/i18n/zh/index.mjs',
+                'intl-tel-input/build/js/i18n/zh_TW/index.mjs',
+            ]
         }
     },
-    server: {
-        hmr: {
-            host: 'localhost',
-        },
-    },
+    //server: {
+    //    hmr: {
+    //        host: 'localhost',
+    //    },
+    //},
 });

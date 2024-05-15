@@ -258,7 +258,7 @@ class MemberController extends Controller
                             return redirect(route('home'))->with('custom_message', [
                                 $i18N->getLanguage(ELanguageText::notification_login_title),
                                 $i18N->getLanguage(ELanguageText::notification_login_success),
-                                ENotificationType::success
+                                "success"
                             ]);
                         } else {
                             // 自訂錯誤訊息
@@ -283,7 +283,7 @@ class MemberController extends Controller
         return redirect(route('login'))->with('custom_message', [
             $i18N->getLanguage(ELanguageText::notification_login_title),
             $i18N->getLanguage(ELanguageText::notification_login_failed),
-            ENotificationType::error
+            "error"
         ])->withInput()->withErrors($validator->errors());
     }
 }

@@ -19,31 +19,35 @@
                 debugbar()->info($request->user());
             @endphp
         @endenv
-        <div class="hero-content placeholder lazyImg" data-src="{{asset('assets/images/welcome_banner1.jpg')}}">
-            <div class="hero-bgdropfilter">
-                <div class="gradable">
-                    <div class="context">
-                        <div class="flex justify-center items-center h-full w-full">
-                            <div class="h-fit w-full">
-                                <div class="title noto-serif-tc-bold">正在尋找伺服器承包商或是網站設計?</div>
-                                <div class="subtitle noto-serif-tc-semibold">又或是代管伺服器、活動、資訊安全</div>
-                                <div class="flex justify-center items-center">
-                                    <div class="btn btn-pill btn-border-0 btn-ripple btn-color1 btn-md btn-text-center">
-                                        前往看看
+        <div class="p-5">
+            <div class="hero-content placeholder lazyImg"  data-src="{{asset('assets/images/welcome_banner1.jpg')}}">
+                <div id="hero" class="hero-bgdropfilter">
+                    <div class="gradable z-[2]">
+                        <div class="context">
+                            <div class="flex justify-center items-center h-full w-full">
+                                <div class="h-fit w-full">
+                                    <div class="title noto-serif-tc-bold">正在尋找伺服器承包商或是網站設計?</div>
+                                    <div class="subtitle noto-serif-tc-semibold">又或是代管伺服器、活動、資訊安全</div>
+                                    <div class="flex justify-center items-center">
+                                        <div
+                                            class=" btn btn-pill btn-border-0 btn-ripple btn-color1 btn-md btn-text-center">
+                                            前往看看
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="_3DModel lazyImg" data-src="{{asset('assets/images/Server3DModel.png')}}"></div>
                     </div>
-                    <div class="_3DModel lazyImg" data-src="{{asset('assets/images/Server3DModel.png')}}"></div>
                 </div>
             </div>
         </div>
-        <div class="bg-white py-24 sm:py-32">
+        <div class="bg-white py-24 xs:px-5 sm:py-32">
             <div class="mx-auto max-w-7xl md:px-6 footer:px-6 sm:px-2 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:text-center">
                     <h2 class="text-base font-semibold leading-7 text-indigo-600">專業級部署</h2>
-                    <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl noto-serif-tc-bold">所有的應用程式幫你部署並整合</p>
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl noto-serif-tc-bold">
+                        所有的應用程式幫你部署並整合</p>
                     <p class="mt-6 text-lg leading-8 text-gray-600"></p>
                 </div>
                 <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -108,8 +112,11 @@
                                 高級資訊安全保護
                             </dt>
                             <dd class="mt-2 text-base leading-7 text-gray-600">
-                                DDOS、Tunning、Firewall、SQL injection、CSP、XSS、Log 分析、CSRF、Malware、Phishing、端點保護（Endpoint security）、加密（Encryption）、身份驗證（Authentication）、2FA、安全資訊和事件管理（SIEM）、訪問控制（Access control）、入侵檢測系統/入侵預防系統（IDS/IPS）、漏洞掃描（Vulnerability scanning）
-                                、多因素認證（Multi-factor authentication, MFA）、安全開發生命周期（Secure Development Lifecycle, SDL）
+                                DDOS、Tunning、Firewall、SQL injection、CSP、XSS、Log 分析、CSRF、Malware、Phishing、端點保護（Endpoint
+                                security）、加密（Encryption）、身份驗證（Authentication）、2FA、安全資訊和事件管理（SIEM）、訪問控制（Access
+                                control）、入侵檢測系統/入侵預防系統（IDS/IPS）、漏洞掃描（Vulnerability scanning）
+                                、多因素認證（Multi-factor authentication, MFA）、安全開發生命周期（Secure Development
+                                Lifecycle, SDL）
                             </dd>
                         </div>
                         <div class="relative pl-16">
@@ -137,6 +144,120 @@
                             </dd>
                         </div>
                     </dl>
+                </div>
+            </div>
+        </div>
+        <div class="cloud-service placeholder lazyImg" data-placeholderdelay="1000" data-src="{{asset('assets/images/welcome_banner3.jpg')}}">
+            <div class="control ct" data-fn="datalist_selector" data-target="#datalist1" data-next="#next1"
+                 data-prev="#perv1" data-lists="#datalist1">
+                <div class="text-white text-2xl tracking-widest noto-serif-tc-bold">所有員工</div>
+                <div id="perv1" class="btn btn-circle btn-ripple btn-ok">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div id="next1" class="btn btn-circle btn-ripple btn-warning">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+            <div id="datalist1" data-index="0" class="cloud-frame cards-flex1">
+                <div class="card placeholder" data-placeholderdelay="2000">
+                    <div class="inner rippleable">
+                        <div class="image-frame">
+                            <div class="image-people placeholder placeholder-circle lazyImg"
+                                 data-src="{{asset('assets/images/people2.webp')}}"></div>
+                        </div>
+                        <div class="content">
+                            <div class="center-border">
+                                <div class="title">蔡佳蓉</div>
+                                <div class="subtitle">
+                                    前端設計師
+                                </div>
+                                <div class="description mt-10">
+                                    曾任職 Tailwind 擔任 CSSParser 設計師
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-bottom-group">
+                            <a class="btn btn-ripple btn-color1 btn-text-center !block"><i
+                                    class="fa-solid fa-envelope"></i>&nbsp;寫信</a>
+                            <a class="btn btn-ripple btn-color1 btn-text-center !block"><i
+                                    class="fa-solid fa-phone"></i>&nbsp;聯絡</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card placeholder" data-placeholderdelay="2000">
+                    <div class="inner rippleable">
+                        <div class="image-frame">
+                            <div class="image-people placeholder placeholder-circle lazyImg"
+                                 data-src="{{asset('assets/images/people1.webp')}}"></div>
+                        </div>
+                        <div class="content">
+                            <div class="center-border">
+                                <div class="title">張嘉恩</div>
+                                <div class="subtitle">
+                                    後端設計師
+                                </div>
+                                <div class="description mt-10">
+                                    曾任職 Laravel 擔任 Eloquent 設計師
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-bottom-group">
+                            <a class="btn btn-ripple btn-color1 btn-text-center !block"><i
+                                    class="fa-solid fa-envelope"></i>&nbsp;寫信</a>
+                            <a class="btn btn-ripple btn-color1 btn-text-center !block"><i
+                                    class="fa-solid fa-phone"></i>&nbsp;聯絡</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card placeholder" data-placeholderdelay="2000">
+                    <div class="inner rippleable">
+                        <div class="image-frame">
+                            <div class="image-people placeholder placeholder-circle lazyImg"
+                                 data-src="{{asset('assets/images/people3.webp')}}"></div>
+                        </div>
+                        <div class="content">
+                            <div class="center-border">
+                                <div class="title">劉怡君</div>
+                                <div class="subtitle">
+                                    PM 專案經理
+                                </div>
+                                <div class="description mt-10">
+                                    曾任職 Docker 擔任系統架構設計師
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-bottom-group">
+                            <a class="btn btn-ripple btn-color1 btn-text-center !block"><i
+                                    class="fa-solid fa-envelope"></i>&nbsp;寫信</a>
+                            <a class="btn btn-ripple btn-color1 btn-text-center !block"><i
+                                    class="fa-solid fa-phone"></i>&nbsp;聯絡</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card placeholder" data-placeholderdelay="2000">
+                    <div class="inner rippleable">
+                        <div class="image-frame">
+                            <div class="image-people placeholder placeholder-circle lazyImg"
+                                 data-src="{{asset('assets/images/people4.webp')}}"></div>
+                        </div>
+                        <div class="content">
+                            <div class="center-border">
+                                <div class="title">陳宇軒</div>
+                                <div class="subtitle">
+                                    系統架構設計師
+                                </div>
+                                <div class="description mt-10">
+                                    現任職擔任系統架構設計師
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-bottom-group">
+                            <a class="btn btn-ripple btn-color1 btn-text-center !block"><i
+                                    class="fa-solid fa-envelope"></i>&nbsp;寫信</a>
+                            <a class="btn btn-ripple btn-color1 btn-text-center !block"><i
+                                    class="fa-solid fa-phone"></i>&nbsp;聯絡</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

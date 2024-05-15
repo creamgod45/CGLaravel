@@ -22,11 +22,11 @@ use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 */
 
 Route::get('/', function (Request $request) {
-    return view('welcome', Controller::baseControllerInit($request));
+    return view('branding', Controller::baseControllerInit($request));
 })->name('home');
 
 Route::get('/branding', function (Request $request) {
-    return view('branding', Controller::baseControllerInit($request));
+    return view('welcome', Controller::baseControllerInit($request));
 })->name('branding');
 
 Route::post('lzstring.json', function (Request $request){

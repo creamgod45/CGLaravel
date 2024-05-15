@@ -22,15 +22,17 @@ function load1() {
 }
 
 function load2() {
+    let hero = document.querySelector("#hero");
+    let herob = hero.getBoundingClientRect();
     let screenWidth, screenHeight, smallerSize;
 
     const Z_RANGE = 100; // How deep is your love
-    const Z_VELOCITY = -0.0025; // How fast
+    const Z_VELOCITY = -0.0055; // How fast
     const STARS_COUNT = 2000; // How many
 
     const setSizes = () => {
-        screenWidth = window.innerWidth;
-        screenHeight = window.innerHeight;
+        screenWidth = herob.width;
+        screenHeight = herob.height;
         smallerSize = screenWidth > screenHeight ? screenHeight : screenWidth;
     }
     setSizes();
@@ -83,7 +85,9 @@ function load2() {
     canvas.classList.add('frontmask');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    document.body.appendChild(canvas);
+    if (hero !== null) {
+        hero.appendChild(canvas);
+    }
     const ctx = canvas.getContext("2d");
 
     const animate = () => {
@@ -101,8 +105,6 @@ function load2() {
     }
     window.addEventListener('resize', e => {
         setSizes();
-        canvas.width = screenWidth;
-        canvas.height = screenHeight;
         HOLE.r = smallerSize / 4;
         HOLE.x = screenWidth / 2;
         HOLE.y = screenHeight / 2;

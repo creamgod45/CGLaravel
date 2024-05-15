@@ -1,7 +1,19 @@
 import intlTelInput from "intl-tel-input";
-import en from 'intl-tel-input/build/js/i18n/en/index.mjs'
-import zh_cn from 'intl-tel-input/build/js/i18n/zh/index.mjs'
-import zh_tw from 'intl-tel-input/build/js/i18n/zh_TW/index.mjs'
+
+let zh_tw;
+import('intl-tel-input/build/js/i18n/zh_TW/index.mjs').then(module => {
+    zh_tw = module.default;
+}).catch(error => console.error('Failed to load zh_TW localization', error));
+
+let zh_cn;
+import('intl-tel-input/build/js/i18n/zh/index.mjs').then(module => {
+    zh_cn = module.default;
+}).catch(error => console.error('Failed to load zh_cn localization', error));
+
+let en;
+import('intl-tel-input/build/js/i18n/en/index.mjs').then(module => {
+    en = module.default;
+}).catch(error => console.error('Failed to load en localization', error));
 
 console.log(navigator.language);
 function phone() {

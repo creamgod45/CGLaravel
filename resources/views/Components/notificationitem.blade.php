@@ -1,12 +1,12 @@
-<div id="{{$id}}" class="item notification-{{$type->name}}">
+<div id="{{"N".Str::random(7)}}" class="item notification-{{$type}}">
     <div class="icon">
-        @if($type===\App\Lib\Utils\ENotificationType::info)
+        @if($type=== "info")
             <i class="fa-solid fa-info"></i>
-        @elseif($type===\App\Lib\Utils\ENotificationType::warning)
+        @elseif($type=== "warning")
             <i class="fa-solid fa-triangle-exclamation"></i>
-        @elseif($type===\App\Lib\Utils\ENotificationType::error)
+        @elseif($type=== 'error')
             <i class="fa-solid fa-xmark"></i>
-        @elseif($type===\App\Lib\Utils\ENotificationType::success)
+        @elseif($type=== "success")
             <i class="fa-solid fa-check"></i>
         @endif
     </div>

@@ -6,31 +6,36 @@ namespace Tests\Feature;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\Utils\Utilsv2;
 use App\Models\Member;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class PageTester extends TestCase
+class PageTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic test example.
      */
     public function test_the_application_returns_a_successful_response(): void
     {
         $response = $this->get('/');
-
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(200);
     }
 
     public function test_the_application_forget_password_a_successful_response(): void
     {
         $response = $this->get('/forgot-password');
-
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(200);
     }
 
     public function test_the_application_passwordreset(): void
     {
         $response = $this->get('/passwordreset');
-
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(302)
             ->assertRedirectToRoute('home')
             ->assertInvalid();
@@ -39,7 +44,8 @@ class PageTester extends TestCase
     public function test_the_application_member(): void
     {
         $response = $this->get('/members');
-
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(302)
             ->assertRedirectToRoute('login');
     }
@@ -50,6 +56,8 @@ class PageTester extends TestCase
         $compress = Utilsv2::encodeContext($value)['compress'];
         $response = $this->postJson('/lzstring.json', ['a' => $compress]);
 
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(200)
             ->assertJson(['message' => 'Data received successfully', 'raw' => Utilsv2::decodeContext($compress)]);
     }
@@ -57,10 +65,14 @@ class PageTester extends TestCase
     public function test_the_application_language()
     {
         $response = $this->postJson('/language', ['lang' => ELanguageCode::en_US->name]);
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(200)
             ->assertCookie('lang', ELanguageCode::en_US->name)
             ->assertJson(['message' => 'Data received successfully']);
         $response = $this->postJson('/language', ['lang' => "error"]);
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(400)
             ->assertJson(['message' => 'Error']);
     }
@@ -71,11 +83,15 @@ class PageTester extends TestCase
         $user = Member::factory()->create();
 
         $response = $this->actingAs($user, 'web')->get('/resendemail');
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(302)
             ->assertSessionHas('mail', true)
             ->assertRedirectToRoute('home');
 
         $response = $this->actingAs($user, 'web')->get('/logout');
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(200)
             ->assertViewIs('logout');
 
@@ -84,10 +100,14 @@ class PageTester extends TestCase
         $user->markEmailAsVerified();
 
         $response = $this->actingAs($user, 'web')->get('/members');
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(200)
             ->assertViewIs('members');
 
         $response = $this->actingAs($user, 'web')->get('/resendemail');
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(302)
             ->assertSessionHas('mail_result', 1)
             ->assertRedirectToRoute('home');
@@ -98,6 +118,8 @@ class PageTester extends TestCase
     public function test_the_application_resendemail()
     {
         $response = $this->get('/resendemail');
+        $response->dumpHeaders();
+        $response->dump();
         $response->assertStatus(302)
             ->assertRedirectToRoute('login');
     }
