@@ -1,12 +1,15 @@
 @use(App\Lib\I18N\ELanguageText)
 <div class="notification">
     <x-Notificationitem :title="$i18N->getLanguage(ELanguageText::notification_title)"
-                         :description="$i18N->getLanguage(ELanguageText::notification_description)"
-                         :type="0"/>
+                        :description="$i18N->getLanguage(ELanguageText::notification_description)"
+                        type="info"
+                        :line=6 />
     @if(session('custom_message')!==null and is_array(session('custom_message')))
         @if(session('custom_message')[0] !== null && session('custom_message')[1]!==null && session('custom_message')[2]!==null)
-        <x-Notificationitem :title="session('custom_message')[0]" :description="session('custom_message')[1]"
-                             :type="session('custom_message')[2]"/>
+        <x-Notificationitem :title="session('custom_message')[0]"
+                            :description="session('custom_message')[1]"
+                            :type="session('custom_message')[2]"
+                            :line=10 />
         @endif
     @endif
     @if(session('invaild') !== null)
@@ -21,8 +24,10 @@
                 }
             }
         @endphp
-        <x-Notificationitem type="error" :title="$title"
-                             :description="$description"/>
+        <x-Notificationitem type="error"
+                            :title="$title"
+                            :description="$description"
+                            :line=30 />
     @endif
     @if(session('mail') !== null)
         @php
@@ -37,7 +42,7 @@
                 $type= "error";
             }
         @endphp
-        <x-Notificationitem :type="$type" :title="$title" :description="$description" />
+        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=45 />
     @endif
     @if(session('mail_result') !== null)
         @php
@@ -57,6 +62,6 @@
                 $type= "success";
             }
         @endphp
-        <x-Notificationitem :type="$type" :title="$title" :description="$description"/>
+        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=65 />
     @endif
 </div>
