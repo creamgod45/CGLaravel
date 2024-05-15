@@ -1,12 +1,13 @@
+@use(App\Lib\Utils\ENotificationType)
 <div id="{{"N".Str::random(7)}}" class="item notification-{{$type}}">
     <div class="icon">
-        @if($type=== "info")
+        @if($type=== ENotificationType::info)
             <i class="fa-solid fa-info"></i>
-        @elseif($type=== "warning")
+        @elseif($type=== ENotificationType::warning)
             <i class="fa-solid fa-triangle-exclamation"></i>
-        @elseif($type=== 'error')
+        @elseif($type=== ENotificationType::error)
             <i class="fa-solid fa-xmark"></i>
-        @elseif($type=== "success")
+        @elseif($type=== ENotificationType::success)
             <i class="fa-solid fa-check"></i>
         @endif
     </div>

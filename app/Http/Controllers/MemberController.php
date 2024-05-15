@@ -43,7 +43,7 @@ class MemberController extends Controller
 
     public function emailVerify(Request $request)
     {
-        debugbar()->info("emailVerify");
+        //debugbar()->info("emailVerify");
         // 用户验证逻辑
         // 保证 ID 和 Hash 都是正确的
         $user = Member::find($request->route('id'));
@@ -258,7 +258,7 @@ class MemberController extends Controller
                             return redirect(route('home'))->with('custom_message', [
                                 $i18N->getLanguage(ELanguageText::notification_login_title),
                                 $i18N->getLanguage(ELanguageText::notification_login_success),
-                                "success"
+                                ENotificationType::success
                             ]);
                         } else {
                             // 自訂錯誤訊息
@@ -283,7 +283,7 @@ class MemberController extends Controller
         return redirect(route('login'))->with('custom_message', [
             $i18N->getLanguage(ELanguageText::notification_login_title),
             $i18N->getLanguage(ELanguageText::notification_login_failed),
-            "error"
+            ENotificationType::error
         ])->withInput()->withErrors($validator->errors());
     }
 }

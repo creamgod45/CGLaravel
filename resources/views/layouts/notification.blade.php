@@ -1,8 +1,9 @@
 @use(App\Lib\I18N\ELanguageText)
+@use(App\Lib\Utils\ENotificationType)
 <div class="notification">
     <x-Notificationitem :title="$i18N->getLanguage(ELanguageText::notification_title)"
                         :description="$i18N->getLanguage(ELanguageText::notification_description)"
-                        type="info"
+                        :type="ENotificationType::info"
                         :line=6 />
     @if(session('custom_message')!==null and is_array(session('custom_message')))
         @if(session('custom_message')[0] !== null && session('custom_message')[1]!==null && session('custom_message')[2]!==null)
@@ -24,7 +25,7 @@
                 }
             }
         @endphp
-        <x-Notificationitem type="error"
+        <x-Notificationitem :type="ENotificationType::error"
                             :title="$title"
                             :description="$description"
                             :line=30 />
@@ -33,13 +34,13 @@
         @php
             $title=$i18N->getLanguage(ELanguageText::notification_email_verifyTitle);
             $description="";
-            $type= "info";
+            $type= ENotificationType::info;
             if(session('mail') === true){
                 $description = $i18N->getLanguage(ELanguageText::notification_email_description);
-                $type= "success";
+                $type= ENotificationType::success;
             }elseif(session('mail') === false){
                 $description = $i18N->getLanguage(ELanguageText::notification_email_fail_description);
-                $type= "error";
+                $type= ENotificationType::error;
             }
         @endphp
         <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=45 />
@@ -48,18 +49,18 @@
         @php
             $title=$i18N->getLanguage(ELanguageText::notification_email_verifyTitle);
             $description="";
-            $type= "info";
+            $type= ENotificationType::info;
             if(session('mail_result') === 0){
                 $description = $i18N->getLanguage(ELanguageText::notification_email_failedAppendText);
                 $description .= $i18N->getLanguage(ELanguageText::notification_email_InvalidVerificationLink);
-                $type= "error";
+                $type= ENotificationType::error;
             }elseif(session('mail_result') === 1){
                 $description = $i18N->getLanguage(ELanguageText::notification_email_failedAppendText);
                 $description .= $i18N->getLanguage(ELanguageText::notification_email_hasVerifiedEmail);
-                $type= "warning";
+                $type= ENotificationType::warning;
             }elseif(session('mail_result') === 2){
                 $description = $i18N->getLanguage(ELanguageText::notification_email_markEmailAsVerified);
-                $type= "success";
+                $type= ENotificationType::success;
             }
         @endphp
         <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=65 />

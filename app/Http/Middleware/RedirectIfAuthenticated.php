@@ -25,8 +25,8 @@ class RedirectIfAuthenticated
             }
         }
 
-        debugbar()->info($request);
-        debugbar()->info($next);
+        //debugbar()->info($request);
+        //debugbar()->info($next);
 
         return $next($request);
     }
