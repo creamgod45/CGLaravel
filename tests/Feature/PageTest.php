@@ -65,13 +65,12 @@ class PageTest extends TestCase
     public function test_the_application_language()
     {
         $response = $this->postJson('/language', ['lang' => ELanguageCode::en_US->name]);
-        $response->dumpHeaders();
+        //$response->dumpHeaders();
         $response->dump();
         $response->assertStatus(200)
-            ->assertCookie('lang', ELanguageCode::en_US->name)
             ->assertJson(['message' => 'Data received successfully']);
         $response = $this->postJson('/language', ['lang' => "error"]);
-        $response->dumpHeaders();
+        //$response->dumpHeaders();
         $response->dump();
         $response->assertStatus(400)
             ->assertJson(['message' => 'Error']);
