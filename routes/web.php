@@ -36,8 +36,9 @@ Route::post('lzstring.json', function (Request $request){
 
 Route::post('language', function (Request $request){
     if (ELanguageCode::isVaild($request['lang'])) {
-        $cookie = Cookie::make("lang", $request["lang"], 60);
-        return response()->json(['message' => 'Data received successfully'])->cookie($cookie);
+        $_COOKIE['lang'] = $request['lang'];
+        setrawcookie('lang', $request['lang'], time() + (86400 * 30), "/");
+        return response()->json(['message' => 'Data received successfully']);
     }
     return response()->json(['message' => 'Error'], ResponseHTTP::HTTP_BAD_REQUEST);
 });

@@ -36,12 +36,12 @@ class I18N
      */
     public function __construct(?ELanguageCode $languageCode = ELanguageCode::en_US, bool $CompileMode= false, array $limitMode=[])
     {
-        if ($languageCode instanceof ELanguageCode) {
-            // 選擇語系
-            $this->languageCode=$languageCode;
-        }
         $this->ELanguageCodeList=$limitMode;
         $this->buildFirstLanguageFile($CompileMode, $limitMode);
+        if ($languageCode instanceof ELanguageCode) {
+            // 選擇語系
+            $this->setLanguageCode($languageCode);
+        }
         $this->buildMissingLanguageDictionary($limitMode);
         $this->init=true;
     }
