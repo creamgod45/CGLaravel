@@ -1,4 +1,4 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+@vite(['resources/css/members.css', 'resources/js/members.js'])
 @use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use Illuminate\Contracts\Pagination\LengthAwarePaginator)
 @php
     /***

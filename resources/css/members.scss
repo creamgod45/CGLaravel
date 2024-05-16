@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "intl-tel-input/build/css/intlTelInput.min.css";
+@import "components/intltelinput";
+@import "components/googlefont";
+@import "components/colors";
+@import "components/scrollbar";
+@import "components/menu";
+@import "components/register";
+@import "components/notification";
+@import "components/tooltip";
+@import "components/alert";
+@import "components/pagination";
+@import "components/table";
+@import "components/button";
+@import "components/card";
+@import "components/placeholder";
+@import "components/persons_bar";
+@import "components/flex_text_col";
+@import "components/breadcrumb";
+@import "components/feed";
+@import "components/form";
+
+body {
+    @apply relative;
+
+    .container1{
+        @apply w-full mt-20;
+    }
+
+    *:not(textarea){
+        transition: all 200ms;
+    }
+
+    footer {
+        @apply w-full pt-5 sm:px-5 xs:px-0 justify-center items-center;
+        div.f1{
+            @apply pt-10;
+            .footer-menu{
+                @apply grid ring-1 ring-slate-200 shadow w-full px-10 py-10 bg-neutral-700 text-white rounded-t-4xl mt-10 gap-5
+                xl:grid-cols-4
+                lg:grid-cols-2
+                md:grid-cols-2
+                footer:grid-cols-1
+                sm:grid-cols-1;
+
+                .item{
+                    @apply items-start w-fit space-y-1;
+                    .menu-btn{
+                        @apply w-fit space-x-3 py-1 hover:shadow-2xl hover:bg-neutral-300 rounded cursor-pointer select-none flex flex-nowrap justify-center items-center ps-4;
+                        svg{
+                            @apply flex-auto1 w-6 ms-3;
+                        }
+                        span{
+                            @apply flex-auto1 w-full;
+                        }
+                    }
+                }
+            }
+            .footer1{
+                @apply ring-1 ring-slate-200 shadow z-10 bg-neutral-700 text-white flex items-center justify-center w-full px-5;
+                a {
+                    @apply text-blue-500;
+                    &:hover {
+                        @apply text-blue-400;
+                    }
+                }
+                .row{
+                    @apply flex flex-row flex-wrap space-x-0 w-full;
+                    .col{
+                        @apply flex-auto1 footer:w-1/2 sm:w-full flex justify-center items-center;
+                    }
+                }
+
+                .laravel {
+                    color: #f4382e;
+
+                    &:hover {
+                        color: #ea807b;
+                    }
+                }
+            }
+        }
+    }
+}
