@@ -1,5 +1,15 @@
 @use(App\Lib\Utils\ENotificationType)
-<div id="{{"N".Str::random(7)}}" class="item notification-{{$type->name}}">
+@php
+    $id = "N".Str::random(7);
+@endphp
+<div id="{{$id}}" data-seconds="{!! $millisecond !!}" class="item notification-{{$type->name}}">
+    @if($millisecond !== 4900)
+    <style>
+        .notification #{{$id}}::after{
+            animation: notificationtimeline {{$millisecond-200}}ms ease-in-out !important;
+        }
+    </style>
+    @endif
     <div class="icon">
         @if($type=== ENotificationType::info)
             <i class="fa-solid fa-info"></i>
