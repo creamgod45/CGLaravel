@@ -27,6 +27,8 @@ class I18N
      */
     private array $ELanguageCodeList;
 
+    private bool $init=false;
+
     /**
      * @param ELanguageCode|null $languageCode 設定現在語言狀態並且讀取語言檔案並覆蓋 Set the current language status and read the language file and overwrite it
      * @param bool $CompileMode 直接編譯模式(忽略沒有編譯過的詞條) Direct compilation mode (ignoring uncompiled entries)
@@ -34,13 +36,14 @@ class I18N
      */
     public function __construct(?ELanguageCode $languageCode = ELanguageCode::en_US, bool $CompileMode= false, array $limitMode=[])
     {
+        if ($languageCode instanceof ELanguageCode) {
+            // 選擇語系
+            $this->languageCode=$languageCode;
+        }
         $this->ELanguageCodeList=$limitMode;
         $this->buildFirstLanguageFile($CompileMode, $limitMode);
-        if ($languageCode !== null) {
-            // 選擇語系
-            $this->setLanguageCode($languageCode);
-        }
         $this->buildMissingLanguageDictionary($limitMode);
+        $this->init=true;
     }
 
     /**
@@ -382,5 +385,11 @@ class I18N
         }
     }
 
-
+    /**
+     * @return bool
+     */
+    public function isInit(): bool
+    {
+        return $this->init;
+    }
 }
