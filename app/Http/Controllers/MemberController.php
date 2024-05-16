@@ -107,7 +107,7 @@ class MemberController extends Controller
                 }
             );
 
-            debugbar()->info($status);
+            //debugbar()->info($status);
             $ELanguageText = ELanguageText::valueof(str_replace(".", "_", $status));
             return $status === Password::PASSWORD_RESET
                 ? redirect()->route('login')->with('status', $ELanguageText)
@@ -140,8 +140,9 @@ class MemberController extends Controller
                 return redirect(route("home"))->with('mail', false);
             }else{
                 $status = Password::sendResetLink(
-                    $request->only('email')
+                    ['email'=>$validate['email']]
                 );
+                Cache::put($cacheKey, true, now()->addSeconds(1));
                 $ELanguageText = ELanguageText::valueof(str_replace(".", "_", $status));
                 return $status === Password::RESET_LINK_SENT
                     ? back()->with(['status' => $i18N->getLanguage($ELanguageText)])
@@ -165,6 +166,7 @@ class MemberController extends Controller
             return redirect(route("home"))->with('mail', false);
         } else {
             $user->notify(new VerifyEmailNotification($i18N));
+            Cache::put($cacheKey, true, now()->addSeconds(1));
             return redirect(route("home"))->with('mail', true);
         }
     }
