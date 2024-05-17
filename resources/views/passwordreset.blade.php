@@ -34,14 +34,4 @@
             @endif
         </form>
     </div>
-    <div class="notification">
-        <div id="A16H5A" class="item">
-            <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-            <div class="context">
-                <div class="title">{{$i18N->getLanguage(ELanguageText::notification_title)}}</div>
-                <div class="description">{{$i18N->getLanguage(ELanguageText::notification_description)}}</div>
-            </div>
-            <div class="close-btn" onclick="document.getElementById('A16H5A').remove()">&times;</div>
-        </div>
-    </div>
 @endsection
