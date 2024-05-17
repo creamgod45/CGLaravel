@@ -1369,77 +1369,8 @@ a.btn {
 body {
   @apply relative;
 }
-body .frontmask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1 !important;
-}
 body .container1 {
   @apply w-full mt-20;
-}
-body .container1 .hero-content {
-  @apply w-full bg-fixed h-fit bg-center bg-cover rounded-4xl;
-}
-body .container1 .hero-content .hero-bgdropfilter {
-  @apply backdrop-blur-md w-full h-full rounded-4xl;
-}
-body .container1 .hero-content .hero-bgdropfilter .gradable {
-  @apply h-full w-full grid auto-rows-max overflow-hidden relative
-                    footer:grid-cols-2
-                    sm:grid-cols-1
-                    xs:grid-cols-1;
-}
-body .container1 .hero-content .hero-bgdropfilter .gradable .context {
-  @apply ps-10 z-[2] break-keep overflow-hidden
-                        footer:static footer:w-fit
-                        sm:absolute sm:top-1/2 sm:left-0
-                        xs:absolute xs:top-1/2 xs:left-0;
-}
-body .container1 .hero-content .hero-bgdropfilter .gradable .context .title {
-  @apply break-all mt-10 mb-5 mr-5 bg-color1 text-black px-2 py-1
-                            xl:text-4xl
-                            lg:text-4xl
-                            md:text-3xl
-                            footer:text-2xl
-                            sm:text-xl
-                            xs:text-xl
-                            text-sm;
-}
-body .container1 .hero-content .hero-bgdropfilter .gradable .context .subtitle {
-  @apply break-all min-w-fit mb-5 mr-5 bg-color1 text-black px-2 py-1
-                            xl:text-3xl
-                            lg:text-3xl
-                            md:text-2xl
-                            footer:text-xl
-                            sm:text-lg
-                            xs:text-lg
-                            text-xs;
-}
-body .container1 .hero-content .hero-bgdropfilter .gradable ._3DModel {
-  @apply z-[1] bg-center bg-cover bg-no-repeat relative
-                        xxl:size-[1200px]
-                        xl:size-[1000px]
-                        lg:size-[800px]
-                        md:size-[600px] md:-left-32
-                        footer:size-[400px] footer:left-0
-                        sm:size-[600px]
-                        xs:size-[600px]
-                        size-44;
-  transition: unset !important;
-  background-size: 80%;
-  transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
-}
-body .container1 .cloud-service {
-  @apply max-h-fit relative bg-fixed overflow-y-hidden overflow-x-hidden max-w-[100vw];
-}
-body .container1 .cloud-service .control {
-  @apply absolute right-4 top-4 space-x-5 flex items-center justify-center w-fit z-[3];
-}
-body .container1 .cloud-service .cloud-frame {
-  @apply backdrop-blur-md overflow-y-hidden overflow-x-hidden;
 }
 body *:not(textarea) {
   transition: all 200ms;
@@ -1492,4 +1423,4 @@ body footer div.f1 .footer1 .laravel:hover {
   color: #ea807b;
 }
 
-/*# sourceMappingURL=branding.css.map */
+/*# sourceMappingURL=members.css.map */

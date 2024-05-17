@@ -352,6 +352,9 @@ enum ELanguageText
     case zh_SG;     // 繁体中文（新加坡）
     case zh_MO;     // 繁体中文（新加坡）
     case zu_ZA;     // 祖鲁语（南非）
+    case ResetPasswordLine1;
+    case ResetPasswordLine2;
+    case ResetPasswordAction1;
 
     public static function isVaild(string $name):bool
     {

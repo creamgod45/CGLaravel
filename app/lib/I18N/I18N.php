@@ -27,6 +27,8 @@ class I18N
      */
     private array $ELanguageCodeList;
 
+    private bool $init=false;
+
     /**
      * @param ELanguageCode|null $languageCode 設定現在語言狀態並且讀取語言檔案並覆蓋 Set the current language status and read the language file and overwrite it
      * @param bool $CompileMode 直接編譯模式(忽略沒有編譯過的詞條) Direct compilation mode (ignoring uncompiled entries)
@@ -36,11 +38,8 @@ class I18N
     {
         $this->ELanguageCodeList=$limitMode;
         $this->buildFirstLanguageFile($CompileMode, $limitMode);
-        if ($languageCode !== null) {
-            // 選擇語系
-            $this->setLanguageCode($languageCode);
-        }
-        $this->buildMissingLanguageDictionary($limitMode);
+        $this->buildMissingLanguageDictionary($languageCode, $limitMode);
+        $this->init=true;
     }
 
     /**
@@ -65,13 +64,19 @@ class I18N
      * @param ELanguageCode[] $limitMode
      * @return void
      */
-    public function buildMissingLanguageDictionary(array $limitMode=[]): void
+    public function buildMissingLanguageDictionary($languageCode, array $limitMode=[]): void
     {
         $this->buildLanguageMap();
         if(!empty($limitMode)){
             $this->extracted($limitMode);
         }else{
             $this->extracted(ELanguageCode::cases());
+        }
+        if ($languageCode instanceof ELanguageCode) {
+            // 選擇語系
+            $this->setLanguageCode($languageCode);
+        }else{
+            $this->setLanguageCode(ELanguageCode::en_US);
         }
     }
 
@@ -296,10 +301,12 @@ class I18N
      */
     private function extracted(array $ELanguageCodeList): void
     {
+        $flag_a=true;
         foreach ($ELanguageCodeList as $case) {
             if (!file_exists("lib/I18N/languages/" . $case->name . ".yml")) {
                 //Utils::pinv("1");
                 $listtext=[];
+                //dump($this->languageTextList);
                 foreach ($this->languageTextList as $item) {
                     $listtext [] = $item[0];
                 }
@@ -333,6 +340,7 @@ class I18N
     {
         if (file_exists("lib/I18N/languages/" . $this->languageCode->name . ".yml")) {
             $lang = $this->yamlController("lib/I18N/languages/" . $this->languageCode->name . ".yml");
+            //dump($lang);
             $this->setLanguageTextList($lang);
         }
     }
@@ -362,6 +370,7 @@ class I18N
      */
     public function setLanguageTextList(array $languageTextList): static
     {
+        //dump($languageTextList);
         $this->languageTextList = $languageTextList;
         return $this;
     }
@@ -382,5 +391,11 @@ class I18N
         }
     }
 
-
+    /**
+     * @return bool
+     */
+    public function isInit(): bool
+    {
+        return $this->init;
+    }
 }

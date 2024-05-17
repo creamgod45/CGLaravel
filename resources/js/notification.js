@@ -13,6 +13,10 @@ function notification(){
                 },900);
             };
         }
+        let seconds = 4900;
+        if (ela.dataset.seconds !== null) {
+            seconds = ela.dataset.seconds-100;
+        }
         setTimeout(()=>{
             let el = document.querySelector('#'+ela.id);
             if(el!==null){
@@ -22,7 +26,7 @@ function notification(){
                     el.remove();
                 },900);
             }
-        }, 4900);
+        }, seconds);
     }
 }
 

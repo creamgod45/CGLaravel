@@ -106,6 +106,15 @@
                         </a>
                     @endguest
                     @auth
+                        @php
+                            $user = Auth::user();
+                        @endphp
+                        @if(!$user->hasVerifiedEmail())
+                        <a href="/resendemail" class="menu-btn btn-ripple">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>&nbsp;重新驗證</span>
+                        </a>
+                        @endif
                         <a href="/members" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_membersBtn)}}</span>

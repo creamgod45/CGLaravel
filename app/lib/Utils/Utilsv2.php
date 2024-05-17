@@ -206,7 +206,7 @@ class Utilsv2
         foreach ($hashChunks as $hashChunkElement) {
             if($hashChunkElement !== ""){
                 $tt = explode("&", $hashChunkElement);
-                debugbar()->info($tt);
+                //debugbar()->info($tt);
                 $hashChunk2[intval($tt[0])] = intval($tt[1]);
             }
         }

@@ -98,7 +98,7 @@ class ValidatorBuilder
      */
     public function validate($data)
     {
-        debugbar()->info($data);
+        //debugbar()->info($data);
         $validator = Validator::make($data, $this->getRules(), $this->getCustomMessages(), $this->getAtters());
         if ($validator->fails()) return $validator->errors();
         return $validator->validate();

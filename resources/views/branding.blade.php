@@ -15,9 +15,6 @@
     <!--suppress SpellCheckingInspection -->
     <main class="container1">
         @env('local')
-            @php
-                debugbar()->info($request->user());
-            @endphp
         @endenv
         <div class="p-5">
             <div class="hero-content placeholder lazyImg"  data-src="{{asset('assets/images/welcome_banner1.jpg')}}">

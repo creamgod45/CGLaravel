@@ -7,7 +7,6 @@ use App\Lib\Type\Array\CGArray;
 class CGString implements CGStringInterface
 {
     protected string $string;
-
     public function __construct(string $string = '')
     {
         $this->string = $string;
@@ -151,6 +150,11 @@ class CGString implements CGStringInterface
     {
         $this->string = str_replace($OldString, $NewString, $this->string);
         return new CGString(str_replace($OldString, $NewString, $this->string));
+    }
+
+    public function placeholderParser($str, $value): CGString
+    {
+        return $this->Replace("%$str%", $value);
     }
 
     public function getString(): CGStringInterface|string

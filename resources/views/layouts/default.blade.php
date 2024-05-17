@@ -1,8 +1,4 @@
-@php
-    use Illuminate\Support\Facades\App;
-    App::setLocale("zh_TW");
-@endphp
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

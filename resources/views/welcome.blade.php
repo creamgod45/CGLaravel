@@ -14,9 +14,6 @@
 @section('content')
     <main class="container1">
         @env('local')
-            @php
-                debugbar()->info($request->user());
-            @endphp
         @endenv
         <div class="home">
             <div class="btn-demo">

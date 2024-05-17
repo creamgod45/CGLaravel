@@ -339,6 +339,9 @@ passwords_sent: '我们已经将密码重设连结发送至您的电子邮箱。
 passwords_throttled: '请稍候再试。 '
 passwords_token: '此密码重设令牌无效。 '
 passwords_user: '我们找不到使用该电子邮件地址的用户。 '
-notification_login_title: 'Login Status'
-notification_login_success: 'You have successfully logged in!!'
-notification_login_failed: 'Your login failed!!'
+notification_login_title: 登入状态
+notification_login_success: 您已成功登入！
+notification_login_failed: 您登入失败！
+ResetPasswordLine1: '您收到这封电子邮件是因为我们收到了您帐户的密码重设请求。 '
+ResetPasswordLine2: '如果您没有请求重设密码，则无需采取进一步操作。 '
+ResetPasswordAction1: '重设密码'

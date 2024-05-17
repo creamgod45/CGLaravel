@@ -214,5 +214,8 @@ class DictionaryMap
         $i->setLanguagev2(ELanguageText::notification_login_title, "Login Status");
         $i->setLanguagev2(ELanguageText::notification_login_success, "You have successfully logged in!!");
         $i->setLanguagev2(ELanguageText::notification_login_failed, "Your login failed!!");
+        $i->setLanguagev2(ELanguageText::ResetPasswordLine1, "You are receiving this email because we received a password reset request for your account.");
+        $i->setLanguagev2(ELanguageText::ResetPasswordLine2, "If you did not request a password reset, no further action is required.");
+        $i->setLanguagev2(ELanguageText::ResetPasswordAction1, "Reset Password");
     }
 }
