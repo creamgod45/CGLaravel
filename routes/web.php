@@ -36,9 +36,17 @@ Route::post('lzstring.json', function (Request $request){
 
 Route::post('language', function (Request $request){
     if (ELanguageCode::isVaild($request['lang'])) {
-        $_COOKIE['lang'] = $request['lang'];
-        setrawcookie('lang', $request['lang'], time() + (86400 * 30), "/");
-        return response()->json(['message' => 'Data received successfully']);
+        $cookie_expire = time() + (24 * 60 * 60);
+        $cookie_path = "/";
+        $secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+        $httponly = true;
+        setrawcookie('lang', $request['lang'], [
+            'expires' => $cookie_expire,
+            'path' => $cookie_path,
+            'secure' => $secure,
+            'httponly' => $httponly
+        ]);
+        return response()->json(['message' => 'Data received successfully', 'lang' => $request['lang']]);
     }
     return response()->json(['message' => 'Error'], ResponseHTTP::HTTP_BAD_REQUEST);
 });

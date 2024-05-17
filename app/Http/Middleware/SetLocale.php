@@ -18,8 +18,8 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->hasCookie('lang')) {
-            $locale = Cookie::get('lang', ELanguageCode::en_US->name);
+        if (isset($_COOKIE['lang'])) {
+            $locale = $_COOKIE['lang'];
             App::setLocale($locale);
         }
         return $next($request);

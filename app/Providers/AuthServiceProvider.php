@@ -34,24 +34,20 @@ class AuthServiceProvider extends ServiceProvider
         //
         ResetPassword::toMailUsing(function (Member $member, $token)  {
             $locale = App::getLocale();
-            $i18N = new I18N(ELanguageCode::valueof($locale), limitMode: [
+            dump($locale);
+            $ELanguageCode = ELanguageCode::valueof($locale);
+            if($ELanguageCode === null) $ELanguageCode=ELanguageCode::en_US;
+            $i18N = new I18N($ELanguageCode, limitMode: [
                 ELanguageCode::zh_TW,
                 ELanguageCode::zh_CN,
                 ELanguageCode::en_US,
                 ELanguageCode::en_GB
             ]);
-            $i18N->setLanguageCode(ELanguageCode::valueof($locale));
-            $vars=dump([ELanguageCode::valueof($locale)->name, $locale, serialize($i18N), $i18N->getLanguage(ELanguageText::ResetPasswordLine1)]);
+            $vars=dump([$ELanguageCode===null,$ELanguageCode instanceof ELanguageCode ? $ELanguageCode->name : $ELanguageCode, $locale, serialize($i18N), $i18N->getLanguage(ELanguageText::ResetPasswordLine1)]);
             Log::info("ResetPassword dump variables".Json::encode($vars, true));
-
-            if (is_array($i18N->getLanguage(ELanguageText::ResetPasswordAction1))) {
-                $action = $i18N->getLanguage(ELanguageText::ResetPasswordAction1)[0];
-            }else{
-                $action = $i18N->getLanguage(ELanguageText::ResetPasswordAction1);
-            }
             return (new MailMessage)
                 ->line($i18N->getLanguage(ELanguageText::ResetPasswordLine1))
-                ->action($action, url(route('password.reset', ['token'=>$token, 'email' => $member->email], false)))
+                ->action($i18N->getLanguage(ELanguageText::ResetPasswordAction1), url(route('password.reset', ['token'=>$token, 'email' => $member->email], false)))
                 ->line($i18N->getLanguage(ELanguageText::ResetPasswordLine2));
         });
     }
