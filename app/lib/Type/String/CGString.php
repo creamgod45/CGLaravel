@@ -152,7 +152,8 @@ class CGString implements CGStringInterface
         return new CGString(str_replace($OldString, $NewString, $this->string));
     }
 
-    public function placeholderParser($str, $value){
+    public function placeholderParser($str, $value): CGString
+    {
         return $this->Replace("%$str%", $value);
     }
 
