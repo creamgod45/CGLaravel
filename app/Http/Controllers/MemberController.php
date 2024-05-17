@@ -142,7 +142,7 @@ class MemberController extends Controller
                 $status = Password::sendResetLink(
                     ['email'=>$validate['email']]
                 );
-                Cache::put($cacheKey, true, now()->addSeconds(1));
+                Cache::put($cacheKey, true, now()->addSeconds(60));
                 $ELanguageText = ELanguageText::valueof(str_replace(".", "_", $status));
                 return $status === Password::RESET_LINK_SENT
                     ? back()->with(['status' => $i18N->getLanguage($ELanguageText)])
@@ -166,7 +166,7 @@ class MemberController extends Controller
             return redirect(route("home"))->with('mail', false);
         } else {
             $user->notify(new VerifyEmailNotification($i18N));
-            Cache::put($cacheKey, true, now()->addSeconds(1));
+            Cache::put($cacheKey, true, now()->addSeconds(60));
             return redirect(route("home"))->with('mail', true);
         }
     }

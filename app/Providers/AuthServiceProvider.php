@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         //
         ResetPassword::toMailUsing(function (Member $member, $token)  {
             $locale = App::getLocale();
-            dump($locale);
+            //dump($locale);
             $ELanguageCode = ELanguageCode::valueof($locale);
             if($ELanguageCode === null) $ELanguageCode=ELanguageCode::en_US;
             $i18N = new I18N($ELanguageCode, limitMode: [
