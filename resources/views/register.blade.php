@@ -12,7 +12,7 @@
 @section('title', $i18N->getLanguage(ELanguageText::register_title))
 @section('content')
     <div class="register-frame">
-        <form class="register" method="POST" action="{{ route('register') }}">
+        <form class="register" method="POST" action="{{ route('member.form-register-post') }}">
             @csrf
             <div class="title">{{$i18N->getLanguage(ELanguageText::register_title)}}</div>
             <div class="row">

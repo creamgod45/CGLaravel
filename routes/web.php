@@ -58,6 +58,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('logout', [MemberController::class, 'logout'])->name('logout');
     Route::get('resendemail', [MemberController::class, 'resendEmail'])->name('verification.notice');
+    Route::get('profile', [MemberController::class, 'profile'])->name('member.profile');
 });
 
 // password reset
@@ -74,6 +75,6 @@ Route::get('/email/verify/{id}/{hash}', [MemberController::class, 'emailVerify']
 Route::middleware(EMiddleWareAliases::guest->name)->group(function () {
     Route::get('login', [MemberController::class, 'loginPage'])->name('login');
     Route::post('login', [MemberController::class, 'login']);
-    Route::get('register', [MemberController::class, 'showRegistrationForm'])->name('register');
-    Route::post('register', [MemberController::class, 'register']);
+    Route::get('register', [MemberController::class, 'showRegistrationForm'])->name('member.form-register');
+    Route::post('register', [MemberController::class, 'register'])->name("member.form-register-post");
 });
