@@ -355,6 +355,8 @@ enum ELanguageText
     case ResetPasswordLine1;
     case ResetPasswordLine2;
     case ResetPasswordAction1;
+    case BooleanStringCoverTrue;
+    case BooleanStringCoverFalse;
 
     public static function isVaild(string $name):bool
     {
