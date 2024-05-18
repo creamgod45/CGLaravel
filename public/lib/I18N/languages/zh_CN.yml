@@ -344,4 +344,6 @@ notification_login_success: 您已成功登入！
 notification_login_failed: 您登入失败！
 ResetPasswordLine1: '您收到这封电子邮件是因为我们收到了您帐户的密码重设请求。 '
 ResetPasswordLine2: '如果您没有请求重设密码，则无需采取进一步操作。 '
-ResetPasswordAction1: '重设密码'
+ResetPasswordAction1: 重设密码
+BooleanStringCoverTrue: 启用
+BooleanStringCoverFalse: 关闭

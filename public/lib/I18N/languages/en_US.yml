@@ -345,3 +345,5 @@ notification_login_failed: 'Your login failed!!'
 ResetPasswordLine1: 'You are receiving this email because we received a password reset request for your account.'
 ResetPasswordLine2: 'If you did not request a password reset, no further action is required.'
 ResetPasswordAction1: 'Reset Password'
+BooleanStringCoverTrue: Enable
+BooleanStringCoverFalse: Disable

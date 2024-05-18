@@ -342,6 +342,8 @@ passwords_user: 我們找不到使用該電子郵件地址的用戶。
 notification_login_title: 登入狀態
 notification_login_success: 您已成功登入！
 notification_login_failed: 您登入失敗！
-ResetPasswordLine1: '您收到這封電子郵件是因為我們收到了您帳戶的密碼重設請求。'
-ResetPasswordLine2: '如果您沒有請求重設密碼，則無需採取進一步操作。'
-ResetPasswordAction1: '重設密碼'
+ResetPasswordLine1: 您收到這封電子郵件是因為我們收到了您帳戶的密碼重設請求。
+ResetPasswordLine2: 如果您沒有請求重設密碼，則無需採取進一步操作。
+ResetPasswordAction1: 重設密碼
+BooleanStringCoverTrue: 啟用
+BooleanStringCoverFalse: 關閉
