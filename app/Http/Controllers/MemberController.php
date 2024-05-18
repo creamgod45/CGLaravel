@@ -288,5 +288,12 @@ class MemberController extends Controller
             ENotificationType::error
         ])->withInput()->withErrors($validator->errors());
     }
+
+    public function profile(Request $request)
+    {
+        dump($request->fingerprint());
+
+        return view('profile', $this::baseControllerInit($request));
+    }
 }
 
