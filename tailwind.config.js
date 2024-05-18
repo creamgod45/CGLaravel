@@ -25,6 +25,7 @@ export default {
                 'color6-50': '#666056',
             },
             screens: {
+                us: '0px',
                 xs: '320px',
                 sm: '480px',
                 footer: '648px',
