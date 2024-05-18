@@ -9,7 +9,7 @@
         @endif
     }
 </style>
-<div id="{{$id}}" class="popover" popover>
+<div id="{{$id}}" {{ $attributes->merge(['class' => 'popover']) }} popover>
     <div class="popover-closebtn btn btn-circle btn-ripple"><i class="fa-solid fa-x"></i></div>
     <div class="popover-title">{{$popoverTitle}}</div>
     {{$slot}}
