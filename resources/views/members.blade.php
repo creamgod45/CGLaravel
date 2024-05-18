@@ -10,7 +10,7 @@
     $footer=true;
 @endphp
 @extends('layouts.default')
-@section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
+@section('title', "會員資料")
 @section('content')
     <main class="container1">
         <div class="home">
