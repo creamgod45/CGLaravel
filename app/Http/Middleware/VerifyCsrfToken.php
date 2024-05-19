@@ -15,5 +15,6 @@ class VerifyCsrfToken extends Middleware
         //
         'language',
         'lzstring.json',
+        'sendMailVerifyCode',
     ];
 }
