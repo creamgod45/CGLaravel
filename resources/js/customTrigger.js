@@ -114,6 +114,11 @@ function createRipple(el) {
     button.appendChild(circle);
 }
 
+function sendMailVerifyCode(ct, target) {
+    let formData = new FormData();
+    formData.append('')
+}
+
 function customTrigger() {
     var cts = document.querySelectorAll('.ct');
     for (let ct of cts) {
@@ -127,6 +132,9 @@ function customTrigger() {
                     break;
                 case "datalist_selector":
                     datalist_selector(ct, target);
+                    break;
+                case "sendMailVerifyCode":
+                    sendMailVerifyCode(ct, target);
                     break;
             }
         }
