@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::get('logout', [MemberController::class, 'logout'])->name('logout');
     Route::get('resendemail', [MemberController::class, 'resendEmail'])->name('verification.notice');
     Route::get('profile', [MemberController::class, 'profile'])->name('member.profile');
+    Route::post('profile', [MemberController::class, 'profilepost'])->name('member.profile.post');
 });
 
 // password reset
