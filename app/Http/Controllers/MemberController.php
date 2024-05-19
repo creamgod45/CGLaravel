@@ -291,9 +291,23 @@ class MemberController extends Controller
 
     public function profile(Request $request)
     {
-        dump($request->fingerprint());
-
+        //dump($request->fingerprint());
         return view('profile', $this::baseControllerInit($request));
+    }
+
+    public function profilepost(Request $request)
+    {
+        $baseControllerInit = self::baseControllerInit($request);
+        $i18N = $baseControllerInit['i18N'];
+        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+
+        $vb = new ValidatorBuilder($i18N, EValidatorType::PROFILEUPDATEEMAIL);
+        try {
+            $validator = Validator::make($request->all(), $vb->getRules(), $vb->getCustomMessages(), $vb->getAtters());
+            $validate = $validator->validate();
+        } catch (ValidationException $e) {
+            Log::info($request->ip() . ": " . PHP_EOL . "    ValidationException=" . $e->getMessage() . "," . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
+        }
     }
 }
 

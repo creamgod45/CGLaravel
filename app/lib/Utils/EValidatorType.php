@@ -10,5 +10,7 @@ enum EValidatorType
     case RESETPASSWORD;
     case RESETPASSWORDPOST;
     case ANIMALCREATE;
+    case PROFILEUPDATEEMAIL;
+    case PROFILEUPDATEPASSWORD;
     case NULL;
 }
