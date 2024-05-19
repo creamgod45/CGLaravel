@@ -36,6 +36,8 @@ class ValidatorBuilder
             case EValidatorType::ANIMALCREATE:
                 $this->animalcreate();
                 break;
+            case EValidatorType::PROFILEUPDATEEMAIL:
+                $this->profileUpdateEmail();
             case EValidatorType::NULL:
                 break;
         }
@@ -325,6 +327,17 @@ class ValidatorBuilder
             'fix' => ['required', 'max:1', 'max_digits:1', 'min_digits:0'],
             'description' => ['string','nullable'],
             'personality' => ['string','nullable'],
+        ];
+    }
+
+    private function profileUpdateEmail()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'type_id' => ['required', 'numeric', 'max:10', 'unique:animals'],
+            'name' => ['required', 'string', 'max:255'],
+            'birthday' => ['date','nullable'],
         ];
     }
 
