@@ -24,8 +24,21 @@ Route::middleware(EMiddleWareAliases::auth->name)->get('/user', function (Reques
 
 Route::apiResource('animal', AnimalController::class);
 
-Route::get('down', function (Request $request){
-    if (Hash::check($request['key'], '$2y$12$odnzjr7ZJSFqOdkAQrDMzuPY6sHoN6n8aoTozqHYsgojw2A5oyAT6')) {
+Route::post('hashmaker', function (){
+    $random = Str::random(60);
+    return response()->json([
+        $random,
+        "hash" => Hash::make($random, [
+            'memory' => 4096,
+            'time' => 10,
+            'threads' => 4,
+            'algo' => PASSWORD_ARGON2ID,
+        ])
+    ]);
+});
+
+Route::post('down', function (Request $request){
+    if (Hash::check($request['key'], '$2y$12$7qWtSxwgM5GZCvxaYKOod.Ns9acYLWAD4HWnc4UC6gOVbZolThpIe')) {
         if (App::isDownForMaintenance()) {
             App::maintenanceMode()->deactivate();
             return response()->json([
