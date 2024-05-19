@@ -46,6 +46,10 @@
             "composer dump-autoload",
             "echo Autoload Done"
         ],
+        "queuework": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php artisan queue:work"
+        ],
         "runServer": [
             "Composer\\Config::disableProcessTimeout",
             "@php artisan serve"
