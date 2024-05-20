@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::get('resendemail', [MemberController::class, 'resendEmail'])->name('verification.notice');
     Route::get('profile', [MemberController::class, 'profile'])->name('member.profile');
     Route::post('profile', [MemberController::class, 'profilepost'])->name('member.profile.post');
+    Route::post('sendMailVerifyCode', [MemberController::class, 'sendMailVerifyCode'])->name('member.sendMailVerifyCode');
 });
 
 // password reset

@@ -6,8 +6,10 @@ use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
 use App\Lib\Utils\ENotificationType;
 use App\Lib\Utils\EValidatorType;
+use App\Lib\Utils\Utils;
 use App\Lib\Utils\ValidatorBuilder;
 use App\Models\Member;
+use App\Notifications\SendMailVerifyCodeNotification;
 use App\Notifications\VerifyEmailNotification;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
@@ -20,13 +22,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
+use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 
 class MemberController extends Controller
 {
@@ -308,6 +313,45 @@ class MemberController extends Controller
         } catch (ValidationException $e) {
             Log::info($request->ip() . ": " . PHP_EOL . "    ValidationException=" . $e->getMessage() . "," . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function sendMailVerifyCode(Request $request)
+    {
+        $baseControllerInit = self::baseControllerInit($request);
+        $i18N = $baseControllerInit['i18N'];
+        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        if (Auth::check()) {
+            $member = Auth::user();
+            $cacheKey = $member->UUID . ":sendMailVerifyCode";
+
+            if(Cache::has($cacheKey)){
+                return response()->json([
+                    "message"=>$i18N->getLanguage(ELanguageText::sendMailVerifyCode_Response_error1) . $i18N->getLanguage(ELanguageText::ExpireTime, true)
+                            ->placeholderParser("timestamp", Utils::timeStamp(Cache::get($cacheKey)))->toString(),
+                    "cooldown" => Cache::get($cacheKey),
+                    "fn" => 1
+                ], ResponseHTTP::HTTP_BAD_REQUEST);
+            }else{
+                $random = Str::random(5);
+                Session::put('sendMailVerifyCode', $random);
+                //dump($i18N);
+                $notification = new SendMailVerifyCodeNotification($i18N, $random);
+                Notification::send($member, $notification->delay(now()->addSeconds(5)));
+                Cache::put($cacheKey, time()+60, 60);
+                return response()->json([
+                    "message"=>$i18N->getLanguage(ELanguageText::sendMailVerifyCode_Response_success) . $i18N->getLanguage(ELanguageText::ExpireTime, true)
+                            ->placeholderParser("timestamp", Utils::timeStamp(Cache::get($cacheKey)))->toString(),
+                    "cooldown" => Cache::get($cacheKey),
+                    "fn" => 2
+                ], ResponseHTTP::HTTP_BAD_REQUEST);
+            }
+        }
+        return response()->json([
+            "message" => $i18N->getLanguage(ELanguageText::HTTP_FORBIDDEN),
+        ],ResponseHTTP::HTTP_FORBIDDEN);
     }
 }
 
