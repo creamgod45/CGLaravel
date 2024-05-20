@@ -347,3 +347,14 @@ ResetPasswordLine2: '如果您没有请求重设密码，则无需采取进一�
 ResetPasswordAction1: 重设密码
 BooleanStringCoverTrue: 启用
 BooleanStringCoverFalse: 关闭
+sendMailVerifyCodeSubject: 会员验证号码
+sendMailVerifyCode_Response_success: 成功寄送验证码至您的信箱中，请至信箱中查看。
+sendMailVerifyCode_Response_error1: 已经寄送验证码至信箱中，请查看后填入验证码送出。
+sendMailVerifyCodeLine1: '请复制号码并输入在验证码输入框中。 验证码:%code%'
+sendMailVerifyCodeLine2: 如果你没有发送验证信件，请至帐号设定移除所有已登入装置，并且更改密码确保安全。
+RegisterMailTitle: '会员注册信件'
+RegisterMailLine1: '请点击下面的按钮来验证您的电子邮件地址。 '
+RegisterMailLine2: '如果您没有建立帐户，则无需采取进一步操作。 '
+RegisterMailAction1: 验证
+HTTP_FORBIDDEN: 禁止
+ExpireTime: '过期时间: %timestamp%'

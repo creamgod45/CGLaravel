@@ -347,3 +347,14 @@ ResetPasswordLine2: 如果您沒有請求重設密碼，則無需採取進一步
 ResetPasswordAction1: 重設密碼
 BooleanStringCoverTrue: 啟用
 BooleanStringCoverFalse: 關閉
+sendMailVerifyCodeSubject: 會員驗證號碼
+sendMailVerifyCode_Response_success: 成功寄送驗證碼至您的信箱中，請至信箱中查看。
+sendMailVerifyCode_Response_error1: 已經寄送驗證碼至信箱中，請查看後填入驗證碼送出。
+sendMailVerifyCodeLine1: '請複製號碼並輸入在驗證碼輸入框中。 驗證碼:%code%'
+sendMailVerifyCodeLine2: 如果你沒有發送驗證信件，請至帳號設定移除所有已登入裝置，並且更改密碼確保安全。
+RegisterMailTitle: '會員註冊信件'
+RegisterMailLine1: '請點擊下面的按鈕來驗證您的電子郵件地址。'
+RegisterMailLine2: '如果您沒有建立帳戶，則無需採取進一步操作。'
+RegisterMailAction1: 驗證
+HTTP_FORBIDDEN: 禁止
+ExpireTime: '過期時間: %timestamp%'

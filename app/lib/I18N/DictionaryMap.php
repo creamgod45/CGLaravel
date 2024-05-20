@@ -219,5 +219,16 @@ class DictionaryMap
         $i->setLanguagev2(ELanguageText::ResetPasswordAction1, "Reset Password");
         $i->setLanguagev2(ELanguageText::BooleanStringCoverTrue, "Enable");
         $i->setLanguagev2(ELanguageText::BooleanStringCoverFalse, "Disable");
+        $i->setLanguagev2(ELanguageText::RegisterMailTitle, "Verify Member Email");
+        $i->setLanguagev2(ELanguageText::RegisterMailLine1, "Please click the button below to verify your email address.");
+        $i->setLanguagev2(ELanguageText::RegisterMailLine2, "If you did not create an account, no further action is required.");
+        $i->setLanguagev2(ELanguageText::RegisterMailAction1, "Verify");
+        $i->setLanguagev2(ELanguageText::sendMailVerifyCode_Response_error1, "A verification code has been sent to your mailbox. Please check it and fill in the verification code to send.");
+        $i->setLanguagev2(ELanguageText::sendMailVerifyCode_Response_success, "The verification code was successfully sent to your mailbox, please check it in your mailbox.");
+        $i->setLanguagev2(ELanguageText::sendMailVerifyCodeSubject, "Member verification code");
+        $i->setLanguagev2(ELanguageText::sendMailVerifyCodeLine1, "Please copy the code and enter it in the verification code input box. Verification code: %code%");
+        $i->setLanguagev2(ELanguageText::sendMailVerifyCodeLine2, "If you did not send a verification email, please go to your account settings to remove all logged-in devices and change your password to ensure security.");
+        $i->setLanguagev2(ELanguageText::HTTP_FORBIDDEN, "FORBIDDEN");
+        $i->setLanguagev2(ELanguageText::ExpireTime, "Expire Time: %timestamp%");
     }
 }

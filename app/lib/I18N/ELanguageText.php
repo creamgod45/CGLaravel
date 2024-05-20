@@ -357,6 +357,18 @@ enum ELanguageText
     case ResetPasswordAction1;
     case BooleanStringCoverTrue;
     case BooleanStringCoverFalse;
+    case RegisterMailTitle;
+    case RegisterMailLine1;
+    case RegisterMailLine2;
+    case RegisterMailAction1;
+    case sendMailVerifyCode_Response_error1;
+    case sendMailVerifyCode_Response_success;
+    case sendMailVerifyCodeSubject;
+    case sendMailVerifyCodeLine1;
+    case sendMailVerifyCodeLine2;
+    case sendMailVerifyCodeAction1;
+    case HTTP_FORBIDDEN;
+    case ExpireTime;
 
     public static function isVaild(string $name):bool
     {
