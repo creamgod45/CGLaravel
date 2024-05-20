@@ -115,8 +115,17 @@ function createRipple(el) {
 }
 
 function sendMailVerifyCode(ct, target) {
-    let formData = new FormData();
-    formData.append('')
+    ct.onclick = () =>{
+        fetch('/sendMailVerifyCode', {method: "post"})
+            .then(async (res) => {
+                console.log(res);
+                let json = await res.json();
+                console.log(json);
+                let el = document.querySelector(target);
+                el.innerText = json.message;
+            })
+            .catch(console.log);
+    };
 }
 
 function customTrigger() {
