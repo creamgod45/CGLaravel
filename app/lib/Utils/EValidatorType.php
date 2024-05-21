@@ -12,5 +12,6 @@ enum EValidatorType
     case ANIMALCREATE;
     case PROFILEUPDATEEMAIL;
     case PROFILEUPDATEPASSWORD;
+    case VERIFYCODE;
     case NULL;
 }

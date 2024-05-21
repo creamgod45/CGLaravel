@@ -38,6 +38,9 @@ class ValidatorBuilder
                 break;
             case EValidatorType::PROFILEUPDATEEMAIL:
                 $this->profileUpdateEmail();
+            case EValidatorType::VERIFYCODE:
+                $this->verifycode();
+                break;
             case EValidatorType::NULL:
                 break;
         }
@@ -139,6 +142,7 @@ class ValidatorBuilder
             'password' => $this->i18N->getLanguage(ELanguageText::validator_field_password),
             'phone' => $this->i18N->getLanguage(ELanguageText::validator_field_phone),
             'token' => $this->i18N->getLanguage(ELanguageText::validator_field_token),
+            'code' => "驗證碼"
         ];
     }
 
@@ -338,6 +342,15 @@ class ValidatorBuilder
             'type_id' => ['required', 'numeric', 'max:10', 'unique:animals'],
             'name' => ['required', 'string', 'max:255'],
             'birthday' => ['date','nullable'],
+        ];
+    }
+
+    private function verifycode()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'code' => ['required', 'string', 'max:5'],
         ];
     }
 
