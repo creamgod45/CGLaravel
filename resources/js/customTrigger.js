@@ -1,4 +1,5 @@
 import * as Utils from './utils.js';
+import {tangentGeometry} from "three/nodes";
 
 
 function password_toggle(ct, target) {
@@ -128,6 +129,38 @@ function sendMailVerifyCode(ct, target) {
     };
 }
 
+function verifyCode(ct, target) {
+    if (ct.dataset.action !== null && ct.dataset.action1 !== null && ct.dataset.action2 !== null) {
+        let actionel = document.querySelector(ct.dataset.action);
+        let action1el = document.querySelector(ct.dataset.action1);
+        let action2el = document.querySelector(ct.dataset.action2);
+        let targetel = document.querySelector(target);
+        ct.onclick = ()=>{
+            if (targetel.value !== null) {
+                let formdata = new FormData();
+                formdata.append("code", targetel.value);
+                fetch('/verifyCode', {method: "post", body: formdata})
+                    .then(async (res) => {
+                        console.log(res);
+                        let json = await res.json();
+                        console.log(json);
+                        if (json.token !== null) {
+                            var htmlInputElement = document.createElement("input");
+                            htmlInputElement.value=json.token.compress;
+                            htmlInputElement.name="sendMailVerifyCodeToken";
+                            htmlInputElement.type="hidden";
+                            actionel.innerHTML = "";
+                            actionel.append(htmlInputElement);
+                            action1el.remove();
+                            action2el.remove();
+                        }
+                    })
+                    .catch(console.log);
+            }
+        };
+    }
+}
+
 function customTrigger() {
     var cts = document.querySelectorAll('.ct');
     for (let ct of cts) {
@@ -144,6 +177,9 @@ function customTrigger() {
                     break;
                 case "sendMailVerifyCode":
                     sendMailVerifyCode(ct, target);
+                    break;
+                case "verifyCode":
+                    verifyCode(ct, target);
                     break;
             }
         }
