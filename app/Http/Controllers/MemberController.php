@@ -7,6 +7,7 @@ use App\Lib\I18N\I18N;
 use App\Lib\Utils\ENotificationType;
 use App\Lib\Utils\EValidatorType;
 use App\Lib\Utils\Utils;
+use App\Lib\Utils\Utilsv2;
 use App\Lib\Utils\ValidatorBuilder;
 use App\Models\Member;
 use App\Notifications\SendMailVerifyCodeNotification;
@@ -352,6 +353,31 @@ class MemberController extends Controller
         return response()->json([
             "message" => $i18N->getLanguage(ELanguageText::HTTP_FORBIDDEN),
         ],ResponseHTTP::HTTP_FORBIDDEN);
+    }
+
+    public function verifyCode(Request $request)
+    {
+        $baseControllerInit = self::baseControllerInit($request);
+        $i18N = $baseControllerInit['i18N'];
+        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+
+        $vb = new ValidatorBuilder($i18N, EValidatorType::VERIFYCODE);
+        $v = $vb->validate($request->all());
+
+        if($v instanceof MessageBag){
+            // validator errors here
+            return response()->json(["messages"=>"驗證失敗",'errors'=>$v->all()]);
+        }else{
+            $code = Session::get('sendMailVerifyCode');
+            if($code === $v['code']){
+                Session::forget('sendMailVerifyCode');
+                $str = Str::random(10);
+                Session::put("sendMailVerifyCodeToken", $str);
+                return response()->json(["messages"=>"驗證成功", "token" => Utilsv2::encodeContext($str)]);
+            }else{
+                return response()->json(["messages"=>"驗證碼錯誤"]);
+            }
+        }
     }
 }
 

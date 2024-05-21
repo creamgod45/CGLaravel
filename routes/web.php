@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [MemberController::class, 'profile'])->name('member.profile');
     Route::post('profile', [MemberController::class, 'profilepost'])->name('member.profile.post');
     Route::post('sendMailVerifyCode', [MemberController::class, 'sendMailVerifyCode'])->name('member.sendMailVerifyCode');
+    Route::post('verifyCode', [MemberController::class, 'verifyCode'])->name('member.verifyCode');
 });
 
 // password reset

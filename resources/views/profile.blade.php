@@ -43,18 +43,26 @@
                                 class="!min-w-[320px] xxl:!w-8/12"
                                 popover-title="編輯電子信箱">
                                 <form action="" method="POST">
-                                    <button type="button"
+                                    <button id="sendMailVerifyCode"
+                                            type="button"
                                             class="btn btn-ripple btn-color1 btn-max btn-center ct"
                                             data-fn="sendMailVerifyCode"
                                             data-target="#sendMailVerifyCodeResult"
                                     >發送驗證碼【驗證身份】</button>
                                     <p id="sendMailVerifyCodeResult">已經寄送驗證碼至信箱，請先驗證信箱</p>
                                     @csrf
-                                    <div class="form-row-nowarp sm:!flex-wrap xs:!flex-wrap us:!flex-wrap">
+                                    <div id="MailVerifyInput" class="form-row-nowarp sm:!flex-wrap xs:!flex-wrap us:!flex-wrap">
                                         <label for="MailCatcher" class="xxl:w-1/12 xl:w-2/12 lg:w-2/12 md:w-2/12 footer:w-3/12 sm:w-full xs:w-full us:w-full flex justify-start items-center">驗證身份</label>
                                         <input id="MailCatcher" class="block form-solid xxl:w-9/12 xl:w-8/12 lg:w-8/12 md:w-8/12 footer:w-6/12 sm:w-full xs:w-full us:w-full" type="text" autocomplete="current-email" required>
                                         <div class="footer:px-5 xxl:w-2/12 xl:w-2/12 lg:w-2/12 md:w-2/12 footer:w-3/12 sm:w-full footer:mt-0 xs:w-full sm:mt-5 xs:mt-5 us:w-full us:mt-5 sm:px-0">
-                                            <button class="btn btn-max btn-center btn-color1 btn-ripple">驗證</button>
+                                            <button type="button"
+                                                    class="btn btn-max btn-center btn-color1 btn-ripple ct"
+                                                    data-fn="verifyCode"
+                                                    data-target="#MailCatcher"
+                                                    data-action="#MailVerifyInput"
+                                                    data-action1="#sendMailVerifyCode"
+                                                    data-action2="#sendMailVerifyCodeResult"
+                                            >驗證</button>
                                         </div>
                                     </div>
                                     <div class="form-row-nowarp sm:!flex-wrap xs:!flex-wrap us:!flex-wrap mt-5">
