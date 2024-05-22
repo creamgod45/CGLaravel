@@ -356,5 +356,5 @@ sendMailVerifyCodeSubject: 'Member verification code'
 sendMailVerifyCodeLine1: 'Please copy the code and enter it in the verification code input box. Verification code: %code%'
 sendMailVerifyCodeLine2: 'If you did not send a verification email, please go to your account settings to remove all logged-in devices and change your password to ensure security.'
 HTTP_FORBIDDEN: FORBIDDEN
-ExpireTime: 'Expire Time:'
+ExpireTime: 'Expire Time: %timestamp%'
 sendMailVerifyCode_Response_success: 'The verification code was successfully sent to your mailbox, please check it in your mailbox.'
