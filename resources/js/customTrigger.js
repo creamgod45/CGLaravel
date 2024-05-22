@@ -1,6 +1,4 @@
 import * as Utils from './utils.js';
-import {tangentGeometry} from "three/nodes";
-
 
 function password_toggle(ct, target) {
     ct.onclick = () => {
