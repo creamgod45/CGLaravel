@@ -1305,6 +1305,9 @@ a.btn {
 .form-solid:-webkit-autofill {
   background-color: red !important;
 }
+.form-solid:user-invalid {
+  @apply ring-red-500;
+}
 
 .form-solid:read-only {
   @apply cursor-grab focus:outline-0;
@@ -1320,6 +1323,9 @@ a.btn {
 
 .form-file {
   @apply disabled:text-gray-200 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:ring-gray-200 bg-slate-200 file:hidden w-fit shadow ring-1 px-4 py-2 rounded valid:ring-slate-200 invalid:ring-red-500;
+}
+.form-file:user-invalid {
+  @apply ring-red-500;
 }
 
 .form-textarea-group {
