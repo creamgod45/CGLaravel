@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
+use App\Lib\Server\CSRF;
 use App\Lib\Utils\ENotificationType;
 use App\Lib\Utils\EValidatorType;
 use App\Lib\Utils\Utils;
@@ -308,11 +309,10 @@ class MemberController extends Controller
         if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::PROFILEUPDATEEMAIL);
-        try {
-            $validator = Validator::make($request->all(), $vb->getRules(), $vb->getCustomMessages(), $vb->getAtters());
-            $validate = $validator->validate();
-        } catch (ValidationException $e) {
-            Log::info($request->ip() . ": " . PHP_EOL . "    ValidationException=" . $e->getMessage() . "," . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
+        $v = $vb->validate($request->all());
+        if($v instanceof MessageBag){
+            // validator errors here
+            return response()->json(["messages"=>"驗證失敗",'errors'=>$v->all()]);
         }
     }
 
@@ -321,19 +321,28 @@ class MemberController extends Controller
      */
     public function sendMailVerifyCode(Request $request)
     {
+        if (!(new CSRF('sendMailVerifyCode'))->equal($request['token'])) {
+            return response()->json([
+                "message"=> "CSRF 驗證失敗",
+            ], ResponseHTTP::HTTP_BAD_REQUEST);
+        }
         $baseControllerInit = self::baseControllerInit($request);
         $i18N = $baseControllerInit['i18N'];
         if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
         if (Auth::check()) {
+
             $member = Auth::user();
             $cacheKey = $member->UUID . ":sendMailVerifyCode";
 
+            $csrf = (new CSRF('sendMailVerifyCode'))->reset()->get();
             if(Cache::has($cacheKey)){
                 return response()->json([
-                    "message"=>$i18N->getLanguage(ELanguageText::sendMailVerifyCode_Response_error1) . $i18N->getLanguage(ELanguageText::ExpireTime, true)
+                    "message"=>$i18N->getLanguage(
+                        ELanguageText::sendMailVerifyCode_Response_error1) .
+                        $i18N->getLanguage(ELanguageText::ExpireTime, true)
                             ->placeholderParser("timestamp", Utils::timeStamp(Cache::get($cacheKey)))->toString(),
                     "cooldown" => Cache::get($cacheKey),
-                    "fn" => 1
+                    "token" => $csrf,
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }else{
                 $random = Str::random(5);
@@ -343,11 +352,13 @@ class MemberController extends Controller
                 Notification::send($member, $notification->delay(now()->addSeconds(5)));
                 Cache::put($cacheKey, time()+60, 60);
                 return response()->json([
-                    "message"=>$i18N->getLanguage(ELanguageText::sendMailVerifyCode_Response_success) . $i18N->getLanguage(ELanguageText::ExpireTime, true)
+                    "message"=>$i18N->getLanguage(
+                        ELanguageText::sendMailVerifyCode_Response_success) .
+                        $i18N->getLanguage(ELanguageText::ExpireTime, true)
                             ->placeholderParser("timestamp", Utils::timeStamp(Cache::get($cacheKey)))->toString(),
                     "cooldown" => Cache::get($cacheKey),
-                    "fn" => 2
-                ], ResponseHTTP::HTTP_BAD_REQUEST);
+                    "token" => $csrf,
+                ], ResponseHTTP::HTTP_OK);
             }
         }
         return response()->json([
@@ -357,6 +368,11 @@ class MemberController extends Controller
 
     public function verifyCode(Request $request)
     {
+        if (!(new CSRF('verifyCode'))->equal($request['token'])) {
+            return response()->json([
+                "message"=> "CSRF 驗證失敗",
+            ], ResponseHTTP::HTTP_BAD_REQUEST);
+        }
         $baseControllerInit = self::baseControllerInit($request);
         $i18N = $baseControllerInit['i18N'];
         if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
@@ -373,7 +389,7 @@ class MemberController extends Controller
                 Session::forget('sendMailVerifyCode');
                 $str = Str::random(10);
                 Session::put("sendMailVerifyCodeToken", $str);
-                return response()->json(["messages"=>"驗證成功", "token" => Utilsv2::encodeContext($str)]);
+                return response()->json(["messages"=>"驗證成功", "access_token" => Utilsv2::encodeContext($str)['compress']]);
             }else{
                 return response()->json(["messages"=>"驗證碼錯誤"]);
             }
