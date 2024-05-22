@@ -115,12 +115,24 @@ function createRipple(el) {
 
 function sendMailVerifyCode(ct, target) {
     ct.onclick = () =>{
-        fetch('/sendMailVerifyCode', {method: "post"})
+        if(ct.dataset.token === null) return false;
+        let csrf = document.querySelector("#csrf_token");
+        if(csrf === null) return false;
+        let formdata = new FormData();
+        formdata.append('token', ct.dataset.token);
+        fetch('/sendMailVerifyCode', {
+                method: "post",
+                headers: {
+                    'X-CSRF-TOKEN': csrf.value
+                },
+                body: formdata,
+            })
             .then(async (res) => {
                 console.log(res);
                 let json = await res.json();
                 console.log(json);
                 let el = document.querySelector(target);
+                ct.dataset.token = json.token;
                 el.innerText = json.message;
             })
             .catch(console.log);
@@ -128,29 +140,46 @@ function sendMailVerifyCode(ct, target) {
 }
 
 function verifyCode(ct, target) {
-    if (ct.dataset.action !== null && ct.dataset.action1 !== null && ct.dataset.action2 !== null) {
-        let actionel = document.querySelector(ct.dataset.action);
-        let action1el = document.querySelector(ct.dataset.action1);
-        let action2el = document.querySelector(ct.dataset.action2);
+    if (ct.dataset.action !== null && ct.dataset.action1 !== null && ct.dataset.action2 !== null &&
+        ct.dataset.action3 !== null && ct.dataset.action4 !== null && ct.dataset.token !== null) {
+        let actionel= document.querySelector(ct.dataset.action);
+        let action1el= document.querySelector(ct.dataset.action1);
+        let action2el= document.querySelector(ct.dataset.action2);
+        let action3el = document.querySelector(ct.dataset.action3);
+        let action4el = document.querySelector(ct.dataset.action4);
         let targetel = document.querySelector(target);
         ct.onclick = ()=>{
             if (targetel.value !== null) {
+                if(ct.dataset.token === null) return false;
+                let csrf = document.querySelector("#csrf_token");
+                if(csrf === null) return false;
                 let formdata = new FormData();
                 formdata.append("code", targetel.value);
-                fetch('/verifyCode', {method: "post", body: formdata})
+                formdata.append('token', ct.dataset.token);
+                fetch('/verifyCode', {
+                        method: "post",
+                        body: formdata,
+                        headers: {
+                            'X-CSRF-TOKEN': csrf.value
+                        },
+                    }
+                    )
                     .then(async (res) => {
                         console.log(res);
                         let json = await res.json();
                         console.log(json);
-                        if (json.token !== null) {
+                        if (json.access_token !== null) {
                             var htmlInputElement = document.createElement("input");
-                            htmlInputElement.value=json.token.compress;
+                            htmlInputElement.value=json.access_token;
                             htmlInputElement.name="sendMailVerifyCodeToken";
                             htmlInputElement.type="hidden";
                             actionel.innerHTML = "";
                             actionel.append(htmlInputElement);
                             action1el.remove();
                             action2el.remove();
+                            action3el.disabled = false;
+                            action4el.disabled = false;
+                            ct.dataset.token = json.token;
                         }
                     })
                     .catch(console.log);
