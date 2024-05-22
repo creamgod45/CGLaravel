@@ -14,7 +14,7 @@ class EncryptedCache
      * @param DateInterval|DateTimeInterface|int|null $ttl
      * @return void
      */
-    public function put(array|string $key, mixed $data, DateInterval|DateTimeInterface|int|null $ttl): void
+    public static function put(array|string $key, mixed $data, DateInterval|DateTimeInterface|int|null $ttl): void
     {
         $encryptedData = Crypt::encrypt($data);
         Cache::put($key, $encryptedData, $ttl);
@@ -24,7 +24,7 @@ class EncryptedCache
      * @param array|string $key
      * @return mixed|null
      */
-    public function get(array|string $key): mixed
+    public static function get(array|string $key): mixed
     {
         $encryptedData = Cache::get($key);
 

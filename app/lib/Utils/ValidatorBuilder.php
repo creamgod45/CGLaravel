@@ -142,7 +142,8 @@ class ValidatorBuilder
             'password' => $this->i18N->getLanguage(ELanguageText::validator_field_password),
             'phone' => $this->i18N->getLanguage(ELanguageText::validator_field_phone),
             'token' => $this->i18N->getLanguage(ELanguageText::validator_field_token),
-            'code' => "驗證碼"
+            'verification' => "驗證碼",
+            'sendMailVerifyCodeToken' => "信箱身份驗證權杖",
         ];
     }
 
@@ -339,9 +340,9 @@ class ValidatorBuilder
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
         $this->rules = [
-            'type_id' => ['required', 'numeric', 'max:10', 'unique:animals'],
-            'name' => ['required', 'string', 'max:255'],
-            'birthday' => ['date','nullable'],
+            'sendMailVerifyCodeToken' => ['required', 'string'],
+            'email' => ['required', 'email', 'max:255'],
+            'verification' => ['required','string', 'max:5'],
         ];
     }
 
