@@ -35,7 +35,9 @@ Route::post('lzstring.json', function (Request $request){
 });
 
 Route::post('language', function (Request $request){
-    if (ELanguageCode::isVaild($request['lang'])) {
+    if(empty($request->all())){
+        return response()->json(['message' => 'Get Language', 'lang' => $_COOKIE["lang"] ?? ELanguageCode::en_US->name]);
+    } elseif (ELanguageCode::isVaild($request['lang'])) {
         $cookie_expire = time() + (24 * 60 * 60);
         $cookie_path = "/";
         $secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
@@ -47,8 +49,9 @@ Route::post('language', function (Request $request){
             'httponly' => $httponly
         ]);
         return response()->json(['message' => 'Data received successfully', 'lang' => $request['lang']]);
+    } else {
+        return response()->json(['message' => 'Error'], ResponseHTTP::HTTP_BAD_REQUEST);
     }
-    return response()->json(['message' => 'Error'], ResponseHTTP::HTTP_BAD_REQUEST);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -62,6 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::post('profile', [MemberController::class, 'profilepost'])->name('member.profile.post');
     Route::post('sendMailVerifyCode', [MemberController::class, 'sendMailVerifyCode'])->name('member.sendMailVerifyCode');
     Route::post('verifyCode', [MemberController::class, 'verifyCode'])->name('member.verifyCode');
+    Route::post('newMailVerifyCode', [MemberController::class, 'newMailVerifyCode'])->name('member.newMailVerifyCode');
 });
 
 // password reset
