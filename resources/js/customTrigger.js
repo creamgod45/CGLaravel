@@ -113,6 +113,7 @@ function createRipple(el) {
     button.appendChild(circle);
 }
 
+// 發送信箱驗證碼
 function sendMailVerifyCode(ct, target) {
     ct.onclick = () =>{
         if(ct.dataset.token === null) return false;
@@ -139,6 +140,7 @@ function sendMailVerifyCode(ct, target) {
     };
 }
 
+// 信箱的驗證碼驗證
 function verifyCode(ct, target) {
     if (ct.dataset.action !== null && ct.dataset.action1 !== null && ct.dataset.action2 !== null &&
         ct.dataset.action3 !== null && ct.dataset.action4 !== null && ct.dataset.token !== null) {
@@ -188,6 +190,28 @@ function verifyCode(ct, target) {
     }
 }
 
+function newMailVerifyCode(ct, target) {
+    if(ct.dataset.token !== null && ct.dataset.data !==null){
+        let targetel = document.querySelector(target);
+        let data = document.querySelector(ct.dataset.data);
+        ct.onclick = ()=>{
+            let csrf = document.querySelector("#csrf_token");
+            if(csrf === null) return false;
+            let formdata = new FormData();
+            formdata.append("email", data.value);
+            formdata.append("token", ct.dataset.token);
+            fetch("/newMailVerifyCode", {
+                method: 'post',
+                body: formdata,
+                headers: {
+                    'X-CSRF-TOKEN': csrf.value
+                },
+            }).then(async (res) => {
+            });
+        };
+    }
+}
+
 function customTrigger() {
     var cts = document.querySelectorAll('.ct');
     for (let ct of cts) {
@@ -207,6 +231,9 @@ function customTrigger() {
                     break;
                 case "verifyCode":
                     verifyCode(ct, target);
+                    break;
+                case "newMailVerifyCode":
+                    newMailVerifyCode(ct, target);
                     break;
             }
         }

@@ -1,31 +1,17 @@
 import intlTelInput from "intl-tel-input";
+import zh_tw from "intl-tel-input/build/js/i18n/zh_tw/index.mjs";
+//console.log(zh_tw);
+import zh_cn from "intl-tel-input/build/js/i18n/zh_tw/index.mjs";
+//console.log(zh_cn);
+import en from "intl-tel-input/build/js/i18n/en/index.mjs";
+//console.log(en);
 
-let zh_tw;
-import('intl-tel-input/build/js/i18n/zh_TW/index.mjs').then(module => {
-    zh_tw = module.default;
-}).catch(error => console.error('Failed to load zh_TW localization', error));
+let lang;
 
-let zh_cn;
-import('intl-tel-input/build/js/i18n/zh/index.mjs').then(module => {
-    zh_cn = module.default;
-}).catch(error => console.error('Failed to load zh_cn localization', error));
-
-let en;
-import('intl-tel-input/build/js/i18n/en/index.mjs').then(module => {
-    en = module.default;
-}).catch(error => console.error('Failed to load en localization', error));
-
-console.log(navigator.language);
 function phone() {
     let tels = document.querySelectorAll('.ITI');
     const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
     for (let tel of tels) {
-        let lang;
-        switch (navigator.language) {
-            case 'zh-TW': lang = zh_tw; break;
-            case 'zh-CN': lang = zh_cn; break;
-            default: lang = en; break;
-        }
         let iti = intlTelInput(tel,{
             CountrySearch: true,
             showSelectedDialCode: true,
@@ -87,4 +73,23 @@ function phone() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', phone)
+document.addEventListener('DOMContentLoaded', async () => {
+    await fetch('language', {
+        method: 'post'
+    }).then(async (res) => {
+        if (res.ok) {
+            let json = await res.json();
+            //console.log(json);
+            switch (json.lang) {
+                case 'zh_TW': lang = zh_tw; break;
+                case 'zh_CN': lang = zh_cn; break;
+                default: lang = en; break;
+            }
+        }else await console.log(res);
+    }).catch((err)=>{
+        console.log(err);
+        lang=en;
+    });
+    //console.log(lang);
+    await phone();
+})
