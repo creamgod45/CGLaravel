@@ -30,9 +30,9 @@ export default defineConfig({
                 }
             },
             external: [
-                'intl-tel-input/build/js/i18n/en/index.mjs',
-                'intl-tel-input/build/js/i18n/zh/index.mjs',
-                'intl-tel-input/build/js/i18n/zh_TW/index.mjs',
+                //'intl-tel-input/build/js/i18n/en/index.mjs',
+                //'intl-tel-input/build/js/i18n/zh/index.mjs',
+                //'intl-tel-input/build/js/i18n/zh_TW/index.mjs',
             ]
         }
     },

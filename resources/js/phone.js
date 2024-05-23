@@ -1,9 +1,9 @@
 import intlTelInput from "intl-tel-input";
-import zh_tw from "intl-tel-input/build/js/i18n/zh_tw/index.mjs";
+import zh_tw from "./intl-tel-input/i18n/zh_tw/index.mjs";
 //console.log(zh_tw);
-import zh_cn from "intl-tel-input/build/js/i18n/zh_tw/index.mjs";
+import zh_cn from "./intl-tel-input/i18n/zh_tw/index.mjs";
 //console.log(zh_cn);
-import en from "intl-tel-input/build/js/i18n/en/index.mjs";
+import en from "./intl-tel-input/i18n/en/index.mjs";
 //console.log(en);
 
 let lang;
