@@ -1,5 +1,5 @@
 @vite(['resources/css/profile.css', 'resources/js/profile.js'])
-@use (App\Lib\I18N\I18N;use App\Lib\Server\CSRF)
+@use (App\Lib\I18N\I18N;use App\Lib\Server\CSRF;use App\View\Components\PopoverOptions)
 @php
     /***
      * @var string[] $router \
@@ -34,7 +34,7 @@
                         <div class="col fixed1">電子郵件</div>
                         <div class="col">{{$member->email}}
                             @php
-                                $emailpopover = new \App\View\Components\PopoverOptions();
+                                $emailpopover = new PopoverOptions();
                             @endphp
                             <x-popover
                                 btn-class-list="btn btn-color1 btn-ripple"
@@ -42,12 +42,12 @@
                                 :popover-options="$emailpopover"
                                 class="!min-w-[320px] xxl:!w-8/12"
                                 popover-title="編輯電子信箱">
-                                <form action="" method="POST">
+                                <form action="{{route("member.profile.post")}}" method="POST">
                                     <button id="sendMailVerifyCode"
                                             type="button"
                                             class="btn btn-ripple btn-color1 btn-max btn-center ct"
                                             data-fn="sendMailVerifyCode"
-                                            data-token="{{(new CSRF("sendMailVerifyCode"))->get()}}"
+                                            data-token="{{(new CSRF("profile.sendMailVerifyCode"))->get()}}"
                                             data-target="#sendMailVerifyCodeResult"
                                     >發送驗證碼【驗證身份】
                                     </button>
@@ -65,7 +65,7 @@
                                             <button type="button"
                                                     class="btn btn-max btn-center btn-color1 btn-ripple ct"
                                                     data-fn="verifyCode"
-                                                    data-token="{{(new CSRF("verifyCode"))->get()}}"
+                                                    data-token="{{(new CSRF("profile.verifyCode"))->get()}}"
                                                     data-target="#MailCatcher"
                                                     data-action="#MailVerifyInput"
                                                     data-action1="#sendMailVerifyCode"
@@ -76,7 +76,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="form-row-nowarp sm:!flex-wrap xs:!flex-wrap us:!flex-wrap mt-5">
+                                    <div id="newMailInput" class="form-row-nowarp sm:!flex-wrap xs:!flex-wrap us:!flex-wrap mt-5">
                                         <label for="email"
                                                class="xxl:w-1/12 xl:w-2/12 lg:w-2/12 md:w-2/12 footer:w-3/12 sm:w-full xs:w-full us:w-full flex justify-start items-center">電子信箱</label>
                                         <input id="email"
@@ -84,7 +84,12 @@
                                                type="email" name="email" autocomplete="email" disabled required>
                                         <div
                                             class="footer:px-5 xxl:w-2/12 xl:w-2/12 lg:w-2/12 md:w-2/12 footer:w-3/12 sm:w-full footer:mt-0 xs:w-full sm:mt-5 xs:mt-5 us:w-full us:mt-5 sm:px-0">
-                                            <button class="btn btn-max btn-center btn-color1 btn-ripple">發送</button>
+                                            <button class="btn btn-max btn-center btn-color1 btn-ripple ct"
+                                                    data-fn="newMailVerifyCode"
+                                                    data-token="{{(new CSRF("profile.newMailVerifyCode"))->get()}}"
+                                                    data-target="#newMailInput"
+                                                    data-data="#email"
+                                            >發送</button>
                                         </div>
                                     </div>
                                     <div class="form-row-nowarp mt-5 xs:!flex-wrap sm:!flex-wrap us:!flex-wrap">
@@ -94,6 +99,9 @@
                                                class="block form-solid xxl:w-11/12 xl:w-10/12 lg:w-10/12 md:w-10/12 footer:w-9/12 sm:w-full xs:w-full us:w-full"
                                                type="text" name="verification" autocomplete="off" disabled required>
                                     </div>
+                                    <input type="hidden" name="token"
+                                           value="{{(new CSRF("profile.profilepost"))->get()}}">
+                                    <input type="hidden" name="method" value="email">
                                     <button type="submit" class="mt-5 btn btn-ripple btn-max btn-color1 btn-center">
                                         更改電子信箱
                                     </button>
@@ -105,7 +113,7 @@
                         <div class="col fixed1 value">密碼</div>
                         <div class="col">*****************
                             @php
-                                $passwordpopover = new \App\View\Components\PopoverOptions();
+                                $passwordpopover = new PopoverOptions();
                             @endphp
                             <x-popover
                                 btn-class-list="btn btn-color1 btn-ripple"
@@ -148,6 +156,7 @@
                                                  data-target="#password3"><i class="fa-regular fa-eye"></i></div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="method" value="password">
                                     <button type="submit" class="mt-5 btn btn-ripple btn-color1 btn-md-strip">更改密碼
                                     </button>
                                 </form>
