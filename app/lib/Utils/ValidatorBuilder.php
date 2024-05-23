@@ -41,6 +41,14 @@ class ValidatorBuilder
             case EValidatorType::VERIFYCODE:
                 $this->verifycode();
                 break;
+            case EValidatorType::SENDMAILVERIFYCODE:
+                $this->sendMailVerifyCode();
+                break;
+            case EValidatorType::PROFILEGENERAL:
+                $this->profilegeneral();
+                break;
+            case EValidatorType::NEWMAILVERIFYCODE:
+                $this->newMailVerifyCode();
             case EValidatorType::NULL:
                 break;
         }
@@ -340,7 +348,6 @@ class ValidatorBuilder
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
         $this->rules = [
-            'sendMailVerifyCodeToken' => ['required', 'string'],
             'email' => ['required', 'email', 'max:255'],
             'verification' => ['required','string', 'max:5'],
         ];
@@ -352,6 +359,37 @@ class ValidatorBuilder
         $this->atters = $this->initAtters();
         $this->rules = [
             'code' => ['required', 'string', 'max:5'],
+            'token' => ['required','string'],
+        ];
+    }
+
+    private function profilegeneral()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'sendMailVerifyCodeToken' => ['required', 'string'],
+            'token' => ['required','string'],
+            'method' => ['required','string'],
+        ];
+    }
+
+    private function sendMailVerifyCode()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'code' => ['required', 'string', 'max:5'],
+        ];
+    }
+
+    private function newMailVerifyCode()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'token' => ['required','string'],
+            'email' => ['required', 'email', 'max:255'],
         ];
     }
 
