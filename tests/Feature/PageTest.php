@@ -8,6 +8,7 @@ use App\Lib\Utils\Utilsv2;
 use App\Models\Member;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class PageTest extends TestCase
@@ -75,6 +76,13 @@ class PageTest extends TestCase
         //$response->dump();
         $response->assertStatus(400)
             ->assertJson(['message' => 'Error']);
+        $response = $this->postJson('/language');
+        //$response->dumpHeaders();
+        $response->assertStatus(200)
+            ->assertJson(function (AssertableJson $json) {
+                //$json->dump();
+                $json->hasAll(['message', 'lang']);
+            });
     }
 
     public function test_the_application_member_middleware_testing()
