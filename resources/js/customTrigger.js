@@ -144,36 +144,44 @@ function sendMailVerifyCode(ct, target) {
 function verifyCode(ct, target) {
     if (ct.dataset.action !== null && ct.dataset.action1 !== null && ct.dataset.action2 !== null &&
         ct.dataset.action3 !== null && ct.dataset.action4 !== null && ct.dataset.token !== null) {
-        let actionel= document.querySelector(ct.dataset.action);
-        let action1el= document.querySelector(ct.dataset.action1);
-        let action2el= document.querySelector(ct.dataset.action2);
-        let action3el = document.querySelector(ct.dataset.action3);
-        let action4el = document.querySelector(ct.dataset.action4);
-        let targetel = document.querySelector(target);
         ct.onclick = ()=>{
-            if (targetel.value !== null) {
-                if(ct.dataset.token === null) return false;
-                let csrf = document.querySelector("#csrf_token");
-                if(csrf === null) return false;
-                let formdata = new FormData();
-                formdata.append("code", targetel.value);
-                formdata.append('token', ct.dataset.token);
-                fetch('/verifyCode', {
-                        method: "post",
-                        body: formdata,
-                        headers: {
-                            'X-CSRF-TOKEN': csrf.value
-                        },
-                    }
-                    )
-                    .then(async (res) => {
-                        console.log(res);
-                        let json = await res.json();
-                        console.log(json);
-                        if (json.access_token !== null) {
-                            var htmlInputElement = document.createElement("input");
+            let actionel= document.querySelector(ct.dataset.action);
+            let action1el= document.querySelector(ct.dataset.action1);
+            let action2el= document.querySelector(ct.dataset.action2);
+            let action3el = document.querySelector(ct.dataset.action3);
+            let action4el = document.querySelector(ct.dataset.action4);
+            let targetel = document.querySelector(target);
+            if (targetel.value === null) return false;
+            if (targetel.value === "") return false;
+            if (targetel.minLength !== null) {
+                if (targetel.value.length < targetel.minLength) {
+                    return false;
+                }
+            }
+            if(ct.dataset.token === null) return false;
+            let csrf = document.querySelector("#csrf_token");
+            if(csrf === null) return false;
+            let formdata = new FormData();
+            formdata.append("code", targetel.value);
+            formdata.append('token', ct.dataset.token);
+            fetch('/verifyCode', {
+                    method: "post",
+                    body: formdata,
+                    headers: {
+                        'X-CSRF-TOKEN': csrf.value
+                    },
+                }
+                )
+                .then(async (res) => {
+                    console.log(res);
+                    let json = await res.json();
+                    console.log(json);
+                    if (res.status === 200) {
+                        if (json.access_token !== "") {
+                            let htmlInputElement = document.createElement("input");
                             htmlInputElement.value=json.access_token;
                             htmlInputElement.name="sendMailVerifyCodeToken";
+                            htmlInputElement.id="sendMailVerifyCodeToken";
                             htmlInputElement.type="hidden";
                             actionel.innerHTML = "";
                             actionel.append(htmlInputElement);
@@ -183,18 +191,29 @@ function verifyCode(ct, target) {
                             action4el.disabled = false;
                             ct.dataset.token = json.token;
                         }
-                    })
-                    .catch(console.log);
-            }
+                    }
+                })
+                .catch(console.log);
         };
     }
 }
 
 function newMailVerifyCode(ct, target) {
-    if(ct.dataset.token !== null && ct.dataset.data !==null){
-        let targetel = document.querySelector(target);
-        let data = document.querySelector(ct.dataset.data);
+    if(ct.dataset.token !== null && ct.dataset.data !==null && ct.dataset.result !== null){
         ct.onclick = ()=>{
+            let targetel = document.querySelector(target);
+            let data = document.querySelector(ct.dataset.data);
+            if(data.value === null) return false;
+            if(data.value === "") return false;
+            if (!Utils.validateEmail(data.value)) return false;
+            if (data.maxLength !== null) {
+                if (data.value.length > data.maxLength) {
+                    return false;
+                }
+            }
+            if(ct.dataset.token === "") return false;
+            if(ct.dataset.token === null) return false;
+            if(ct.dataset.token === undefined) return false;
             let csrf = document.querySelector("#csrf_token");
             if(csrf === null) return false;
             let formdata = new FormData();
@@ -207,6 +226,61 @@ function newMailVerifyCode(ct, target) {
                     'X-CSRF-TOKEN': csrf.value
                 },
             }).then(async (res) => {
+                console.log(res);
+                let json = await res.json();
+                ct.dataset.token = json.token;
+                targetel.innerText = json.message;
+            });
+        };
+    }
+}
+
+function profileUpdateEmail(ct, target) {
+    if(ct.dataset.token !== null && ct.dataset.method !==null){
+        ct.onclick = ()=>{
+            let value1el = document.querySelector(ct.dataset.value1);
+            let value2el = document.querySelector(ct.dataset.value2);
+            let value3el = document.querySelector(ct.dataset.value3);
+            let resultel = document.querySelector(ct.dataset.result);
+            let targetel = document.querySelector(target);
+            if(value1el.value === null) return false;
+            if(value2el.value === null) return false;
+            if(value3el.value === null) return false;
+            if(value1el.value === "") return false;
+            if(value2el.value === "") return false;
+            if(value3el.value === "") return false;
+            if (value1el.minLength !== null) {
+                if (value1el.value.length < value1el.minLength) {
+                    return false;
+                }
+            }
+            if(resultel === null) return false;
+            if (!Utils.validateEmail(value2el.value)) return false;
+            let csrf = document.querySelector("#csrf_token");
+            if(csrf === null) return false;
+            let formdata = new FormData();
+            formdata.append("method", ct.dataset.method);
+            formdata.append("token", ct.dataset.token);
+            formdata.append("verification", value1el.value);
+            formdata.append("sendMailVerifyCodeToken", value3el.value);
+            formdata.append("email", value2el.value);
+            fetch("/profile", {
+                method: 'post',
+                body: formdata,
+                headers: {
+                    'X-CSRF-TOKEN': csrf.value
+                },
+            }).then(async (res) => {
+                console.log(res);
+                let json = await res.json();
+                console.log(json);
+                resultel.innerText = json.message;
+                if(res.status===200){
+                    setTimeout(async ()=>{
+                        await targetel.hidePopover();
+                        await location.reload();
+                    },3000)
+                }
             });
         };
     }
@@ -234,6 +308,9 @@ function customTrigger() {
                     break;
                 case "newMailVerifyCode":
                     newMailVerifyCode(ct, target);
+                    break;
+                case "profileUpdateEmail":
+                    profileUpdateEmail(ct, target);
                     break;
             }
         }
