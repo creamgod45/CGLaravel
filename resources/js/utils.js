@@ -127,3 +127,11 @@ export function rotateElement(event, element) {
     element.style.setProperty("--rotateX", offsetX + "deg");
     element.style.setProperty("--rotateY", -1 * offsetY + "deg");
 }
+
+export function validateEmail(email) {
+    // 定義正則表達式
+    var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // 測試信箱字串是否符合正則表達式
+    return regex.test(email);
+}
