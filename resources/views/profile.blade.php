@@ -40,9 +40,9 @@
                                 btn-class-list="btn btn-color1 btn-ripple"
                                 popover-btn-message="編輯"
                                 :popover-options="$emailpopover"
-                                class="!min-w-[320px] xxl:!w-8/12"
+                                class="!min-w-[320px] xxl:!w-8/12 emailPopover1"
                                 popover-title="編輯電子信箱">
-                                <form action="{{route("member.profile.post")}}" method="POST">
+                                <form action="{{route("member.profile.post")}}" method="POST" onsubmit="return false;">
                                     <button id="sendMailVerifyCode"
                                             type="button"
                                             class="btn btn-ripple btn-color1 btn-max btn-center ct"
@@ -59,7 +59,7 @@
                                                class="xxl:w-1/12 xl:w-2/12 lg:w-2/12 md:w-2/12 footer:w-3/12 sm:w-full xs:w-full us:w-full flex justify-start items-center">驗證身份</label>
                                         <input id="MailCatcher"
                                                class="block form-solid xxl:w-9/12 xl:w-8/12 lg:w-8/12 md:w-8/12 footer:w-6/12 sm:w-full xs:w-full us:w-full"
-                                               type="text" autocomplete="current-email" required>
+                                               type="text" placeholder="填入驗證身份用途的驗證碼" minlength="5" autocomplete="off" required>
                                         <div
                                             class="footer:px-5 xxl:w-2/12 xl:w-2/12 lg:w-2/12 md:w-2/12 footer:w-3/12 sm:w-full footer:mt-0 xs:w-full sm:mt-5 xs:mt-5 us:w-full us:mt-5 sm:px-0">
                                             <button type="button"
@@ -81,30 +81,37 @@
                                                class="xxl:w-1/12 xl:w-2/12 lg:w-2/12 md:w-2/12 footer:w-3/12 sm:w-full xs:w-full us:w-full flex justify-start items-center">電子信箱</label>
                                         <input id="email"
                                                class="block form-solid xxl:w-9/12 xl:w-8/12 lg:w-8/12 md:w-8/12 footer:w-6/12 sm:w-full xs:w-full us:w-full"
-                                               type="email" name="email" autocomplete="email" disabled required>
+                                               type="email" maxlength="255" placeholder="填入新的電子郵件" name="email" autocomplete="new-email" disabled required>
                                         <div
                                             class="footer:px-5 xxl:w-2/12 xl:w-2/12 lg:w-2/12 md:w-2/12 footer:w-3/12 sm:w-full footer:mt-0 xs:w-full sm:mt-5 xs:mt-5 us:w-full us:mt-5 sm:px-0">
-                                            <button class="btn btn-max btn-center btn-color1 btn-ripple ct"
+                                            <button type="button" class="btn btn-max btn-center btn-color1 btn-ripple ct"
                                                     data-fn="newMailVerifyCode"
                                                     data-token="{{(new CSRF("profile.newMailVerifyCode"))->get()}}"
-                                                    data-target="#newMailInput"
+                                                    data-target="#newMailVerifyCodeResult"
                                                     data-data="#email"
                                             >發送</button>
                                         </div>
                                     </div>
+                                    <div id="newMailVerifyCodeResult" class="mt-5"></div>
                                     <div class="form-row-nowarp mt-5 xs:!flex-wrap sm:!flex-wrap us:!flex-wrap">
                                         <label for="verification"
                                                class="xxl:w-1/12 xl:w-2/12 lg:w-2/12 md:w-2/12 footer:w-3/12 sm:w-full xs:w-full us:w-full flex justify-start items-center">驗證碼</label>
                                         <input id="verification"
                                                class="block form-solid xxl:w-11/12 xl:w-10/12 lg:w-10/12 md:w-10/12 footer:w-9/12 sm:w-full xs:w-full us:w-full"
-                                               type="text" name="verification" autocomplete="off" disabled required>
+                                               type="text" minlength="5" placeholder="填入新的電子郵件寄送的驗證碼" name="verification" autocomplete="off" disabled required>
                                     </div>
-                                    <input type="hidden" name="token"
-                                           value="{{(new CSRF("profile.profilepost"))->get()}}">
-                                    <input type="hidden" name="method" value="email">
-                                    <button type="submit" class="mt-5 btn btn-ripple btn-max btn-color1 btn-center">
-                                        更改電子信箱
-                                    </button>
+                                    <button type="button"
+                                            class="mt-5 btn btn-ripple btn-max btn-color1 btn-center ct"
+                                            data-fn="profileUpdateEmail"
+                                            data-target=".emailPopover1"
+                                            data-value1="#verification"
+                                            data-value2="#email"
+                                            data-value3="#sendMailVerifyCodeToken"
+                                            data-result="#profileUpdateEmailResult"
+                                            data-token="{{(new CSRF("profile.profilepost"))->get()}}"
+                                            data-method="email"
+                                    >更改電子信箱</button>
+                                    <div id="profileUpdateEmailResult" class="mt-5"></div>
                                 </form>
                             </x-popover>
                         </div>
