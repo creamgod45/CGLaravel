@@ -13,6 +13,8 @@ class ValidatorBuilder
     private array $rules;
     private array $customMessages;
     private array $atters;
+    public $eValidatorType;
+    public $lastkey=0;
 
     public function __construct(I18N $i18N, EValidatorType $eValidatorType = EValidatorType::NULL)
     {
@@ -38,6 +40,7 @@ class ValidatorBuilder
                 break;
             case EValidatorType::PROFILEUPDATEEMAIL:
                 $this->profileUpdateEmail();
+                break;
             case EValidatorType::VERIFYCODE:
                 $this->verifycode();
                 break;
@@ -52,6 +55,7 @@ class ValidatorBuilder
             case EValidatorType::NULL:
                 break;
         }
+        $this->eValidatorType = $eValidatorType;
     }
 
     private function login()
@@ -62,6 +66,7 @@ class ValidatorBuilder
             'username' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
         ];
+        $this->lastkey=1;
     }
 
     private function forgotpassword(){
@@ -70,6 +75,7 @@ class ValidatorBuilder
         $this->rules = [
             'email' => ['required', 'string', 'email', 'max:255'],
         ];
+        $this->lastkey=2;
     }
 
     private function resetpassword()
@@ -80,6 +86,7 @@ class ValidatorBuilder
             'token' => 'required',
             'email' => 'required|email'
         ];
+        $this->lastkey=3;
     }
 
     private function resetpasswordpost()
@@ -91,6 +98,7 @@ class ValidatorBuilder
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
         ];
+        $this->lastkey=4;
     }
 
     private function register()
@@ -103,6 +111,7 @@ class ValidatorBuilder
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'string', 'min:10', 'max:255', 'unique:members'],
         ];
+        $this->lastkey=5;
     }
 
     /**
@@ -111,7 +120,6 @@ class ValidatorBuilder
      */
     public function validate($data)
     {
-        //debugbar()->info($data);
         $validator = Validator::make($data, $this->getRules(), $this->getCustomMessages(), $this->getAtters());
         if ($validator->fails()) return $validator->errors();
         return $validator->validate();
@@ -341,6 +349,7 @@ class ValidatorBuilder
             'description' => ['string','nullable'],
             'personality' => ['string','nullable'],
         ];
+        $this->lastkey=6;
     }
 
     private function profileUpdateEmail()
@@ -351,6 +360,7 @@ class ValidatorBuilder
             'email' => ['required', 'email', 'max:255'],
             'verification' => ['required','string', 'max:5'],
         ];
+        $this->lastkey=7;
     }
 
     private function verifycode()
@@ -361,6 +371,7 @@ class ValidatorBuilder
             'code' => ['required', 'string', 'max:5'],
             'token' => ['required','string'],
         ];
+        $this->lastkey=8;
     }
 
     private function profilegeneral()
@@ -372,6 +383,7 @@ class ValidatorBuilder
             'token' => ['required','string'],
             'method' => ['required','string'],
         ];
+        $this->lastkey=9;
     }
 
     private function sendMailVerifyCode()
@@ -379,8 +391,9 @@ class ValidatorBuilder
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
         $this->rules = [
-            'code' => ['required', 'string', 'max:5'],
+            'token' => ['required', 'string'],
         ];
+        $this->lastkey=10;
     }
 
     private function newMailVerifyCode()
@@ -391,6 +404,7 @@ class ValidatorBuilder
             'token' => ['required','string'],
             'email' => ['required', 'email', 'max:255'],
         ];
+        $this->lastkey=11;
     }
 
 }
