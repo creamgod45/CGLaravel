@@ -22,12 +22,12 @@ use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 */
 
 Route::get('/', function (Request $request) {
-    return view('branding', Controller::baseControllerInit($request));
+    return view('branding', Controller::baseControllerInit($request)->toArrayable());
 })->name('home');
 
-Route::get('/branding', function (Request $request) {
-    return view('welcome', Controller::baseControllerInit($request));
-})->name('branding');
+Route::get('/designcomponents', function (Request $request) {
+    return view('designcomponents', Controller::baseControllerInit($request)->toArrayable());
+})->name('designcomponents');
 
 Route::post('lzstring.json', function (Request $request){
     $decodeContext = Utilsv2::decodeContext($request["a"]);
@@ -61,11 +61,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('logout', [MemberController::class, 'logout'])->name('logout');
     Route::get('resendemail', [MemberController::class, 'resendEmail'])->name('verification.notice');
+    // Profile Start
     Route::get('profile', [MemberController::class, 'profile'])->name('member.profile');
     Route::post('profile', [MemberController::class, 'profilepost'])->name('member.profile.post');
-    Route::post('sendMailVerifyCode', [MemberController::class, 'sendMailVerifyCode'])->name('member.sendMailVerifyCode');
-    Route::post('verifyCode', [MemberController::class, 'verifyCode'])->name('member.verifyCode');
-    Route::post('newMailVerifyCode', [MemberController::class, 'newMailVerifyCode'])->name('member.newMailVerifyCode');
+    Route::group(['prefix' => 'profile'], function () {
+        Route::group(['prefix' => 'email'], function () {
+            Route::post('sendMailVerifyCode', [MemberController::class, 'sendMailVerifyCode_profile_email']);
+            Route::post('verifyCode', [MemberController::class, 'verifyCode_profile_email']);
+            Route::post('newMailVerifyCode', [MemberController::class, 'newMailVerifyCode_profile_email']);
+        });
+        Route::group(['prefix' => 'password'], function () {
+            Route::post('sendMailVerifyCode', [MemberController::class, 'sendMailVerifyCode_profile_password']);
+            Route::post('verifyCode', [MemberController::class, 'verifyCode_profile_password']);
+        });
+    });
+    // Profile End
 });
 
 // password reset

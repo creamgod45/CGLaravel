@@ -47,7 +47,7 @@ class MemberController extends Controller
         $user = Auth::user();
         $members = Member::paginate(30);
         //debugbar()->info($members);
-        return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user]));
+        return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user])->toArrayable());
     }
 
     public function emailVerify(Request $request)
@@ -78,9 +78,9 @@ class MemberController extends Controller
 
     public function passwordreset(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
+
         $vb = new ValidatorBuilder($i18N, EValidatorType::RESETPASSWORD);
         $v = $vb->validate($request->all());
 
@@ -88,15 +88,15 @@ class MemberController extends Controller
             // validator errors here
             return redirect(route('home'))->with('invaild',true)->withErrors($v);
         }else{
-            return view('passwordreset', $this::baseGlobalVariable($request, ['token'=>$v["token"],'email'=>$v["email"]]));
+            return view('passwordreset', $this::baseGlobalVariable($request, ['token'=>$v["token"],'email'=>$v["email"]])->toArrayable());
         }
     }
 
     public function passwordresetpost(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
+
         $vb = new ValidatorBuilder($i18N, EValidatorType::RESETPASSWORD);
         $v = $vb->validate($request->only('email', 'password', 'password_confirmation', 'token'));
 
@@ -131,9 +131,8 @@ class MemberController extends Controller
 
     public function forgetpasswordpost(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::FORGOTPASSWORD);
 
@@ -162,9 +161,8 @@ class MemberController extends Controller
 
     public function resendEmail(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
 
         $user = Auth::user();
         if ($user->hasVerifiedEmail()) {
@@ -182,19 +180,19 @@ class MemberController extends Controller
 
     public function loginPage(Request $request)
     {
-        return view('login', $this::baseControllerInit($request));
+        return view('login', $this::baseControllerInit($request)->toArrayable());
     }
 
     public function logout(Request $request)
     {
         Log::info($request->user()["username"] . ": logout");
         Auth::logout();
-        return view('logout', $this::baseControllerInit($request));
+        return view('logout', $this::baseControllerInit($request)->toArrayable());
     }
 
     public function showRegistrationForm(Request $request): Factory|\Illuminate\Foundation\Application|View|Application
     {
-        return view('register', $this::baseControllerInit($request));
+        return view('register', $this::baseControllerInit($request)->toArrayable());
     }
 
     /**
@@ -203,9 +201,8 @@ class MemberController extends Controller
      */
     public function register(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::REGISTER);
 
@@ -245,9 +242,8 @@ class MemberController extends Controller
 
     public function login(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::LOGIN);
         try {
@@ -300,15 +296,13 @@ class MemberController extends Controller
 
     public function profile(Request $request)
     {
-        //dump($request->fingerprint());
-        return view('profile', $this::baseControllerInit($request));
+        return view('profile', $this::baseControllerInit($request)->toArrayable());
     }
 
     public function profilepost(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::PROFILEGENERAL);
         $v = $vb->validate($request->all());
@@ -334,9 +328,11 @@ class MemberController extends Controller
                         // validator errors here
                         return response()->json(["messages"=>"驗證失敗 2",'errors'=>$v1->all()]);
                     }else{
-                        if(!Session::has('profile.newMailVerifyCode')) return response()->json(["message"=>"沒有 Session 資料"], ResponseHTTP::HTTP_BAD_REQUEST);
-                        if(Session::get('profile.newMailVerifyCode') !== $v1['verification']) return response()->json(["message"=>"Session 資料不相同"], ResponseHTTP::HTTP_BAD_REQUEST);
-                        if ((new CSRF('profile.sendMailVerifyCode'))->equal($v['sendMailVerifyCodeToken'])) return response()->json(["message"=>"錯誤 信箱身份驗證權杖"], ResponseHTTP::HTTP_BAD_REQUEST);
+                        if(!Session::has('profile.email.newMailVerifyCode')) return response()->json(["message"=>"沒有 Session 資料"], ResponseHTTP::HTTP_BAD_REQUEST);
+                        if(Session::get('profile.email.newMailVerifyCode') !== $v1['verification']) return response()->json(["message"=>"Session 資料不相同"], ResponseHTTP::HTTP_BAD_REQUEST);
+                        if (Session::get("profile.email.sendMailVerifyCodeToken") !== Utilsv2::decodeContext($v['sendMailVerifyCodeToken'])) {
+                            return response()->json(["message"=>"錯誤 信箱身份驗證權杖"], ResponseHTTP::HTTP_BAD_REQUEST);
+                        }
                         return $this->profilepost_email($request, $v1, $i18N);
                     }
                 case 'password':
@@ -360,19 +356,18 @@ class MemberController extends Controller
             ]);
             $member->save();
         }
-        (new CSRF('profile.sendMailVerifyCode'))->release();
-        Session::forget('profile.newMailVerifyCode');
+        (new CSRF('profile.email.sendMailVerifyCode'))->release();
+        Session::forget('profile.email.newMailVerifyCode');
         return response()->json(["message"=>"Email 資料更新成功"]);
     }
 
     /**
      * @throws Exception
      */
-    public function sendMailVerifyCode(Request $request)
+    public function sendMailVerifyCode_profile_email(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::SENDMAILVERIFYCODE);
         $v = $vb->validate($request->all());
@@ -380,7 +375,7 @@ class MemberController extends Controller
             // validator errors here
             return response()->json(["messages"=>"驗證失敗",'errors'=>$v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
         }else{
-            if (!(new CSRF('profile.sendMailVerifyCode'))->equal($request['token'])) {
+            if (!(new CSRF('profile.email.sendMailVerifyCode'))->equal($request['token'])) {
                 return response()->json([
                     "message"=> "CSRF 驗證失敗",
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
@@ -388,7 +383,7 @@ class MemberController extends Controller
             $member = Auth::user();
             $cacheKey = $member->UUID . ":sendMailVerifyCode";
 
-            $csrf = (new CSRF('profile.sendMailVerifyCode'))->reset()->get();
+            $csrf = (new CSRF('profile.email.sendMailVerifyCode'))->reset()->get();
             if(Cache::has($cacheKey)){
                 return response()->json([
                     "message"=>$i18N->getLanguage(
@@ -400,7 +395,7 @@ class MemberController extends Controller
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }else{
                 $random = Str::random(5);
-                Session::put('profile.sendMailVerifyCode', $random);
+                Session::put('profile.email.sendMailVerifyCode', $random);
                 //dump($i18N);
                 $notification = new SendMailVerifyCodeNotification($i18N, $random);
                 Notification::send($member, $notification->delay(now()->addSeconds(5)));
@@ -420,11 +415,10 @@ class MemberController extends Controller
         //],ResponseHTTP::HTTP_FORBIDDEN);
     }
 
-    public function newMailVerifyCode(Request $request)
+    public function newMailVerifyCode_profile_email(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::NEWMAILVERIFYCODE);
         $v = $vb->validate($request->all());
@@ -433,15 +427,21 @@ class MemberController extends Controller
             // validator errors here
             return response()->json(["messages"=>"驗證失敗",'errors'=>$v->all()]);
         }else {
-            if (!(new CSRF('profile.newMailVerifyCode'))->equal($request['token'])) {
+            if (!(new CSRF('profile.email.newMailVerifyCode'))->equal($request['token'])) {
                 return response()->json([
                     "message" => "CSRF 驗證失敗",
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }
             $member = Auth::user();
             if($member instanceof Member) {
-                $csrf = (new CSRF('profile.newMailVerifyCode'))->reset()->get();
+                $csrf = (new CSRF('profile.email.newMailVerifyCode'))->reset()->get();
                 $cacheKey = $member->UUID . ":newMailVerifyCode";
+                if($v['email'] === $member->email){
+                    return response()->json([
+                        "message"=> "無法更換相同的電子信箱",
+                        "token" => $csrf,
+                    ], ResponseHTTP::HTTP_BAD_REQUEST);
+                }
                 if(Cache::has($cacheKey)){
                     return response()->json([
                         "message"=>$i18N->getLanguage(
@@ -452,7 +452,7 @@ class MemberController extends Controller
                     ], ResponseHTTP::HTTP_BAD_REQUEST);
                 }else{
                     $random = Str::random(5);
-                    Session::put('profile.newMailVerifyCode', $random);
+                    Session::put('profile.email.newMailVerifyCode', $random);
 
                     $notification = new SendMailVerifyCodeNotification($i18N, $random);
                     $notification->delay(Carbon::now()->addSeconds(5));
@@ -470,11 +470,10 @@ class MemberController extends Controller
         }
     }
 
-    public function verifyCode(Request $request)
+    public function verifyCode_profile_email(Request $request)
     {
-        $baseControllerInit = self::baseControllerInit($request);
-        $i18N = $baseControllerInit['i18N'];
-        if (!$i18N instanceof I18N) throw new Exception('$i18N Not instanceof I18N');
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::VERIFYCODE);
         $v = $vb->validate($request->all());
@@ -483,16 +482,93 @@ class MemberController extends Controller
             // validator errors here
             return response()->json(["messages"=>"驗證失敗",'errors'=>$v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
         }else{
-            if (!(new CSRF('profile.verifyCode'))->equal($request['token'])) {
+            if (!(new CSRF('profile.email.verifyCode'))->equal($request['token'])) {
                 return response()->json([
                     "message"=> "CSRF 驗證失敗",
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }
-            $code = Session::get('profile.sendMailVerifyCode');
+            $code = Session::get('profile.email.sendMailVerifyCode');
             if($code === $v['code']){
-                Session::forget('profile.sendMailVerifyCode');
+                Session::forget('profile.email.sendMailVerifyCode');
                 $str = Str::random(10);
-                Session::put("profile.sendMailVerifyCodeToken", $str);
+                Session::put("profile.email.sendMailVerifyCodeToken", $str);
+                return response()->json(["messages"=>"驗證成功", "access_token" => Utilsv2::encodeContext($str)['compress']]);
+            }else{
+                return response()->json(["messages"=>"驗證碼錯誤"], ResponseHTTP::HTTP_BAD_REQUEST);
+            }
+        }
+    }
+
+    public function sendMailVerifyCode_profile_password(Request $request)
+    {
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
+
+        $vb = new ValidatorBuilder($i18N, EValidatorType::SENDMAILVERIFYCODE);
+        $v = $vb->validate($request->all());
+        if($v instanceof MessageBag){
+            // validator errors here
+            return response()->json(["messages"=>"驗證失敗",'errors'=>$v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
+        }else{
+            if (!(new CSRF('profile.password.sendMailVerifyCode'))->equal($request['token'])) {
+                return response()->json([
+                    "message"=> "CSRF 驗證失敗",
+                ], ResponseHTTP::HTTP_BAD_REQUEST);
+            }
+            $member = Auth::user();
+            $cacheKey = $member->UUID . ":profile.password.sendMailVerifyCode";
+
+            $csrf = (new CSRF('profile.password.sendMailVerifyCode'))->reset()->get();
+            if(Cache::has($cacheKey)){
+                return response()->json([
+                    "message"=>$i18N->getLanguage(
+                            ELanguageText::sendMailVerifyCode_Response_error1)  ." ".
+                        $i18N->getLanguage(ELanguageText::ExpireTime, true)
+                            ->placeholderParser("timestamp", Utils::timeStamp(Cache::get($cacheKey)))->toString(),
+                    "cooldown" => Cache::get($cacheKey),
+                    "token" => $csrf,
+                ], ResponseHTTP::HTTP_BAD_REQUEST);
+            }else{
+                $random = Str::random(5);
+                Session::put('profile.password.sendMailVerifyCode', $random);
+                //dump($i18N);
+                $notification = new SendMailVerifyCodeNotification($i18N, $random);
+                Notification::send($member, $notification->delay(now()->addSeconds(5)));
+                Cache::put($cacheKey, time()+60, 60);
+                return response()->json([
+                    "message"=>$i18N->getLanguage(
+                            ELanguageText::sendMailVerifyCode_Response_success)  ." ".
+                        $i18N->getLanguage(ELanguageText::ExpireTime, true)
+                            ->placeholderParser("timestamp", Utils::timeStamp(Cache::get($cacheKey)))->toString(),
+                    "cooldown" => Cache::get($cacheKey),
+                    "token" => $csrf,
+                ], ResponseHTTP::HTTP_OK);
+            }
+        }
+    }
+
+    public function verifyCode_profile_password(Request $request)
+    {
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
+
+        $vb = new ValidatorBuilder($i18N, EValidatorType::VERIFYCODE);
+        $v = $vb->validate($request->all());
+
+        if($v instanceof MessageBag){
+            // validator errors here
+            return response()->json(["messages"=>"驗證失敗",'errors'=>$v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
+        }else{
+            if (!(new CSRF('profile.password.verifyCode'))->equal($request['token'])) {
+                return response()->json([
+                    "message"=> "CSRF 驗證失敗",
+                ], ResponseHTTP::HTTP_BAD_REQUEST);
+            }
+            $code = Session::get('profile.password.sendMailVerifyCode');
+            if($code === $v['code']){
+                Session::forget('profile.password.sendMailVerifyCode');
+                $str = Str::random(10);
+                Session::put("profile.password.sendMailVerifyCodeToken", $str);
                 return response()->json(["messages"=>"驗證成功", "access_token" => Utilsv2::encodeContext($str)['compress']]);
             }else{
                 return response()->json(["messages"=>"驗證碼錯誤"], ResponseHTTP::HTTP_BAD_REQUEST);

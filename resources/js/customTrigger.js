@@ -114,14 +114,14 @@ function createRipple(el) {
 }
 
 // 發送信箱驗證碼
-function sendMailVerifyCode(ct, target) {
+function sendMailVerifyCode_profile_email(ct, target) {
     ct.onclick = () =>{
         if(ct.dataset.token === null) return false;
         let csrf = document.querySelector("#csrf_token");
         if(csrf === null) return false;
         let formdata = new FormData();
         formdata.append('token', ct.dataset.token);
-        fetch('/sendMailVerifyCode', {
+        fetch('/profile/email/sendMailVerifyCode', {
                 method: "post",
                 headers: {
                     'X-CSRF-TOKEN': csrf.value
@@ -129,9 +129,9 @@ function sendMailVerifyCode(ct, target) {
                 body: formdata,
             })
             .then(async (res) => {
-                console.log(res);
+                //console.log(res);
                 let json = await res.json();
-                console.log(json);
+                //console.log(json);
                 let el = document.querySelector(target);
                 ct.dataset.token = json.token;
                 el.innerText = json.message;
@@ -141,7 +141,7 @@ function sendMailVerifyCode(ct, target) {
 }
 
 // 信箱的驗證碼驗證
-function verifyCode(ct, target) {
+function verifyCode_profile_email(ct, target) {
     if (ct.dataset.action !== null && ct.dataset.action1 !== null && ct.dataset.action2 !== null &&
         ct.dataset.action3 !== null && ct.dataset.action4 !== null && ct.dataset.token !== null) {
         ct.onclick = ()=>{
@@ -164,7 +164,7 @@ function verifyCode(ct, target) {
             let formdata = new FormData();
             formdata.append("code", targetel.value);
             formdata.append('token', ct.dataset.token);
-            fetch('/verifyCode', {
+            fetch('/profile/email/verifyCode', {
                     method: "post",
                     body: formdata,
                     headers: {
@@ -173,9 +173,9 @@ function verifyCode(ct, target) {
                 }
                 )
                 .then(async (res) => {
-                    console.log(res);
+                    //console.log(res);
                     let json = await res.json();
-                    console.log(json);
+                    //console.log(json);
                     if (res.status === 200) {
                         if (json.access_token !== "") {
                             let htmlInputElement = document.createElement("input");
@@ -198,7 +198,7 @@ function verifyCode(ct, target) {
     }
 }
 
-function newMailVerifyCode(ct, target) {
+function newMailVerifyCode_profile_email(ct, target) {
     if(ct.dataset.token !== null && ct.dataset.data !==null && ct.dataset.result !== null){
         ct.onclick = ()=>{
             let targetel = document.querySelector(target);
@@ -219,14 +219,14 @@ function newMailVerifyCode(ct, target) {
             let formdata = new FormData();
             formdata.append("email", data.value);
             formdata.append("token", ct.dataset.token);
-            fetch("/newMailVerifyCode", {
+            fetch("/profile/email/newMailVerifyCode", {
                 method: 'post',
                 body: formdata,
                 headers: {
                     'X-CSRF-TOKEN': csrf.value
                 },
             }).then(async (res) => {
-                console.log(res);
+                //console.log(res);
                 let json = await res.json();
                 ct.dataset.token = json.token;
                 targetel.innerText = json.message;
@@ -271,7 +271,7 @@ function profileUpdateEmail(ct, target) {
                     'X-CSRF-TOKEN': csrf.value
                 },
             }).then(async (res) => {
-                console.log(res);
+                //console.log(res);
                 let json = await res.json();
                 console.log(json);
                 resultel.innerText = json.message;
@@ -286,13 +286,106 @@ function profileUpdateEmail(ct, target) {
     }
 }
 
+function sendMailVerifyCode_password(ct, target) {
+    ct.onclick = ()=>{
+        let targetel = document.querySelector(target);
+        if(targetel === null) return false;
+        let csrf = document.querySelector("#csrf_token");
+        if(csrf === null) return false;
+        let formdata = new FormData();
+        formdata.append('token', ct.dataset.token);
+        fetch('/profile/password/sendMailVerifyCode', {
+            method: "post",
+            headers: {
+                'X-CSRF-TOKEN': csrf.value
+            },
+            body: formdata,
+        }).then(async (res) => {
+            console.log(res);
+            let json = await res.json();
+            console.log(json);
+            targetel.innerText = json.message;
+        });
+    };
+}
+
+function verifyCode_password(ct, target) {
+    if (ct.dataset.action1 !== null && ct.dataset.action2 !== null &&
+        ct.dataset.action4 !== null && ct.dataset.action5 !== null &&
+        ct.dataset.action3 !== null && ct.dataset.token !== null &&
+        ct.dataset.save !== null) {
+        ct.onclick = ()=>{
+            let save = document.querySelector(ct.dataset.save);
+            let action1el= document.querySelector(ct.dataset.action1);
+            let action2el= document.querySelector(ct.dataset.action2);
+            let action3el = document.querySelector(ct.dataset.action3);
+            let action4el = document.querySelector(ct.dataset.action4);
+            let action5el = document.querySelector(ct.dataset.action5);
+            let targetel = document.querySelector(target);
+            if(action1el === null) return false;
+            if(action2el === null) return false;
+            if(action3el === null) return false;
+            if(action4el === null) return false;
+            if(action5el === null) return false;
+            if(save === null) return false;
+            if (targetel.value === null) return false;
+            if (targetel.value === "") return false;
+            if (targetel.minLength !== null) {
+                if (targetel.value.length < targetel.minLength) {
+                    return false;
+                }
+            }
+            if(ct.dataset.token === null) return false;
+            let csrf = document.querySelector("#csrf_token");
+            if(csrf === null) return false;
+            let formdata = new FormData();
+            formdata.append("code", targetel.value);
+            formdata.append('token', ct.dataset.token);
+            fetch('/profile/password/verifyCode', {
+                    method: "post",
+                    body: formdata,
+                    headers: {
+                        'X-CSRF-TOKEN': csrf.value
+                    },
+                }
+            ).then(async (res) => {
+                console.log(res);
+                let json = await res.json();
+                console.log(json);
+                if (res.status === 200) {
+                    if (json.access_token !== "") {
+                        let htmlInputElement = document.createElement("input");
+                        htmlInputElement.value=json.access_token;
+                        htmlInputElement.name="profile_password_sendMailVerifyCodeToken";
+                        htmlInputElement.id="profile_password_sendMailVerifyCodeToken";
+                        htmlInputElement.type="hidden";
+                        save.innerHTML = "";
+                        save.append(htmlInputElement);
+                        action1el.disabled = false;
+                        action2el.disabled = false;
+                        action3el.disabled = false;
+                        action4el.remove();
+                        action5el.remove();
+                        ct.dataset.token = json.token;
+                    }
+                }
+            })
+            .catch(console.log);
+        };
+    }
+}
+
+function profileUpdatePassword(ct, target) {
+
+}
+
 function customTrigger() {
     var cts = document.querySelectorAll('.ct');
     for (let ct of cts) {
-        console.log(ct)
+        //console.log(ct)
         if (ct.dataset.fn !== null && ct.dataset.target !== null) {
             let target = ct.dataset.target;
-            console.log(target)
+            //console.log(target)
             switch (ct.dataset.fn) {
                 case 'password-toggle':
                     password_toggle(ct, target);
@@ -300,17 +393,26 @@ function customTrigger() {
                 case "datalist_selector":
                     datalist_selector(ct, target);
                     break;
-                case "sendMailVerifyCode":
-                    sendMailVerifyCode(ct, target);
+                case "profile.email.sendMailVerifyCode":
+                    sendMailVerifyCode_profile_email(ct, target);
                     break;
-                case "verifyCode":
-                    verifyCode(ct, target);
+                case "profile.email.verifyCode":
+                    verifyCode_profile_email(ct, target);
                     break;
-                case "newMailVerifyCode":
-                    newMailVerifyCode(ct, target);
+                case "profile.email.newMailVerifyCode":
+                    newMailVerifyCode_profile_email(ct, target);
+                    break;
+                case "profile.password.sendMailVerifyCode":
+                    sendMailVerifyCode_password(ct, target);
+                    break;
+                case "profile.password.verifyCode":
+                    verifyCode_password(ct, target);
                     break;
                 case "profileUpdateEmail":
                     profileUpdateEmail(ct, target);
+                    break;
+                case "profileUpdatePassword":
+                    profileUpdatePassword(ct, target);
                     break;
             }
         }
