@@ -2,9 +2,10 @@
 @use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Utils\Htmlv2;use Illuminate\Support\Facades\Log)
 @php
     /***
-     * @var string[] $router \
+     * @var string[] $urlParams
+     * @var array $moreParams
      * @var I18N $i18N
-     * @var \Illuminate\Support\Facades\Request $request
+     * @var Request $request
      */
     $menu=true;
     $footer=true;

@@ -2,9 +2,10 @@
 @use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use Illuminate\Contracts\Pagination\LengthAwarePaginator)
 @php
     /***
-     * @var string[] $router \
+     * @var string[] $urlParams
+     * @var array $moreParams
      * @var I18N $i18N
-     * @var LengthAwarePaginator $members
+     * @var Request $request
      */
     $menu=true;
     $footer=true;

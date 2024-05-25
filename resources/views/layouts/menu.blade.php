@@ -1,7 +1,9 @@
 @php
 /***
- * @var string[] $router \
+ * @var string[] $urlParams
+ * @var array $moreParams
  * @var I18N $i18N
+ * @var Request $request
  */
 @endphp
 @use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Type\Array\CGArray;use App\Lib\Utils\Utils)
@@ -29,15 +31,13 @@
 </script>
 <nav class="float-menu">
     <div class="float-btn-group">
-        <a href="/" aria-label="首頁連接圖片" class="icon placeholder placeholder-circle lazy-loaded-image" data-src="{{asset("assets/images/logo.webp")}}"></a>
+        <a href="/"
+           aria-label="首頁連接圖片"
+           class="icon placeholder placeholder-circle lazy-loaded-image"
+           data-src="{{asset("assets/images/logo.webp")}}"></a>
         <a href="/" type="button" class="float-menu-btn" aria-expanded="false">
-            <span>{{$i18N->getLanguage(ELanguageText::menu_frontpage)}}</span>
+            <span><i class="fa-solid fa-house"></i>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_frontpage)}}</span>
         </a>
-        @env('local')
-            <a href="{{route('branding')}}" class="float-menu-btn" aria-expanded="false">
-                <span>品牌頁面</span>
-            </a>
-        @endenv
         <button type="button" class="float-menu-btn" aria-expanded="false" data-target="#float1">
             <span>{{$i18N->getLanguage(ELanguageText::menu_product)}}</span>
             <i class="fa-solid fa-caret-down"></i>
@@ -46,6 +46,11 @@
             <span>{{$i18N->getLanguage(ELanguageText::menu_information)}}</span>
             <i class="fa-solid fa-caret-down"></i>
         </button>
+        @env('local')
+            <a href="{{route('designcomponents')}}" class="float-menu-btn" aria-expanded="false">
+                <span>元件測試頁面</span>
+            </a>
+        @endenv
     </div>
     <div id="float1" class="float-menu-panel" data-second="450" data-visible="false">
         <div class="float-menu-panel-columns">

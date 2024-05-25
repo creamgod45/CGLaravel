@@ -2,9 +2,10 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 @php
     /***
-     * @var string[] $router \
+     * @var string[] $urlParams
+     * @var array $moreParams
      * @var I18N $i18N
-     * @var \Illuminate\Support\Facades\Request $request
+     * @var Request $request
      */
     $menu=true;
     $footer=true;
