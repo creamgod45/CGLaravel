@@ -58,62 +58,6 @@ class ValidatorBuilder
         $this->eValidatorType = $eValidatorType;
     }
 
-    private function login()
-    {
-        $this->customMessages = $this->initMessage();
-        $this->atters = $this->initAtters();
-        $this->rules = [
-            'username' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8'],
-        ];
-        $this->lastkey=1;
-    }
-
-    private function forgotpassword(){
-        $this->customMessages = $this->initMessage();
-        $this->atters = $this->initAtters();
-        $this->rules = [
-            'email' => ['required', 'string', 'email', 'max:255'],
-        ];
-        $this->lastkey=2;
-    }
-
-    private function resetpassword()
-    {
-        $this->customMessages = $this->initMessage();
-        $this->atters = $this->initAtters();
-        $this->rules = [
-            'token' => 'required',
-            'email' => 'required|email'
-        ];
-        $this->lastkey=3;
-    }
-
-    private function resetpasswordpost()
-    {
-        $this->customMessages = $this->initMessage();
-        $this->atters = $this->initAtters();
-        $this->rules = [
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
-        ];
-        $this->lastkey=4;
-    }
-
-    private function register()
-    {
-        $this->customMessages = $this->initMessage();
-        $this->atters = $this->initAtters();
-        $this->rules = [
-            'username' => ['required', 'string', 'max:255', 'unique:members'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:members'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required', 'string', 'min:10', 'max:255', 'unique:members'],
-        ];
-        $this->lastkey=5;
-    }
-
     /**
      * @param $data
      * @return array|MessageBag
@@ -160,6 +104,7 @@ class ValidatorBuilder
             'token' => $this->i18N->getLanguage(ELanguageText::validator_field_token),
             'verification' => "驗證碼",
             'sendMailVerifyCodeToken' => "信箱身份驗證權杖",
+            'code' => "驗證碼"
         ];
     }
 
@@ -186,7 +131,7 @@ class ValidatorBuilder
             ],
             'boolean'           => 'validator_boolean',
             'can'               => 'validator_can',
-            'confirmed'         => $this->i18N->getLanguage(ELanguageText::validator_confirmed, true)->Replace("%validator_field_passwordConfirmed%", $this->i18N->getLanguage(ELanguageText::validator_field_passwordConfirmed))->toString(),
+            'confirmed'         => $this->i18N->getLanguage(ELanguageText::validator_confirmed, true)->placeholderParser("validator_field_passwordConfirmed", $this->i18N->getLanguage(ELanguageText::validator_field_passwordConfirmed))->toString(),
             'current_password'  => 'validator_current_password',
             'date'              => 'validator_date',
             'date_equals'       => 'validator_date_equals',
@@ -336,6 +281,62 @@ class ValidatorBuilder
         return $newarr;
     }
 
+    private function login()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'username' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+        ];
+        $this->lastkey=1;
+    }
+
+    private function forgotpassword(){
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'email' => ['required', 'string', 'email', 'max:255'],
+        ];
+        $this->lastkey=2;
+    }
+
+    private function resetpassword()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'token' => 'required',
+            'email' => 'required|email'
+        ];
+        $this->lastkey=3;
+    }
+
+    private function resetpasswordpost()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ];
+        $this->lastkey=4;
+    }
+
+    private function register()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'username' => ['required', 'string', 'max:255', 'unique:members'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:members'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'string', 'min:10', 'max:255', 'unique:members'],
+        ];
+        $this->lastkey=5;
+    }
+
     private function animalcreate()
     {
         $this->customMessages = $this->initMessage();
@@ -358,7 +359,7 @@ class ValidatorBuilder
         $this->atters = $this->initAtters();
         $this->rules = [
             'email' => ['required', 'email', 'max:255'],
-            'verification' => ['required','string', 'max:5'],
+            'verification' => ['required','string', 'min:5'],
         ];
         $this->lastkey=7;
     }
@@ -368,7 +369,7 @@ class ValidatorBuilder
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
         $this->rules = [
-            'code' => ['required', 'string', 'max:5'],
+            'code' => ['required', 'string', 'min:5'],
             'token' => ['required','string'],
         ];
         $this->lastkey=8;
