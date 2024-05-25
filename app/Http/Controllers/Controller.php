@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\I18N;
+use App\Lib\Utils\CGLaravelControllerInit;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
 
-    public static function baseControllerInit(Request $request, array ...$params): array
+    public static function baseControllerInit(Request $request, array ...$params): CGLaravelControllerInit
     {
         return (new Controller)->extracted($request, $params);
     }
@@ -26,7 +27,7 @@ class Controller extends BaseController
      * @param array $params
      * @return array
      */
-    public function baseGlobalVariable(Request $request, array $params = []): array
+    public function baseGlobalVariable(Request $request, array $params = []): CGLaravelControllerInit
     {
         return $this->extracted($request, $params);
     }
@@ -36,7 +37,7 @@ class Controller extends BaseController
      * @param array $params
      * @return array
      */
-    public function extracted(Request $request, array $params): array
+    public function extracted(Request $request, array $params): CGLaravelControllerInit
     {
         $url = $request->url();
         $path = parse_url($url, PHP_URL_PATH);
@@ -53,6 +54,6 @@ class Controller extends BaseController
         //dump($lang);
         //debugbar()->info($lang);
         $i18N = new I18N(ELanguageCode::valueof($lang), limitMode: [ELanguageCode::zh_TW, ELanguageCode::zh_CN, ELanguageCode::en_US, ELanguageCode::en_GB]);
-        return ['router' => $router, 'i18N' => $i18N, ...$params, 'request' => $request];
+        return new CGLaravelControllerInit($i18N, $router, $request, $params);
     }
 }
