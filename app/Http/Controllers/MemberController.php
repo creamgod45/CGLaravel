@@ -126,7 +126,7 @@ class MemberController extends Controller
 
     public function forgetpassword(Request $request)
     {
-        return view('forgot-password', Controller::baseControllerInit($request));
+        return view('forgot-password', Controller::baseControllerInit($request)->toArrayable());
     }
 
     public function forgetpasswordpost(Request $request)

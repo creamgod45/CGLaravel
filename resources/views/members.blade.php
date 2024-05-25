@@ -9,6 +9,7 @@
      */
     $menu=true;
     $footer=true;
+    $members = $moreParams['members'];
 @endphp
 @extends('layouts.default')
 @section('title', "會員資料")
