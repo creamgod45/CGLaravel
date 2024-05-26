@@ -205,23 +205,18 @@ class MemberController extends Controller
         $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::REGISTER);
-
-        try {
-            $validator = Validator::make($request->all(), $vb->getRules(), $vb->getCustomMessages(), $vb->getAtters());
-            $validate = $validator->validate();
-        } catch (ValidationException $e) {
-            Log::info($request->ip() . ": " . PHP_EOL . "    ValidationException=" . $e->getMessage() . "," . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
-        }
-
-        if (!empty($validate)) {
-
+        $v = $vb->validate($request->all());
+        if($v instanceof MessageBag){
+            Log::info($request->ip() . ": " . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
+            return redirect('register')->withErrors($v)->withInput();
+        }else{
             // 可以在这里实现登录逻辑，或者重定向到登录页面
-            Log::info($validate['username'] . ": registering");
+            Log::info($v['username'] . ": registering");
             $user = Member::create([
-                'username' => $validate['username'],
-                'email' => $validate['email'],
-                'phone' => $validate['phone'],
-                'password' => Hash::make($validate['password']),
+                'username' => $v['username'],
+                'email' => $v['email'],
+                'phone' => $v['phone'],
+                'password' => Hash::make($v['password']),
                 'enable' => 'true',
                 'administrator' => 'false'
             ]);
@@ -229,7 +224,9 @@ class MemberController extends Controller
 
             // 发送验证邮件
             Log::info($user->username . ": mailing");
-            $user->notify(new VerifyEmailNotification($i18N));
+            $instance = new VerifyEmailNotification($i18N);
+            $instance->delay(now()->addSeconds(5));
+            $user->notify($instance);
             Log::info($user->username . ": mailed");
             $cacheKey = $user->UUID . ":mail-sent";
 
@@ -237,7 +234,6 @@ class MemberController extends Controller
             Auth::login($user);
             return redirect(route("home"))->with('mail', true);
         }
-        return redirect('register')->withErrors($validator->errors())->withInput();
     }
 
     public function login(Request $request)
