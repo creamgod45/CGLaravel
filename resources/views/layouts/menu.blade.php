@@ -99,6 +99,10 @@
                         <i class="fa-solid fa-shop"></i>
                         <span>&nbsp;串串幸福 <i class="fa-solid fa-square-arrow-up-right"></i></span>
                     </a>
+                    <a href="https://creamgod45.github.io/TimeCalculate/" target="_blank" class="menu-btn btn-ripple">
+                        <i class="fa-solid fa-shop"></i>
+                        <span>&nbsp;時間計算程式 <i class="fa-solid fa-square-arrow-up-right"></i></span>
+                    </a>
                 </div>
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_VendorOperations)}}</div>
