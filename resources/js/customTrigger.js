@@ -305,6 +305,7 @@ function sendMailVerifyCode_password(ct, target) {
             let json = await res.json();
             console.log(json);
             targetel.innerText = json.message;
+            ct.dataset.token = json.token;
         });
     };
 }
@@ -320,13 +321,11 @@ function verifyCode_password(ct, target) {
             let action2el= document.querySelector(ct.dataset.action2);
             let action3el = document.querySelector(ct.dataset.action3);
             let action4el = document.querySelector(ct.dataset.action4);
-            let action5el = document.querySelector(ct.dataset.action5);
             let targetel = document.querySelector(target);
             if(action1el === null) return false;
             if(action2el === null) return false;
             if(action3el === null) return false;
             if(action4el === null) return false;
-            if(action5el === null) return false;
             if(save === null) return false;
             if (targetel.value === null) return false;
             if (targetel.value === "") return false;
@@ -365,7 +364,6 @@ function verifyCode_password(ct, target) {
                         action2el.disabled = false;
                         action3el.disabled = false;
                         action4el.remove();
-                        action5el.remove();
                         ct.dataset.token = json.token;
                     }
                 }
@@ -376,7 +374,59 @@ function verifyCode_password(ct, target) {
 }
 
 function profileUpdatePassword(ct, target) {
-
+    if(ct.dataset.token !== null && ct.dataset.method !==null){
+        ct.onclick = ()=>{
+            if(ct.dataset.data1 === null) return false;
+            if(ct.dataset.data2 === null) return false;
+            if(ct.dataset.data3 === null) return false;
+            let value1el = document.querySelector(ct.dataset.data1);
+            let value2el = document.querySelector(ct.dataset.data2);
+            let value3el = document.querySelector(ct.dataset.data3);
+            let popoverel = document.querySelector(ct.dataset.popover);
+            let result = document.querySelector(ct.dataset.result);
+            let targetel = document.querySelector(target);
+            if(value1el.value === null) return false;
+            if(value2el.value === null) return false;
+            if(value3el.value === null) return false;
+            if(value1el.value === "") return false;
+            if(value2el.value === "") return false;
+            if(value3el.value === "") return false;
+            let csrf = document.querySelector("#csrf_token");
+            if(csrf === null) return false;
+            let formdata = new FormData();
+            formdata.append("method", ct.dataset.method);
+            formdata.append("token", ct.dataset.token);
+            formdata.append("sendMailVerifyCodeToken", targetel.value);
+            formdata.append("current-ps", Utils.encodeContext(value1el.value).compress);
+            formdata.append("password",  Utils.encodeContext(value2el.value).compress);
+            formdata.append("password_confirmation",  Utils.encodeContext(value3el.value).compress);
+            fetch("/profile", {
+                method: 'post',
+                body: formdata,
+                headers: {
+                    'X-CSRF-TOKEN': csrf.value
+                },
+            }).then(async (res) => {
+                //console.log(res);
+                let json = await res.json();
+                console.log(json);
+                let str ="";
+                if (json.hasOwnProperty("errors")) {
+                    console.log(json.errors);
+                    if (typeof json.errors === "object") {
+                        str = json.errors.join("\n<br>");
+                    }
+                }
+                result.innerText = json.message+str;
+                if(res.status===200){
+                    setTimeout(async ()=>{
+                        await popoverel.hidePopover();
+                        await location.reload();
+                    },3000)
+                }
+            });
+        };
+    }
 }
 
 function customTrigger() {
