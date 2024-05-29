@@ -332,9 +332,44 @@ class MemberController extends Controller
                         return $this->profilepost_email($request, $v1, $i18N);
                     }
                 case 'password':
+                    $vb1 = new ValidatorBuilder($i18N, EValidatorType::PROFILEUPDATEPASSWORD);
+                    //Log::info("password: ". \Psy\Util\Json::encode($request->all()));
+                    $v1 = $vb1->validate($request->all(),true);
+                    if($v1 instanceof MessageBag){
+                        // validator errors here
+                        //Log::info("MessageBag: ". serialize($v1));
+                        return response()->json(["messages"=>"驗證失敗 2",'errors'=>$v1->all()], ResponseHTTP::HTTP_BAD_REQUEST);
+                    }else{
+                        //Log::info("password: ". \Psy\Util\Json::encode($v1));
+                        if (Session::get("profile.password.sendMailVerifyCodeToken") !== Utilsv2::decodeContext($v['sendMailVerifyCodeToken'])) {
+                            return response()->json(["message"=>"錯誤 信箱身份驗證權杖"], ResponseHTTP::HTTP_BAD_REQUEST);
+                        }
+                        $member = Auth::user();
+                        //Log::info("password Verify: ".PHP_EOL.$v1['current-ps'].PHP_EOL.$member->getAuthPassword());
+                        //Log::info("password Verify: ".Hash::check($v1['current-ps'], $member->getAuthPassword()));
+                        //Log::info("test Verify: ".Hash::check("5as19fg1a9sg", $member->getAuthPassword()));
+                        if (!Hash::check($v1['current-ps'], $member->getAuthPassword())) {
+                            return response()->json(["message"=>"錯誤 密碼"], ResponseHTTP::HTTP_BAD_REQUEST);
+                        }
+                        return $this->profilepost_password($request, $v1, $i18N);
+                    }
                     break;
             }
         }
+    }
+
+    private function profilepost_password(Request $request, array $v, I18N $i18N)
+    {
+        $member = Auth::user();
+        if($member instanceof Member){
+            $member->forceFill([
+                'password' => Hash::make($v['password'])
+            ]);
+            $member->save();
+        }
+        (new CSRF('profile.password.sendMailVerifyCode'))->release();
+        Session::forget('profile.password.MailVerifyCode');
+        return response()->json(["message"=>"Password 資料更新成功"]);
     }
 
     /**
@@ -504,7 +539,7 @@ class MemberController extends Controller
         $v = $vb->validate($request->all());
         if($v instanceof MessageBag){
             // validator errors here
-            return response()->json(["messages"=>"驗證失敗",'errors'=>$v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
+            return response()->json(["message"=>"驗證失敗",'errors'=>$v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
         }else{
             if (!(new CSRF('profile.password.sendMailVerifyCode'))->equal($request['token'])) {
                 return response()->json([
@@ -560,11 +595,11 @@ class MemberController extends Controller
                     "message"=> "CSRF 驗證失敗",
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }
-            $code = Session::get('profile.password.sendMailVerifyCode');
+            $code = Session::get('profile.password.sendMailVerifyCode'); // 原始驗證碼
             if($code === $v['code']){
                 Session::forget('profile.password.sendMailVerifyCode');
                 $str = Str::random(10);
-                Session::put("profile.password.sendMailVerifyCodeToken", $str);
+                Session::put("profile.password.sendMailVerifyCodeToken", $str); // 許可驗證碼
                 return response()->json(["messages"=>"驗證成功", "access_token" => Utilsv2::encodeContext($str)['compress']]);
             }else{
                 return response()->json(["messages"=>"驗證碼錯誤"], ResponseHTTP::HTTP_BAD_REQUEST);
