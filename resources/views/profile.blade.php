@@ -126,7 +126,7 @@
                                 btn-class-list="btn btn-color1 btn-ripple"
                                 popover-btn-message="編輯"
                                 :popover-options="$passwordpopover"
-                                class="xxl:!w-7/12"
+                                class="xxl:!w-7/12 password-popover"
                                 popover-title="編輯密碼">
                                 <form action="" method="POST">
                                     <button id="sendMailVerifyCode1"
@@ -157,7 +157,6 @@
                                                     data-action2="#password2"
                                                     data-action3="#password3"
                                                     data-action4="#sendMailVerifyCode1"
-                                                    data-action5="#sendMailVerifyCodeResult1"
                                             >驗證
                                             </button>
                                         </div>
@@ -200,7 +199,10 @@
                                             class="mt-5 btn btn-ripple btn-color1 btn-md-strip ct"
                                             data-fn="profileUpdatePassword"
                                             data-method="password"
+                                            data-token="{{(new CSRF('profile.profilepost'))->get()}}"
                                             data-target="#profile_password_sendMailVerifyCodeToken"
+                                            data-result="#sendMailVerifyCodeResult1"
+                                            data-popover=".password-popover"
                                             data-data1="#password1"
                                             data-data2="#password2"
                                             data-data3="#password3"
