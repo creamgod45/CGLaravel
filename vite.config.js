@@ -15,6 +15,7 @@ export default defineConfig({
                 'resources/js/branding.js',
                 'resources/js/members.js',
                 'resources/js/profile.js',
+                'resources/js/registerForm.js',
             ],
             refresh: true,
         }),

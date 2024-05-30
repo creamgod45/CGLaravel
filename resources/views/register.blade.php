@@ -1,5 +1,5 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
-@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N)
+@vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/registerForm.js'])
+@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Server\CSRF)
 @php
     /***
      * @var string[] $urlParams
@@ -14,34 +14,62 @@
 @section('title', $i18N->getLanguage(ELanguageText::register_title))
 @section('content')
     <div class="register-frame">
-        <form class="register" method="POST" action="{{ route('member.form-register-post') }}">
-            @csrf
+        <form class="register" data-fn="register" method="POST"
+              data-token="{{(new CSRF("member.register.token"))->get()}}"
+              action="{{ route('member.form-register-post') }}">
+            <input type="hidden" name="_token" id="csrf_token" value="{{csrf_token()}}">
             <div class="title">{{$i18N->getLanguage(ELanguageText::register_title)}}</div>
-            <div class="row">
+            <div class="row tooltip-gen tooltip-right-to-left tooltip-error !mt-3 !break-keep"
+                 data-direction="tooltip-right"
+                 data-htmlable="true"
+                 data-hoverable="false"
+                 data-customclass="min-w-fit w-[42%] !block"
+                 data-tooltip="<li class='flex flex-nowrap'>⭕必填項目</li><li class='flex flex-nowrap'>🌟獨一無二帳號</li><li class='flex flex-nowrap'>❌最大的長度為255</li>">
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_username)}}</label>
-                <input class="col" type="text" name="username" value="{{old("username")}}" required>
+                <input class="col form-solid" type="text" name="username" maxlength="255" value="{{old("username")}}" required>
             </div>
-            <div class="row">
+            <div class="row tooltip-gen tooltip-right-to-left tooltip-error !break-keep"
+                 data-direction="tooltip-right"
+                 data-htmlable="true"
+                 data-hoverable="false"
+                 data-customclass="min-w-fit w-[42%] !block"
+                 data-tooltip="<li class='flex flex-nowrap'>⭕必填項目</li><li class='flex flex-nowrap'>🌟獨一無二電子信箱</li><li class='flex flex-nowrap'>❌最大的長度為255</li>">
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_email)}}</label>
-                <input class="col" type="email" name="email" value="{{old("email")}}" required>
+                <input class="col form-solid" type="email" name="email" maxlength="255" value="{{old("email")}}" required>
             </div>
-            <div class="row">
+            <div class="row tooltip-gen tooltip-right-to-left tooltip-error !break-keep"
+                 data-direction="tooltip-right"
+                 data-htmlable="true"
+                 data-hoverable="false"
+                 data-customclass="min-w-fit w-[42%] !block"
+                 data-tooltip="<li class='flex flex-nowrap'>⭕必填項目</li><li class='flex flex-nowrap'>🌟獨一無二密碼</li><li class='flex flex-nowrap'>❌最小的長度為8</li>">
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_password)}}</label>
-                <input class="col" type="password" name="password" required>
+                <input class="col form-solid" type="password" minlength="8" name="password" required>
             </div>
-            <div class="row">
+            <div class="row tooltip-gen tooltip-right-to-left tooltip-error !break-keep"
+                 data-direction="tooltip-right"
+                 data-htmlable="true"
+                 data-hoverable="false"
+                 data-customclass="min-w-fit w-[42%] !block"
+                 data-tooltip="<li class='flex flex-nowrap'>⭕必填項目</li><li class='flex flex-nowrap'>🌟確認密碼</li><li class='flex flex-nowrap'>❌最小的長度為8</li>">
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_passwordConfirmed)}}</label>
-                <input class="col" type="password" name="password_confirmation" required>
+                <input class="col form-solid" type="password" minlength="8" name="password_confirmation" required>
             </div>
-            <div class="row">
+            <div class="row tooltip-gen tooltip-right-to-left tooltip-error !break-keep"
+                 data-direction="tooltip-right"
+                 data-htmlable="true"
+                 data-hoverable="false"
+                 data-customclass="min-w-fit w-[45%] !block"
+                 data-tooltip="<li class='flex flex-nowrap'>⭕必填項目</li><li class='flex flex-nowrap'>🌟電話號碼</li><li class='flex flex-nowrap'>⭕收發簡訊的號碼</li><li class='flex flex-nowrap'>❌最小的長度為10</li>">
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_phone)}}</label>
-                <input class="col" type="password" name="phone" value="{{old("phone")}}" required>
+                <input class="col form-solid" type="text" minlength="10" name="phone" value="{{old("phone")}}" required>
             </div>
             <div class="button">
-                <button type="submit">{{$i18N->getLanguage(ELanguageText::register_btn)}}</button>
+                <button type="button"
+                        class="btn btn-ripple btn-md-strip">{{$i18N->getLanguage(ELanguageText::register_btn)}}</button>
             </div>
             @if ($errors->any())
-                <x-alert type="danger" :messages="$errors->all()" />
+                <x-alert type="danger" :messages="$errors->all()"/>
             @endif
         </form>
     </div>

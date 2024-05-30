@@ -12,17 +12,20 @@
         .title{
             @apply text-center text-xl;
         }
+        .row:first-child{
+            @apply mt-0;
+        }
         .row{
-            @apply flex flex-nowrap space-y-2;
+            @apply flex flex-nowrap mt-14;
             .col{
                 @apply flex items-center text-xl;
                 flex: 0 0 auto;
             }
             label{
-                @apply w-[40%] text-right columns-10;
+                @apply w-[40%] text-right;
             }
             input{
-                @apply w-[60%] bg-white text-black outline-none p-2;
+                @apply w-[60%] text-black p-2;
             }
         }
         .button{
