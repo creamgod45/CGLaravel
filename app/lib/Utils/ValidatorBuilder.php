@@ -6,6 +6,7 @@ use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
+use Illuminate\Validation\ValidationException;
 use Log;
 use Psy\Util\Json;
 
@@ -202,14 +203,17 @@ class ValidatorBuilder
 
     /**
      * @param $data
+     * @param array $decodeKeyList
+     * @param bool $decodeContext
      * @return array|MessageBag
+     * @throws ValidationException
      */
-    public function validate($data, $decodeContext = false)
+    public function validate($data, $decodeKeyList=[], $decodeContext = false)
     {
         $newdata = [];
         if ($decodeContext===true) {
             foreach ($data as $key => $datum) {
-                if ($key === "current-ps" || $key === "password"  || $key === "password_confirmation" ) {
+                if (in_array($key, $decodeKeyList)) {
                     $newdata[$key] = Utilsv2::decodeContext($datum);
                 } else {
                     $newdata[$key]=$datum;
