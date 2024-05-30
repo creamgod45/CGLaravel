@@ -301,7 +301,9 @@ class MemberController extends Controller
         $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::PROFILEGENERAL);
-        $v = $vb->validate($request->all());
+        $v = $vb->validate($request->all(), [
+            'sendMailVerifyCodeToken'
+        ], true);
         if($v instanceof MessageBag){
             // validator errors here
             return response()->json(["messages"=>"驗證失敗 1",'errors'=>$v->all()]);
@@ -326,7 +328,7 @@ class MemberController extends Controller
                     }else{
                         if(!Session::has('profile.email.newMailVerifyCode')) return response()->json(["message"=>"沒有 Session 資料"], ResponseHTTP::HTTP_BAD_REQUEST);
                         if(Session::get('profile.email.newMailVerifyCode') !== $v1['verification']) return response()->json(["message"=>"Session 資料不相同"], ResponseHTTP::HTTP_BAD_REQUEST);
-                        if (Session::get("profile.email.sendMailVerifyCodeToken") !== Utilsv2::decodeContext($v['sendMailVerifyCodeToken'])) {
+                        if (Session::get("profile.email.sendMailVerifyCodeToken") !== $v['sendMailVerifyCodeToken']) {
                             return response()->json(["message"=>"錯誤 信箱身份驗證權杖"], ResponseHTTP::HTTP_BAD_REQUEST);
                         }
                         return $this->profilepost_email($request, $v1, $i18N);
@@ -334,14 +336,16 @@ class MemberController extends Controller
                 case 'password':
                     $vb1 = new ValidatorBuilder($i18N, EValidatorType::PROFILEUPDATEPASSWORD);
                     //Log::info("password: ". \Psy\Util\Json::encode($request->all()));
-                    $v1 = $vb1->validate($request->all(),true);
+                    $v1 = $vb1->validate($request->all(), [
+                        "current-ps","password","password_confirmation"
+                    ],true);
                     if($v1 instanceof MessageBag){
                         // validator errors here
                         //Log::info("MessageBag: ". serialize($v1));
                         return response()->json(["messages"=>"驗證失敗 2",'errors'=>$v1->all()], ResponseHTTP::HTTP_BAD_REQUEST);
                     }else{
                         //Log::info("password: ". \Psy\Util\Json::encode($v1));
-                        if (Session::get("profile.password.sendMailVerifyCodeToken") !== Utilsv2::decodeContext($v['sendMailVerifyCodeToken'])) {
+                        if (Session::get("profile.password.sendMailVerifyCodeToken") !== $v['sendMailVerifyCodeToken']) {
                             return response()->json(["message"=>"錯誤 信箱身份驗證權杖"], ResponseHTTP::HTTP_BAD_REQUEST);
                         }
                         $member = Auth::user();
