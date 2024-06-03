@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\YourEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
@@ -32,6 +33,26 @@ Route::get('/designcomponents', function (Request $request) {
 Route::post('lzstring.json', function (Request $request){
     $decodeContext = Utilsv2::decodeContext($request["a"]);
     return response()->json(['message' => 'Data received successfully', 'raw'=> $decodeContext]);
+});
+
+Route::post('broadcast', function (Request $request){
+    $options = array(
+        'cluster' => env('PUSHER_APP_CLUSTER'),
+        'useTLS' => true
+    );
+    $pusher = new Pusher\Pusher(
+        env('PUSHER_APP_KEY'),
+        env('PUSHER_APP_SECRET'),
+        env('PUSHER_APP_ID'),
+        $options
+    );
+
+    $data['message'] = 'hello world';
+    $pusher->trigger('my-channel', 'my-event', $data);
+
+    event(new YourEvent($request['message']));
+    broadcast(new YourEvent($request['message']))->toOthers();
+    return response()->json(['message' => 'Data received successfully', 'raw'=> $request['message']]);
 });
 
 Route::post('language', function (Request $request){
