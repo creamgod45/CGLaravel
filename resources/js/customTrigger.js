@@ -429,6 +429,22 @@ function profileUpdatePassword(ct, target) {
     }
 }
 
+function test_broadcast(ct, target) {
+    ct.onclick = ()=>{
+        let formdata = new FormData();
+        formdata.append("message", "test btn send");
+        fetch("broadcast", {
+            method: 'post',
+            body: formdata,
+            headers: {
+                'X-CSRF-TOKEN': ct.dataset.token
+            },
+        }).then(async (res) => {
+            console.log(res);
+        });
+    };
+}
+
 function customTrigger() {
     var cts = document.querySelectorAll('.ct');
     for (let ct of cts) {
@@ -463,6 +479,9 @@ function customTrigger() {
                     break;
                 case "profileUpdatePassword":
                     profileUpdatePassword(ct, target);
+                    break;
+                case "test-broadcast":
+                    test_broadcast(ct, target);
                     break;
             }
         }

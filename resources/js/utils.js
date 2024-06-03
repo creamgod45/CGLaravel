@@ -135,3 +135,8 @@ export function validateEmail(email) {
     // 測試信箱字串是否符合正則表達式
     return regex.test(email);
 }
+
+export function validatePhone(phone){
+    var regex = /^\d{10,}$/;
+    return regex.test(phone);
+}

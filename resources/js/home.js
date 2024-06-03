@@ -1,4 +1,5 @@
 import './bootstrap';
+import './Pusher.js'
 import '@fortawesome/fontawesome-free/js/all.js';
 import './tooltip.js';
 import './lazyImageLoader.js';

@@ -1,3 +1,4 @@
+
 function notification(){
     let nitem = document.querySelectorAll(".notification .item");
     //console.log(nitem);
