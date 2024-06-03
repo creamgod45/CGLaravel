@@ -35,6 +35,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
+use Pusher\Pusher;
 use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 
 class MemberController extends Controller
@@ -205,7 +206,10 @@ class MemberController extends Controller
         $i18N = $cgLCI->getI18N();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::REGISTER);
-        $v = $vb->validate($request->all());
+        $v = $vb->validate($request->all(), [
+            'password',
+            'password_confirmation'
+        ], true);
         if($v instanceof MessageBag){
             Log::info($request->ip() . ": " . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
             return redirect('register')->withErrors($v)->withInput();
