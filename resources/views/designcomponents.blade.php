@@ -37,7 +37,8 @@
                 <div class="btn btn-color5">按鈕</div>
                 <div class="btn btn-color6">按鈕</div>
                 <div class="btn-color1 btn-ripple btn-circle"><i class="fa-solid fa-house"></i></div>
-                <button class="btn btn-ripple btn-color1">Click Me</button>
+                <div id="result"></div>
+                <button class="btn btn-ripple btn-color1 ct" data-fn="test-broadcast" data-target="#result" data-token="{{csrf_token()}}">Click Me</button>
             </div>
             <div class="outline-btn-demo">
                 這是關於 Outline Button(Filter) 示範
