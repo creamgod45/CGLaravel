@@ -111,7 +111,12 @@ class ValidatorBuilder
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
-        $this->rules = ['username' => ['required', 'string', 'max:255', 'unique:members'], 'email' => ['required', 'string', 'email', 'max:255', 'unique:members'], 'password' => ['required', 'string', 'min:8', 'confirmed'], 'phone' => ['required', 'string', 'min:10', 'max:255', 'unique:members'],];
+        $this->rules = [
+            'username' => ['required', 'string', 'max:255', 'unique:members'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:members'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'string', 'min:10', 'max:255', 'unique:members'],
+            ];
         $this->lastkey = 5;
     }
 
