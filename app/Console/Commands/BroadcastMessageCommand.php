@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\Notification;
 use App\Jobs\BroadcastMessageJob;
 use Illuminate\Console\Command;
 
@@ -12,7 +13,7 @@ class BroadcastMessageCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:broadcast-message-command';
+    protected $signature = 'broadcast:Notification {message}';
 
     /**
      * The console command description.
@@ -27,6 +28,6 @@ class BroadcastMessageCommand extends Command
     public function handle()
     {
         //
-        dispatch(new BroadcastMessageJob());
+        event(new Notification($this->argument('message')));
     }
 }

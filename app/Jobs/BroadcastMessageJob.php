@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Events\YourEvent;
+use App\Events\Notification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -13,14 +13,13 @@ class BroadcastMessageJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct()
+    public function __construct(public string $message)
     {
         //
     }
 
     public function handle(): void
     {
-        $message = 'Hello, this is a test message!';
-        event(new YourEvent($message));
+        event(new Notification($this->message));
     }
 }

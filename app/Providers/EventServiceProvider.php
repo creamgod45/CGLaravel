@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\Notification;
+use App\Events\YourEvent;
+use App\Listeners\NotificationListener;
 use App\Models\Member;
 use App\Observers\MemberObserver;
 use Illuminate\Auth\Events\Registered;
@@ -20,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        //Notification::class => [
+        //    NotificationListener::class
+        //]
     ];
 
     protected $observers=[
