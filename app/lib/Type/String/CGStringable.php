@@ -29,6 +29,8 @@ class CGStringable
             $this->string = (string) $variable;
         } elseif (is_float($variable)) {
             $this->string = (string) $variable;
+        } elseif(is_string($variable)) {
+            $this->string = $variable;
         } else {
             throw new Exception("Not supported converter Stringable variable", 0);
         }
