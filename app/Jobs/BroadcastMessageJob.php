@@ -25,6 +25,6 @@ class BroadcastMessageJob implements ShouldQueue
 
     public function handle(): void
     {
-        event(new Notification(Json::encode([$this->message, $this->title, $this->type, $this->second])));
+        event(new Notification([$this->message, $this->title, $this->type, $this->second]));
     }
 }
