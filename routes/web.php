@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HTMLTemplateController;
 use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\Utils\Utilsv2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Psy\Util\Json;
 use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 
 /*
@@ -24,6 +26,10 @@ Route::get('/', function (Request $request) {
     return view('branding', Controller::baseControllerInit($request)->toArrayable());
 })->name('home');
 
+Route::group(["prefix"=>"HTMLTemplate"], function () {
+    Route::post('/Notification', [ HTMLTemplateController::class, 'Notification' ])->name('HTMLTemplate.Notification');
+});
+
 Route::get('/designcomponents', function (Request $request) {
     return view('designcomponents', Controller::baseControllerInit($request)->toArrayable());
 })->name('designcomponents');
@@ -34,20 +40,9 @@ Route::post('lzstring.json', function (Request $request){
 });
 
 Route::post('broadcast', function (Request $request){
-    //$options = array(
-    //    'cluster' => env('PUSHER_APP_CLUSTER'),
-    //    'useTLS' => true
-    //);
-    //$pusher = new Pusher\Pusher(
-    //    env('PUSHER_APP_KEY'),
-    //    env('PUSHER_APP_SECRET'),
-    //    env('PUSHER_APP_ID'),
-    //    $options
-    //);
-    //
-    //$data['message'] = 'hello world';
-    //$pusher->trigger('my-channel', 'my-event', $data);
-    event(new \App\Events\Notification($request['message']));
+    event(new \App\Events\Notification(
+        [$request['description'], $request['title'], $request['type'], $request['second']]
+    ));
     return response()->json(['message' => 'Data received successfully', 'raw'=> $request['message']]);
 });
 
