@@ -51,6 +51,10 @@
             "Composer\\Config::disableProcessTimeout",
             "@php artisan queue:work"
         ],
+        "schedulework": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php artisan schedule:work"
+        ],
         "runServer": [
             "Composer\\Config::disableProcessTimeout",
             "@php artisan serve"
