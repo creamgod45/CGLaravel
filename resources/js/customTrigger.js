@@ -432,7 +432,10 @@ function profileUpdatePassword(ct, target) {
 function test_broadcast(ct, target) {
     ct.onclick = ()=>{
         let formdata = new FormData();
-        formdata.append("message", "test btn send");
+        formdata.append("description", "test btn send");
+        formdata.append("title", "test btn send");
+        formdata.append("type", "info");
+        formdata.append("second", "10000");
         fetch("broadcast", {
             method: 'post',
             body: formdata,
