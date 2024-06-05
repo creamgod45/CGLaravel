@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->job(new BroadcastMessageJob("每五分鐘執行的廣播 Pusher"))->everyFiveMinutes();
+        $schedule->job(new BroadcastMessageJob("每五分鐘執行的廣播 Pusher", "固定廣播", "info", "10000"))->everyFiveMinutes();
     }
 
     /**
