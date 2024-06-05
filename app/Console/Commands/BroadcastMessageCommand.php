@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Events\Notification;
 use App\Jobs\BroadcastMessageJob;
 use Illuminate\Console\Command;
+use Psy\Util\Json;
 
 class BroadcastMessageCommand extends Command
 {
@@ -13,7 +14,7 @@ class BroadcastMessageCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'broadcast:Notification {message}';
+    protected $signature = 'broadcast:Notification {message} {title} {type} {second}';
 
     /**
      * The console command description.
@@ -28,6 +29,6 @@ class BroadcastMessageCommand extends Command
     public function handle()
     {
         //
-        event(new Notification($this->argument('message')));
+        event(new Notification([$this->argument('message'), $this->argument('title'), $this->argument('type'), $this->argument('second')]));
     }
 }

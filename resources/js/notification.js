@@ -1,5 +1,6 @@
 
 function notification(){
+    console.log(1)
     let nitem = document.querySelectorAll(".notification .item");
     //console.log(nitem);
     for (let ela of nitem) {
@@ -31,4 +32,5 @@ function notification(){
     }
 }
 
+document.addEventListener('PusherRenderNotificationEvent', notification);
 document.addEventListener('DOMContentLoaded', notification);

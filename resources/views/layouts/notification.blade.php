@@ -12,7 +12,7 @@
     <x-Notificationitem :title="$i18N->getLanguage(ELanguageText::notification_title)"
                         :description="$i18N->getLanguage(ELanguageText::notification_description)"
                         :type="ENotificationType::info"
-                        :line=6
+                        :line=15
                         :millisecond=10000/>
     @if(session('custom_message')!==null and is_array(session('custom_message')))
         @if(session('custom_message')[0] !== null && session('custom_message')[1]!==null && session('custom_message')[2]!==null)
@@ -52,7 +52,7 @@
                 $type= ENotificationType::error;
             }
         @endphp
-        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=45/>
+        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=55/>
     @endif
     @if(session('mail_result') !== null)
         @php
@@ -72,6 +72,6 @@
                 $type= ENotificationType::success;
             }
         @endphp
-        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=65/>
+        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=75/>
     @endif
 </div>

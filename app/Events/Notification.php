@@ -2,6 +2,9 @@
 
 namespace App\Events;
 
+use AllowDynamicProperties;
+use App\Lib\Type\String\CGStringable;
+use Exception;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -17,10 +20,16 @@ class Notification implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public string $message)
+    public function __construct(
+        public array $message
+    )
     {
         //
-        Log::info("Notification Event trigger:".$message);
+        try {
+            Log::info("Notification Event trigger: " . new CGStringable($this->message));
+        } catch (Exception $e) {
+            Log::info("App\\Events\\Notification:31:13 Exception = ".$e->getMessage());
+        }
     }
 
     /**
@@ -43,6 +52,12 @@ class Notification implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
-        return ['message' => $this->message];
+        return [
+            'description' => $this->message[0],
+            'title' => $this->message[1],
+            'type' => $this->message[2],
+            'second' => $this->message[3],
+        ];
     }
+
 }

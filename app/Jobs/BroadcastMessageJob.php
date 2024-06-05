@@ -13,13 +13,18 @@ class BroadcastMessageJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public string $message)
+    public function __construct(
+        public string $message,
+        public string $title,
+        public string $type,
+        public string $second,
+    )
     {
         //
     }
 
     public function handle(): void
     {
-        event(new Notification($this->message));
+        event(new Notification(Json::encode([$this->message, $this->title, $this->type, $this->second])));
     }
 }
