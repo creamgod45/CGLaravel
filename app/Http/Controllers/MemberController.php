@@ -35,7 +35,6 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
-use Pusher\Pusher;
 use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 
 class MemberController extends Controller
