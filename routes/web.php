@@ -1,15 +1,10 @@
 <?php
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\HTMLTemplateController;
+use App\Http\Controllers\InternalController;
 use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
-use App\Lib\I18N\ELanguageCode;
-use App\Lib\Utils\Utilsv2;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Psy\Util\Json;
-use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,52 +17,28 @@ use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 |
 */
 
-Route::get('/', function (Request $request) {
-    return view('branding', Controller::baseControllerInit($request)->toArrayable());
-})->name('home');
-
-Route::group(["prefix"=>"HTMLTemplate"], function () {
-    Route::post('/Notification', [ HTMLTemplateController::class, 'Notification' ])->name('HTMLTemplate.Notification');
-});
-
-Route::get('/designcomponents', function (Request $request) {
-    return view('designcomponents', Controller::baseControllerInit($request)->toArrayable());
-})->name('designcomponents');
-
-Route::post('lzstring.json', function (Request $request){
-    $decodeContext = Utilsv2::decodeContext($request["a"]);
-    return response()->json(['message' => 'Data received successfully', 'raw'=> $decodeContext]);
-});
-
-Route::post('broadcast', function (Request $request){
-    event(new \App\Events\Notification(
-        [$request['description'], $request['title'], $request['type'], $request['second']]
-    ));
-    return response()->json(['message' => 'Data received successfully', 'raw'=> $request['message']]);
-});
-
-Route::post('language', function (Request $request){
-    if(empty($request->all())){
-        return response()->json(['message' => 'Get Language', 'lang' => $_COOKIE["lang"] ?? ELanguageCode::en_US->name]);
-    } elseif (ELanguageCode::isVaild($request['lang'])) {
-        $cookie_expire = time() + (24 * 60 * 60);
-        $cookie_path = "/";
-        $secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
-        $httponly = true;
-        setrawcookie('lang', $request['lang'], [
-            'expires' => $cookie_expire,
-            'path' => $cookie_path,
-            'secure' => $secure,
-            'httponly' => $httponly
-        ]);
-        return response()->json(['message' => 'Data received successfully', 'lang' => $request['lang']]);
-    } else {
-        return response()->json(['message' => 'Error'], ResponseHTTP::HTTP_BAD_REQUEST);
-    }
-});
+Route::get('/', [InternalController::class,'branding'])->name('home');
+Route::get('/designcomponents', [InternalController::class,'designcomponents'])->name('designcomponents');
+Route::post('lzstring.json', [InternalController::class, 'lzstring_json']);
+Route::post('broadcast', [InternalController::class, 'broadcast_Notification_Notification']);
+Route::post('language', [InternalController::class, 'language']);
+Route::post('user', [InternalController::class, 'user']);
+Route::post('browser', [InternalController::class, 'browser']);
+// password reset
+Route::get('passwordreset', [MemberController::class, 'passwordreset'])->name('password.reset');
+Route::post('passwordreset', [MemberController::class, 'passwordresetpost'])->name('password.resetpost');
+// forgot password
+Route::get('forgot-password',  [MemberController::class, 'forgetpassword'])->name('password.request');
+Route::post('forget-password', [MemberController::class, 'forgetpasswordpost'])->name('password.email');
+// email verify
+Route::get('/email/verify/{id}/{hash}', [MemberController::class, 'emailVerify'])->name('verification.verify');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('members', [MemberController::class, 'index']);
+});
+
+Route::group(["prefix"=>"HTMLTemplate"], function () {
+    Route::post('/Notification', [ HTMLTemplateController::class, 'Notification' ])->name('HTMLTemplate.Notification');
 });
 
 Route::middleware('auth')->group(function () {
@@ -90,19 +61,8 @@ Route::middleware('auth')->group(function () {
     // Profile End
 });
 
-// password reset
-Route::get('passwordreset', [MemberController::class, 'passwordreset'])->name('password.reset');
-Route::post('passwordreset', [MemberController::class, 'passwordresetpost'])->name('password.resetpost');
-
-// forgot password
-Route::get('forgot-password',  [MemberController::class, 'forgetpassword'])->name('password.request');
-Route::post('forget-password', [MemberController::class, 'forgetpasswordpost'])->name('password.email');
-
-// email verify
-Route::get('/email/verify/{id}/{hash}', [MemberController::class, 'emailVerify'])->name('verification.verify');
-
 Route::middleware(EMiddleWareAliases::guest->name)->group(function () {
-    Route::get('login', [MemberController::class, 'loginPage'])->name('login');
+    Route::get('login', [MemberController::class, 'loginPage'])->name('member.form-login');
     Route::post('login', [MemberController::class, 'login']);
     Route::get('register', [MemberController::class, 'showRegistrationForm'])->name('member.form-register');
     Route::post('register', [MemberController::class, 'register'])->name("member.form-register-post");
