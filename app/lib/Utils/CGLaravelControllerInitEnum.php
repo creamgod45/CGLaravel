@@ -8,4 +8,5 @@ enum CGLaravelControllerInitEnum
     case i18N;
     case moreParams;
     case request;
+    case fingerprint;
 }

@@ -10,7 +10,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cookie;
 
 class Controller extends BaseController
 {
@@ -54,6 +53,11 @@ class Controller extends BaseController
         //dump($lang);
         //debugbar()->info($lang);
         $i18N = new I18N(ELanguageCode::valueof($lang), limitMode: [ELanguageCode::zh_TW, ELanguageCode::zh_CN, ELanguageCode::en_US, ELanguageCode::en_GB]);
-        return new CGLaravelControllerInit($i18N, $router, $request, $params);
+        $fingerprint = $this->fingerprint($request);
+        return new CGLaravelControllerInit($i18N, $router, $request, $params, $fingerprint);
+    }
+
+    public function fingerprint(Request $request){
+        return sha1($request->ip().$request->getHost().$request->userAgent());
     }
 }

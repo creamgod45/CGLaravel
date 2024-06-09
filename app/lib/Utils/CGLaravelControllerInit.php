@@ -25,17 +25,23 @@ class CGLaravelControllerInit
     private array $MoreParams;
 
     /**
+     * @var string 客戶端指紋碼
+     */
+    private string $fingerprint;
+
+    /**
      * @param I18N $i18N
      * @param array $URLParams
      * @param Request $request
      * @param array $MoreParams
      */
-    public function __construct(I18N $i18N, array $URLParams, Request $request, array $MoreParams=[])
+    public function __construct(I18N $i18N, array $URLParams, Request $request, array $MoreParams=[], string $fingerprint="")
     {
         $this->i18N = $i18N;
         $this->URLParams = $URLParams;
         $this->request = $request;
         $this->MoreParams = $MoreParams;
+        $this->fingerprint = $fingerprint;
     }
 
 
@@ -124,6 +130,25 @@ class CGLaravelControllerInit
             CGLaravelControllerInitEnum::i18N->name => $this->getI18N(),
             CGLaravelControllerInitEnum::moreParams->name => $this->getMoreParams(),
             CGLaravelControllerInitEnum::request->name => $this->getRequest(),
+            CGLaravelControllerInitEnum::fingerprint->name => $this->getFingerprint(),
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getFingerprint(): string
+    {
+        return $this->fingerprint;
+    }
+
+    /**
+     * @param string $fingerprint
+     * @return CGLaravelControllerInit
+     */
+    public function setFingerprint(string $fingerprint): CGLaravelControllerInit
+    {
+        $this->fingerprint = $fingerprint;
+        return $this;
     }
 }
