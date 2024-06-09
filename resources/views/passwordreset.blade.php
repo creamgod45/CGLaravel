@@ -6,6 +6,7 @@
      * @var array $moreParams
      * @var I18N $i18N
      * @var Request $request
+     * @var string $fingerprint
      */
     $menu=true;
     $footer=true;

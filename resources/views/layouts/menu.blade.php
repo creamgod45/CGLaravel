@@ -4,10 +4,11 @@
  * @var array $moreParams
  * @var I18N $i18N
  * @var Request $request
+ * @var string $fingerprint
  */
 @endphp
 @use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Type\Array\CGArray;use App\Lib\Utils\Utils)
-
+@dump($request->fingerprint())
 <script>
     function changeLanguage(el) {
         let value = el.value;
@@ -107,7 +108,7 @@
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_VendorOperations)}}</div>
                     @guest
-                        <a href="/login" class="menu-btn btn-ripple">
+                        <a href="{{route('member.form-login')}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::login_title)}}</span>
                         </a>

@@ -6,6 +6,7 @@
      * @var array $moreParams
      * @var I18N $i18N
      * @var Request $request
+     * @var string $fingerprint
      */
     $menu=true;
     $footer=true;
@@ -68,6 +69,7 @@
                 <button type="button"
                         class="btn btn-ripple btn-md-strip">{{$i18N->getLanguage(ELanguageText::register_btn)}}</button>
             </div>
+            <a class="link" href="{{route('member.form-login')}}">登入會員</a>
             @if ($errors->any())
                 <x-alert type="danger" :messages="$errors->all()"/>
             @endif
