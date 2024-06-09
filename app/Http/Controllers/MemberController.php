@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserNotification;
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
 use App\Lib\Server\CSRF;
@@ -119,7 +120,7 @@ class MemberController extends Controller
             //debugbar()->info($status);
             $ELanguageText = ELanguageText::valueof(str_replace(".", "_", $status));
             return $status === Password::PASSWORD_RESET
-                ? redirect()->route('login')->with('status', $ELanguageText)
+                ? redirect()->route('member.form-login')->with('status', $ELanguageText)
                 : back()->withErrors(['email' => [$ELanguageText]]);
         }
     }
@@ -185,7 +186,17 @@ class MemberController extends Controller
 
     public function logout(Request $request)
     {
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
+
         Log::info($request->user()["username"] . ": logout");
+        event((new UserNotification([
+            $i18N->getLanguage(ELanguageText::logout_context, true)->placeholderParser("s", 5)->toString(),
+            $i18N->getLanguage(ELanguageText::logout_title),
+            "warning",
+            10000,
+            Cache::get('guest_id'.$request->fingerprint())
+        ]))->delay(now()->addSeconds(3)));
         Auth::logout();
         return view('logout', $this::baseControllerInit($request)->toArrayable());
     }
@@ -261,6 +272,19 @@ class MemberController extends Controller
                             Log::info($user->username . ": Logging in");
                             Auth::login($user);
                             Log::info($user->username . ": logined");
+                            if(Auth::check() && Auth::user()->enable==="false"){
+                                $errors = new MessageBag;
+                                $errors->add('username', "你的帳號因已經停用，所以你已被強制登出。 Notification ID:".Cache::get('guest_id'.$request->fingerprint()));
+                                event((new UserNotification([
+                                    "你的帳號因已經停用，所以你已被強制登出。",
+                                    "警告訊息",
+                                    "warning",
+                                    10000,
+                                    Cache::get('guest_id'.$request->fingerprint())
+                                ]))->delay(now()->addSeconds(8)));
+                                Auth::logout();
+                                return back()->withErrors($errors);
+                            }
                             return redirect(route('home'))->with('custom_message', [
                                 $i18N->getLanguage(ELanguageText::notification_login_title),
                                 $i18N->getLanguage(ELanguageText::notification_login_success),
@@ -286,7 +310,7 @@ class MemberController extends Controller
                 }
             }
         }
-        return redirect(route('login'))->with('custom_message', [
+        return redirect(route('member.form-login'))->with('custom_message', [
             $i18N->getLanguage(ELanguageText::notification_login_title),
             $i18N->getLanguage(ELanguageText::notification_login_failed),
             ENotificationType::error

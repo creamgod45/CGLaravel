@@ -1,6 +1,8 @@
 import Pusher from 'pusher-js';
-import axios from "axios";
+import Axios from "axios";
 import * as Utils from './utils.js';
+
+Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 // Enable pusher logging - don't include this in production
 Pusher.logToConsole = true;
@@ -14,6 +16,12 @@ const HTMLTemplateNotificationLoadedEvent = new CustomEvent('HTMLTemplateNotific
     },
     cancelable: false
 });
+const userIDLoadedEvent = new CustomEvent('userIDLoadedEvent', {
+    detail: {
+        message: "API Call userIDLoadedEvent is ready"
+    },
+    cancelable: false
+});
 const PusherRenderNotificationEvent = new CustomEvent('PusherRenderNotificationEvent', {
     detail: {
         message: "API Call PusherRenderNotificationEvent is render done"
@@ -21,39 +29,67 @@ const PusherRenderNotificationEvent = new CustomEvent('PusherRenderNotificationE
     cancelable: false
 });
 let HTMLTemplateNotificationData = "";
+let id = "";
 
-axios.post('/HTMLTemplate/Notification', {}, {
+Axios.post('/HTMLTemplate/Notification', {}, {
     adapter: "fetch"
 }).then(async (res) => {
     console.log(res);
     HTMLTemplateNotificationData = res.data;
     document.dispatchEvent(HTMLTemplateNotificationLoadedEvent);
 });
-document.addEventListener('HTMLTemplateNotificationLoadedEvent', (event) => {
-    console.log(event);
-    let publicchannel = pusher.subscribe('Notification');
 
-    function HTMLFormater(msg) {
-        let temp = HTMLTemplateNotificationData;
-        temp = temp.replaceAll("%id%", "N" + Utils.generateRandomString(10));
-        temp = temp.replaceAll("%type%", msg.type);
-        temp = temp.replaceAll("%title%", msg.title);
-        temp = temp.replaceAll("%description%", msg.description);
-        return temp.replaceAll("%second%", msg.second);
+Axios.post('/browser', {
+} ,{
+    adapter: "fetch",
+}).then(async (res) => {
+    console.log(res);
+    if (res.status === 200) {
+        id = res.data.id;
+        console.log(id);
     }
+    document.dispatchEvent(userIDLoadedEvent);
+});
 
-    publicchannel.bind('Notification', function (msg, title, type, second) {
+document.addEventListener('userIDLoadedEvent', (event) => {
+    console.log(event);
+    console.log(2);
+    let userChannel = pusher.subscribe('Notification.user.'+id);
+    userChannel.bind('Notification', function (msg) {
         console.log(msg);
-        let notificationParents = document.querySelectorAll('.notification .item');
-        if(notificationParents.length <= 0) {
-            let notificationParent = document.querySelector('.notification');
-            notificationParent.innerHTML = HTMLFormater(msg);
-        }else{
-            let notificationParent = notificationParents[notificationParents.length-1];
-            if(notificationParent !== null){
-                notificationParent.insertAdjacentHTML("afterend", HTMLFormater(msg)) ;
-            }
-        }
+        insertItemToParentDOM(msg)
         document.dispatchEvent(PusherRenderNotificationEvent);
     });
 });
+
+document.addEventListener('HTMLTemplateNotificationLoadedEvent', (event) => {
+    console.log(event);
+    let publicchannel = pusher.subscribe('Notification');
+    publicchannel.bind('Notification', function (msg) {
+        console.log(msg);
+        insertItemToParentDOM(msg)
+        document.dispatchEvent(PusherRenderNotificationEvent);
+    });
+});
+
+function HTMLFormater(msg) {
+    let temp = HTMLTemplateNotificationData;
+    temp = temp.replaceAll("%id%", "N" + Utils.generateRandomString(10));
+    temp = temp.replaceAll("%type%", msg.type);
+    temp = temp.replaceAll("%title%", msg.title);
+    temp = temp.replaceAll("%description%", msg.description);
+    return temp.replaceAll("%second%", msg.second);
+}
+
+function insertItemToParentDOM(msg){
+    let notificationParents = document.querySelectorAll('.notification .item');
+    if(notificationParents.length <= 0) {
+        let notificationParent = document.querySelector('.notification');
+        notificationParent.innerHTML = HTMLFormater(msg);
+    }else{
+        let notificationParent = notificationParents[notificationParents.length-1];
+        if(notificationParent !== null){
+            notificationParent.insertAdjacentHTML("afterend", HTMLFormater(msg)) ;
+        }
+    }
+}
