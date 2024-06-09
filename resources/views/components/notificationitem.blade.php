@@ -16,7 +16,7 @@
     @endphp
 @endif
 
-<div id="{{$id}}" data-seconds="{!! $s !!}" class="item notification-{{$type->name}}">
+<div id="{{$id}}" data-seconds="{!! $s !!}" class="item notification-@if($type instanceof ENotificationType){{$type->name}}@else%type%@endif">
     @if($millisecond !== 4900)
     <style>
         .notification #{{$id}}::after{
