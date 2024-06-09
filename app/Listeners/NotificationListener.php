@@ -3,14 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\Notification;
-use Exception;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Log;
-use Pusher\ApiErrorException;
-use Pusher\Pusher;
-use Pusher\PusherException;
 
 class NotificationListener
 {

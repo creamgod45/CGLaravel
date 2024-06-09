@@ -2,9 +2,6 @@
 
 namespace App\Lib\Utils;
 
-use App\Lib\I18N\ELanguageCode;
-use App\Lib\I18N\I18N;
-use Illuminate\Http\Request;
 use LZCompressor\LZString;
 
 class Utilsv2

@@ -6,13 +6,13 @@ use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
 use App\Lib\Type\String\CGStringable;
 use App\Lib\Utils\Utilsv2;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
-use Exception;
 
 class VerifyEmailNotification extends Notification implements ShouldQueue
 {

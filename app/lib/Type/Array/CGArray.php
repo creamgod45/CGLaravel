@@ -305,32 +305,32 @@ class CGArray implements CGArrayInterface
         return true;
     }
 
-    public function array_splice_key(array &$array, array $keyrows = null, bool $nametokey = false, bool $result = false, bool $keyint = false)
+    public function array_splice_key(array $keyrows = null, bool $nametokey = false, bool $result = false, bool $keyint = false)
     {
         $arr = [];
         if (is_array($keyrows)) {
             if ($nametokey === true) {
-                $int_arr = $this->array_keytovalue($array);
+                $int_arr = $this->array_keytovalue($this->array);
                 foreach ($keyrows as $v) {
                     if ($result === true) {
-                        $arr[] = $array[$int_arr[$v]];
+                        $arr[] = $this->array[$int_arr[$v]];
                     }
-                    unset($array[$int_arr[$v]]);
+                    unset($this->array[$int_arr[$v]]);
                 }
             } else {
-                foreach ($array as $key => $value) {
+                foreach ($this->array as $key => $value) {
                     for ($i = 0; $i <= count($keyrows) - 1; $i++) {
                         if ($key === $keyrows[$i]) {
                             if ($result === true) {
-                                $arr[] = $array[$key];
+                                $arr[] = $this->array[$key];
                             }
-                            unset($array[$key]);
+                            unset($this->array[$key]);
                         }
                     }
                 }
             }
             if ($keyint === true) {
-                $array = $this->array_resort($array);
+                $this->array = $this->array_resort($this->array);
             }
             if ($result === true) {
                 return $arr;

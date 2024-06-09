@@ -7,8 +7,6 @@ use App\Lib\I18N\I18N;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
-use Log;
-use Psy\Util\Json;
 
 class ValidatorBuilder
 {
