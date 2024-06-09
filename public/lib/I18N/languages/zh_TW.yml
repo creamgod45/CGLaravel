@@ -314,7 +314,7 @@ login_title: 登入會員
 login_btn: 送出
 login_faild: '登入失敗。 %validator_field_username% 或 %validator_field_password% 其中一個可能是錯誤'
 logout_title: 登出
-logout_context: 已經登出三秒後跳轉頁面!!點擊前往
+logout_context: 已經登出 %s% 秒後跳轉頁面!!點擊前往
 login_username_notfound: '登入失敗。 %validator_field_username% 不存在'
 pagination_firstPage: 首頁
 pagination_previous: 上一頁
