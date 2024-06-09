@@ -6,7 +6,6 @@ namespace App\Providers;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
-use App\Lib\Utils\Utils;
 use App\Models\Member;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
