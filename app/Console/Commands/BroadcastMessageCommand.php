@@ -3,9 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Events\Notification;
-use App\Jobs\BroadcastMessageJob;
 use Illuminate\Console\Command;
-use Psy\Util\Json;
 
 class BroadcastMessageCommand extends Command
 {
@@ -21,7 +19,7 @@ class BroadcastMessageCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '發送泡泡訊息給全部訪問者';
 
     /**
      * Execute the console command.
