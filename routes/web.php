@@ -4,6 +4,7 @@ use App\Http\Controllers\HTMLTemplateController;
 use App\Http\Controllers\InternalController;
 use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
+use App\Lib\Utils\RouteNameField;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,28 +18,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [InternalController::class,'branding'])->name('home');
-Route::get('/designcomponents', [InternalController::class,'designcomponents'])->name('designcomponents');
-Route::post('lzstring.json', [InternalController::class, 'lzstring_json']);
+Route::get('/', [InternalController::class,'branding'])->name(RouteNameField::PageHome->value);
+Route::get('designcomponents', [InternalController::class,'designComponents'])->name(RouteNameField::PageDesignComponents->value);
+Route::post('encode.json', [InternalController::class, 'encodeJson'])->name(RouteNameField::APIEncodeJson->value);
 Route::post('broadcast', [InternalController::class, 'broadcast_Notification_Notification']);
-Route::post('language', [InternalController::class, 'language']);
-Route::post('user', [InternalController::class, 'user']);
-Route::post('browser', [InternalController::class, 'browser']);
+Route::post('language', [InternalController::class, 'language'])->name(RouteNameField::APILanguage->value);
+//Route::post('user', [InternalController::class, 'user']);
+Route::post('browser', [InternalController::class, 'browser'])->name(RouteNameField::APIBrowser->value);
 // password reset
-Route::get('passwordreset', [MemberController::class, 'passwordreset'])->name('password.reset');
-Route::post('passwordreset', [MemberController::class, 'passwordresetpost'])->name('password.resetpost');
+Route::get('passwordreset', [MemberController::class, 'passwordreset'])->name(RouteNameField::PagePasswordReset->value);
+Route::post('passwordreset', [MemberController::class, 'passwordresetpost'])->name(RouteNameField::PagePasswordResetPost->value);
 // forgot password
-Route::get('forgot-password',  [MemberController::class, 'forgetpassword'])->name('password.request');
+Route::get('forgot-password',  [MemberController::class, 'forgetpassword'])->name(RouteNameField::PageForgetPassword->value);
 Route::post('forget-password', [MemberController::class, 'forgetpasswordpost'])->name('password.email');
 // email verify
-Route::get('/email/verify/{id}/{hash}', [MemberController::class, 'emailVerify'])->name('verification.verify');
+Route::get('email/verify/{id}/{hash}', [MemberController::class, 'emailVerify'])->name('verification.verify');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('members', [MemberController::class, 'index']);
 });
 
 Route::group(["prefix"=>"HTMLTemplate"], function () {
-    Route::post('/Notification', [ HTMLTemplateController::class, 'Notification' ])->name('HTMLTemplate.Notification');
+    Route::post('Notification', [ HTMLTemplateController::class, 'Notification' ])->name('HTMLTemplate.Notification');
 });
 
 Route::middleware('auth')->group(function () {
