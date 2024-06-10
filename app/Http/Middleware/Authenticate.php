@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Events\UserNotification;
+use App\Http\Controllers\Controller;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
@@ -52,7 +53,7 @@ class Authenticate extends Middleware
                 "警告訊息",
                 "warning",
                 10000,
-                Cache::get('guest_id')
+                Cache::get('guest_id'.Controller::fingerprintStaticable($request))
             ]))->delay(now()->addSeconds(5)));
             Auth::logout();
             Log::info("Authenticate Middleware 2");
@@ -60,6 +61,6 @@ class Authenticate extends Middleware
         }
         Log::info("Authenticate Middleware 3");
 
-        return parent::handle($request, $next, $guards);
+        return parent::handle($request, $next, ...$guards);
     }
 }
