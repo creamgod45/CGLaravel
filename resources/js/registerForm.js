@@ -1,4 +1,5 @@
 import * as Utils from './utils.js'
+import axios from 'axios'
 
 function register(){
     let registerEl = document.querySelector(".register");
@@ -101,6 +102,12 @@ function register(){
             formdata.append("phone", object.phone.value);
             formdata.append("password",  Utils.encodeContext(object.password.value).compress);
             formdata.append("password_confirmation",  Utils.encodeContext(object.repassword.value).compress);
+            axios.post("/register", formdata, {
+                adapter: "fetch",
+            }).then(async (res) => {
+                let json = await res.json();
+                console.log(json);
+            });
             fetch("/register", {
                 method: 'post',
                 body: formdata,
