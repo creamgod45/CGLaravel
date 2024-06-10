@@ -1,5 +1,5 @@
 @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/registerForm.js'])
-@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Server\CSRF)
+@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Server\CSRF;use Illuminate\Http\Request)
 @php
     /***
      * @var string[] $urlParams
@@ -27,7 +27,8 @@
                  data-customclass="min-w-fit w-[42%] !block"
                  data-tooltip="<li class='flex flex-nowrap'>⭕必填項目</li><li class='flex flex-nowrap'>🌟獨一無二帳號</li><li class='flex flex-nowrap'>❌最大的長度為255</li>">
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_username)}}</label>
-                <input class="col form-solid" type="text" name="username" maxlength="255" value="{{old("username")}}" required>
+                <input class="col form-solid" type="text" name="username" maxlength="255" value="{{old("username")}}"
+                       required>
             </div>
             <div class="row tooltip-gen tooltip-right-to-left tooltip-error !break-keep"
                  data-direction="tooltip-right"
@@ -36,7 +37,8 @@
                  data-customclass="min-w-fit w-[42%] !block"
                  data-tooltip="<li class='flex flex-nowrap'>⭕必填項目</li><li class='flex flex-nowrap'>🌟獨一無二電子信箱</li><li class='flex flex-nowrap'>❌最大的長度為255</li>">
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_email)}}</label>
-                <input class="col form-solid" type="email" name="email" maxlength="255" value="{{old("email")}}" required>
+                <input class="col form-solid" type="email" name="email" maxlength="255" value="{{old("email")}}"
+                       required>
             </div>
             <div class="row tooltip-gen tooltip-right-to-left tooltip-error !break-keep"
                  data-direction="tooltip-right"
