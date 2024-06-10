@@ -49,7 +49,7 @@ class PageTest extends TestCase
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(302)
-            ->assertRedirectToRoute('login');
+            ->assertRedirectToRoute('member.form-login');
     }
 
     public function test_the_application_lzstring_compare()
@@ -129,6 +129,6 @@ class PageTest extends TestCase
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(302)
-            ->assertRedirectToRoute('login');
+            ->assertRedirectToRoute('member.form-login');
     }
 }

@@ -8,7 +8,6 @@
  */
 @endphp
 @use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Type\Array\CGArray;use App\Lib\Utils\Utils)
-@dump($request->fingerprint())
 <script>
     function changeLanguage(el) {
         let value = el.value;
