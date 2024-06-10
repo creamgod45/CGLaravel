@@ -32,11 +32,12 @@ class Controller extends BaseController
     }
 
     /**
+     * 內部使用 CGLaravelControllerInit 類別建構器
      * @param Request $request
      * @param array $params
-     * @return array
+     * @return CGLaravelControllerInit
      */
-    public function extracted(Request $request, array $params): CGLaravelControllerInit
+    private function extracted(Request $request, array $params): CGLaravelControllerInit
     {
         $url = $request->url();
         $path = parse_url($url, PHP_URL_PATH);
@@ -57,7 +58,21 @@ class Controller extends BaseController
         return new CGLaravelControllerInit($i18N, $router, $request, $params, $fingerprint);
     }
 
+    /**
+     * 客戶端指紋
+     * @param Request $request
+     * @return string
+     */
     public function fingerprint(Request $request){
         return sha1($request->ip().$request->getHost().$request->userAgent());
+    }
+
+    /**
+     * 客戶端指紋(靜態化)
+     * @param Request $request
+     * @return string
+     */
+    public static function fingerprintStaticable(Request $request){
+        return (new Controller)->fingerprint($request);
     }
 }
