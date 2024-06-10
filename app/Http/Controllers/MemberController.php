@@ -8,6 +8,7 @@ use App\Lib\I18N\I18N;
 use App\Lib\Server\CSRF;
 use App\Lib\Utils\ENotificationType;
 use App\Lib\Utils\EValidatorType;
+use App\Lib\Utils\RouteNameField;
 use App\Lib\Utils\Utils;
 use App\Lib\Utils\Utilsv2;
 use App\Lib\Utils\ValidatorBuilder;
@@ -103,7 +104,7 @@ class MemberController extends Controller
 
         if($v instanceof MessageBag){
             // validator errors here
-            return redirect(route('password.reset'))->withInput()->withErrors($v);
+            return redirect(route(RouteNameField::PagePasswordReset->value))->withInput()->withErrors($v);
         }else{
             $status = Password::reset(
                 $request->only('email', 'password', 'password_confirmation', 'token'),
@@ -142,7 +143,7 @@ class MemberController extends Controller
 
         if ($validator instanceof MessageBag) {
             // validator errors here
-            return redirect(route('password.request'))->withInput()->withErrors($validate);
+            return redirect(route(RouteNameField::PageForgetPassword->value))->withInput()->withErrors($validate);
         }else{
             $cacheKey = $validate['email'].":forgetpassword";
             if (Cache::has($cacheKey)) {
@@ -188,6 +189,7 @@ class MemberController extends Controller
     {
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
+        $fingerprint = $cgLCI->getFingerprint();
 
         Log::info($request->user()["username"] . ": logout");
         event((new UserNotification([
@@ -195,7 +197,7 @@ class MemberController extends Controller
             $i18N->getLanguage(ELanguageText::logout_title),
             "warning",
             10000,
-            Cache::get('guest_id'.$request->fingerprint())
+            Cache::get('guest_id'.$fingerprint)
         ]))->delay(now()->addSeconds(3)));
         Auth::logout();
         return view('logout', $this::baseControllerInit($request)->toArrayable());
@@ -214,6 +216,7 @@ class MemberController extends Controller
     {
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
+        $fingerprint = $cgLCI->getFingerprint();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::REGISTER);
         $v = $vb->validate($request->all(), [
@@ -222,6 +225,13 @@ class MemberController extends Controller
         ], true);
         if($v instanceof MessageBag){
             Log::info($request->ip() . ": " . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
+            event(new UserNotification([
+                implode('<br>', $v->all()),
+                "註冊失敗",
+                "error",
+                "10000",
+                Cache::get("guest_id".$fingerprint)
+            ]));
             return redirect('register')->withErrors($v)->withInput();
         }else{
             // 可以在这里实现登录逻辑，或者重定向到登录页面
@@ -254,6 +264,7 @@ class MemberController extends Controller
     {
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
+        $fingerprint = $cgLCI->getFingerprint();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::LOGIN);
         try {
@@ -274,13 +285,13 @@ class MemberController extends Controller
                             Log::info($user->username . ": logined");
                             if(Auth::check() && Auth::user()->enable==="false"){
                                 $errors = new MessageBag;
-                                $errors->add('username', "你的帳號因已經停用，所以你已被強制登出。 Notification ID:".Cache::get('guest_id'.$request->fingerprint()));
+                                $errors->add('username', "你的帳號因已經停用，所以你已被強制登出。 Notification ID:". Cache::get("guest_id".$fingerprint));
                                 event((new UserNotification([
                                     "你的帳號因已經停用，所以你已被強制登出。",
                                     "警告訊息",
                                     "warning",
                                     10000,
-                                    Cache::get('guest_id'.$request->fingerprint())
+                                    Cache::get('guest_id'.$fingerprint)
                                 ]))->delay(now()->addSeconds(8)));
                                 Auth::logout();
                                 return back()->withErrors($errors);
