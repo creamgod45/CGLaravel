@@ -1,8 +1,7 @@
 import Pusher from 'pusher-js';
-import Axios from "axios";
 import * as Utils from './utils.js';
 
-Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 // Enable pusher logging - don't include this in production
 Pusher.logToConsole = true;
@@ -16,7 +15,7 @@ const HTMLTemplateNotificationLoadedEvent = new CustomEvent('HTMLTemplateNotific
     },
     cancelable: false
 });
-const userIDLoadedEvent = new CustomEvent('userIDLoadedEvent', {
+const BrowserIDLoadedEvent = new CustomEvent('BrowserIDLoadedEvent', {
     detail: {
         message: "API Call userIDLoadedEvent is ready"
     },
@@ -31,42 +30,43 @@ const PusherRenderNotificationEvent = new CustomEvent('PusherRenderNotificationE
 let HTMLTemplateNotificationData = "";
 let id = "";
 
-Axios.post('/HTMLTemplate/Notification', {}, {
-    adapter: "fetch"
+axios.post('/HTMLTemplate/Notification', {}, {
+    adapter: "fetch",
+
 }).then(async (res) => {
-    console.log(res);
+    //console.log(res);
     HTMLTemplateNotificationData = res.data;
     document.dispatchEvent(HTMLTemplateNotificationLoadedEvent);
 });
 
-Axios.post('/browser', {
+axios.post('/browser', {
 } ,{
     adapter: "fetch",
 }).then(async (res) => {
-    console.log(res);
+    //console.log(res);
     if (res.status === 200) {
         id = res.data.id;
-        console.log(id);
+        //console.log(id);
     }
-    document.dispatchEvent(userIDLoadedEvent);
+    document.dispatchEvent(BrowserIDLoadedEvent);
 });
 
-document.addEventListener('userIDLoadedEvent', (event) => {
-    console.log(event);
-    console.log(2);
+document.addEventListener('BrowserIDLoadedEvent', (event) => {
+    //console.log(event);
+    //console.log(2);
     let userChannel = pusher.subscribe('Notification.user.'+id);
     userChannel.bind('Notification', function (msg) {
-        console.log(msg);
+        //console.log(msg);
         insertItemToParentDOM(msg)
         document.dispatchEvent(PusherRenderNotificationEvent);
     });
 });
 
 document.addEventListener('HTMLTemplateNotificationLoadedEvent', (event) => {
-    console.log(event);
+    //console.log(event);
     let publicchannel = pusher.subscribe('Notification');
     publicchannel.bind('Notification', function (msg) {
-        console.log(msg);
+        //console.log(msg);
         insertItemToParentDOM(msg)
         document.dispatchEvent(PusherRenderNotificationEvent);
     });
