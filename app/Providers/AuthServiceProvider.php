@@ -6,6 +6,7 @@ namespace App\Providers;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
+use App\Lib\Utils\RouteNameField;
 use App\Models\Member;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -46,7 +47,7 @@ class AuthServiceProvider extends ServiceProvider
             Log::info("ResetPassword dump variables".Json::encode($vars, true));
             return (new MailMessage)
                 ->line($i18N->getLanguage(ELanguageText::ResetPasswordLine1))
-                ->action($i18N->getLanguage(ELanguageText::ResetPasswordAction1), url(route('password.reset', ['token'=>$token, 'email' => $member->email], false)))
+                ->action($i18N->getLanguage(ELanguageText::ResetPasswordAction1), url(route(RouteNameField::PagePasswordReset->value, ['token'=>$token, 'email' => $member->email], false)))
                 ->line($i18N->getLanguage(ELanguageText::ResetPasswordLine2));
         });
     }
