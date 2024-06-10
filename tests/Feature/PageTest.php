@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Lib\I18N\ELanguageCode;
+use App\Lib\Utils\RouteNameField;
 use App\Lib\Utils\Utilsv2;
 use App\Models\Member;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,7 +20,7 @@ class PageTest extends TestCase
      */
     public function test_the_application_returns_a_successful_response(): void
     {
-        $response = $this->get('/');
+        $response = $this->get(route(RouteNameField::PageHome->value));
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(200);
@@ -39,7 +40,7 @@ class PageTest extends TestCase
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(302)
-            ->assertRedirectToRoute('home')
+            ->assertRedirectToRoute(RouteNameField::PageHome->value)
             ->assertInvalid();
     }
 
@@ -56,7 +57,7 @@ class PageTest extends TestCase
     {
         $value = "lzstring compress data to encode data post to lzstring.json URL deocde data to check";
         $compress = Utilsv2::encodeContext($value)['compress'];
-        $response = $this->postJson('/lzstring.json', ['a' => $compress]);
+        $response = $this->postJson(route(RouteNameField::APIEncodeJson->value), ['a' => $compress]);
 
         //$response->dumpHeaders();
         //$response->dump();
@@ -95,7 +96,7 @@ class PageTest extends TestCase
         //$response->dump();
         $response->assertStatus(302)
             ->assertSessionHas('mail', true)
-            ->assertRedirectToRoute('home');
+            ->assertRedirectToRoute(RouteNameField::PageHome->value);
 
         $response = $this->actingAs($user, 'web')->get('/logout');
         //$response->dumpHeaders();
@@ -118,7 +119,7 @@ class PageTest extends TestCase
         //$response->dump();
         $response->assertStatus(302)
             ->assertSessionHas('mail_result', 1)
-            ->assertRedirectToRoute('home');
+            ->assertRedirectToRoute(RouteNameField::PageHome->value);
 
         $user->delete();
     }
