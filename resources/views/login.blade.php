@@ -1,5 +1,5 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N)
+@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Utils\RouteNameField)
 @php
     /***
      * @var string[] $urlParams
@@ -26,7 +26,7 @@
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_password)}}</label>
                 <input class="col form-solid" type="password" name="password" required>
             </div>
-            <a class="link" href="{{route('password.request')}}">忘記密碼</a>
+            <a class="link" href="{{route(RouteNameField::PageForgetPassword->value)}}">忘記密碼</a>
             <a class="link" href="{{route('member.form-register')}}">註冊會員</a>
             <div class="button">
                 <button type="submit" class="btn-ripple btn btn-md-strip ">{{$i18N->getLanguage(ELanguageText::login_btn)}}</button>
