@@ -51,7 +51,7 @@ axios.post('/browser', {
     document.dispatchEvent(BrowserIDLoadedEvent);
 });
 
-document.addEventListener('BrowserIDLoadedEvent', (event) => {
+document.addEventListener('BrowserIDLoadedEvent', () => {
     //console.log(event);
     //console.log(2);
     let userChannel = pusher.subscribe('Notification.user.'+id);
@@ -62,7 +62,7 @@ document.addEventListener('BrowserIDLoadedEvent', (event) => {
     });
 });
 
-document.addEventListener('HTMLTemplateNotificationLoadedEvent', (event) => {
+document.addEventListener('HTMLTemplateNotificationLoadedEvent', () => {
     //console.log(event);
     let publicchannel = pusher.subscribe('Notification');
     publicchannel.bind('Notification', function (msg) {
