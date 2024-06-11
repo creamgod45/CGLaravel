@@ -67,14 +67,16 @@
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_phone)}}</label>
                 <input class="col form-solid" type="text" minlength="10" name="phone" value="{{old("phone")}}" required>
             </div>
+            <a class="link" href="{{route('member.form-login')}}">登入會員</a>
             <div class="button">
                 <button type="button"
                         class="btn btn-ripple btn-md-strip">{{$i18N->getLanguage(ELanguageText::register_btn)}}</button>
             </div>
-            <a class="link" href="{{route('member.form-login')}}">登入會員</a>
-            @if ($errors->any())
-                <x-alert type="danger" :messages="$errors->all()"/>
-            @endif
+            <div id="alert">
+                @if ($errors->any())
+                    <x-alert type="danger" :messages="$errors->all()"/>
+                @endif
+            </div>
         </form>
     </div>
 @endsection
