@@ -28,7 +28,7 @@ class PageTest extends TestCase
 
     public function test_the_application_forget_password_a_successful_response(): void
     {
-        $response = $this->get('/forgot-password');
+        $response = $this->get(route(RouteNameField::PageForgetPassword->value));
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(200);
@@ -36,7 +36,7 @@ class PageTest extends TestCase
 
     public function test_the_application_passwordreset(): void
     {
-        $response = $this->get('/passwordreset');
+        $response = $this->get(route(RouteNameField::PagePasswordReset->value));
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(302)
@@ -46,7 +46,7 @@ class PageTest extends TestCase
 
     public function test_the_application_member(): void
     {
-        $response = $this->get('/members');
+        $response = $this->get(route(RouteNameField::PageMembers->value));
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(302)
@@ -67,17 +67,17 @@ class PageTest extends TestCase
 
     public function test_the_application_language()
     {
-        $response = $this->postJson('/language', ['lang' => ELanguageCode::zh_CN->name]);
+        $response = $this->postJson(route(RouteNameField::APILanguage->value), ['lang' => ELanguageCode::zh_CN->name]);
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(200)
             ->assertJson(['message' => 'Data received successfully', 'lang' => ELanguageCode::zh_CN->name]);
-        $response = $this->postJson('/language', ['lang' => "error"]);
+        $response = $this->postJson(route(RouteNameField::APILanguage->value), ['lang' => "error"]);
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(400)
             ->assertJson(['message' => 'Error']);
-        $response = $this->postJson('/language');
+        $response = $this->postJson(route(RouteNameField::APILanguage->value));
         //$response->dumpHeaders();
         $response->assertStatus(200)
             ->assertJson(function (AssertableJson $json) {
@@ -98,7 +98,7 @@ class PageTest extends TestCase
             ->assertSessionHas('mail', true)
             ->assertRedirectToRoute(RouteNameField::PageHome->value);
 
-        $response = $this->actingAs($user, 'web')->get('/logout');
+        $response = $this->actingAs($user, 'web')->get(route(RouteNameField::PageLogout->value));
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(200)
@@ -108,7 +108,7 @@ class PageTest extends TestCase
 
         $user->markEmailAsVerified();
 
-        $response = $this->actingAs($user, 'web')->get('/members');
+        $response = $this->actingAs($user, 'web')->get(route(RouteNameField::PageMembers->value));
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(200)
