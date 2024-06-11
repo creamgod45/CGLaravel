@@ -7,7 +7,7 @@
  * @var string $fingerprint
  */
 @endphp
-@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Type\Array\CGArray;use App\Lib\Utils\Utils)
+@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Type\Array\CGArray;use App\Lib\Utils\Utils;use App\Lib\Utils\RouteNameField)
 <script>
     function changeLanguage(el) {
         let value = el.value;
@@ -47,7 +47,7 @@
             <i class="fa-solid fa-caret-down"></i>
         </button>
         @env('local')
-            <a href="{{route('designcomponents')}}" class="float-menu-btn" aria-expanded="false">
+            <a href="{{route(RouteNameField::PageDesignComponents->value)}}" class="float-menu-btn" aria-expanded="false">
                 <span>元件測試頁面</span>
             </a>
         @endenv
@@ -126,15 +126,15 @@
                             <span>&nbsp;重新驗證</span>
                         </a>
                         @endif
-                        <a href="{{route('member.profile')}}" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageProfile->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-user"></i>
                             <span>&nbsp;個人資料</span>
                         </a>
-                        <a href="/members" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageMembers->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_membersBtn)}}</span>
                         </a>
-                        <a href="/logout" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageLogout->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::logout_title)}}</span>
                         </a>

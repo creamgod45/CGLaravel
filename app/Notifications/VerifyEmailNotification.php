@@ -5,12 +5,14 @@ namespace App\Notifications;
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
 use App\Lib\Type\String\CGStringable;
+use App\Lib\Utils\RouteNameField;
 use App\Lib\Utils\Utilsv2;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
@@ -45,14 +47,14 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
         Log::info("=================================================================================================");
         Log::info("Proccess: VerifyEmailNotification");
         try {
-            Log::info("Debug \$Instance: (encode)" . Utilsv2::encodeContext((new CGStringable($this))));
+            Log::info("Debug \$Instance: (encode)" . Utilsv2::encodeContext((new CGStringable($this)))['compress']);
         } catch (Exception $e) {
             Log::warning($e->getMessage());
         }
         Log::info("Debug \$i18N: " . $this->i18N->getLanguageCode()->name);
         Log::info("Debug \$verificationUrl: " . $verificationUrl);
         try {
-            Log::info("Debug \$notifiable: (encode)" . Utilsv2::encodeContext((new CGStringable($notifiable))));
+            Log::info("Debug \$notifiable: (encode)" . Utilsv2::encodeContext((new CGStringable($notifiable)))['compress']);
         } catch (Exception $e) {
             Log::warning($e->getMessage());
         }
@@ -62,7 +64,13 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
 
     protected function verificationUrl($notifiable)
     {
-        return URL::temporarySignedRoute('verification.verify', now()->addSeconds(5), ['id' => $notifiable->getKey(), 'hash' => sha1($notifiable->getEmailForVerification())]);
+        return URL::temporarySignedRoute(
+            RouteNameField::PageEmailVerification->value,
+            now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            [
+                'id' => $notifiable->getKey(),
+                'hash' => sha1($notifiable->getEmailForVerification())
+            ]);
     }
 
     /**

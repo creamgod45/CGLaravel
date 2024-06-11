@@ -26,16 +26,16 @@ Route::post('language', [InternalController::class, 'language'])->name(RouteName
 //Route::post('user', [InternalController::class, 'user']);
 Route::post('browser', [InternalController::class, 'browser'])->name(RouteNameField::APIBrowser->value);
 // password reset
-Route::get('passwordreset', [MemberController::class, 'passwordreset'])->name(RouteNameField::PagePasswordReset->value);
-Route::post('passwordreset', [MemberController::class, 'passwordresetpost'])->name(RouteNameField::PagePasswordResetPost->value);
+Route::get('passwordreset', [MemberController::class, 'passwordReset'])->name(RouteNameField::PagePasswordReset->value);
+Route::post('passwordreset', [MemberController::class, 'passwordResetPost'])->name(RouteNameField::PagePasswordResetPost->value);
 // forgot password
-Route::get('forgot-password',  [MemberController::class, 'forgetpassword'])->name(RouteNameField::PageForgetPassword->value);
-Route::post('forget-password', [MemberController::class, 'forgetpasswordpost'])->name('password.email');
+Route::get('forgot-password',  [MemberController::class, 'forgetPassword'])->name(RouteNameField::PageForgetPassword->value);
+Route::post('forget-password', [MemberController::class, 'forgetPasswordPost'])->name(RouteNameField::PageForgetPasswordPost->value);
 // email verify
-Route::get('email/verify/{id}/{hash}', [MemberController::class, 'emailVerify'])->name('verification.verify');
+Route::get('email/verify/{id}/{hash}', [MemberController::class, 'emailVerify'])->name(RouteNameField::PageEmailVerification->value);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('members', [MemberController::class, 'index']);
+    Route::get('members', [MemberController::class, 'index'])->name(RouteNameField::PageMembers->value);
 });
 
 Route::group(["prefix"=>"HTMLTemplate"], function () {
@@ -43,11 +43,11 @@ Route::group(["prefix"=>"HTMLTemplate"], function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('logout', [MemberController::class, 'logout'])->name('logout');
-    Route::get('resendemail', [MemberController::class, 'resendEmail'])->name('verification.notice');
+    Route::get('logout', [MemberController::class, 'logout'])->name(RouteNameField::PageLogout->value);
+    Route::get('resendemail', [MemberController::class, 'resendEmail'])->name(RouteNameField::PageEmailReSendMailVerification->value);
     // Profile Start
-    Route::get('profile', [MemberController::class, 'profile'])->name('member.profile');
-    Route::post('profile', [MemberController::class, 'profilepost'])->name('member.profile.post');
+    Route::get('profile', [MemberController::class, 'profile'])->name(RouteNameField::PageProfile->value);
+    Route::post('profile', [MemberController::class, 'profilePost'])->name(RouteNameField::PageProfilePost->value);
     Route::group(['prefix' => 'profile'], function () {
         Route::group(['prefix' => 'email'], function () {
             Route::post('sendMailVerifyCode', [MemberController::class, 'sendMailVerifyCode_profile_email']);

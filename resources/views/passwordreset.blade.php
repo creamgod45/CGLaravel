@@ -15,7 +15,7 @@
 @section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
 @section('content')
     <div class="register-frame">
-        <form class="register" method="POST" action="{{ route('password.resetpost') }}">
+        <form class="register" method="POST" action="{{ route(\App\Lib\Utils\RouteNameField::PagePasswordResetPost->value) }}">
             @csrf
             <div class="title">重設密碼</div>
             <div class="row">
