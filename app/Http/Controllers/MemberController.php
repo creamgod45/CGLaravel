@@ -15,6 +15,7 @@ use App\Lib\Utils\ValidatorBuilder;
 use App\Models\Member;
 use App\Notifications\SendMailVerifyCodeNotification;
 use App\Notifications\VerifyEmailNotification;
+use App\View\Components\Alert;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
@@ -78,7 +79,7 @@ class MemberController extends Controller
         return redirect(route("home"))->with('mail_result', 2);
     }
 
-    public function passwordreset(Request $request)
+    public function passwordReset(Request $request)
     {
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
@@ -94,7 +95,7 @@ class MemberController extends Controller
         }
     }
 
-    public function passwordresetpost(Request $request)
+    public function passwordResetPost(Request $request)
     {
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
@@ -126,12 +127,12 @@ class MemberController extends Controller
         }
     }
 
-    public function forgetpassword(Request $request)
+    public function  forgetPassword(Request $request)
     {
         return view('forgot-password', Controller::baseControllerInit($request)->toArrayable());
     }
 
-    public function forgetpasswordpost(Request $request)
+    public function forgetPasswordPost(Request $request)
     {
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
@@ -232,7 +233,12 @@ class MemberController extends Controller
                 "10000",
                 Cache::get("guest_id".$fingerprint)
             ]));
-            return redirect('register')->withErrors($v)->withInput();
+            $alert = new Alert("%type%", $v->all());
+            return response()->json([
+                "message" => $alert,
+                "error_keys" => $v->keys(),
+            ], ResponseHTTP::HTTP_BAD_REQUEST);
+                //redirect('register')->withErrors($v)->withInput();
         }else{
             // 可以在这里实现登录逻辑，或者重定向到登录页面
             Log::info($v['username'] . ": registering");
@@ -256,7 +262,14 @@ class MemberController extends Controller
 
             Cache::put($cacheKey, true, 60);
             Auth::login($user);
-            return redirect(route("home"))->with('mail', true);
+            event(new UserNotification([
+
+            ]));
+            return response()->json([
+                "message" => "註冊完成",
+                "redirect" => route(RouteNameField::PageHome->value)
+            ], ResponseHTTP::HTTP_BAD_REQUEST);
+            //return redirect(route("home"))->with('mail', true);
         }
     }
 
@@ -333,7 +346,7 @@ class MemberController extends Controller
         return view('profile', $this::baseControllerInit($request)->toArrayable());
     }
 
-    public function profilepost(Request $request)
+    public function profilePost(Request $request)
     {
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
