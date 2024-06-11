@@ -17,7 +17,8 @@ function register(){
             repasswordTooltip: children[5],
             phone: children[6].children[1],
             phoneTooltip: children[6],
-            submit: children[7],
+            submit: children[8],
+            alert: children[9],
         };
         console.log(object);
         object.submit.onclick = ()=>{
@@ -102,23 +103,24 @@ function register(){
             formdata.append("phone", object.phone.value);
             formdata.append("password",  Utils.encodeContext(object.password.value).compress);
             formdata.append("password_confirmation",  Utils.encodeContext(object.repassword.value).compress);
+
             axios.post("/register", formdata, {
                 adapter: "fetch",
             }).then(async (res) => {
-                let json = await res.json();
-                console.log(json);
+                var data = res.data;
+                console.log(data);
             });
-            fetch("/register", {
-                method: 'post',
-                body: formdata,
-                headers: {
-                    'X-CSRF-TOKEN': csrf.value
-                },
-            }).then(async (res) => {
-                //console.log(res);
-                let json = await res.json();
-                console.log(json);
-            });
+            //fetch("/register", {
+            //    method: 'post',
+            //    body: formdata,
+            //    headers: {
+            //        'X-CSRF-TOKEN': csrf.value
+            //    },
+            //}).then(async (res) => {
+            //    //console.log(res);
+            //    let json = await res.json();
+            //    console.log(json);
+            //});
         };
     }
     return false;
