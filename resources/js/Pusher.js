@@ -1,4 +1,5 @@
 import Pusher from 'pusher-js';
+import axios from "axios";
 import * as Utils from './utils.js';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
