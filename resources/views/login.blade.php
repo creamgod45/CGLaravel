@@ -27,7 +27,7 @@
                 <input class="col form-solid" type="password" name="password" required>
             </div>
             <a class="link" href="{{route(RouteNameField::PageForgetPassword->value)}}">忘記密碼</a>
-            <a class="link" href="{{route('member.form-register')}}">註冊會員</a>
+            <a class="link" href="{{route(RouteNameField::PageRegisterPost->value)}}">註冊會員</a>
             <div class="button">
                 <button type="submit" class="btn-ripple btn btn-md-strip ">{{$i18N->getLanguage(ELanguageText::login_btn)}}</button>
             </div>

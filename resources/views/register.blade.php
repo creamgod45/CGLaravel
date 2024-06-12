@@ -16,8 +16,8 @@
 @section('content')
     <div class="register-frame">
         <form class="register" data-fn="register" method="POST"
-              data-token="{{(new CSRF("member.register.token"))->get()}}"
-              action="{{ route('member.form-register-post') }}">
+              data-token="{{(new CSRF(\App\Lib\Utils\RouteNameField::PageRegisterPost->value))->get()}}"
+              action="{{ route(\App\Lib\Utils\RouteNameField::PageRegisterPost->value) }}">
             <input type="hidden" name="_token" id="csrf_token" value="{{csrf_token()}}">
             <div class="title">{{$i18N->getLanguage(ELanguageText::register_title)}}</div>
             <div class="row tooltip-gen tooltip-right-to-left tooltip-error !mt-3 !break-keep"

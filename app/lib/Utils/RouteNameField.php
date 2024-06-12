@@ -17,9 +17,11 @@ enum RouteNameField :string
     case PageProfilePost = 'root.member.profile.post';
     case PageMembers = 'root.member.list';
     case PageLogout = 'root.member.logout';
+    case PageRegisterPost = 'root.member.register.post';
 
     // API
     case APIEncodeJson = 'root.api.EncodeJson';
     case APILanguage = 'root.api.Language';
     case APIBrowser = 'root.api.Browser';
+    case APIHTMLTemplateNotification = 'root.api.HTMLTemplateNotification';
 }

@@ -252,7 +252,7 @@
             <div class="breadcrumb-demo">
                 這是 breadcrumb 示範
                 <div class="breadcrumb">
-                    <a href="{{ route('home') }}" class="bcitem">
+                    <a href="{{ route(\App\Lib\Utils\RouteNameField::PageHome->value) }}" class="bcitem">
                         <i class="fa-solid fa-house"></i>&nbsp;Home
                     </a>
                     <a class="bcitem">

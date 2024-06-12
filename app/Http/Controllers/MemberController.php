@@ -63,11 +63,11 @@ class MemberController extends Controller
         if (!hash_equals((string)$request->route('id'), (string)$user->getKey()) ||
             !hash_equals((string)$request->route('hash'), sha1($user->getEmailForVerification()))) {
             //return response()->json(["msg" => "Invalid verification link"], 400);
-            return redirect(route("home"))->with('mail_result', 0);
+            return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 0);
         }
 
         if ($user->hasVerifiedEmail()) {
-            return redirect(route("home"))->with('mail_result', 1);
+            return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 1);
         }
 
         $user->markEmailAsVerified();
@@ -76,7 +76,7 @@ class MemberController extends Controller
         event(new Verified($request->user()));
 
         // 返回验证成功的响应
-        return redirect(route("home"))->with('mail_result', 2);
+        return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 2);
     }
 
     public function passwordReset(Request $request)
@@ -89,7 +89,7 @@ class MemberController extends Controller
 
         if($v instanceof MessageBag){
             // validator errors here
-            return redirect(route('home'))->with('invaild',true)->withErrors($v);
+            return redirect(route(RouteNameField::PageHome->value))->with('invaild',true)->withErrors($v);
         }else{
             return view('passwordreset', $this::baseGlobalVariable($request, ['token'=>$v["token"],'email'=>$v["email"]])->toArrayable());
         }
@@ -148,7 +148,7 @@ class MemberController extends Controller
         }else{
             $cacheKey = $validate['email'].":forgetpassword";
             if (Cache::has($cacheKey)) {
-                return redirect(route("home"))->with('mail', false);
+                return redirect(route(RouteNameField::PageHome->value))->with('mail', false);
             }else{
                 $status = Password::sendResetLink(
                     ['email'=>$validate['email']]
@@ -169,15 +169,15 @@ class MemberController extends Controller
 
         $user = Auth::user();
         if ($user->hasVerifiedEmail()) {
-            return redirect(route("home"))->with('mail_result', 1);
+            return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 1);
         }
         $cacheKey = $user->UUID . ":mail-sent";
         if (Cache::has($cacheKey)) {
-            return redirect(route("home"))->with('mail', false);
+            return redirect(route(RouteNameField::PageHome->value))->with('mail', false);
         } else {
             $user->notify(new VerifyEmailNotification($i18N));
             Cache::put($cacheKey, true, now()->addSeconds(60));
-            return redirect(route("home"))->with('mail', true);
+            return redirect(route(RouteNameField::PageHome->value))->with('mail', true);
         }
     }
 
@@ -228,7 +228,7 @@ class MemberController extends Controller
             Log::info($request->ip() . ": " . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
             event(new UserNotification([
                 implode('<br>', $v->all()),
-                "註冊失敗",
+                "驗證失敗",
                 "error",
                 "10000",
                 Cache::get("guest_id".$fingerprint)
@@ -240,6 +240,10 @@ class MemberController extends Controller
             ], ResponseHTTP::HTTP_BAD_REQUEST);
                 //redirect('register')->withErrors($v)->withInput();
         }else{
+            if($v['token'] !== (new CSRF(RouteNameField::PageRegisterPost->value))->get()) return response()->json([
+                "message" => "CSRF 驗證碼失效",
+                "error_keys" => ['token'],
+            ], ResponseHTTP::HTTP_BAD_REQUEST);
             // 可以在这里实现登录逻辑，或者重定向到登录页面
             Log::info($v['username'] . ": registering");
             $user = Member::create([
@@ -253,22 +257,40 @@ class MemberController extends Controller
             Log::info($user->username . ": registered");
 
             // 发送验证邮件
-            Log::info($user->username . ": mailing");
-            $instance = new VerifyEmailNotification($i18N);
-            $instance->delay(now()->addSeconds(5));
-            $user->notify($instance);
-            Log::info($user->username . ": mailed");
             $cacheKey = $user->UUID . ":mail-sent";
-
-            Cache::put($cacheKey, true, 60);
-            Auth::login($user);
-            event(new UserNotification([
-
-            ]));
-            return response()->json([
-                "message" => "註冊完成",
-                "redirect" => route(RouteNameField::PageHome->value)
-            ], ResponseHTTP::HTTP_BAD_REQUEST);
+            if(Cache::has($cacheKey)) {
+                event(new UserNotification([
+                    $i18N->getLanguage(ELanguageText::notification_email_description),
+                    $i18N->getLanguage(ELanguageText::notification_email_verifyTitle),
+                    "warning",
+                    "10000",
+                    Cache::get("guest_id".$fingerprint)
+                ]));
+                return response()->json([
+                    "message" => "註冊成功請驗證信箱!!在 1 小時候驗證將過期",
+                    "redirect" => route(RouteNameField::PageHome->value)
+                ]);
+            }else{
+                Log::info($user->username . ": mailing");
+                $instance = new VerifyEmailNotification($i18N);
+                $instance->delay(now()->addSeconds(5));
+                $user->notify($instance);
+                Log::info($user->username . ": mailed");
+                Cache::put($cacheKey, true, now()->addHours(1));
+                Auth::login($user);
+                Member::
+                event(new UserNotification([
+                    $i18N->getLanguage(ELanguageText::notification_email_description),
+                    $i18N->getLanguage(ELanguageText::notification_email_verifyTitle),
+                    "success",
+                    "10000",
+                    Cache::get("guest_id".$fingerprint)
+                ]));
+                return response()->json([
+                    "message" => "註冊成功請驗證信箱!!在 1 小時候驗證將過期",
+                    "redirect" => route(RouteNameField::PageHome->value)
+                ]);
+            }
             //return redirect(route("home"))->with('mail', true);
         }
     }
@@ -309,7 +331,7 @@ class MemberController extends Controller
                                 Auth::logout();
                                 return back()->withErrors($errors);
                             }
-                            return redirect(route('home'))->with('custom_message', [
+                            return redirect(route(RouteNameField::PageHome->value))->with('custom_message', [
                                 $i18N->getLanguage(ELanguageText::notification_login_title),
                                 $i18N->getLanguage(ELanguageText::notification_login_success),
                                 ENotificationType::success
