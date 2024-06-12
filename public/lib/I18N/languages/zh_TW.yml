@@ -331,7 +331,7 @@ notification_email_failedAppendText: '認證失敗: '
 notification_email_InvalidVerificationLink: 驗證連結無效
 notification_email_hasVerifiedEmail: 電子郵件已驗證
 notification_email_markEmailAsVerified: 驗證電子郵件成功
-notification_email_fail_description: 請前往您的郵箱驗證您的電子郵件，然後才能訪問網站的其他功能。
+notification_email_fail_description: 你已經完成註冊，請前往您的郵箱驗證您的電子郵件。
 notification_invaild_title: 錯誤
 notification_invaild_description: 輸入的資訊無效
 passwords_reset: 您的密碼已重設。

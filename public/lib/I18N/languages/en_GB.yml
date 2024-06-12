@@ -331,7 +331,7 @@ notification_email_failedAppendText: 'Authentication failed: '
 notification_email_InvalidVerificationLink: 'Invalid authentication connection'
 notification_email_hasVerifiedEmail: 'Email already verified'
 notification_email_markEmailAsVerified: 'Verification email successful'
-notification_email_fail_description: 'Please go to your mailbox to verify your email before you can access other features of the website.'
+notification_email_fail_description: 'You have completed registration, please go to your mailbox to verify your email.'
 notification_invaild_title: Error
 notification_invaild_description: 'Invalid information entered'
 passwords_reset: 'Your password has been reset.'

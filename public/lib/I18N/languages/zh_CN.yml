@@ -331,7 +331,7 @@ notification_email_failedAppendText: '认证失败: '
 notification_email_InvalidVerificationLink: 验证连结无效
 notification_email_hasVerifiedEmail: 电子邮件已验证
 notification_email_markEmailAsVerified: 验证电子邮件成功
-notification_email_fail_description: 请前往您的邮箱验证您的电子邮件，然后才能访问网站的其他功能。
+notification_email_fail_description: 你已经完成注册，请前往您的邮箱验证您的电子邮件。
 notification_invaild_title: 错误
 notification_invaild_description: 输入的信息无效
 passwords_reset: '您的密码已重设。 '
