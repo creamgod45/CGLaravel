@@ -114,6 +114,7 @@ class ValidatorBuilder
             'email' => ['required', 'string', 'email', 'max:255', 'unique:members'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'string', 'min:10', 'max:255', 'unique:members'],
+            'token' => ['required', 'string'],
             ];
         $this->lastkey = 5;
     }
@@ -122,7 +123,9 @@ class ValidatorBuilder
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
-        $this->rules = ['email' => ['required', 'string', 'email', 'max:255'],];
+        $this->rules = [
+            'email' => ['required', 'string', 'email', 'max:255'],
+        ];
         $this->lastkey = 2;
     }
 
@@ -130,7 +133,10 @@ class ValidatorBuilder
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
-        $this->rules = ['token' => 'required', 'email' => 'required|email'];
+        $this->rules = [
+            'token' => 'required',
+            'email' => 'required|email'
+        ];
         $this->lastkey = 3;
     }
 
@@ -138,7 +144,11 @@ class ValidatorBuilder
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
-        $this->rules = ['token' => 'required', 'email' => 'required|email', 'password' => 'required|min:8|confirmed',];
+        $this->rules = [
+            'token' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ];
         $this->lastkey = 4;
     }
 
@@ -146,7 +156,15 @@ class ValidatorBuilder
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
-        $this->rules = ['type_id' => ['required', 'numeric', 'max:10', 'unique:animals'], 'name' => ['required', 'string', 'max:255'], 'birthday' => ['date', 'nullable'], 'area' => ['string', 'max:255', 'nullable'], 'fix' => ['required', 'max:1', 'max_digits:1', 'min_digits:0'], 'description' => ['string', 'nullable'], 'personality' => ['string', 'nullable'],];
+        $this->rules = [
+            'type_id' => ['required', 'numeric', 'max:10', 'unique:animals'],
+            'name' => ['required', 'string', 'max:255'],
+            'birthday' => ['date', 'nullable'],
+            'area' => ['string', 'max:255', 'nullable'],
+            'fix' => ['required', 'max:1', 'max_digits:1', 'min_digits:0'],
+            'description' => ['string', 'nullable'],
+            'personality' => ['string', 'nullable'],
+        ];
         $this->lastkey = 6;
     }
 
@@ -154,7 +172,10 @@ class ValidatorBuilder
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
-        $this->rules = ['code' => ['required', 'string', 'min:5'], 'token' => ['required', 'string'],];
+        $this->rules = [
+            'code' => ['required', 'string', 'min:5'],
+            'token' => ['required', 'string'],
+        ];
         $this->lastkey = 8;
     }
 
@@ -162,7 +183,9 @@ class ValidatorBuilder
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
-        $this->rules = ['token' => ['required', 'string'],];
+        $this->rules = [
+            'token' => ['required', 'string'],
+        ];
         $this->lastkey = 10;
     }
 
