@@ -27,20 +27,20 @@ class UserNotification implements ShouldBroadcast
         try {
             Log::info("UserNotification Event trigger: " . new CGStringable($this->message));
         } catch (Exception $e) {
-            Log::info("App\\Events\\UserNotification:30:13 Exception = ".$e->getMessage());
+            Log::info("App\\Events\\UserNotification:30:13 Exception = " . $e->getMessage());
         }
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return array<int, Channel>
      */
     public function broadcastOn(): array
     {
         $var = $this->message[4];
         return [
-            new Channel('Notification.user.'.$var),
+            new Channel('Notification.user.' . $var),
         ];
     }
 

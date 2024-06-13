@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [InternalController::class,'branding'])->name(RouteNameField::PageHome->value);
 Route::get('designcomponents', [InternalController::class,'designComponents'])->name(RouteNameField::PageDesignComponents->value);
 Route::post('encode.json', [InternalController::class, 'encodeJson'])->name(RouteNameField::APIEncodeJson->value);
-Route::post('broadcast', [InternalController::class, 'broadcast_Notification_Notification']);
+Route::post('broadcast', [InternalController::class, 'broadcast_Notification_Notification'])->name(RouteNameField::APIBroadcast->value);
 Route::post('language', [InternalController::class, 'language'])->name(RouteNameField::APILanguage->value);
 //Route::post('user', [InternalController::class, 'user']);
 Route::post('browser', [InternalController::class, 'browser'])->name(RouteNameField::APIBrowser->value);
@@ -39,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::group(["prefix"=>"HTMLTemplate"], function () {
-    Route::post('Notification', [ HTMLTemplateController::class, 'Notification' ])->name('HTMLTemplate.Notification');
+    Route::post('Notification', [ HTMLTemplateController::class, 'Notification' ])->name(RouteNameField::APIHTMLTemplateNotification->value);
 });
 
 Route::middleware('auth')->group(function () {
@@ -63,8 +63,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(EMiddleWareAliases::guest->name)->group(function () {
-    Route::get('login', [MemberController::class, 'loginPage'])->name('member.form-login');
-    Route::post('login', [MemberController::class, 'login']);
-    Route::get('register', [MemberController::class, 'showRegistrationForm'])->name(RouteNameField::PageRegisterPost->value);
+    Route::get('login', [MemberController::class, 'loginPage'])->name(RouteNameField::PageLogin->value);
+    Route::post('login', [MemberController::class, 'login'])->name(RouteNameField::PageLoginPost->value);
+    Route::get('register', [MemberController::class, 'showRegistrationForm'])->name(RouteNameField::PageRegister->value);
     Route::post('register', [MemberController::class, 'register'])->name("member.form-register-post");
 });

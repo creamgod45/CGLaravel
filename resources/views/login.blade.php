@@ -15,7 +15,7 @@
 @section('title', $i18N->getLanguage(ELanguageText::login_title))
 @section('content')
     <div class="register-frame">
-        <form class="register ct" data-fn="login-submit" data-target="" method="POST" action="{{ route('member.form-login') }}">
+        <form class="register ct" data-fn="login-submit" data-target="#alert" method="POST" action="{{ route(RouteNameField::PageLoginPost->value) }}">
             @csrf
             <div class="title">{{$i18N->getLanguage(ELanguageText::login_title)}}</div>
             <div class="row !mt-2">
@@ -27,13 +27,15 @@
                 <input class="col form-solid" type="password" name="password" required>
             </div>
             <a class="link" href="{{route(RouteNameField::PageForgetPassword->value)}}">忘記密碼</a>
-            <a class="link" href="{{route(RouteNameField::PageRegisterPost->value)}}">註冊會員</a>
+            <a class="link" href="{{route(RouteNameField::PageRegister->value)}}">註冊會員</a>
             <div class="button">
-                <button type="submit" class="btn-ripple btn btn-md-strip ">{{$i18N->getLanguage(ELanguageText::login_btn)}}</button>
+                <button type="submit" class="btn-ripple btn btn-md-strip">{{$i18N->getLanguage(ELanguageText::login_btn)}}</button>
             </div>
-            @if ($errors->any())
-                <x-alert type="danger" :messages="$errors->all()"/>
-            @endif
+            <div id="alert">
+                @if ($errors->any())
+                    <x-alert type="danger" :messages="$errors->all()"/>
+                @endif
+            </div>
         </form>
     </div>
 @endsection

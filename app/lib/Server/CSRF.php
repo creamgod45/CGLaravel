@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 class CSRF
 {
     public array|string $key;
+
     public function __construct(array|string $key)
     {
         $this->key = $key;
@@ -49,7 +50,7 @@ class CSRF
      */
     public function equal(mixed $value): bool
     {
-        if($value === null) throw new Exception('$value is not a Nullable variable');
+        if ($value === null) throw new Exception('$value is not a Nullable variable');
         return $this->get() === $value;
     }
 
@@ -61,7 +62,7 @@ class CSRF
      */
     public static function equalManual(array|string $key, mixed $value): bool
     {
-        if($value === null) throw new Exception('$value is not a Nullable variable');
+        if ($value === null) throw new Exception('$value is not a Nullable variable');
         if (Cache::has($key)) {
             $value1 = EncryptedCache::get($key);
             return $value1 === $value;

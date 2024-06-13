@@ -1,5 +1,5 @@
 @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/registerForm.js'])
-@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Server\CSRF;use Illuminate\Http\Request)
+@use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Server\CSRF;use Illuminate\Http\Request;use App\Lib\Utils\RouteNameField)
 @php
     /***
      * @var string[] $urlParams
@@ -67,7 +67,7 @@
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_phone)}}</label>
                 <input class="col form-solid" type="text" minlength="10" name="phone" value="{{old("phone")}}" required>
             </div>
-            <a class="link" href="{{route('member.form-login')}}">登入會員</a>
+            <a class="link" href="{{route(RouteNameField::PageLogin->value)}}">登入會員</a>
             <div class="button">
                 <button type="button"
                         class="btn btn-ripple btn-md-strip">{{$i18N->getLanguage(ELanguageText::register_btn)}}</button>

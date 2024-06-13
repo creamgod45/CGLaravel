@@ -10,14 +10,15 @@ use Illuminate\View\Component;
 class BooleanStringCover extends Component
 {
     public string $result;
+
     public function __construct(
-        public $value,
+        public      $value,
         public I18N $i18N
     )
     {
-        if($this->value==="true"){
+        if ($this->value === "true") {
             $this->result = $this->i18N->getLanguage(ELanguageText::BooleanStringCoverTrue);
-        }else{
+        } else {
             $this->result = $this->i18N->getLanguage(ELanguageText::BooleanStringCoverFalse);
         }
     }

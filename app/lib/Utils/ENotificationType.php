@@ -11,7 +11,7 @@ enum ENotificationType
     case error;
     case success;
 
-    public static function isVaild(string $name):bool
+    public static function isVaild(string $name): bool
     {
         foreach (ENotificationType::cases() as $case) {
             if ((new CGString($case->name))->toUpperCase()->toString() === (new CGString($name))->toUpperCase()->toString()) {

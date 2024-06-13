@@ -7,6 +7,7 @@ use App\Lib\Type\Array\CGArray;
 class CGString implements CGStringInterface
 {
     protected string $string;
+
     public function __construct(string $string = '')
     {
         $this->string = $string;

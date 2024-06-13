@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Events\Notification;
 use App\Events\UserNotification;
 use Illuminate\Console\Command;
 

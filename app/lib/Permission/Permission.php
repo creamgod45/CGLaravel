@@ -20,7 +20,7 @@ class Permission
      * @param bool $adminBydefault
      * @param Permission[] $subPermission
      */
-    public function __construct(string $page, string $name, string $description="", array $subPermission=[], bool $adminBydefault=false)
+    public function __construct(string $page, string $name, string $description = "", array $subPermission = [], bool $adminBydefault = false)
     {
         $this->page = $page;
         $this->name = $name;

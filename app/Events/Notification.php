@@ -27,14 +27,14 @@ class Notification implements ShouldBroadcast
         try {
             Log::info("Notification Event trigger: " . new CGStringable($this->message));
         } catch (Exception $e) {
-            Log::info("App\\Events\\Notification:31:13 Exception = ".$e->getMessage());
+            Log::info("App\\Events\\Notification:31:13 Exception = " . $e->getMessage());
         }
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return array<int, Channel>
      */
     public function broadcastOn(): array
     {

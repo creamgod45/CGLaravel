@@ -147,7 +147,7 @@ enum ELanguageCode
     case zh_MO; // Traditional Chinese (Singapore)
     case zu_ZA; // Zulu (South Africa)
 
-    public static function isVaild(string $name):bool
+    public static function isVaild(string $name): bool
     {
         foreach (ELanguageCode::cases() as $case) {
             if ((new CGString($case->name))->toUpperCase()->toString() === (new CGString($name))->toUpperCase()->toString()) {

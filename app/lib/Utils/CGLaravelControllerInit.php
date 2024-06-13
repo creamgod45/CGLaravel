@@ -35,7 +35,7 @@ class CGLaravelControllerInit
      * @param Request $request
      * @param array $MoreParams
      */
-    public function __construct(I18N $i18N, array $URLParams, Request $request, array $MoreParams=[], string $fingerprint="")
+    public function __construct(I18N $i18N, array $URLParams, Request $request, array $MoreParams = [], string $fingerprint = "")
     {
         $this->i18N = $i18N;
         $this->URLParams = $URLParams;

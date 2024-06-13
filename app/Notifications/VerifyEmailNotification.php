@@ -6,8 +6,6 @@ use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
 use App\Lib\Type\String\CGStringable;
 use App\Lib\Utils\RouteNameField;
-use App\Lib\Utils\Utilsv2;
-use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -46,18 +44,9 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
         $verificationUrl = $this->verificationUrl($notifiable);
         Log::info("=================================================================================================");
         Log::info("Proccess: VerifyEmailNotification");
-        try {
-            Log::info("Debug \$Instance: (encode)" . Utilsv2::encodeContext((new CGStringable($this)))['compress']);
-        } catch (Exception $e) {
-            Log::warning($e->getMessage());
-        }
+        Log::info("Debug \$Instance: " . (new CGStringable($this)));
         Log::info("Debug \$i18N: " . $this->i18N->getLanguageCode()->name);
         Log::info("Debug \$verificationUrl: " . $verificationUrl);
-        try {
-            Log::info("Debug \$notifiable: (encode)" . Utilsv2::encodeContext((new CGStringable($notifiable)))['compress']);
-        } catch (Exception $e) {
-            Log::warning($e->getMessage());
-        }
         Log::info("=================================================================================================");
         return (new MailMessage)->subject($this->i18N->getLanguage(ELanguageText::RegisterMailTitle))->line($this->i18N->getLanguage(ELanguageText::RegisterMailLine1))->action($this->i18N->getLanguage(ELanguageText::RegisterMailAction1), $verificationUrl)->line($this->i18N->getLanguage(ELanguageText::RegisterMailLine2));
     }

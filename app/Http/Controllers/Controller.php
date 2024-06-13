@@ -41,14 +41,14 @@ class Controller extends BaseController
     {
         $url = $request->url();
         $path = parse_url($url, PHP_URL_PATH);
-        $router=[];
-        if($path!==null){
+        $router = [];
+        if ($path !== null) {
             $pathParts = explode('/', $path);
             $router = array_filter($pathParts);
         }
         $lang = App::getLocale();
-        if(isset($_COOKIE['lang'])){
-            $lang=$_COOKIE['lang'];
+        if (isset($_COOKIE['lang'])) {
+            $lang = $_COOKIE['lang'];
             //dump(1);
         }
         //dump($lang);
@@ -63,8 +63,9 @@ class Controller extends BaseController
      * @param Request $request
      * @return string
      */
-    public function fingerprint(Request $request){
-        return sha1($request->ip().$request->getHost().$request->userAgent());
+    public function fingerprint(Request $request)
+    {
+        return sha1($request->ip() . $request->getHost() . $request->userAgent());
     }
 
     /**
@@ -72,7 +73,8 @@ class Controller extends BaseController
      * @param Request $request
      * @return string
      */
-    public static function fingerprintStaticable(Request $request){
+    public static function fingerprintStaticable(Request $request)
+    {
         return (new Controller)->fingerprint($request);
     }
 }

@@ -146,7 +146,8 @@ class Filter
         }
     }
 
-    public static function intFilter($i){
+    public static function intFilter($i)
+    {
         $value = intval($i);
         if ($r = filter_var($value, FILTER_VALIDATE_INT)) {
             return $r;

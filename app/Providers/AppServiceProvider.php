@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
             // $event->connectionName
             // $event->job
             // $event->exception
-            Log::warning("Queue::failing(JobFailed): " , [
+            Log::warning("Queue::failing(JobFailed): ", [
                 $event->job->getJobId(),
                 $event->job->getQueue(),
                 $event->job->getRawBody(),

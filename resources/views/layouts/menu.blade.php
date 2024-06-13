@@ -107,11 +107,11 @@
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_VendorOperations)}}</div>
                     @guest
-                        <a href="{{route('member.form-login')}}" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageLogin->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::login_title)}}</span>
                         </a>
-                        <a href="/register" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageRegister->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::register_title)}}</span>
                         </a>

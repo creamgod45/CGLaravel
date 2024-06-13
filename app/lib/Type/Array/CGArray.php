@@ -37,10 +37,11 @@ class CGArray implements CGArrayInterface
     /**
      * 搬移陣列中的參數至新的參數
      */
-    public function shiftKeytoNewKey($oldKey, $newKey,bool $deleteold=true){
-        if($this->IsEmpty()) return false;
+    public function shiftKeytoNewKey($oldKey, $newKey, bool $deleteold = true)
+    {
+        if ($this->IsEmpty()) return false;
         $this->Set($newKey, $this->Get($oldKey));
-        if($deleteold){
+        if ($deleteold) {
             $this->Delete($oldKey, true);
         }
         return $this;
@@ -59,10 +60,11 @@ class CGArray implements CGArrayInterface
         return $this->array[$this->Size() - 1];
     }
 
-    public function getLastObject(){
+    public function getLastObject()
+    {
         $k = 0;
         foreach ($this->array as $item) {
-            if(count($this->array) === $k){
+            if (count($this->array) === $k) {
                 return $item;
             }
             $k++;
@@ -70,11 +72,12 @@ class CGArray implements CGArrayInterface
         return null;
     }
 
-    public function splitLastObjectFromNumber($number=1){
+    public function splitLastObjectFromNumber($number = 1)
+    {
         $k = 0;
         $count = $this->count();
         foreach ($this->array as $key => $item) {
-            if($k>=$count-$number){
+            if ($k >= $count - $number) {
                 $this->Delete($key);
             }
             $k++;
@@ -87,10 +90,11 @@ class CGArray implements CGArrayInterface
         return count($this->array);
     }
 
-    public function splitFirstObjectFromNumber($number=1){
+    public function splitFirstObjectFromNumber($number = 1)
+    {
         $k = 0;
         foreach ($this->array as $key => $item) {
-            if($k<=$number){
+            if ($k <= $number) {
                 $this->Delete($key);
             }
             $k++;
@@ -109,7 +113,8 @@ class CGArray implements CGArrayInterface
         return $this->array[0];
     }
 
-    public function getFirstObject(){
+    public function getFirstObject()
+    {
         foreach ($this->array as $item) {
             return $item;
         }
@@ -132,8 +137,9 @@ class CGArray implements CGArrayInterface
         return $this;
     }
 
-    public function Delete($Key, $force=false){
-        if(!$force) {
+    public function Delete($Key, $force = false)
+    {
+        if (!$force) {
             if (empty($this->array[$Key])) return null;
         }
         unset($this->array[$Key]);
@@ -167,7 +173,7 @@ class CGArray implements CGArrayInterface
      */
     public function GetValuetoCGArray($Index): bool|CGArray
     {
-        if(!is_array($this->array[$Index])) return false;
+        if (!is_array($this->array[$Index])) return false;
         return new CGArray($this->array[$Index]);
     }
 
@@ -176,8 +182,10 @@ class CGArray implements CGArrayInterface
         // TODO: Implement get() method.
         return $this->array[$Index];
     }
-    public function hasKey($key){
-        if(@empty($this->Get($key))){
+
+    public function hasKey($key)
+    {
+        if (@empty($this->Get($key))) {
             return false;
         }
         return true;

@@ -8,6 +8,7 @@ use Psy\Util\Json;
 class CGStringable
 {
     private $string;
+
     /**
      * @throws Exception
      */
@@ -17,26 +18,27 @@ class CGStringable
             $this->string = Json::encode($variable);
         } elseif (is_object($variable)) {
             $this->string = serialize($variable);
-        }elseif (is_bool($variable)) {
-            if($variable){
+        } elseif (is_bool($variable)) {
+            if ($variable) {
                 $this->string = 'true';
-            }else{
+            } else {
                 $this->string = 'false';
             }
         } elseif (is_numeric($variable)) {
-            $this->string = (string) $variable;
-        }  elseif (is_double($variable)) {
-            $this->string = (string) $variable;
+            $this->string = (string)$variable;
+        } elseif (is_double($variable)) {
+            $this->string = (string)$variable;
         } elseif (is_float($variable)) {
-            $this->string = (string) $variable;
-        } elseif(is_string($variable)) {
+            $this->string = (string)$variable;
+        } elseif (is_string($variable)) {
             $this->string = $variable;
         } else {
             throw new Exception("Not supported converter Stringable variable", 0);
         }
     }
 
-    public function toString(){
+    public function toString()
+    {
         return $this->string;
     }
 

@@ -500,9 +500,9 @@ class Utils
      * @param bool $filterPathName
      * @return array|CGString[]
      */
-    public static function exploreDirectory($path, bool $CGString = false, bool $deep = false, bool $fileOnly = false, bool $hideFileSearchable = true, array $filterFileExtension = [], int $filterSizeLimit = -1, array $filterMIMEType = [], bool $filterPathName= false): array
+    public static function exploreDirectory($path, bool $CGString = false, bool $deep = false, bool $fileOnly = false, bool $hideFileSearchable = true, array $filterFileExtension = [], int $filterSizeLimit = -1, array $filterMIMEType = [], bool $filterPathName = false): array
     {
-        $originFilePath="";
+        $originFilePath = "";
         $results = [];
         $directoryOptions = FilesystemIterator::SKIP_DOTS; // Always skip "." and ".."
 
@@ -515,8 +515,8 @@ class Utils
         }
 
         foreach ($iterator as $item) {
-            if($originFilePath===""){
-                $originFilePath=(new CGString($item->getPathname()))->Replace($item->getFilename())->toString();
+            if ($originFilePath === "") {
+                $originFilePath = (new CGString($item->getPathname()))->Replace($item->getFilename())->toString();
             }
             $fileName = $item->getFilename();
 
@@ -553,23 +553,23 @@ class Utils
 
             $nowfilepath = (new CGString($filePath))->Replace($fileName)->toString();
 
-            if($filterPathName && $nowfilepath === $originFilePath){
-                if($CGString){
+            if ($filterPathName && $nowfilepath === $originFilePath) {
+                if ($CGString) {
                     $results[] = new CGString($fileName);
-                }else {
+                } else {
                     $results[] = $fileName;
                 }
-            }else{
-                if($filterPathName) {
-                    if($CGString){
+            } else {
+                if ($filterPathName) {
+                    if ($CGString) {
                         $results[] = (new CGString($filePath))->Replace($originFilePath);
-                    }else {
+                    } else {
                         $results[] = (new CGString($filePath))->Replace($originFilePath)->toString();
                     }
-                }else{
-                    if($CGString){
+                } else {
+                    if ($CGString) {
                         $results[] = new CGString($filePath);
-                    }else {
+                    } else {
                         $results[] = $filePath;
                     }
                 }

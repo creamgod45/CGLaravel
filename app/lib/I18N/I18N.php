@@ -27,19 +27,19 @@ class I18N
      */
     private array $ELanguageCodeList;
 
-    private bool $init=false;
+    private bool $init = false;
 
     /**
      * @param ELanguageCode|null $languageCode 設定現在語言狀態並且讀取語言檔案並覆蓋 Set the current language status and read the language file and overwrite it
      * @param bool $CompileMode 直接編譯模式(忽略沒有編譯過的詞條) Direct compilation mode (ignoring uncompiled entries)
      * @param ELanguageCode[] $limitMode 允許編譯的語言 Languages that allow compilation
      */
-    public function __construct(?ELanguageCode $languageCode = ELanguageCode::en_US, bool $CompileMode= false, array $limitMode=[])
+    public function __construct(?ELanguageCode $languageCode = ELanguageCode::en_US, bool $CompileMode = false, array $limitMode = [])
     {
-        $this->ELanguageCodeList=$limitMode;
+        $this->ELanguageCodeList = $limitMode;
         $this->buildFirstLanguageFile($CompileMode, $limitMode);
         $this->buildMissingLanguageDictionary($languageCode, $limitMode);
-        $this->init=true;
+        $this->init = true;
     }
 
     /**
@@ -64,18 +64,18 @@ class I18N
      * @param ELanguageCode[] $limitMode
      * @return void
      */
-    public function buildMissingLanguageDictionary($languageCode, array $limitMode=[]): void
+    public function buildMissingLanguageDictionary($languageCode, array $limitMode = []): void
     {
         $this->buildLanguageMap();
-        if(!empty($limitMode)){
+        if (!empty($limitMode)) {
             $this->extracted($limitMode);
-        }else{
+        } else {
             $this->extracted(ELanguageCode::cases());
         }
         if ($languageCode instanceof ELanguageCode) {
             // 選擇語系
             $this->setLanguageCode($languageCode);
-        }else{
+        } else {
             $this->setLanguageCode(ELanguageCode::en_US);
         }
     }
@@ -85,21 +85,21 @@ class I18N
      * @param ELanguageCode[] $limitMode
      * @return void
      */
-    public function buildFirstLanguageFile($CompileMode,array $limitMode=[]): void
+    public function buildFirstLanguageFile($CompileMode, array $limitMode = []): void
     {
         if (file_exists("I18N.lock") && !$CompileMode) return;
         FileSystem::write("I18N.lock", time() . ": build I18N");
         $this->buildLanguageMap();
-        $listtext=[];
+        $listtext = [];
         foreach ($this->languageTextList as $item) {
             $listtext [] = $item[0];
         }
         $dump = Yaml::dump($listtext);
-        if(!empty($limitMode)){
+        if (!empty($limitMode)) {
             foreach ($limitMode as $case) {
                 FileSystem::write("lib/I18N/languages/" . $case->name . ".yml", $dump);
             }
-        }else{
+        } else {
             foreach (ELanguageCode::cases() as $case) {
                 FileSystem::write("lib/I18N/languages/" . $case->name . ".yml", $dump);
             }
@@ -274,7 +274,8 @@ class I18N
         return $this;
     }
 
-    public function setLanguagev2(ELanguageText $elanguageText, string $value, bool $forceChangeValue=false){
+    public function setLanguagev2(ELanguageText $elanguageText, string $value, bool $forceChangeValue = false)
+    {
         $this->languageTextList[$elanguageText->name] = [$value, $forceChangeValue];
         return $this;
     }
@@ -301,11 +302,11 @@ class I18N
      */
     private function extracted(array $ELanguageCodeList): void
     {
-        $flag_a=true;
+        $flag_a = true;
         foreach ($ELanguageCodeList as $case) {
             if (!file_exists("lib/I18N/languages/" . $case->name . ".yml")) {
                 //Utils::pinv("1");
-                $listtext=[];
+                $listtext = [];
                 //dump($this->languageTextList);
                 foreach ($this->languageTextList as $item) {
                     $listtext [] = $item[0];

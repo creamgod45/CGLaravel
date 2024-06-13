@@ -65,6 +65,7 @@ document.addEventListener('BrowserIDLoadedEvent', () => {
 
 document.addEventListener('HTMLTemplateNotificationLoadedEvent', () => {
     //console.log(event);
+    console.log('publicChannel');
     let publicchannel = pusher.subscribe('Notification');
     publicchannel.bind('Notification', function (msg) {
         //console.log(msg);

@@ -115,7 +115,7 @@ class ValidatorBuilder
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'string', 'min:10', 'max:255', 'unique:members'],
             'token' => ['required', 'string'],
-            ];
+        ];
         $this->lastkey = 5;
     }
 
@@ -215,7 +215,7 @@ class ValidatorBuilder
         $this->rules = [
             'current-ps' => ['required', 'string'],
             'password' => ['required', 'string', 'confirmed'],
-            ];
+        ];
         $this->lastkey = 7;
     }
 
@@ -234,19 +234,19 @@ class ValidatorBuilder
      * @return array|MessageBag
      * @throws ValidationException
      */
-    public function validate($data, $decodeKeyList=[], $decodeContext = false)
+    public function validate($data, $decodeKeyList = [], $decodeContext = false)
     {
         $newdata = [];
-        if ($decodeContext===true) {
+        if ($decodeContext === true) {
             foreach ($data as $key => $datum) {
                 if (in_array($key, $decodeKeyList)) {
                     $newdata[$key] = Utilsv2::decodeContext($datum);
                 } else {
-                    $newdata[$key]=$datum;
+                    $newdata[$key] = $datum;
                 }
             }
             //Log::info("password newdata: ".Json::encode($newdata));
-        }else {
+        } else {
             $newdata = $data;
         }
         $validator = Validator::make($newdata, $this->getRules(), $this->getCustomMessages(), $this->getAtters());
