@@ -9,6 +9,7 @@ use App\Lib\I18N\ELanguageCode;
 use App\Lib\Utils\RouteNameField;
 use App\Lib\Utils\Utilsv2;
 use App\Models\Member;
+use Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
@@ -150,7 +151,7 @@ class PageTest extends TestCase
         $reactConnector = new ReactConnector($loop);
         $connector = new Connector($loop, $reactConnector);
 
-        $connector('wss://ws-ap1.pusher.com:443/app/faa244d58f2ef2333cd9?protocol=7&client=js&version=8.4.0-rc2&flash=false')
+        $connector('wss://ws-ap1.pusher.com:443/app/'.Config::get("broadcasting.connections.pusher.key").'?protocol=7&client=js&version=8.4.0-rc2&flash=false')
             ->then(function(WebSocket $conn) use($loop) {
                 echo "Connected to Pusher WebSocket\n";
 
