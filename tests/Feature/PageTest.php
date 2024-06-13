@@ -169,9 +169,6 @@ class PageTest extends TestCase
                             "info",
                             "10000",
                         ]));
-                        Artisan::call("broadcast:Notification test test info 10000");
-                        $output = Artisan::output();
-                        Log::info("Artisan::output ".$output);
                     }
 
                     // 订阅频道
@@ -183,6 +180,9 @@ class PageTest extends TestCase
                                 'channel' => 'Notification',
                             ],
                         ]));
+                        Artisan::call("broadcast:Notification test test info 10000");
+                        $output = Artisan::output();
+                        Log::info("Artisan::output ".$output);
                     }
 
                     // 处理自定义事件
@@ -205,6 +205,11 @@ class PageTest extends TestCase
                         }
                     }
                     Log::info('test02_the_Pusher_Broadcast_Receive looping');
+                    if(isset($data['event']) && $data['event'] == 'pusher:pong'){
+                        Artisan::call("broadcast:Notification test test info 10000");
+                        $output = Artisan::output();
+                        Log::info("Artisan::output ".$output);
+                    }
                 });
 
                 $conn->on('close', function($code = null, $reason = null) use($loop) {
