@@ -4,23 +4,21 @@ namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Events\Notification;
-use App\Jobs\BroadcastMessageJob;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\Utils\RouteNameField;
 use App\Lib\Utils\Utilsv2;
 use App\Models\Member;
 use Config;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Support\Facades\Log;
-use Psy\Util\Json;
-use Tests\TestCase;
-use Ratchet\Client\WebSocket;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Ratchet\Client\Connector;
+use Ratchet\Client\WebSocket;
 use React\EventLoop\Factory;
 use React\Socket\Connector as ReactConnector;
+use Tests\TestCase;
 
 class PageTest extends TestCase
 {
@@ -59,15 +57,19 @@ class PageTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_the_application_passwordreset(): void
+    public function test_the_application_ForgetPassword_redirect_to_Home_Route(): void
     {
         $response = $this->get(route(RouteNameField::PagePasswordReset->value));
-        //$response->dumpHeaders();
-        //$response->dump();
-        $response->assertStatus(302)->assertRedirectToRoute(RouteNameField::PageHome->value)->assertInvalid();
+        $response->assertStatus(302)->assertRedirectToRoute(RouteNameField::PageHome->value)->assertSessionHas('invaild', true);
     }
 
-    public function test_the_application_member(): void
+    public function test_the_application_PageEmailVerification_redirect_to_Route()
+    {
+        $response = $this->get(route(RouteNameField::PageEmailVerification->value));
+        $response->assertStatus(302)->assertRedirectToRoute(RouteNameField::PageHome->value)->assertSessionHas('mail_result', 0);
+    }
+
+    public function test_the_application_PageMembers_redirect_to_Route(): void
     {
         $response = $this->get(route(RouteNameField::PageMembers->value));
         //$response->dumpHeaders();
@@ -151,11 +153,11 @@ class PageTest extends TestCase
         $reactConnector = new ReactConnector($loop);
         $connector = new Connector($loop, $reactConnector);
 
-        $connector('wss://ws-ap1.pusher.com:443/app/'.Config::get("broadcasting.connections.pusher.key").'?protocol=7&client=js&version=8.4.0-rc2&flash=false')
-            ->then(function(WebSocket $conn) use($loop) {
+        $connector('wss://ws-ap1.pusher.com:443/app/' . Config::get("broadcasting.connections.pusher.key") . '?protocol=7&client=js&version=8.4.0-rc2&flash=false')
+            ->then(function (WebSocket $conn) use ($loop) {
                 echo "Connected to Pusher WebSocket\n";
 
-                $conn->on('message', function($msg) use ($conn, $loop) {
+                $conn->on('message', function ($msg) use ($conn, $loop) {
                     Log::info('test02_the_Pusher_Broadcast_Receive $conn->on:' . $msg);
                     echo "Received: {$msg}\n";
                     $data = json_decode($msg, true);
@@ -182,45 +184,45 @@ class PageTest extends TestCase
                         ]));
                         Artisan::call("broadcast:Notification test test info 10000");
                         $output = Artisan::output();
-                        Log::info("Artisan::output ".$output);
+                        Log::info("Artisan::output " . $output);
                     }
 
                     // 处理自定义事件
                     if (isset($data['event']) && $data['event'] == 'Notification') {
-                        Log::info('test02_the_Pusher_Broadcast_Receive $conn->RX:'.$msg);
+                        Log::info('test02_the_Pusher_Broadcast_Receive $conn->RX:' . $msg);
                         echo "Message: " . $msg . "\n";
                         //var_dump($data);
                         $datadata = json_decode($data['data'], true);
                         //var_dump($datadata);
-                        if(
+                        if (
                             $datadata['description'] === "test" &&
                             $datadata['title'] === "test" &&
                             $datadata['type'] === "info" &&
-                            $datadata['second'] === "10000"){
+                            $datadata['second'] === "10000") {
                             $this->assertTrue(true);
                             $loop->stop();
                             Log::info('test02_the_Pusher_Broadcast_Receive loop end');
-                        }else{
+                        } else {
                             $this->fail("內容與不符合測試結果");
                         }
                     }
                     Log::info('test02_the_Pusher_Broadcast_Receive looping');
-                    if(isset($data['event']) && $data['event'] == 'pusher:pong'){
+                    if (isset($data['event']) && $data['event'] == 'pusher:pong') {
                         Artisan::call("broadcast:Notification test test info 10000");
                         $output = Artisan::output();
-                        Log::info("Artisan::output ".$output);
+                        Log::info("Artisan::output " . $output);
                     }
                 });
 
-                $conn->on('close', function($code = null, $reason = null) use($loop) {
-                    Log::info('test02_the_Pusher_Broadcast_Receive loop end'."Connection closed ($code - $reason)\n");
+                $conn->on('close', function ($code = null, $reason = null) use ($loop) {
+                    Log::info('test02_the_Pusher_Broadcast_Receive loop end' . "Connection closed ($code - $reason)\n");
                     echo "Connection closed ($code - $reason)\n";
                     $this->assertTrue(false);
                     $loop->stop();
                     Log::info('test02_the_Pusher_Broadcast_Receive loop end');
                 });
 
-            }, function(\Exception $e) use ($loop) {
+            }, function (Exception $e) use ($loop) {
                 echo "Could not connect: {$e->getMessage()}\n";
                 $loop->stop();
             });

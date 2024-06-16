@@ -10,8 +10,8 @@ use Illuminate\Validation\ValidationException;
 
 class ValidatorBuilder
 {
-    public $eValidatorType;
-    public $lastkey = 0;
+    public EValidatorType $eValidatorType;
+    public int $lastkey = 0;
     private I18N $i18N;
     private array $rules;
     private array $customMessages;
@@ -56,21 +56,17 @@ class ValidatorBuilder
                 break;
             case EValidatorType::NEWMAILVERIFYCODE:
                 $this->newMailVerifyCode();
+                break;
+            case EValidatorType::EMAILVERIFICATION:
+                $this->emailVerification();
+                break;
             case EValidatorType::NULL:
                 break;
         }
         $this->eValidatorType = $eValidatorType;
     }
 
-    private function login()
-    {
-        $this->customMessages = $this->initMessage();
-        $this->atters = $this->initAtters();
-        $this->rules = ['username' => ['required', 'string', 'max:255'], 'password' => ['required', 'string', 'min:8'],];
-        $this->lastkey = 1;
-    }
-
-    private function initMessage()
+    private function initMessage(): array
     {
         $arr = ['accepted' => 'validator_accepted', 'accepted_if' => 'validator_accepted_if', 'active_url' => 'validator_active_url', 'after' => 'validator_after', 'after_or_equal' => 'validator_after_or_equal', 'alpha' => 'validator_alpha', 'alpha_dash' => 'validator_alpha_dash', 'alpha_num' => 'validator_alpha_num ', 'array' => 'validator_array', 'ascii' => 'validator_ascii', 'before' => 'validator_before', 'before_or_equal' => 'validator_before_or_equal', 'between' => ['array' => 'validator_between_array', 'file' => 'validator_between_file', 'numeric' => 'validator_between_numeric', 'string' => 'validator_between_string',], 'boolean' => 'validator_boolean', 'can' => 'validator_can', 'confirmed' => $this->i18N->getLanguage(ELanguageText::validator_confirmed, true)->placeholderParser("validator_field_passwordConfirmed", $this->i18N->getLanguage(ELanguageText::validator_field_passwordConfirmed))->toString(), 'current_password' => 'validator_current_password', 'date' => 'validator_date', 'date_equals' => 'validator_date_equals', 'date_format' => 'validator_date_format', 'decimal' => 'validator_decimal', 'declined' => 'validator_declined', 'declined_if' => 'validator_declined_if', 'different' => 'validator_different', 'digits' => 'validator_digits', 'digits_between' => 'validator_digits_between', 'dimensions' => 'validator_dimensions', 'distinct' => 'validator_distinct', 'doesnt_end_with' => 'validator_doesnt_end_with', 'doesnt_start_with' => 'validator_doesnt_start_with', 'email' => 'validator_email', 'ends_with' => 'validator_ends_with', 'enum' => 'validator_enum', 'exists' => 'validator_exists', 'extensions' => 'validator_extensions', 'file' => 'validator_file', 'filled' => 'validator_filled', 'gt' => ['array' => 'validator_gt_array', 'file' => 'validator_gt_file', 'numeric' => 'validator_gt_numeric', 'string' => 'validator_gt_string',], 'gte' => ['array' => 'validator_gte_array', 'file' => 'validator_gte_file', 'numeric' => 'validator_gte_numeric', 'string' => 'validator_gte_string',], 'hex_color' => 'validator_hex_color', 'image' => 'validator_image', 'in' => 'validator_in', 'in_array' => 'validator_in_array', 'integer' => 'validator_integer', 'ip' => 'validator_ip', 'ipv4' => 'validator_ipv4', 'ipv6' => 'validator_ipv6', 'json' => 'validator_json', 'lowercase' => 'validator_lowercase', 'lt' => ['array' => 'validator_lt_array', 'file' => 'validator_lt_file', 'numeric' => 'validator_lt_numeric', 'string' => 'validator_lt_string',], 'lte' => ['array' => 'validator_lte_array', 'file' => 'validator_lte_file', 'numeric' => 'validator_lte_numeric', 'string' => 'validator_lte_string',
 
@@ -100,12 +96,20 @@ class ValidatorBuilder
         return $newarr;
     }
 
-    private function initAtters()
+    private function initAtters(): array
     {
         return ['username' => $this->i18N->getLanguage(ELanguageText::validator_field_username), 'email' => $this->i18N->getLanguage(ELanguageText::validator_field_email), 'password' => $this->i18N->getLanguage(ELanguageText::validator_field_password), 'phone' => $this->i18N->getLanguage(ELanguageText::validator_field_phone), 'token' => $this->i18N->getLanguage(ELanguageText::validator_field_token), 'verification' => "驗證碼", 'sendMailVerifyCodeToken' => "信箱身份驗證權杖", 'code' => "驗證碼"];
     }
 
-    private function register()
+    private function login(): void
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = ['username' => ['required', 'string', 'max:255'], 'password' => ['required', 'string', 'min:8'],];
+        $this->lastkey = 1;
+    }
+
+    private function register(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
@@ -116,20 +120,20 @@ class ValidatorBuilder
             'phone' => ['required', 'string', 'min:10', 'max:255', 'unique:members'],
             'token' => ['required', 'string'],
         ];
-        $this->lastkey = 5;
+        $this->lastkey = 2;
     }
 
-    private function forgotpassword()
+    private function forgotpassword(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
         $this->rules = [
             'email' => ['required', 'string', 'email', 'max:255'],
         ];
-        $this->lastkey = 2;
+        $this->lastkey = 3;
     }
 
-    private function resetpassword()
+    private function resetpassword(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
@@ -137,10 +141,10 @@ class ValidatorBuilder
             'token' => 'required',
             'email' => 'required|email'
         ];
-        $this->lastkey = 3;
+        $this->lastkey = 4;
     }
 
-    private function resetpasswordpost()
+    private function resetpasswordpost(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
@@ -149,10 +153,10 @@ class ValidatorBuilder
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
         ];
-        $this->lastkey = 4;
+        $this->lastkey = 5;
     }
 
-    private function animalcreate()
+    private function animalcreate(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
@@ -168,7 +172,7 @@ class ValidatorBuilder
         $this->lastkey = 6;
     }
 
-    private function verifycode()
+    private function verifycode(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
@@ -176,20 +180,20 @@ class ValidatorBuilder
             'code' => ['required', 'string', 'min:5'],
             'token' => ['required', 'string'],
         ];
-        $this->lastkey = 8;
+        $this->lastkey = 7;
     }
 
-    private function sendMailVerifyCode()
+    private function sendMailVerifyCode(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
         $this->rules = [
             'token' => ['required', 'string'],
         ];
-        $this->lastkey = 10;
+        $this->lastkey = 8;
     }
 
-    private function profilegeneral()
+    private function profilegeneral(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
@@ -200,15 +204,15 @@ class ValidatorBuilder
         $this->lastkey = 9;
     }
 
-    private function profileUpdateEmail()
+    private function profileUpdateEmail(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
         $this->rules = ['email' => ['required', 'email', 'max:255'], 'verification' => ['required', 'string', 'min:5'],];
-        $this->lastkey = 7;
+        $this->lastkey = 10;
     }
 
-    private function profileUpdatePassword()
+    private function profileUpdatePassword(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
@@ -216,15 +220,29 @@ class ValidatorBuilder
             'current-ps' => ['required', 'string'],
             'password' => ['required', 'string', 'confirmed'],
         ];
-        $this->lastkey = 7;
+        $this->lastkey = 11;
     }
 
-    private function newMailVerifyCode()
+    private function newMailVerifyCode(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
-        $this->rules = ['token' => ['required', 'string'], 'email' => ['required', 'email', 'max:255'],];
-        $this->lastkey = 11;
+        $this->rules = [
+            'token' => ['required', 'string'],
+            'email' => ['required', 'email', 'max:255'],
+        ];
+        $this->lastkey = 12;
+    }
+
+    private function emailVerification(): void
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'id' => ['required', 'string'],
+            'hash' => ['required', 'string'],
+        ];
+        $this->lastkey = 13;
     }
 
     /**
@@ -234,7 +252,7 @@ class ValidatorBuilder
      * @return array|MessageBag
      * @throws ValidationException
      */
-    public function validate($data, $decodeKeyList = [], $decodeContext = false)
+    public function validate($data, array $decodeKeyList = [], bool $decodeContext = false): array|MessageBag
     {
         $newdata = [];
         if ($decodeContext === true) {

@@ -58,25 +58,34 @@ class MemberController extends Controller
         //debugbar()->info("emailVerify");
         // 用户验证逻辑
         // 保证 ID 和 Hash 都是正确的
-        $user = Member::find($request->route('id'));
+        $cgLCI = self::baseControllerInit($request);
+        $i18N = $cgLCI->getI18N();
+        $vb = new ValidatorBuilder($i18N, EValidatorType::EMAILVERIFICATION);
+        $vb->validate($request->all());
+        if($vb instanceof MessageBag){
 
-        if (!hash_equals((string)$request->route('id'), (string)$user->getKey()) ||
-            !hash_equals((string)$request->route('hash'), sha1($user->getEmailForVerification()))) {
-            //return response()->json(["msg" => "Invalid verification link"], 400);
-            return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 0);
+        }else{
+
+            $user = Member::find($request->route('id'));
+
+            if (!hash_equals((string)$request->route('id'), (string)$user->getKey()) ||
+                !hash_equals((string)$request->route('hash'), sha1($user->getEmailForVerification()))) {
+                //return response()->json(["msg" => "Invalid verification link"], 400);
+                return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 0);
+            }
+
+            if ($user->hasVerifiedEmail()) {
+                return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 1);
+            }
+
+            $user->markEmailAsVerified();
+
+            // 触发邮箱验证成功的事件
+            event(new \Illuminate\Auth\Events\Verified($request->user()));
+
+            // 返回验证成功的响应
+            return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 2);
         }
-
-        if ($user->hasVerifiedEmail()) {
-            return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 1);
-        }
-
-        $user->markEmailAsVerified();
-
-        // 触发邮箱验证成功的事件
-        event(new Verified($request->user()));
-
-        // 返回验证成功的响应
-        return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 2);
     }
 
     public function passwordReset(Request $request)
