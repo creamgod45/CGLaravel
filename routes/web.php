@@ -66,5 +66,5 @@ Route::middleware(EMiddleWareAliases::guest->name)->group(function () {
     Route::get('login', [MemberController::class, 'loginPage'])->name(RouteNameField::PageLogin->value);
     Route::post('login', [MemberController::class, 'login'])->name(RouteNameField::PageLoginPost->value);
     Route::get('register', [MemberController::class, 'showRegistrationForm'])->name(RouteNameField::PageRegister->value);
-    Route::post('register', [MemberController::class, 'register'])->name("member.form-register-post");
+    Route::post('register', [MemberController::class, 'register'])->name(RouteNameField::PageRegisterPost->value);
 });

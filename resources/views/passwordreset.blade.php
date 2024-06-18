@@ -26,8 +26,8 @@
                 <label class="col">{{$i18N->getLanguage(ELanguageText::validator_field_passwordConfirmed)}}</label>
                 <input class="col" type="password" name="password_confirmation" required>
             </div>
-            <input type="hidden" name="email" value="{{$email}}">
-            <input type="hidden" name="token" value="{{$token}}">
+            <input type="hidden" name="email" value="{{$moreParams['email']}}">
+            <input type="hidden" name="token" value="{{$moreParams['token']}}">
             <div class="button">
                 <button type="submit">{{$i18N->getLanguage(ELanguageText::register_btn)}}</button>
             </div>

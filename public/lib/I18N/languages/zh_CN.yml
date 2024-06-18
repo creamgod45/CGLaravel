@@ -314,7 +314,7 @@ login_title: 登入会员
 login_btn: 送出
 login_faild: '登入失败。 %validator_field_username% 或 %validator_field_password% 其中一个可能是错误'
 logout_title: 登出
-logout_context: 已经登出 %s% 秒后跳转页面!!点击前往
+logout_context: '已经登出 %s% 秒后跳转页面!!点击前往'
 login_username_notfound: '登入失败。 %validator_field_username% 不存在'
 pagination_firstPage: 首页
 pagination_previous: 上一页
@@ -352,9 +352,11 @@ sendMailVerifyCode_Response_success: 成功寄送验证码至您的信箱中，�
 sendMailVerifyCode_Response_error1: 已经寄送验证码至信箱中，请查看后填入验证码送出。
 sendMailVerifyCodeLine1: '请复制号码并输入在验证码输入框中。 验证码:%code%'
 sendMailVerifyCodeLine2: 如果你没有发送验证信件，请至帐号设定移除所有已登入装置，并且更改密码确保安全。
-RegisterMailTitle: '会员注册信件'
+RegisterMailTitle: 会员注册信件
 RegisterMailLine1: '请点击下面的按钮来验证您的电子邮件地址。 '
 RegisterMailLine2: '如果您没有建立帐户，则无需采取进一步操作。 '
 RegisterMailAction1: 验证
 HTTP_FORBIDDEN: 禁止
 ExpireTime: '过期时间: %timestamp%'
+EmailVerifiedListenerEmailTitle: 'welcome to use %APP_NAME%'
+EmailVerifiedListenerEmailContent: 'We provide high-quality network systems, server hosting, website design, information integration, network attack protection, diversion systems...'

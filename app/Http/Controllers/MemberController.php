@@ -6,7 +6,6 @@ use App\Events\UserNotification;
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
 use App\Lib\Server\CSRF;
-use App\Lib\Utils\ENotificationType;
 use App\Lib\Utils\EValidatorType;
 use App\Lib\Utils\RouteNameField;
 use App\Lib\Utils\Utils;
@@ -15,14 +14,11 @@ use App\Lib\Utils\ValidatorBuilder;
 use App\Models\Member;
 use App\Notifications\SendMailVerifyCodeNotification;
 use App\Notifications\VerifyEmailNotification;
-use App\View\Components\Alert;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +31,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
 use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
@@ -61,11 +57,10 @@ class MemberController extends Controller
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
         $vb = new ValidatorBuilder($i18N, EValidatorType::EMAILVERIFICATION);
-        $vb->validate($request->all());
-        if($vb instanceof MessageBag){
-
+        $v = $vb->validate($request->all());
+        if($v instanceof MessageBag){
+            return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 1);
         }else{
-
             $user = Member::find($request->route('id'));
 
             if (!hash_equals((string)$request->route('id'), (string)$user->getKey()) ||
@@ -233,26 +228,35 @@ class MemberController extends Controller
             'password',
             'password_confirmation'
         ], true);
+        $CSRF = new CSRF(RouteNameField::PageRegisterPost->value);
         if ($v instanceof MessageBag) {
             Log::info($request->ip() . ": " . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
-            event(new UserNotification([
+            event((new UserNotification([
                 implode('<br>', $v->all()),
                 "驗證失敗",
                 "error",
                 "10000",
                 Cache::get("guest_id" . $fingerprint)
-            ]));
-            $alert = new Alert("%type%", $v->all());
+            ])));
+            $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "%type%", "messages" => $v->all()]);
+            $CSRF->reset();
             return response()->json([
-                "message" => $alert,
+                'type' => false,
+                'token' => $CSRF->get(),
+                "message" => $alertView->render(),
                 "error_keys" => $v->keys(),
-            ], ResponseHTTP::HTTP_BAD_REQUEST);
+            ], ResponseHTTP::HTTP_OK);
             //redirect('register')->withErrors($v)->withInput();
         } else {
-            if ($v['token'] !== (new CSRF(RouteNameField::PageRegisterPost->value))->get()) return response()->json([
-                "message" => "CSRF 驗證碼失效",
-                "error_keys" => ['token'],
-            ], ResponseHTTP::HTTP_BAD_REQUEST);
+            if ($v['token'] !== ($CSRF)->get()) {
+                $CSRF->reset();
+                return response()->json([
+                    'type' => false,
+                    'token' => ($CSRF)->get(),
+                    "message" => "CSRF 驗證碼失效",
+                    "error_keys" => ['token'],
+                ], ResponseHTTP::HTTP_OK);
+            }
             // 可以在这里实现登录逻辑，或者重定向到登录页面
             Log::info($v['username'] . ": registering");
             $user = Member::create([
@@ -268,14 +272,15 @@ class MemberController extends Controller
             // 发送验证邮件
             $cacheKey = $user->UUID . ":mail-sent";
             if (Cache::has($cacheKey)) {
-                event(new UserNotification([
+                event((new UserNotification([
                     $i18N->getLanguage(ELanguageText::notification_email_description),
                     $i18N->getLanguage(ELanguageText::notification_email_verifyTitle),
                     "warning",
-                    "10000",
+                    "5000",
                     Cache::get("guest_id" . $fingerprint)
-                ]));
+                ])));
                 return response()->json([
+                    'type' => true,
                     "message" => "註冊成功請驗證信箱!!在 1 小時候驗證將過期",
                     "redirect" => route(RouteNameField::PageHome->value)
                 ]);
@@ -287,15 +292,15 @@ class MemberController extends Controller
                 Log::info($user->username . ": mailed");
                 Cache::put($cacheKey, true, now()->addHours(1));
                 Auth::login($user);
-                Member::
-                event(new UserNotification([
+                event((new UserNotification([
                     $i18N->getLanguage(ELanguageText::notification_email_description),
                     $i18N->getLanguage(ELanguageText::notification_email_verifyTitle),
                     "success",
-                    "10000",
+                    "5000",
                     Cache::get("guest_id" . $fingerprint)
-                ]));
+                ])));
                 return response()->json([
+                    'type' => true,
                     "message" => "註冊成功請驗證信箱!!在 1 小時候驗證將過期",
                     "redirect" => route(RouteNameField::PageHome->value)
                 ]);
@@ -311,65 +316,126 @@ class MemberController extends Controller
         $fingerprint = $cgLCI->getFingerprint();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::LOGIN);
-        try {
-            $validator = Validator::make($request->all(), $vb->getRules(), $vb->getCustomMessages(), $vb->getAtters());
-            $validate = $validator->validate();
-        } catch (ValidationException $e) {
-            Log::info($request->ip() . ": " . PHP_EOL . "    ValidationException=" . $e->getMessage() . "," . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
-        }
-
-        if (isset($validator)) {
-            if (!$validator->fails()) {
-                if (isset($validate)) {
-                    $user = Member::where("username", $validate["username"])->first();
-                    if ($user !== null) {
-                        if (Hash::check($validate["password"], $user["password"])) {
-                            Log::info($user->username . ": Logging in");
-                            Auth::login($user);
-                            Log::info($user->username . ": logined");
-                            if (Auth::check() && Auth::user()->enable === "false") {
-                                $errors = new MessageBag;
-                                $errors->add('username', "你的帳號因已經停用，所以你已被強制登出。 Notification ID:" . Cache::get("guest_id" . $fingerprint));
-                                event((new UserNotification([
-                                    "你的帳號因已經停用，所以你已被強制登出。",
-                                    "警告訊息",
-                                    "warning",
-                                    10000,
-                                    Cache::get('guest_id' . $fingerprint)
-                                ]))->delay(now()->addSeconds(8)));
-                                Auth::logout();
-                                return back()->withErrors($errors);
-                            }
-                            return redirect(route(RouteNameField::PageHome->value))->with('custom_message', [
-                                $i18N->getLanguage(ELanguageText::notification_login_title),
-                                $i18N->getLanguage(ELanguageText::notification_login_success),
-                                ENotificationType::success
-                            ]);
-                        } else {
-                            // 自訂錯誤訊息
-                            $validator->errors()->add("login_faild",
-                                $i18N->getLanguage(ELanguageText::login_faild, true)
-                                    ->Replace("%validator_field_username%", $i18N->getLanguage(ELanguageText::validator_field_username))
-                                    ->Replace("%validator_field_password%", $i18N->getLanguage(ELanguageText::validator_field_password))
-                                    ->toString()
-                            );
-                            Log::info($request->ip() . ": " . PHP_EOL . "    ValidationException=asd," . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
-                        }
-                    } else {
-                        $validator->errors()->add("login_username_notfound",
-                            $i18N->getLanguage(ELanguageText::login_username_notfound, true)
-                                ->Replace("%validator_field_username%", $i18N->getLanguage(ELanguageText::validator_field_username))
-                                ->toString()
-                        );
+        $v = $vb->validate($request->all(), [
+            "password"
+        ], true);
+        $CSRF = new CSRF(RouteNameField::PageLoginPost->value);
+        if($v instanceof MessageBag) {
+            Log::info($request->ip() . ": " . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
+            event((new UserNotification([
+                $i18N->getLanguage(ELanguageText::notification_login_failed),
+                $i18N->getLanguage(ELanguageText::notification_login_title),
+                "error",
+                "10000",
+                Cache::get("guest_id" . $fingerprint)
+            ])));
+            $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "warning", "messages" => $v->all()]);
+            $CSRF->reset();
+            return response()->json([
+                'type' => false,
+                'token' => $CSRF->get(),
+                "message" => $alertView->render(),
+                "error_keys" => $v->keys(),
+            ], ResponseHTTP::HTTP_OK);
+        }else{
+            if ($v['token'] !== ($CSRF)->get()) {
+                event((new UserNotification([
+                    "CSRF 驗證碼失效",
+                    $i18N->getLanguage(ELanguageText::notification_login_title),
+                    "error",
+                    "10000",
+                    Cache::get("guest_id" . $fingerprint)
+                ])));
+                $errors = new MessageBag;
+                $errors->add('token', "CSRF 驗證碼失效。 Notification ID:" . Cache::get("guest_id" . $fingerprint));
+                $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "danger", "messages" => $errors->all()]);
+                $CSRF->reset();
+                return response()->json([
+                    'type' => false,
+                    'token' => ($CSRF)->get(),
+                    "message" => $alertView->render(),
+                    "error_keys" => ['token'],
+                ], ResponseHTTP::HTTP_OK);
+            }
+            $CSRF->reset();
+            $user = Member::where("username", $v["username"])->first();
+            if ($user !== null) {
+                if (Hash::check($v["password"], $user["password"])) {
+                    Log::info($user->username . ": Logging in");
+                    Auth::login($user);
+                    Log::info($user->username . ": logined");
+                    if (Auth::check() && Auth::user()->enable === "false") {
+                        $errors = new MessageBag;
+                        $errors->add('username', "你的帳號因已經停用，所以你已被強制登出。 Notification ID:" . Cache::get("guest_id" . $fingerprint));
+                        event((new UserNotification([
+                            "你的帳號因已經停用，所以你已被強制登出。",
+                            "警告訊息",
+                            "warning",
+                            10000,
+                            Cache::get('guest_id' . $fingerprint)
+                        ])));
+                        $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "danger", "messages" => $errors->all()]);
+                        Auth::logout();
+                        return response()->json([
+                            'type' => false,
+                            'token' => $CSRF->get(),
+                            "message" => $alertView->render(),
+                            "error_keys" => $v->keys(),
+                        ], ResponseHTTP::HTTP_OK);
                     }
+                    event((new UserNotification([
+                        $i18N->getLanguage(ELanguageText::notification_login_success),
+                        $i18N->getLanguage(ELanguageText::notification_login_title),
+                        "success",
+                        10000,
+                        Cache::get('guest_id' . $fingerprint)
+                    ])));
+                    return response()->json([
+                        'type' => true,
+                        "message" => $i18N->getLanguage(ELanguageText::notification_login_success),
+                        "redirect" => route(RouteNameField::PageHome->value),
+                    ], ResponseHTTP::HTTP_OK);
+                } else {
+                    // 自訂錯誤訊息
+                    $msg = $i18N->getLanguage(ELanguageText::login_faild, true)
+                        ->Replace("%validator_field_username%", $i18N->getLanguage(ELanguageText::validator_field_username))
+                        ->Replace("%validator_field_password%", $i18N->getLanguage(ELanguageText::validator_field_password))
+                        ->toString();
+                    $errors = new MessageBag;
+                    $errors->add('username',$msg);
+                    event((new UserNotification([
+                        $msg,
+                        $i18N->getLanguage(ELanguageText::notification_login_title),
+                        "warning",
+                        10000,
+                        Cache::get('guest_id' . $fingerprint)
+                    ])));
+                    $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "warning", "messages" => $errors->all()]);
+                    Log::info($request->ip() . ": " . PHP_EOL . "    ValidationException=asd," . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
+                    return response()->json([
+                        'type' => false,
+                        'token' => $CSRF->get(),
+                        "message" => $alertView->render(),
+                        "error_keys" => $errors->keys(),
+                    ], ResponseHTTP::HTTP_OK);
                 }
+            } else {
+                $msg = $i18N->getLanguage(ELanguageText::login_username_notfound, true)
+                    ->Replace("%validator_field_username%", $i18N->getLanguage(ELanguageText::validator_field_username))
+                    ->toString();
+
+                $errors = new MessageBag;
+                $errors->add('username',$msg);
+                $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "danger", "messages" => $errors->all()]);
+
+                return response()->json([
+                    'type' => false,
+                    'token' => $CSRF->get(),
+                    "message" => $alertView->render(),
+                    "error_keys" => $errors->keys(),
+                ], ResponseHTTP::HTTP_OK);
             }
         }
-        return redirect(route(RouteNameField::PageLogin->value))->with('custom_message', [
-            $i18N->getLanguage(ELanguageText::notification_login_title),
-            $i18N->getLanguage(ELanguageText::notification_login_failed),
-            ENotificationType::error
-        ])->withInput()->withErrors($validator->errors());
     }
 
     public function profile(Request $request)

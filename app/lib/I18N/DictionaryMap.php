@@ -230,5 +230,7 @@ class DictionaryMap
         $i->setLanguagev2(ELanguageText::sendMailVerifyCodeLine2, "If you did not send a verification email, please go to your account settings to remove all logged-in devices and change your password to ensure security.");
         $i->setLanguagev2(ELanguageText::HTTP_FORBIDDEN, "FORBIDDEN");
         $i->setLanguagev2(ELanguageText::ExpireTime, "Expire Time: %timestamp%");
+        $i->setLanguagev2(ELanguageText::EmailVerifiedListenerEmailTitle, "welcome to use %APP_NAME%");
+        $i->setLanguagev2(ELanguageText::EmailVerifiedListenerEmailContent, "We provide high-quality network systems, server hosting, website design, information integration, network attack protection, diversion systems...");
     }
 }

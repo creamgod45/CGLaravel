@@ -1,15 +1,35 @@
 import {generateRandomString, htmldecode} from "@/utils.js";
+import {data} from "autoprefixer";
 
-function tooltip() {
+function tooltip(event) {
+    console.log(window.screen.width);
     let tooltips = document.querySelectorAll(".tooltip-gen");
 
     function getOnmouseenter(direction, tooltip, tooltipEl) {
         return () => {
+            if (tooltipEl.dataset.destory !== undefined) {
+                let destoryEl = tooltipEl.dataset.destory;
+                if(destoryEl!==""){
+                    document.querySelector(destoryEl).remove();
+                    tooltipEl.dataset.destory = "";
+                    tooltipEl.isTooltopShow = false;
+                }
+            }
             let t = document.createElement("div");
+            tooltipEl.dataset.render = "true";
             t.classList.add("tooltip");
+            if(tooltipEl.dataset.render === "true" && tooltipEl.dataset.mobileTriggerPx !== null && tooltipEl.dataset.mobile !== null){
+                if(window.screen.width <= Number.parseInt(tooltipEl.dataset.mobiletriggerpx)){
+                    //console.log(true)
+                    direction = tooltipEl.dataset.mobile;
+                    tooltipEl.dataset.mobilestatus = "true";
+                }else{
+                    direction = tooltipEl.dataset.direction;
+                }
+            }
             t.classList.add(direction);
             if(tooltipEl.dataset.customclass!==undefined){
-                console.log(tooltipEl.dataset.customclass)
+                //console.log(tooltipEl.dataset.customclass)
                 let strings = tooltipEl.dataset.customclass.split(" ");
                 if (strings.length > 1){
                     for (let string of strings) {
@@ -22,7 +42,7 @@ function tooltip() {
             let s = generateRandomString(5);
             t.id = s;
             if(tooltipEl.dataset.htmlable !== undefined){
-                console.log(tooltipEl.dataset.htmlable);
+                //console.log(tooltipEl.dataset.htmlable);
                 if (tooltipEl.dataset.htmlable === "true") {
                     t.innerHTML = tooltip;
                 }else{
@@ -59,11 +79,13 @@ function tooltip() {
 
     function getOnmouseleave(tooltipEl) {
         return () => {
-            if (tooltipEl.dataset.destory !== null) {
+            if (tooltipEl.dataset.destory !== undefined) {
                 let destoryEl = tooltipEl.dataset.destory;
-                document.querySelector(destoryEl).remove();
-                tooltipEl.dataset.destory = "";
-                tooltipEl.isTooltopShow = false;
+                if(destoryEl!==""){
+                    document.querySelector(destoryEl).remove();
+                    tooltipEl.dataset.destory = "";
+                    tooltipEl.isTooltopShow = false;
+                }
             }
         };
     }
@@ -74,6 +96,26 @@ function tooltip() {
         if (dataset.direction === null) continue;
         let tooltip = dataset.tooltip;
         let direction = dataset.direction;
+        if(dataset.render === "true" && dataset.mobileTriggerPx !== null && dataset.mobile !== null){
+            if(window.screen.width <= Number.parseInt(dataset.mobiletriggerpx)){
+                //console.log(true)
+                direction = dataset.mobile;
+                dataset.mobilestatus = "true";
+            }else{
+                direction = dataset.direction;
+            }
+            if (tooltipEl.dataset.destory !== undefined) {
+                let destoryEl = tooltipEl.dataset.destory;
+                if(destoryEl !== ""){
+                    document.querySelector(destoryEl).remove();
+                    tooltipEl.dataset.destory = "";
+                    tooltipEl.isTooltopShow = false;
+                    if(tooltipEl.isTooltopShow===false){
+                        tooltipEl.tooltipShow();
+                    }
+                }
+            }
+        }
         if(tooltipEl.dataset.hoverable !== undefined){
             if (tooltipEl.dataset.hoverable === "false") {
 
@@ -91,5 +133,5 @@ function tooltip() {
     }
 }
 
-document.addEventListener('resize', tooltip);
+window.addEventListener('resize', tooltip);
 document.addEventListener('DOMContentLoaded', tooltip);

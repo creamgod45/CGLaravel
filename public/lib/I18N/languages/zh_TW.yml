@@ -314,7 +314,7 @@ login_title: 登入會員
 login_btn: 送出
 login_faild: '登入失敗。 %validator_field_username% 或 %validator_field_password% 其中一個可能是錯誤'
 logout_title: 登出
-logout_context: 已經登出 %s% 秒後跳轉頁面!!點擊前往
+logout_context: '已經登出 %s% 秒後跳轉頁面!!點擊前往'
 login_username_notfound: '登入失敗。 %validator_field_username% 不存在'
 pagination_firstPage: 首頁
 pagination_previous: 上一頁
@@ -352,9 +352,11 @@ sendMailVerifyCode_Response_success: 成功寄送驗證碼至您的信箱中，�
 sendMailVerifyCode_Response_error1: 已經寄送驗證碼至信箱中，請查看後填入驗證碼送出。
 sendMailVerifyCodeLine1: '請複製號碼並輸入在驗證碼輸入框中。 驗證碼:%code%'
 sendMailVerifyCodeLine2: 如果你沒有發送驗證信件，請至帳號設定移除所有已登入裝置，並且更改密碼確保安全。
-RegisterMailTitle: '會員註冊信件'
-RegisterMailLine1: '請點擊下面的按鈕來驗證您的電子郵件地址。'
-RegisterMailLine2: '如果您沒有建立帳戶，則無需採取進一步操作。'
+RegisterMailTitle: 會員註冊信件
+RegisterMailLine1: 請點擊下面的按鈕來驗證您的電子郵件地址。
+RegisterMailLine2: 如果您沒有建立帳戶，則無需採取進一步操作。
 RegisterMailAction1: 驗證
 HTTP_FORBIDDEN: 禁止
 ExpireTime: '過期時間: %timestamp%'
+EmailVerifiedListenerEmailTitle: '歡迎使用 %APP_NAME%'
+EmailVerifiedListenerEmailContent: '我們提供優質網路系統、伺服器代管、網站設計、資訊整合、網路攻擊防護、分流系統...'

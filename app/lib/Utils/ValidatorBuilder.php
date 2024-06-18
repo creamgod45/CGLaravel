@@ -98,14 +98,27 @@ class ValidatorBuilder
 
     private function initAtters(): array
     {
-        return ['username' => $this->i18N->getLanguage(ELanguageText::validator_field_username), 'email' => $this->i18N->getLanguage(ELanguageText::validator_field_email), 'password' => $this->i18N->getLanguage(ELanguageText::validator_field_password), 'phone' => $this->i18N->getLanguage(ELanguageText::validator_field_phone), 'token' => $this->i18N->getLanguage(ELanguageText::validator_field_token), 'verification' => "驗證碼", 'sendMailVerifyCodeToken' => "信箱身份驗證權杖", 'code' => "驗證碼"];
+        return [
+            'username' => $this->i18N->getLanguage(ELanguageText::validator_field_username),
+            'email' => $this->i18N->getLanguage(ELanguageText::validator_field_email),
+            'password' => $this->i18N->getLanguage(ELanguageText::validator_field_password),
+            'phone' => $this->i18N->getLanguage(ELanguageText::validator_field_phone),
+            'token' => $this->i18N->getLanguage(ELanguageText::validator_field_token),
+            'verification' => "驗證碼",
+            'sendMailVerifyCodeToken' => "信箱身份驗證權杖",
+            'code' => "驗證碼"
+        ];
     }
 
     private function login(): void
     {
         $this->customMessages = $this->initMessage();
         $this->atters = $this->initAtters();
-        $this->rules = ['username' => ['required', 'string', 'max:255'], 'password' => ['required', 'string', 'min:8'],];
+        $this->rules = [
+            'username' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+            'token' => ['required', 'string'],
+        ];
         $this->lastkey = 1;
     }
 

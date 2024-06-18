@@ -283,17 +283,17 @@
   @apply mt-0;
 }
 .register-frame .register .row, .register-frame .login .row, .register-frame .logout .row, .register-frame .from .row {
-  @apply flex flex-nowrap mt-14;
+  @apply flex md:flex-nowrap footer:flex-wrap sm:flex-wrap xs:flex-wrap us:flex-wrap mt-14;
 }
 .register-frame .register .row .col, .register-frame .login .row .col, .register-frame .logout .row .col, .register-frame .from .row .col {
   @apply flex items-center text-xl;
   flex: 0 0 auto;
 }
 .register-frame .register .row label, .register-frame .login .row label, .register-frame .logout .row label, .register-frame .from .row label {
-  @apply w-[40%] text-right;
+  @apply md:w-[40%] footer:w-full sm:w-full xs:w-full us:w-full text-right;
 }
 .register-frame .register .row input, .register-frame .login .row input, .register-frame .logout .row input, .register-frame .from .row input {
-  @apply w-[60%] text-black p-2;
+  @apply md:w-[60%] footer:w-full sm:w-full xs:w-full us:w-full text-black p-2;
 }
 .register-frame .register .button, .register-frame .login .button, .register-frame .logout .button, .register-frame .from .button {
   @apply mt-3;
@@ -713,6 +713,10 @@
 
 .alert-danger {
   @apply border-red-500 text-red-500 font-bold;
+}
+
+.alert-warning {
+  @apply border-yellow-500 text-yellow-500 font-bold;
 }
 
 .pagination-frame {

@@ -16,16 +16,16 @@
             @apply mt-0;
         }
         .row{
-            @apply flex flex-nowrap mt-14;
+            @apply flex md:flex-nowrap footer:flex-wrap sm:flex-wrap xs:flex-wrap us:flex-wrap mt-14;
             .col{
                 @apply flex items-center text-xl;
                 flex: 0 0 auto;
             }
             label{
-                @apply w-[40%] text-right;
+                @apply md:w-[40%] footer:w-full sm:w-full xs:w-full us:w-full text-right;
             }
             input{
-                @apply w-[60%] text-black p-2;
+                @apply md:w-[60%] footer:w-full sm:w-full xs:w-full us:w-full text-black p-2;
             }
         }
         .button{

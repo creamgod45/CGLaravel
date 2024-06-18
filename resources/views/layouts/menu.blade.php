@@ -46,11 +46,6 @@
             <span>{{$i18N->getLanguage(ELanguageText::menu_information)}}</span>
             <i class="fa-solid fa-caret-down"></i>
         </button>
-        @env('local')
-            <a href="{{route(RouteNameField::PageDesignComponents->value)}}" class="float-menu-btn" aria-expanded="false">
-                <span>元件測試頁面</span>
-            </a>
-        @endenv
     </div>
     <div id="float1" class="float-menu-panel" data-second="450" data-visible="false">
         <div class="float-menu-panel-columns">
@@ -69,6 +64,11 @@
                         <i class="fa-brands fa-microsoft"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_MicrosoftAzure)}}</span>
                     </a>
+                    @env('local')
+                    <a href="{{route(RouteNameField::PageDesignComponents->value)}}" class="menu-btn btn-ripple">
+                        <span>元件測試頁面</span>
+                    </a>
+                    @endenv
                 </div>
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_WebDesign)}}</div>
@@ -121,7 +121,7 @@
                             $user = Auth::user();
                         @endphp
                         @if(!$user->hasVerifiedEmail())
-                        <a href="/resendemail" class="menu-btn btn-ripple">
+                        <a href="{{RouteNameField::PageEmailReSendMailVerification->value}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-paper-plane"></i>
                             <span>&nbsp;重新驗證</span>
                         </a>

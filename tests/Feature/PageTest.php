@@ -65,8 +65,8 @@ class PageTest extends TestCase
 
     public function test_the_application_PageEmailVerification_redirect_to_Route()
     {
-        $response = $this->get(route(RouteNameField::PageEmailVerification->value));
-        $response->assertStatus(302)->assertRedirectToRoute(RouteNameField::PageHome->value)->assertSessionHas('mail_result', 0);
+        $response = $this->get("/email/verify/1/1");
+        $response->assertStatus(302)->assertRedirectToRoute(RouteNameField::PageHome->value)->assertSessionHas('mail_result', 1);
     }
 
     public function test_the_application_PageMembers_redirect_to_Route(): void
@@ -111,7 +111,7 @@ class PageTest extends TestCase
         // user tester
         $user = Member::factory()->create();
 
-        $response = $this->actingAs($user, 'web')->get('/resendemail');
+        $response = $this->actingAs($user, 'web')->get(route(RouteNameField::PageEmailReSendMailVerification->value));
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(302)->assertSessionHas('mail', true)->assertRedirectToRoute(RouteNameField::PageHome->value);
@@ -130,7 +130,7 @@ class PageTest extends TestCase
         //$response->dump();
         $response->assertStatus(200)->assertViewIs('members');
 
-        $response = $this->actingAs($user, 'web')->get('/resendemail');
+        $response = $this->actingAs($user, 'web')->get(route(RouteNameField::PageEmailReSendMailVerification->value));
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(302)->assertSessionHas('mail_result', 1)->assertRedirectToRoute(RouteNameField::PageHome->value);
@@ -140,7 +140,7 @@ class PageTest extends TestCase
 
     public function test_the_application_resendemail()
     {
-        $response = $this->get('/resendemail');
+        $response = $this->get(route(RouteNameField::PageEmailReSendMailVerification->value));
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(302)->assertRedirectToRoute(RouteNameField::PageLogin->value);
@@ -148,7 +148,6 @@ class PageTest extends TestCase
 
     public function test_the_Pusher_Broadcast_RX_TX()
     {
-
         $loop = Factory::create();
         $reactConnector = new ReactConnector($loop);
         $connector = new Connector($loop, $reactConnector);

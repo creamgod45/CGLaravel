@@ -20,11 +20,9 @@ function phone() {
             i18n: lang,
             initialCountry: "auto",
             utilsScript: "iti_utils.js",
-            hiddenInput: function(telInputName) {
-                return {
-                    phone: "phone_full",
-                    country: "country_code"
-                };
+            separateDialCode: true,
+            customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+                return "e.g. " + selectedCountryPlaceholder;
             },
             geoIpLookup: callback => {
                 fetch("https://ipapi.co/json")
@@ -33,15 +31,47 @@ function phone() {
                     .catch(() => callback("us"));
             },
         });
-        const reset = () => {
-            console.log('reset')
+        const reset = (line) => {
+            console.log(`reset line:${line}`)
             let btn = document.querySelector(tel.dataset.btn);
             let msg = document.querySelector(tel.dataset.msg);
-            if (btn !== null && msg !==null) {
+            if (msg !==null) {
                 msg.innerText="";
                 msg.classList.add('hidden');
             }
         };
+        if (tel.dataset.autotrigger !== undefined && tel.dataset.autotrigger !== null){
+            if(tel.dataset.autotrigger === "true"){
+                tel.onchange = () => {
+                    let msg = document.querySelector(tel.dataset.msg);
+                    let ok = tel.dataset.true;
+                    let fail = tel.dataset.false;
+                    if (msg !==null&&ok !== null && fail !== null) {
+                        reset(50);
+                        if (!tel.value.trim()) {
+                            msg.innerText = fail;
+                            msg.classList.remove('hidden');
+                            return false;
+                        } else if (iti.isValidNumber()) {
+                            msg.innerText = ok;
+                            msg.classList.remove("hidden");
+                            console.log(iti);
+                            let namedItem = tel.parentElement.children.namedItem('dialCode');
+                            if (namedItem === null) {
+                                tel.insertAdjacentHTML("afterend", `<input type='hidden' name='dialCode' value="${iti.selectedCountryData.dialCode}">`);
+                            }else{
+                                namedItem.value = iti.selectedCountryData.dialCode;
+                            }
+                        } else {
+                            const errorCode = iti.getValidationError();
+                            //console.log(errorCode);
+                            msg.innerText = errorMap[errorCode] || "Invalid number";
+                            msg.classList.remove('hidden');
+                        }
+                    }
+                };
+            }
+        }
         if (tel.dataset.btn !== null) {
             let btn = document.querySelector(tel.dataset.btn);
             let msg = document.querySelector(tel.dataset.msg);
@@ -51,7 +81,7 @@ function phone() {
                 //console.log('ok');
                 btn.onclick = ()=>{
                     //console.log('onclick');
-                    reset();
+                    reset(84);
                     if (!tel.value.trim()) {
                         msg.innerText = fail;
                         msg.classList.remove('hidden');
@@ -59,6 +89,13 @@ function phone() {
                     } else if (iti.isValidNumber()) {
                         msg.innerText = ok;
                         msg.classList.remove("hidden");
+                        console.log(iti);
+                        let namedItem = tel.parentElement.children.namedItem('dialCode');
+                        if (namedItem === null) {
+                            tel.insertAdjacentHTML("afterend", `<input type='hidden' name='dialCode' value="${iti.selectedCountryData.dialCode}">`);
+                        }else{
+                            namedItem.value = iti.selectedCountryData.dialCode;
+                        }
                     } else {
                         const errorCode = iti.getValidationError();
                         //console.log(errorCode);
@@ -66,8 +103,8 @@ function phone() {
                         msg.classList.remove('hidden');
                     }
                 };
-                tel.onchange = reset;
-                tel.keyup = reset;
+                tel.onchange = () => reset(106);
+                tel.keyup = ()=> reset(107);
             }
         }
     }

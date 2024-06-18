@@ -1,4 +1,4 @@
-@vite(['resources/css/branding.css', 'resources/js/branding.js'])
+@vite(['resources/css/WelcomeEmail.css', 'resources/js/WelcomeEmail.js'])
 @use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Utils\Htmlv2;use App\Lib\Utils\Utilsv2;use Illuminate\Support\Facades\Log;use App\Lib\Utils\RouteNameField)
 @php
     /***
@@ -11,6 +11,7 @@
     $menu=false;
     $footer=true;
 @endphp
+
 @extends('layouts.default')
 @section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
 @section('content')

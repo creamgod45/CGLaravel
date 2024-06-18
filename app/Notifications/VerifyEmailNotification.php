@@ -48,7 +48,11 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
         Log::info("Debug \$i18N: " . $this->i18N->getLanguageCode()->name);
         Log::info("Debug \$verificationUrl: " . $verificationUrl);
         Log::info("=================================================================================================");
-        return (new MailMessage)->subject($this->i18N->getLanguage(ELanguageText::RegisterMailTitle))->line($this->i18N->getLanguage(ELanguageText::RegisterMailLine1))->action($this->i18N->getLanguage(ELanguageText::RegisterMailAction1), $verificationUrl)->line($this->i18N->getLanguage(ELanguageText::RegisterMailLine2));
+        return (new MailMessage)
+            ->subject($this->i18N->getLanguage(ELanguageText::RegisterMailTitle))
+            ->line($this->i18N->getLanguage(ELanguageText::RegisterMailLine1))
+            ->action($this->i18N->getLanguage(ELanguageText::RegisterMailAction1), $verificationUrl)
+            ->line($this->i18N->getLanguage(ELanguageText::RegisterMailLine2));
     }
 
     protected function verificationUrl($notifiable)

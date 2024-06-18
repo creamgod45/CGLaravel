@@ -369,6 +369,9 @@ enum ELanguageText
     case sendMailVerifyCodeAction1;
     case HTTP_FORBIDDEN;
     case ExpireTime;
+    case EmailVerifiedListenerEmailTitle;
+
+    case EmailVerifiedListenerEmailContent;
 
     public static function isVaild(string $name): bool
     {
