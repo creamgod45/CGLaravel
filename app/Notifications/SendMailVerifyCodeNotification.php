@@ -27,7 +27,7 @@ class SendMailVerifyCodeNotification extends Notification implements ShouldQueue
     public function toMail($notifiable): MailMessage
     {
         Log::info("=================================================================================================");
-        Log::info("Proccess: VerifyEmailNotification");
+        Log::info("Process: VerifyEmailNotification");
         Log::info("Debug \$Instance: " . (new CGStringable($this)));
         Log::info("Debug \$i18N: " . $this->i18N->getLanguageCode()->name);
         Log::info("Debug \$code: " . $this->i18N->getLanguage(ELanguageText::sendMailVerifyCodeLine1, true)->placeholderParser("code", $this->code)->toString());

@@ -9,9 +9,6 @@ class CGStringable
 {
     private $string;
 
-    /**
-     * @throws Exception
-     */
     public function __construct(mixed $variable)
     {
         if (is_array($variable)) {
@@ -33,7 +30,7 @@ class CGStringable
         } elseif (is_string($variable)) {
             $this->string = $variable;
         } else {
-            throw new Exception("Not supported converter Stringable variable", 0);
+            return "Not supported converter Stringable variable";
         }
     }
 

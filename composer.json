@@ -9,6 +9,7 @@
         "ext-bcmath": "*",
         "ext-curl": "*",
         "ext-fileinfo": "*",
+        "cerdic/css-tidy": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",

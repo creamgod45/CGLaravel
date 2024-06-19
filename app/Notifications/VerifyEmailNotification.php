@@ -43,7 +43,7 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
     {
         $verificationUrl = $this->verificationUrl($notifiable);
         Log::info("=================================================================================================");
-        Log::info("Proccess: VerifyEmailNotification");
+        Log::info("Process: VerifyEmailNotification");
         Log::info("Debug \$Instance: " . (new CGStringable($this)));
         Log::info("Debug \$i18N: " . $this->i18N->getLanguageCode()->name);
         Log::info("Debug \$verificationUrl: " . $verificationUrl);
