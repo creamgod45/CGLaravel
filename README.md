@@ -11,7 +11,10 @@
 
 > 失敗(failing)可能會導致產品功能不正常等狀態 希望都是(passing) 😎
 
-[![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml/badge.svg?branch=main)](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml)
+### 分支建構狀態
+
+main [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml/badge.svg?branch=main)](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml)
+20240518 [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml/badge.svg?branch=20240518)](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml)
 
 ## 如果你也想要加入開發
 
