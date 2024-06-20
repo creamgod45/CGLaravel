@@ -18,4 +18,5 @@ enum EValidatorType
     case VERIFYCODE;
     case NEWMAILVERIFYCODE;
     case NULL;
+    case Language;
 }

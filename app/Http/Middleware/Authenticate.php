@@ -50,8 +50,8 @@ class Authenticate extends Middleware
                 Log::error("backtrace: " . $e->getMessage() . (new CGStringable(ClassUtils::varName($e))));
             }
             event((new UserNotification([
-                "你的帳號因已經停用，所以你已被強制登出。",
-                "警告訊息",
+                $i18N->getLanguage(ELanguageText::UserAccountBanMessage),
+                $i18N->getLanguage(ELanguageText::notification_login_title),
                 "warning",
                 10000,
                 Cache::get('guest_id' . Controller::fingerprintStaticable($request))

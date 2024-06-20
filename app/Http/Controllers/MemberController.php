@@ -45,13 +45,11 @@ class MemberController extends Controller
     {
         $user = Auth::user();
         $members = Member::paginate(30);
-        //debugbar()->info($members);
         return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user])->toArrayable());
     }
 
     public function emailVerify(Request $request)
     {
-        //debugbar()->info("emailVerify");
         // 用户验证逻辑
         // 保证 ID 和 Hash 都是正确的
         $cgLCI = self::baseControllerInit($request);
@@ -122,8 +120,6 @@ class MemberController extends Controller
                     event(new PasswordReset($user));
                 }
             );
-
-            //debugbar()->info($status);
             $ELanguageText = ELanguageText::valueof(str_replace(".", "_", $status));
             return $status === Password::PASSWORD_RESET
                 ? redirect()->route(RouteNameField::PageLogin->value)->with('status', $ELanguageText)
@@ -233,7 +229,7 @@ class MemberController extends Controller
             Log::info($request->ip() . ": " . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
             event((new UserNotification([
                 implode('<br>', $v->all()),
-                "驗證失敗",
+                $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
                 "error",
                 "10000",
                 Cache::get("guest_id" . $fingerprint)
@@ -253,7 +249,7 @@ class MemberController extends Controller
                 return response()->json([
                     'type' => false,
                     'token' => ($CSRF)->get(),
-                    "message" => "CSRF 驗證碼失效",
+                    "message" => $i18N->getLanguage(ELanguageText::CSRFVerificationFailed),
                     "error_keys" => ['token'],
                 ], ResponseHTTP::HTTP_OK);
             }
@@ -281,7 +277,7 @@ class MemberController extends Controller
                 ])));
                 return response()->json([
                     'type' => true,
-                    "message" => "註冊成功請驗證信箱!!在 1 小時候驗證將過期",
+                    "message" => $i18N->getLanguage(ELanguageText::registerDone), // 註冊成功請驗證信箱!!在 1 小時候驗證將過期
                     "redirect" => route(RouteNameField::PageHome->value)
                 ]);
             } else {
@@ -301,7 +297,7 @@ class MemberController extends Controller
                 ])));
                 return response()->json([
                     'type' => true,
-                    "message" => "註冊成功請驗證信箱!!在 1 小時候驗證將過期",
+                    "message" => $i18N->getLanguage(ELanguageText::registerDone),
                     "redirect" => route(RouteNameField::PageHome->value)
                 ]);
             }
@@ -340,14 +336,14 @@ class MemberController extends Controller
         }else{
             if ($v['token'] !== ($CSRF)->get()) {
                 event((new UserNotification([
-                    "CSRF 驗證碼失效",
+                    $i18N->getLanguage(ELanguageText::CSRFVerificationFailed),
                     $i18N->getLanguage(ELanguageText::notification_login_title),
                     "error",
                     "10000",
                     Cache::get("guest_id" . $fingerprint)
                 ])));
                 $errors = new MessageBag;
-                $errors->add('token', "CSRF 驗證碼失效。 Notification ID:" . Cache::get("guest_id" . $fingerprint));
+                $errors->add('token', $i18N->getLanguage(ELanguageText::CSRFVerificationFailed));
                 $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "danger", "messages" => $errors->all()]);
                 $CSRF->reset();
                 return response()->json([
@@ -366,10 +362,10 @@ class MemberController extends Controller
                     Log::info($user->username . ": logined");
                     if (Auth::check() && Auth::user()->enable === "false") {
                         $errors = new MessageBag;
-                        $errors->add('username', "你的帳號因已經停用，所以你已被強制登出。 Notification ID:" . Cache::get("guest_id" . $fingerprint));
+                        $errors->add('username', $i18N->getLanguage(ELanguageText::UserAccountBanMessage));
                         event((new UserNotification([
-                            "你的帳號因已經停用，所以你已被強制登出。",
-                            "警告訊息",
+                            $i18N->getLanguage(ELanguageText::UserAccountBanMessage),
+                            $i18N->getLanguage(ELanguageText::notification_login_title),
                             "warning",
                             10000,
                             Cache::get('guest_id' . $fingerprint)
@@ -454,30 +450,33 @@ class MemberController extends Controller
         ], true);
         if ($v instanceof MessageBag) {
             // validator errors here
-            return response()->json(["messages" => "驗證失敗 1", 'errors' => $v->all()]);
+            return response()->json(["messages" => $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed), 'errors' => $v->all()]);
         } else {
             if (!(new CSRF('profile.profilepost'))->equal($v['token'])) {
                 return response()->json([
-                    "message" => "CSRF 驗證失敗",
+                    "message" => $i18N->getLanguage(ELanguageText::CSRFVerificationFailed),
                     "value" => [
                         (new CSRF('profile.profilepost'))->get(),
                         $v['token'],
                     ]
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }
-            if (!isset($v['method'])) return response()->json(["messages" => "缺少 method"], ResponseHTTP::HTTP_BAD_REQUEST);
+            if (!isset($v['method'])) return response()->json(["messages" => $i18N->getLanguage(ELanguageText::miss_method)], ResponseHTTP::HTTP_BAD_REQUEST);
             switch ($v['method']) {
                 case 'email':
                     $vb1 = new ValidatorBuilder($i18N, EValidatorType::PROFILEUPDATEEMAIL);
                     $v1 = $vb1->validate($request->all());
                     if ($v1 instanceof MessageBag) {
                         // validator errors here
-                        return response()->json(["messages" => "驗證失敗 2", 'errors' => $v1->all()]);
+                        return response()->json(["messages" => $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed), 'errors' => $v1->all()]);
                     } else {
                         if (!Session::has('profile.email.newMailVerifyCode')) return response()->json(["message" => "沒有 Session 資料"], ResponseHTTP::HTTP_BAD_REQUEST);
                         if (Session::get('profile.email.newMailVerifyCode') !== $v1['verification']) return response()->json(["message" => "Session 資料不相同"], ResponseHTTP::HTTP_BAD_REQUEST);
                         if (Session::get("profile.email.sendMailVerifyCodeToken") !== $v['sendMailVerifyCodeToken']) {
-                            return response()->json(["message" => "錯誤 信箱身份驗證權杖"], ResponseHTTP::HTTP_BAD_REQUEST);
+                            return response()->json(["message" => $i18N->getLanguage(ELanguageText::sendMailVerifyCodeNotEqualValue, true)
+                                ->placeholderParser("validator_field_VerificationCode", $i18N->getLanguage(ELanguageText::validator_field_VerificationCode))
+                                ->toString()], ResponseHTTP::HTTP_BAD_REQUEST);
+                            // "錯誤 信箱身份驗證權杖" validator_field_VerificationCode
                         }
                         return $this->profilepost_email($request, $v1, $i18N);
                     }
@@ -490,11 +489,13 @@ class MemberController extends Controller
                     if ($v1 instanceof MessageBag) {
                         // validator errors here
                         //Log::info("MessageBag: ". serialize($v1));
-                        return response()->json(["messages" => "驗證失敗 2", 'errors' => $v1->all()], ResponseHTTP::HTTP_BAD_REQUEST);
+                        return response()->json(["messages" => $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed), 'errors' => $v1->all()], ResponseHTTP::HTTP_BAD_REQUEST);
                     } else {
                         //Log::info("password: ". \Psy\Util\Json::encode($v1));
                         if (Session::get("profile.password.sendMailVerifyCodeToken") !== $v['sendMailVerifyCodeToken']) {
-                            return response()->json(["message" => "錯誤 信箱身份驗證權杖"], ResponseHTTP::HTTP_BAD_REQUEST);
+                            return response()->json(["message" => $i18N->getLanguage(ELanguageText::sendMailVerifyCodeNotEqualValue, true)
+                                ->placeholderParser("validator_field_VerificationCode", $i18N->getLanguage(ELanguageText::validator_field_VerificationCode))
+                                ->toString()], ResponseHTTP::HTTP_BAD_REQUEST);
                         }
                         $member = Auth::user();
                         //Log::info("password Verify: ".PHP_EOL.$v1['current-ps'].PHP_EOL.$member->getAuthPassword());
@@ -521,7 +522,9 @@ class MemberController extends Controller
         }
         (new CSRF('profile.password.sendMailVerifyCode'))->release();
         Session::forget('profile.password.MailVerifyCode');
-        return response()->json(["message" => "Password 資料更新成功"]);
+        return response()->json(["message" => $i18N->getLanguage(ELanguageText::FieldDataUpdatedSuccessfully, true)
+            ->placeholderParser("field", $i18N->getLanguage(ELanguageText::validator_field_password))
+            ->toString()]);
     }
 
     /**
@@ -541,7 +544,9 @@ class MemberController extends Controller
         }
         (new CSRF('profile.email.sendMailVerifyCode'))->release();
         Session::forget('profile.email.newMailVerifyCode');
-        return response()->json(["message" => "Email 資料更新成功"]);
+        return response()->json(["message" => $i18N->getLanguage(ELanguageText::FieldDataUpdatedSuccessfully, true)
+            ->placeholderParser("field", $i18N->getLanguage(ELanguageText::validator_field_email))
+            ->toString()]);
     }
 
     /**
@@ -556,11 +561,11 @@ class MemberController extends Controller
         $v = $vb->validate($request->all());
         if ($v instanceof MessageBag) {
             // validator errors here
-            return response()->json(["messages" => "驗證失敗", 'errors' => $v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
+            return response()->json(["messages" => $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed), 'errors' => $v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
         } else {
             if (!(new CSRF('profile.email.sendMailVerifyCode'))->equal($request['token'])) {
                 return response()->json([
-                    "message" => "CSRF 驗證失敗",
+                    "message" => $i18N->getLanguage(ELanguageText::CSRFVerificationFailed),
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }
             $member = Auth::user();
@@ -608,11 +613,11 @@ class MemberController extends Controller
 
         if ($v instanceof MessageBag) {
             // validator errors here
-            return response()->json(["messages" => "驗證失敗", 'errors' => $v->all()]);
+            return response()->json(["messages" => $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed), 'errors' => $v->all()]);
         } else {
             if (!(new CSRF('profile.email.newMailVerifyCode'))->equal($request['token'])) {
                 return response()->json([
-                    "message" => "CSRF 驗證失敗",
+                    "message" => $i18N->getLanguage(ELanguageText::CSRFVerificationFailed),
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }
             $member = Auth::user();
@@ -621,7 +626,9 @@ class MemberController extends Controller
                 $cacheKey = $member->UUID . ":newMailVerifyCode";
                 if ($v['email'] === $member->email) {
                     return response()->json([
-                        "message" => "無法更換相同的電子信箱",
+                        "message" => $i18N->getLanguage(ELanguageText::Unable_to_change_the_same_field, true)
+                            ->placeholderParser("field", $i18N->getLanguage(ELanguageText::validator_field_email))
+                            ->toString(), // 無法更換相同的電子信箱 Unable to change the same email address
                         "token" => $csrf,
                     ], ResponseHTTP::HTTP_BAD_REQUEST);
                 }
@@ -663,11 +670,11 @@ class MemberController extends Controller
 
         if ($v instanceof MessageBag) {
             // validator errors here
-            return response()->json(["messages" => "驗證失敗", 'errors' => $v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
+            return response()->json(["messages" => $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed), 'errors' => $v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
         } else {
             if (!(new CSRF('profile.email.verifyCode'))->equal($request['token'])) {
                 return response()->json([
-                    "message" => "CSRF 驗證失敗",
+                    "message" => $i18N->getLanguage(ELanguageText::CSRFVerificationFailed),
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }
             $code = Session::get('profile.email.sendMailVerifyCode');
@@ -691,11 +698,11 @@ class MemberController extends Controller
         $v = $vb->validate($request->all());
         if ($v instanceof MessageBag) {
             // validator errors here
-            return response()->json(["message" => "驗證失敗", 'errors' => $v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
+            return response()->json(["message" => $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed), 'errors' => $v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
         } else {
             if (!(new CSRF('profile.password.sendMailVerifyCode'))->equal($request['token'])) {
                 return response()->json([
-                    "message" => "CSRF 驗證失敗",
+                    "message" => $i18N->getLanguage(ELanguageText::CSRFVerificationFailed),
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }
             $member = Auth::user();
@@ -740,11 +747,11 @@ class MemberController extends Controller
 
         if ($v instanceof MessageBag) {
             // validator errors here
-            return response()->json(["messages" => "驗證失敗", 'errors' => $v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
+            return response()->json(["messages" => $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed), 'errors' => $v->all()], ResponseHTTP::HTTP_BAD_REQUEST);
         } else {
             if (!(new CSRF('profile.password.verifyCode'))->equal($request['token'])) {
                 return response()->json([
-                    "message" => "CSRF 驗證失敗",
+                    "message" => $i18N->getLanguage(ELanguageText::CSRFVerificationFailed),
                 ], ResponseHTTP::HTTP_BAD_REQUEST);
             }
             $code = Session::get('profile.password.sendMailVerifyCode'); // 原始驗證碼

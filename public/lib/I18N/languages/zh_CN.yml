@@ -360,3 +360,4 @@ HTTP_FORBIDDEN: 禁止
 ExpireTime: '过期时间: %timestamp%'
 EmailVerifiedListenerEmailTitle: 'welcome to use %APP_NAME%'
 EmailVerifiedListenerEmailContent: 'We provide high-quality network systems, server hosting, website design, information integration, network attack protection, diversion systems...'
+UserAccountBanMessage: 'Your account has been deactivated, so you have been forced to log out.'

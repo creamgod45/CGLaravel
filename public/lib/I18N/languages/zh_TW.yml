@@ -359,4 +359,5 @@ RegisterMailAction1: 驗證
 HTTP_FORBIDDEN: 禁止
 ExpireTime: '過期時間: %timestamp%'
 EmailVerifiedListenerEmailTitle: '歡迎使用 %APP_NAME%'
-EmailVerifiedListenerEmailContent: '我們提供優質網路系統、伺服器代管、網站設計、資訊整合、網路攻擊防護、分流系統...'
+EmailVerifiedListenerEmailContent: 我們提供優質網路系統、伺服器代管、網站設計、資訊整合、網路攻擊防護、分流系統...
+UserAccountBanMessage: 'Your account has been deactivated, so you have been forced to log out.'

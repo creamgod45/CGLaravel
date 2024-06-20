@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Lib\I18N\ELanguageCode;
+use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
 use App\Models\Member;
 use App\Notifications\WelcomeEmailDataStructure;
@@ -32,7 +33,6 @@ class EmailVerifiedListener
             Log::info('EmailVerifiedListener User verified', ['user_id' => $user->id, 'email' => $user->email]);
             $locale = App::getLocale();
             //dump($locale);
-
             $ELanguageCode = ELanguageCode::valueof($locale);
             if (ELanguageCode::isVaild($locale)) $ELanguageCode = ELanguageCode::en_US;
             $i18N = new I18N($ELanguageCode, limitMode: [
@@ -41,7 +41,9 @@ class EmailVerifiedListener
                 ELanguageCode::en_US,
                 ELanguageCode::en_GB
             ]);
-            event(new WelcomeEmailNotification($i18N, new WelcomeEmailDataStructure($title, $content)));
+            event((new WelcomeEmailNotification($i18N, new WelcomeEmailDataStructure(
+                ELanguageText::EmailVerifiedListenerEmailTitle,
+                ELanguageText::EmailVerifiedListenerEmailContent)))->delay(now()->addSeconds(2)));
         }
     }
 }

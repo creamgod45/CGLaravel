@@ -38,16 +38,21 @@ class AnimalController extends Controller
     {
         //
         $init = self::baseControllerInit($request);
-        $i18N = $init['i18N'];
-        if (!($i18N instanceof I18N)) throw new Exception('$i18N Not instanceof I18N');
+        $i18N = $init->getI18N();
+
         $vb = new ValidatorBuilder($i18N, EValidatorType::ANIMALCREATE);
         $v = $vb->validate($request->all());
 
         if ($v instanceof MessageBag) {
-            return response()->json(['message' => "Failed to create animal", 'errors' => [...$v->all()]], ResponseAlias::HTTP_BAD_REQUEST);
+            return response()->json([
+                'message' => "Failed to create animal",
+                'errors' => $v->all()
+            ], ResponseAlias::HTTP_BAD_REQUEST);
         } else {
             Animal::create($request->all());
-            return response()->json(['message' => "Animal Added"], ResponseAlias::HTTP_CREATED);
+            return response()->json([
+                'message' => "Animal Added"
+            ], ResponseAlias::HTTP_CREATED);
         }
     }
 

@@ -373,6 +373,34 @@ enum ELanguageText
 
     case EmailVerifiedListenerEmailContent;
 
+    case WelcomeMailTitle;
+
+    case WelcomeMailDescription;
+
+    case UserAccountBanMessage;
+
+    case validator_field_sendMailVerifyCodeToken;
+
+    case validator_field_VerificationCode;
+
+    case DataReceivedSuccessfully;
+
+    case GetLanguage;
+
+    case ValidatorBuilderFailed;
+
+    case CSRFVerificationFailed;
+
+    case registerDone;
+
+    case sendMailVerifyCodeNotEqualValue;
+
+    case miss_method;
+
+    case FieldDataUpdatedSuccessfully;
+
+    case Unable_to_change_the_same_field;
+
     public static function isVaild(string $name): bool
     {
         foreach (ELanguageText::cases() as $case) {

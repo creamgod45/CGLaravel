@@ -24,7 +24,7 @@ class Controller extends BaseController
     /**
      * @param Request $request
      * @param array $params
-     * @return array
+     * @return CGLaravelControllerInit
      */
     public function baseGlobalVariable(Request $request, array $params = []): CGLaravelControllerInit
     {
@@ -51,8 +51,6 @@ class Controller extends BaseController
             $lang = $_COOKIE['lang'];
             //dump(1);
         }
-        //dump($lang);
-        //debugbar()->info($lang);
         $i18N = new I18N(ELanguageCode::valueof($lang), limitMode: [ELanguageCode::zh_TW, ELanguageCode::zh_CN, ELanguageCode::en_US, ELanguageCode::en_GB]);
         $fingerprint = $this->fingerprint($request);
         return new CGLaravelControllerInit($i18N, $router, $request, $params, $fingerprint);
