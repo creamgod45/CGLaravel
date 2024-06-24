@@ -1,17 +1,26 @@
 @use(App\Lib\I18N\ELanguageText)
-@use(App\Lib\Utils\ENotificationType)
+@use(App\Lib\I18N\I18N;use App\Lib\Utils\ENotificationType)
+@php
+/***
+ * @var string[] $urlParams
+ * @var array $moreParams
+ * @var I18N $i18N
+ * @var Request $request
+ * @var string $fingerprint
+ */
+@endphp
 <div class="notification">
     <x-Notificationitem :title="$i18N->getLanguage(ELanguageText::notification_title)"
                         :description="$i18N->getLanguage(ELanguageText::notification_description)"
                         :type="ENotificationType::info"
-                        :line=6
-                        :millisecond=10000 />
+                        :line=15
+                        :millisecond=10000/>
     @if(session('custom_message')!==null and is_array(session('custom_message')))
         @if(session('custom_message')[0] !== null && session('custom_message')[1]!==null && session('custom_message')[2]!==null)
-        <x-Notificationitem :title="session('custom_message')[0]"
-                            :description="session('custom_message')[1]"
-                            :type="session('custom_message')[2]"
-                            :line=10 />
+            <x-Notificationitem :title="session('custom_message')[0]"
+                                :description="session('custom_message')[1]"
+                                :type="session('custom_message')[2]"
+                                :line=10/>
         @endif
     @endif
     @if(session('invaild') !== null)
@@ -29,7 +38,7 @@
         <x-Notificationitem :type="ENotificationType::error"
                             :title="$title"
                             :description="$description"
-                            :line=30 />
+                            :line=30/>
     @endif
     @if(session('mail') !== null)
         @php
@@ -44,7 +53,7 @@
                 $type= ENotificationType::error;
             }
         @endphp
-        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=45 />
+        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=55/>
     @endif
     @if(session('mail_result') !== null)
         @php
@@ -64,6 +73,6 @@
                 $type= ENotificationType::success;
             }
         @endphp
-        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=65 />
+        <x-Notificationitem :type="$type" :title="$title" :description="$description" :line=75/>
     @endif
 </div>

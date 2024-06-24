@@ -314,7 +314,7 @@ login_title: 登入会员
 login_btn: 送出
 login_faild: '登入失败。 %validator_field_username% 或 %validator_field_password% 其中一个可能是错误'
 logout_title: 登出
-logout_context: 已经登出三秒后跳转页面!!点击前往
+logout_context: '已经登出 %s% 秒后跳转页面!!点击前往'
 login_username_notfound: '登入失败。 %validator_field_username% 不存在'
 pagination_firstPage: 首页
 pagination_previous: 上一页
@@ -331,7 +331,7 @@ notification_email_failedAppendText: '认证失败: '
 notification_email_InvalidVerificationLink: 验证连结无效
 notification_email_hasVerifiedEmail: 电子邮件已验证
 notification_email_markEmailAsVerified: 验证电子邮件成功
-notification_email_fail_description: 请前往您的邮箱验证您的电子邮件，然后才能访问网站的其他功能。
+notification_email_fail_description: 你已经完成注册，请前往您的邮箱验证您的电子邮件。
 notification_invaild_title: 错误
 notification_invaild_description: 输入的信息无效
 passwords_reset: '您的密码已重设。 '
@@ -344,4 +344,31 @@ notification_login_success: 您已成功登入！
 notification_login_failed: 您登入失败！
 ResetPasswordLine1: '您收到这封电子邮件是因为我们收到了您帐户的密码重设请求。 '
 ResetPasswordLine2: '如果您没有请求重设密码，则无需采取进一步操作。 '
-ResetPasswordAction1: '重设密码'
+ResetPasswordAction1: 重设密码
+BooleanStringCoverTrue: 启用
+BooleanStringCoverFalse: 关闭
+sendMailVerifyCodeSubject: 会员验证号码
+sendMailVerifyCode_Response_success: 成功寄送验证码至您的信箱中，请至信箱中查看。
+sendMailVerifyCode_Response_error1: 已经寄送验证码至信箱中，请查看后填入验证码送出。
+sendMailVerifyCodeLine1: '请复制号码并输入在验证码输入框中。 验证码:%code%'
+sendMailVerifyCodeLine2: 如果你没有发送验证信件，请至帐号设定移除所有已登入装置，并且更改密码确保安全。
+RegisterMailTitle: 会员注册信件
+RegisterMailLine1: '请点击下面的按钮来验证您的电子邮件地址。 '
+RegisterMailLine2: '如果您没有建立帐户，则无需采取进一步操作。 '
+RegisterMailAction1: 验证
+HTTP_FORBIDDEN: 禁止
+ExpireTime: '过期时间: %timestamp%'
+EmailVerifiedListenerEmailTitle: '欢迎使用 %APP_NAME%'
+EmailVerifiedListenerEmailContent: "我们提供优质网路系统、伺服器代管、网站设计、资讯整合、网路攻击防护、分流系统..."
+UserAccountBanMessage: '您的帐户已被停用，因此您已被强制登出。 '
+Unable_to_change_the_same_field: '无法更改相同的 %field%'
+FieldDataUpdatedSuccessfully: '%field% 的信息已成功更新'
+miss_method: '缺少方法'
+sendMailVerifyCodeNotEqualValue: '%validator_field_VerificationCode% 的值无效'
+CSRFVerificationFailed: 'CSRF 验证失败'
+DataReceivedSuccessfully: '数据已成功接收'
+GetLanguage: '获取语言'
+registerDone: '注册成功。请验证您的电子邮件地址！验证码将在 1 小时内失效'
+validator_field_sendMailVerifyCodeToken: '电子邮件认证令牌'
+validator_field_VerificationCode: '验证码'
+ValidatorBuilderFailed: '验证失败'

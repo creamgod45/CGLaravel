@@ -1,3 +1,5 @@
+let Flag_floatMenuPendingQueueing=false;
+let floatMenuPendingQueueList= [];
 function menu() {
     let floatMenuBtns = document.querySelectorAll(".float-menu-btn");
     for (let floatMenuBtn of floatMenuBtns) {
@@ -23,6 +25,12 @@ function menu() {
         //    }, 450);
         //};
         floatMenuBtn.onclick = () => {
+            if(Flag_floatMenuPendingQueueing){
+                floatMenuPendingQueueList.push(floatMenuBtn);
+                console.log(floatMenuPendingQueueList);
+                return;
+            }
+            Flag_floatMenuPendingQueueing = true;
             let element = document.querySelector(floatMenuBtn.dataset.target);
             if (element !== null) {
                 if (element.classList.contains("active")) {
@@ -30,6 +38,7 @@ function menu() {
                     element.classList.remove("active");
                     element.classList.add("off");
                     setTimeout(function () {
+                        Flag_floatMenuPendingQueueing = false;
                         element.classList.remove("off");
                     }, 450);
                 } else {
@@ -54,17 +63,34 @@ function menu() {
                     if (count === 0) {
                         //console.log(1);
                         element.classList.add("active");
+                        Flag_floatMenuPendingQueueing = false;
                     } else {
                         //console.log(2);
                         let second = Number.parseInt(element.dataset.second) + s;
                         setTimeout(function () {
                             element.classList.remove("off");
                             element.classList.add("active");
+                            Flag_floatMenuPendingQueueing = false;
                         }, second / 1.2);
                     }
                 }
             }
         };
+        setInterval(()=>{
+            if(Flag_floatMenuPendingQueueing === false){
+                if(floatMenuPendingQueueList.length === 0) return;
+                for (let e of floatMenuPendingQueueList) {
+                    e.onclick();
+                    if(floatMenuPendingQueueList.length>1){
+                        floatMenuPendingQueueList = floatMenuPendingQueueList.splice(0, 1);
+                    }else{
+                        floatMenuPendingQueueList=[];
+                    }
+                    break;
+                }
+                //console.log(floatMenuPendingQueueList);
+            }
+        }, 500);
     }
 }
 document.addEventListener('DOMContentLoaded', menu);

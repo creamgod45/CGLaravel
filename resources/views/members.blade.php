@@ -2,15 +2,18 @@
 @use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use Illuminate\Contracts\Pagination\LengthAwarePaginator)
 @php
     /***
-     * @var string[] $router \
+     * @var string[] $urlParams
+     * @var array $moreParams
      * @var I18N $i18N
-     * @var LengthAwarePaginator $members
+     * @var Request $request
+     * @var string $fingerprint
      */
     $menu=true;
     $footer=true;
+    $members = $moreParams['members'];
 @endphp
 @extends('layouts.default')
-@section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
+@section('title', "會員資料")
 @section('content')
     <main class="container1">
         <div class="home">

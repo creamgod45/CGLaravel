@@ -1,11 +1,13 @@
 @php
 /***
- * @var string[] $router \
+ * @var string[] $urlParams
+ * @var array $moreParams
  * @var I18N $i18N
+ * @var Request $request
+ * @var string $fingerprint
  */
 @endphp
-@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Type\Array\CGArray;use App\Lib\Utils\Utils)
-
+@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Type\Array\CGArray;use App\Lib\Utils\Utils;use App\Lib\Utils\RouteNameField)
 <script>
     function changeLanguage(el) {
         let value = el.value;
@@ -22,20 +24,20 @@
                 location.reload();
             }
             throw new Error('Network response was not ok.');
-        })
+        }).catch(response => {
+            console.log(response);
+        });
     }
 </script>
 <nav class="float-menu">
     <div class="float-btn-group">
-        <a href="/" aria-label="首頁連接圖片" class="icon placeholder placeholder-circle lazy-loaded-image" data-src="{{asset("assets/images/logo.webp")}}"></a>
+        <a href="/"
+           aria-label="首頁連接圖片"
+           class="icon placeholder placeholder-circle lazy-loaded-image"
+           data-src="{{asset("assets/images/logo.webp")}}"></a>
         <a href="/" type="button" class="float-menu-btn" aria-expanded="false">
-            <span>{{$i18N->getLanguage(ELanguageText::menu_frontpage)}}</span>
+            <span><i class="fa-solid fa-house"></i>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_frontpage)}}</span>
         </a>
-        @env('local')
-            <a href="{{route('branding')}}" class="float-menu-btn" aria-expanded="false">
-                <span>品牌頁面</span>
-            </a>
-        @endenv
         <button type="button" class="float-menu-btn" aria-expanded="false" data-target="#float1">
             <span>{{$i18N->getLanguage(ELanguageText::menu_product)}}</span>
             <i class="fa-solid fa-caret-down"></i>
@@ -62,6 +64,11 @@
                         <i class="fa-brands fa-microsoft"></i>
                         <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_MicrosoftAzure)}}</span>
                     </a>
+                    @env('local')
+                    <a href="{{route(RouteNameField::PageDesignComponents->value)}}" class="menu-btn btn-ripple">
+                        <span>元件測試頁面</span>
+                    </a>
+                    @endenv
                 </div>
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_WebDesign)}}</div>
@@ -92,15 +99,19 @@
                         <i class="fa-solid fa-shop"></i>
                         <span>&nbsp;串串幸福 <i class="fa-solid fa-square-arrow-up-right"></i></span>
                     </a>
+                    <a href="https://creamgod45.github.io/TimeCalculate/" target="_blank" class="menu-btn btn-ripple">
+                        <i class="fa-solid fa-shop"></i>
+                        <span>&nbsp;時間計算程式 <i class="fa-solid fa-square-arrow-up-right"></i></span>
+                    </a>
                 </div>
                 <div class="item">
                     <div class="title">{{$i18N->getLanguage(ELanguageText::menu_VendorOperations)}}</div>
                     @guest
-                        <a href="/login" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageLogin->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::login_title)}}</span>
                         </a>
-                        <a href="/register" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageRegister->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::register_title)}}</span>
                         </a>
@@ -110,16 +121,20 @@
                             $user = Auth::user();
                         @endphp
                         @if(!$user->hasVerifiedEmail())
-                        <a href="/resendemail" class="menu-btn btn-ripple">
+                        <a href="{{RouteNameField::PageEmailReSendMailVerification->value}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-paper-plane"></i>
                             <span>&nbsp;重新驗證</span>
                         </a>
                         @endif
-                        <a href="/members" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageProfile->value)}}" class="menu-btn btn-ripple">
+                            <i class="fa-solid fa-user"></i>
+                            <span>&nbsp;個人資料</span>
+                        </a>
+                        <a href="{{route(RouteNameField::PageMembers->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::menu_membersBtn)}}</span>
                         </a>
-                        <a href="/logout" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageLogout->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-shop"></i>
                             <span>&nbsp;{{$i18N->getLanguage(ELanguageText::logout_title)}}</span>
                         </a>

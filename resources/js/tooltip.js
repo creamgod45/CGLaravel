@@ -1,24 +1,60 @@
 import {generateRandomString, htmldecode} from "@/utils.js";
+import {data} from "autoprefixer";
 
-function tooltip() {
+function tooltip(event) {
+    console.log(window.screen.width);
     let tooltips = document.querySelectorAll(".tooltip-gen");
-    for (let tooltipEl of tooltips) {
-        let dataset = tooltipEl.dataset;
-        if (dataset.tooltip === null) continue;
-        if (dataset.direction === null) continue;
-        let tooltip = dataset.tooltip;
-        let direction = dataset.direction;
-        tooltipEl.onmouseenter = () => {
+
+    function getOnmouseenter(direction, tooltip, tooltipEl) {
+        return () => {
+            if (tooltipEl.dataset.destory !== undefined) {
+                let destoryEl = tooltipEl.dataset.destory;
+                if(destoryEl!==""){
+                    document.querySelector(destoryEl).remove();
+                    tooltipEl.dataset.destory = "";
+                    tooltipEl.isTooltopShow = false;
+                }
+            }
             let t = document.createElement("div");
+            tooltipEl.dataset.render = "true";
             t.classList.add("tooltip");
+            if(tooltipEl.dataset.render === "true" && tooltipEl.dataset.mobileTriggerPx !== null && tooltipEl.dataset.mobile !== null){
+                if(window.screen.width <= Number.parseInt(tooltipEl.dataset.mobiletriggerpx)){
+                    //console.log(true)
+                    direction = tooltipEl.dataset.mobile;
+                    tooltipEl.dataset.mobilestatus = "true";
+                }else{
+                    direction = tooltipEl.dataset.direction;
+                }
+            }
             t.classList.add(direction);
+            if(tooltipEl.dataset.customclass!==undefined){
+                //console.log(tooltipEl.dataset.customclass)
+                let strings = tooltipEl.dataset.customclass.split(" ");
+                if (strings.length > 1){
+                    for (let string of strings) {
+                        t.classList.add(string);
+                    }
+                }else{
+                    t.classList.add(tooltipEl.dataset.customclass);
+                }
+            }
             let s = generateRandomString(5);
             t.id = s;
-            t.innerHTML = htmldecode(tooltip);
+            if(tooltipEl.dataset.htmlable !== undefined){
+                //console.log(tooltipEl.dataset.htmlable);
+                if (tooltipEl.dataset.htmlable === "true") {
+                    t.innerHTML = tooltip;
+                }else{
+                    t.innerHTML = htmldecode(tooltip);
+                }
+            }else{
+                t.innerHTML = htmldecode(tooltip);
+            }
             tooltipEl.dataset.destory = "#" + s;
             tooltipEl.appendChild(t);
             let tooltipBound = tooltipEl.getBoundingClientRect();
-            let tBound = t.getBoundingClientRect();
+            //let tBound = t.getBoundingClientRect();
             if (direction === "tooltip-top") {
                 t.style.bottom = tooltipBound.height + 20 + "px";
                 t.style.right = "0";
@@ -37,17 +73,65 @@ function tooltip() {
                 t.style.top = tooltipBound.height + 18 + "px";
                 t.style.left = "0";
             }
-
+            tooltipEl.isTooltopShow = true;
         }
-        tooltipEl.onmouseleave = () => {
-            if (tooltipEl.dataset.destory !== null) {
+    }
+
+    function getOnmouseleave(tooltipEl) {
+        return () => {
+            if (tooltipEl.dataset.destory !== undefined) {
                 let destoryEl = tooltipEl.dataset.destory;
-                document.querySelector(destoryEl).remove();
-                tooltipEl.dataset.destory = "";
+                if(destoryEl!==""){
+                    document.querySelector(destoryEl).remove();
+                    tooltipEl.dataset.destory = "";
+                    tooltipEl.isTooltopShow = false;
+                }
+            }
+        };
+    }
+
+    for (let tooltipEl of tooltips) {
+        let dataset = tooltipEl.dataset;
+        if (dataset.tooltip === null) continue;
+        if (dataset.direction === null) continue;
+        let tooltip = dataset.tooltip;
+        let direction = dataset.direction;
+        if(dataset.render === "true" && dataset.mobileTriggerPx !== null && dataset.mobile !== null){
+            if(window.screen.width <= Number.parseInt(dataset.mobiletriggerpx)){
+                //console.log(true)
+                direction = dataset.mobile;
+                dataset.mobilestatus = "true";
+            }else{
+                direction = dataset.direction;
+            }
+            if (tooltipEl.dataset.destory !== undefined) {
+                let destoryEl = tooltipEl.dataset.destory;
+                if(destoryEl !== ""){
+                    document.querySelector(destoryEl).remove();
+                    tooltipEl.dataset.destory = "";
+                    tooltipEl.isTooltopShow = false;
+                    if(tooltipEl.isTooltopShow===false){
+                        tooltipEl.tooltipShow();
+                    }
+                }
             }
         }
+        if(tooltipEl.dataset.hoverable !== undefined){
+            if (tooltipEl.dataset.hoverable === "false") {
+
+            }else{
+                tooltipEl.onmouseenter = getOnmouseenter(direction, tooltip, tooltipEl)
+                tooltipEl.onmouseleave = getOnmouseleave(tooltipEl)
+            }
+        }else{
+            tooltipEl.onmouseenter = getOnmouseenter(direction, tooltip, tooltipEl)
+            tooltipEl.onmouseleave = getOnmouseleave(tooltipEl)
+        }
+        tooltipEl.isTooltopShow = false;
+        tooltipEl.tooltipShow = getOnmouseenter(direction, tooltip, tooltipEl)
+        tooltipEl.tooltipHide = getOnmouseleave(tooltipEl)
     }
 }
 
-document.addEventListener('resize', tooltip);
+window.addEventListener('resize', tooltip);
 document.addEventListener('DOMContentLoaded', tooltip);

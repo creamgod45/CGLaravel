@@ -2,7 +2,7 @@
 
 namespace App\Lib\Utils;
 
-enum FilterType :int
+enum FilterType: int
 {
     case Integer = 0;
     case Token = 1;

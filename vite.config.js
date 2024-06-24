@@ -5,14 +5,21 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
+                // css
                 'resources/css/app.css',
                 'resources/css/home.css',
                 'resources/css/branding.css',
                 'resources/css/members.css',
+                'resources/css/profile.css',
+                'resources/css/WelcomeEmail.css',
+                // js
                 'resources/js/app.js',
                 'resources/js/home.js',
                 'resources/js/branding.js',
                 'resources/js/members.js',
+                'resources/js/profile.js',
+                'resources/js/registerForm.js',
+                'resources/js/WelcomeEmail.js',
             ],
             refresh: true,
         }),
@@ -28,9 +35,9 @@ export default defineConfig({
                 }
             },
             external: [
-                'intl-tel-input/build/js/i18n/en/index.mjs',
-                'intl-tel-input/build/js/i18n/zh/index.mjs',
-                'intl-tel-input/build/js/i18n/zh_TW/index.mjs',
+                //'intl-tel-input/build/js/i18n/en/index.mjs',
+                //'intl-tel-input/build/js/i18n/zh/index.mjs',
+                //'intl-tel-input/build/js/i18n/zh_TW/index.mjs',
             ]
         }
     },

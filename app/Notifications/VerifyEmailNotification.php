@@ -2,11 +2,16 @@
 
 namespace App\Notifications;
 
+use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
+use App\Lib\Type\String\CGStringable;
+use App\Lib\Utils\RouteNameField;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
 class VerifyEmailNotification extends Notification implements ShouldQueue
@@ -37,21 +42,28 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $verificationUrl = $this->verificationUrl($notifiable);
-
+        Log::info("=================================================================================================");
+        Log::info("Process: VerifyEmailNotification");
+        Log::info("Debug \$Instance: " . (new CGStringable($this)));
+        Log::info("Debug \$i18N: " . $this->i18N->getLanguageCode()->name);
+        Log::info("Debug \$verificationUrl: " . $verificationUrl);
+        Log::info("=================================================================================================");
         return (new MailMessage)
-            ->subject('Verify Email Address')
-            ->line('Please click the button below to verify your email address.')
-            ->action('Verify Email Address', $verificationUrl)
-            ->line('If you did not create an account, no further action is required.');
+            ->subject($this->i18N->getLanguage(ELanguageText::RegisterMailTitle))
+            ->line($this->i18N->getLanguage(ELanguageText::RegisterMailLine1))
+            ->action($this->i18N->getLanguage(ELanguageText::RegisterMailAction1), $verificationUrl)
+            ->line($this->i18N->getLanguage(ELanguageText::RegisterMailLine2));
     }
 
     protected function verificationUrl($notifiable)
     {
         return URL::temporarySignedRoute(
-            'verification.verify',
-            now()->addSeconds(5),
-            ['id' => $notifiable->getKey(), 'hash' => sha1($notifiable->getEmailForVerification())]
-        );
+            RouteNameField::PageEmailVerification->value,
+            now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            [
+                'id' => $notifiable->getKey(),
+                'hash' => sha1($notifiable->getEmailForVerification())
+            ]);
     }
 
     /**
@@ -61,8 +73,7 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            //
+        return [//
         ];
     }
 }

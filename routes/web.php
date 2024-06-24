@@ -1,14 +1,11 @@
 <?php
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\HTMLTemplateController;
+use App\Http\Controllers\InternalController;
 use App\Http\Controllers\MemberController;
 use App\Http\Middleware\EMiddleWareAliases;
-use App\Lib\I18N\ELanguageCode;
-use App\Lib\Utils\Utilsv2;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
+use App\Lib\Utils\RouteNameField;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,59 +18,53 @@ use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 |
 */
 
-Route::get('/', function (Request $request) {
-    return view('branding', Controller::baseControllerInit($request));
-})->name('home');
-
-Route::get('/branding', function (Request $request) {
-    return view('welcome', Controller::baseControllerInit($request));
-})->name('branding');
-
-Route::post('lzstring.json', function (Request $request){
-    $decodeContext = Utilsv2::decodeContext($request["a"]);
-    return response()->json(['message' => 'Data received successfully', 'raw'=> $decodeContext]);
-});
-
-Route::post('language', function (Request $request){
-    if (ELanguageCode::isVaild($request['lang'])) {
-        $cookie_expire = time() + (24 * 60 * 60);
-        $cookie_path = "/";
-        $secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
-        $httponly = true;
-        setrawcookie('lang', $request['lang'], [
-            'expires' => $cookie_expire,
-            'path' => $cookie_path,
-            'secure' => $secure,
-            'httponly' => $httponly
-        ]);
-        return response()->json(['message' => 'Data received successfully', 'lang' => $request['lang']]);
-    }
-    return response()->json(['message' => 'Error'], ResponseHTTP::HTTP_BAD_REQUEST);
-});
+Route::get('/', [InternalController::class,'branding'])->name(RouteNameField::PageHome->value);
+Route::get('designcomponents', [InternalController::class,'designComponents'])->name(RouteNameField::PageDesignComponents->value);
+Route::post('encode.json', [InternalController::class, 'encodeJson'])->name(RouteNameField::APIEncodeJson->value);
+Route::post('broadcast', [InternalController::class, 'broadcast_Notification_Notification'])->name(RouteNameField::APIBroadcast->value);
+Route::post('language', [InternalController::class, 'language'])->name(RouteNameField::APILanguage->value);
+//Route::post('user', [InternalController::class, 'user']);
+Route::post('browser', [InternalController::class, 'browser'])->name(RouteNameField::APIBrowser->value);
+// password reset
+Route::get('passwordreset', [MemberController::class, 'passwordReset'])->name(RouteNameField::PagePasswordReset->value);
+Route::post('passwordreset', [MemberController::class, 'passwordResetPost'])->name(RouteNameField::PagePasswordResetPost->value);
+// forgot password
+Route::get('forgot-password',  [MemberController::class, 'forgetPassword'])->name(RouteNameField::PageForgetPassword->value);
+Route::post('forget-password', [MemberController::class, 'forgetPasswordPost'])->name(RouteNameField::PageForgetPasswordPost->value);
+// email verify
+Route::get('email/verify/{id}/{hash}', [MemberController::class, 'emailVerify'])->name(RouteNameField::PageEmailVerification->value);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('members', [MemberController::class, 'index']);
+    Route::get('members', [MemberController::class, 'index'])->name(RouteNameField::PageMembers->value);
+});
+
+Route::group(["prefix"=>"HTMLTemplate"], function () {
+    Route::post('Notification', [ HTMLTemplateController::class, 'Notification' ])->name(RouteNameField::APIHTMLTemplateNotification->value);
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('logout', [MemberController::class, 'logout'])->name('logout');
-    Route::get('resendemail', [MemberController::class, 'resendEmail'])->name('verification.notice');
+    Route::get('logout', [MemberController::class, 'logout'])->name(RouteNameField::PageLogout->value);
+    Route::get('resendemail', [MemberController::class, 'resendEmail'])->name(RouteNameField::PageEmailReSendMailVerification->value);
+    // Profile Start
+    Route::get('profile', [MemberController::class, 'profile'])->name(RouteNameField::PageProfile->value);
+    Route::post('profile', [MemberController::class, 'profilePost'])->name(RouteNameField::PageProfilePost->value);
+    Route::group(['prefix' => 'profile'], function () {
+        Route::group(['prefix' => 'email'], function () {
+            Route::post('sendMailVerifyCode', [MemberController::class, 'sendMailVerifyCode_profile_email']);
+            Route::post('verifyCode', [MemberController::class, 'verifyCode_profile_email']);
+            Route::post('newMailVerifyCode', [MemberController::class, 'newMailVerifyCode_profile_email']);
+        });
+        Route::group(['prefix' => 'password'], function () {
+            Route::post('sendMailVerifyCode', [MemberController::class, 'sendMailVerifyCode_profile_password']);
+            Route::post('verifyCode', [MemberController::class, 'verifyCode_profile_password']);
+        });
+    });
+    // Profile End
 });
 
-// password reset
-Route::get('passwordreset', [MemberController::class, 'passwordreset'])->name('password.reset');
-Route::post('passwordreset', [MemberController::class, 'passwordresetpost'])->name('password.resetpost');
-
-// forgot password
-Route::get('forgot-password',  [MemberController::class, 'forgetpassword'])->name('password.request');
-Route::post('forget-password', [MemberController::class, 'forgetpasswordpost'])->name('password.email');
-
-// email verify
-Route::get('/email/verify/{id}/{hash}', [MemberController::class, 'emailVerify'])->name('verification.verify');
-
 Route::middleware(EMiddleWareAliases::guest->name)->group(function () {
-    Route::get('login', [MemberController::class, 'loginPage'])->name('login');
-    Route::post('login', [MemberController::class, 'login']);
-    Route::get('register', [MemberController::class, 'showRegistrationForm'])->name('register');
-    Route::post('register', [MemberController::class, 'register']);
+    Route::get('login', [MemberController::class, 'loginPage'])->name(RouteNameField::PageLogin->value);
+    Route::post('login', [MemberController::class, 'login'])->name(RouteNameField::PageLoginPost->value);
+    Route::get('register', [MemberController::class, 'showRegistrationForm'])->name(RouteNameField::PageRegister->value);
+    Route::post('register', [MemberController::class, 'register'])->name(RouteNameField::PageRegisterPost->value);
 });

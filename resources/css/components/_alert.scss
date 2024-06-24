@@ -4,3 +4,6 @@
 .alert-danger{
     @apply border-red-500 text-red-500 font-bold;
 }
+.alert-warning{
+    @apply border-yellow-500 text-yellow-500 font-bold;
+}

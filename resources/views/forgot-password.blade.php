@@ -1,10 +1,12 @@
-@use(App\Lib\I18N\ELanguageText;use \App\Lib\I18N\I18N)
+@use(App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Utils\RouteNameField)
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 @php
     /***
-     * @var string[] $router \
+     * @var string[] $urlParams
+     * @var array $moreParams
      * @var I18N $i18N
-     * @var \Illuminate\Support\Facades\Request $request
+     * @var Request $request
+     * @var string $fingerprint
      */
     $menu=true;
     $footer=true;
@@ -13,7 +15,7 @@
 @section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
 @section('content')
     <div class="register-frame">
-        <form class="register" method="POST" action="{{ route('password.email') }}">
+        <form class="register" method="POST" action="{{ route(RouteNameField::PageForgetPasswordPost->value) }}">
             @csrf
             <div class="title">忘記密碼</div>
             <div class="row">
@@ -30,15 +32,5 @@
                 <x-alert type="danger" :messages="$errors->all()" />
             @endif
         </form>
-    </div>
-    <div class="notification">
-        <div id="A16H5A" class="item">
-            <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-            <div class="context">
-                <div class="title">{{$i18N->getLanguage(ELanguageText::notification_title)}}</div>
-                <div class="description">{{$i18N->getLanguage(ELanguageText::notification_description)}}</div>
-            </div>
-            <div class="close-btn" onclick="document.getElementById('A16H5A').remove()">&times;</div>
-        </div>
     </div>
 @endsection

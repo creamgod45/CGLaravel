@@ -45,7 +45,8 @@ class PermissionManager
      */
 
 
-    public function PermissTreeParser(Permission $permission){
+    public function PermissTreeParser(Permission $permission)
+    {
         $arr = [];
         $permissions = [];
         $this->PermissionTree($permission, $permissions);
@@ -56,10 +57,10 @@ class PermissionManager
         $permission->setSubPermission([]);
         $arr[$permission->getName()] = $permission;
         foreach ($permissions as $p) {
-            if($p->getName() !== $permission->getName()) {
+            if ($p->getName() !== $permission->getName()) {
                 $p->setSubPermission([]);
                 $p->setPage($permissions[$permission->getName()]->getPage());
-                $p->setDescription($permissions[$permission->getName()]->getDescription(). "_" . $p->getDescription());
+                $p->setDescription($permissions[$permission->getName()]->getDescription() . "_" . $p->getDescription());
                 $arr [$p->getName()] = $p;
             }
         }
@@ -71,7 +72,7 @@ class PermissionManager
      * @param Permission[] $refArray
      * @return Permission
      */
-    public function PermissionTree(Permission $permission,array &$refArray=[])
+    public function PermissionTree(Permission $permission, array &$refArray = [])
     {
         $tarr = [];
         $tarr [$permission->getName()] = $permission;
@@ -129,19 +130,20 @@ class PermissionManager
         $this->permissions [$permission->getName()] = $permission;
     }
 
-    public function addPermissions(array $ps){
-        foreach ($ps as $key=> $permission) {
-             $this->permissions[$key]=$permission;
+    public function addPermissions(array $ps)
+    {
+        foreach ($ps as $key => $permission) {
+            $this->permissions[$key] = $permission;
         }
     }
 
     public function removePermission(string $p)
     {
-        if($this->hasPermission($p)){
+        if ($this->hasPermission($p)) {
             $tarr = [];
             foreach ($this->permissions as $key => $permission) {
                 $CGString = new CGString($permission->getName());
-                if(!$CGString->StartWith($p)){
+                if (!$CGString->StartWith($p)) {
                     $tarr [$key] = $permission;
                 }
             }
@@ -149,12 +151,13 @@ class PermissionManager
         }
     }
 
-    public function removePermissions(string ... $permissions): void
+    public function removePermissions(string ...$permissions): void
     {
         foreach ($permissions as $item) {
             $this->removePermission($item);
         }
     }
+
     public function removePermissionsArray(array $permissions): void
     {
         foreach ($permissions as $item) {
@@ -166,10 +169,10 @@ class PermissionManager
     public function hasPermission(string $permission)
     {
         $CGArray = new CGArray($this->permissions);
-        if($CGArray->hasKey("admin")){
+        if ($CGArray->hasKey("admin")) {
             return true;
         }
-        if($CGArray->hasKey($permission)){
+        if ($CGArray->hasKey($permission)) {
             return true;
         }
         return false;
@@ -195,7 +198,8 @@ class PermissionManager
      * @param string ...$str
      * @return bool
      */
-    public function hasPermissions2(string ...$str){
+    public function hasPermissions2(string ...$str)
+    {
         $r = true;
         foreach ($str as $item) {
             $r = $r && $this->hasPermission($item);

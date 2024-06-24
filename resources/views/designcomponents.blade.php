@@ -2,15 +2,17 @@
 @use (App\Lib\I18N\ELanguageText;use App\Lib\I18N\I18N;use App\Lib\Utils\Htmlv2;use App\Lib\Utils\Utilsv2;use Illuminate\Support\Facades\Log)
 @php
     /***
-     * @var string[] $router \
+     * @var string[] $urlParams
+     * @var array $moreParams
      * @var I18N $i18N
-     * @var \Illuminate\Support\Facades\Request $request
+     * @var Request $request
+     * @var string $fingerprint
      */
     $menu=true;
     $footer=true;
 @endphp
 @extends('layouts.default')
-@section('title', $i18N->getLanguage(ELanguageText::menu_frontpage))
+@section('title', "元件展示區域")
 @section('content')
     <main class="container1">
         @env('local')
@@ -36,7 +38,8 @@
                 <div class="btn btn-color5">按鈕</div>
                 <div class="btn btn-color6">按鈕</div>
                 <div class="btn-color1 btn-ripple btn-circle"><i class="fa-solid fa-house"></i></div>
-                <button class="btn btn-ripple btn-color1">Click Me</button>
+                <div id="result"></div>
+                <button class="btn btn-ripple btn-color1 ct" data-fn="test-broadcast" data-target="#result" data-token="{{csrf_token()}}">Click Me</button>
             </div>
             <div class="outline-btn-demo">
                 這是關於 Outline Button(Filter) 示範
@@ -249,7 +252,7 @@
             <div class="breadcrumb-demo">
                 這是 breadcrumb 示範
                 <div class="breadcrumb">
-                    <a href="{{ route('home') }}" class="bcitem">
+                    <a href="{{ route(\App\Lib\Utils\RouteNameField::PageHome->value) }}" class="bcitem">
                         <i class="fa-solid fa-house"></i>&nbsp;Home
                     </a>
                     <a class="bcitem">

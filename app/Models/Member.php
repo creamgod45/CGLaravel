@@ -3,23 +3,25 @@
 namespace App\Models;
 
 use App\Lib\Permission\cases\AdministratorPermission;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Closure;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin Builder
  *
- * @method static \Illuminate\Database\Eloquent\Builder|static query()
+ * @method static Builder|static query()
  * @method static static make(array $attributes = [])
  * @method static static create(array $attributes = [])
  * @method static static forceCreate(array $attributes)
  * @method Member firstOrNew(array $attributes = [], array $values = [])
  * @method Member firstOrFail($columns = ['*'])
  * @method Member firstOrCreate(array $attributes, array $values = [])
- * @method Member firstOr($columns = ['*'], \Closure $callback = null)
+ * @method Member firstOr($columns = ['*'], Closure $callback = null)
  * @method Member firstWhere($column, $operator = null, $value = null, $boolean = 'and')
  * @method Member updateOrCreate(array $attributes, array $values = [])
  * @method null|static first($columns = ['*'])
@@ -37,10 +39,10 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $administrator
  * @property string $remember_token
  *
- * @property-read \Illuminate\Support\Carbon $created_at
- * @property-read \Illuminate\Support\Carbon $updated_at
+ * @property-read Carbon $created_at
+ * @property-read Carbon $updated_at
  */
-class Member extends Authenticatable implements MustVerifyEmail
+class Member extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 

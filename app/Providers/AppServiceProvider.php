@@ -27,7 +27,15 @@ class AppServiceProvider extends ServiceProvider
             // $event->connectionName
             // $event->job
             // $event->exception
-            Log::warning("connectionName: ".$event->connectionName.'exception: '.$event->exception->getMessage(), [serialize($event->job), $event->connectionName, $event->exception->getMessage()]);
+            Log::warning("Queue::failing(JobFailed): ", [
+                $event->job->getJobId(),
+                $event->job->getQueue(),
+                $event->job->getRawBody(),
+                $event->job->getConnectionName(),
+                $event->job->getName(),
+                $event->connectionName,
+                $event->exception->getMessage(),
+            ]);
         });
     }
 }

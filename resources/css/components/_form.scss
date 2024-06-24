@@ -50,9 +50,12 @@
     }
 }
 .form-solid{
-    @apply disabled:bg-gray-200 disabled:ring-gray-200 bg-slate-200 autofill:bg-slate-200 ring-1 ring-slate-200 shadow rounded-md px-2 py-2 focus:outline-0 valid:ring-slate-200 invalid:ring-red-500;
+    @apply disabled:bg-gray-200 disabled:ring-gray-200 bg-slate-200 autofill:bg-slate-200 ring-1 ring-slate-200 shadow rounded-md px-2 py-2 focus:outline-0 valid:ring-slate-200;
     &:-webkit-autofill{
         background-color: red !important;
+    }
+    &:user-invalid{
+        @apply ring-red-500;
     }
 }
 
@@ -73,7 +76,10 @@
 }
 
 .form-file{
-    @apply disabled:text-gray-200 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:ring-gray-200 bg-slate-200 file:hidden w-fit shadow ring-1 px-4 py-2 rounded valid:ring-slate-200 invalid:ring-red-500;
+    @apply disabled:text-gray-200 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:ring-gray-200 bg-slate-200 file:hidden w-fit shadow ring-1 px-4 py-2 rounded valid:ring-slate-200;
+    &:user-invalid{
+        @apply ring-red-500;
+    }
 }
 
 .form-textarea-group{

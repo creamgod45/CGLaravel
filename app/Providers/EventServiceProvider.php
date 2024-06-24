@@ -7,6 +7,7 @@ use App\Observers\MemberObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+
 //use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
@@ -20,10 +21,13 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        //Notification::class => [
+        //    NotificationListener::class
+        //]
     ];
 
-    protected $observers=[
-        Member::class=>[MemberObserver::class],
+    protected $observers = [
+        Member::class => [MemberObserver::class],
     ];
 
     /**

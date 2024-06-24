@@ -314,7 +314,7 @@ login_title: 登入會員
 login_btn: 送出
 login_faild: '登入失敗。 %validator_field_username% 或 %validator_field_password% 其中一個可能是錯誤'
 logout_title: 登出
-logout_context: 已經登出三秒後跳轉頁面!!點擊前往
+logout_context: '已經登出 %s% 秒後跳轉頁面!!點擊前往'
 login_username_notfound: '登入失敗。 %validator_field_username% 不存在'
 pagination_firstPage: 首頁
 pagination_previous: 上一頁
@@ -331,7 +331,7 @@ notification_email_failedAppendText: '認證失敗: '
 notification_email_InvalidVerificationLink: 驗證連結無效
 notification_email_hasVerifiedEmail: 電子郵件已驗證
 notification_email_markEmailAsVerified: 驗證電子郵件成功
-notification_email_fail_description: 請前往您的郵箱驗證您的電子郵件，然後才能訪問網站的其他功能。
+notification_email_fail_description: 你已經完成註冊，請前往您的郵箱驗證您的電子郵件。
 notification_invaild_title: 錯誤
 notification_invaild_description: 輸入的資訊無效
 passwords_reset: 您的密碼已重設。
@@ -342,6 +342,33 @@ passwords_user: 我們找不到使用該電子郵件地址的用戶。
 notification_login_title: 登入狀態
 notification_login_success: 您已成功登入！
 notification_login_failed: 您登入失敗！
-ResetPasswordLine1: '您收到這封電子郵件是因為我們收到了您帳戶的密碼重設請求。'
-ResetPasswordLine2: '如果您沒有請求重設密碼，則無需採取進一步操作。'
-ResetPasswordAction1: '重設密碼'
+ResetPasswordLine1: 您收到這封電子郵件是因為我們收到了您帳戶的密碼重設請求。
+ResetPasswordLine2: 如果您沒有請求重設密碼，則無需採取進一步操作。
+ResetPasswordAction1: 重設密碼
+BooleanStringCoverTrue: 啟用
+BooleanStringCoverFalse: 關閉
+sendMailVerifyCodeSubject: 會員驗證號碼
+sendMailVerifyCode_Response_success: 成功寄送驗證碼至您的信箱中，請至信箱中查看。
+sendMailVerifyCode_Response_error1: 已經寄送驗證碼至信箱中，請查看後填入驗證碼送出。
+sendMailVerifyCodeLine1: '請複製號碼並輸入在驗證碼輸入框中。 驗證碼:%code%'
+sendMailVerifyCodeLine2: 如果你沒有發送驗證信件，請至帳號設定移除所有已登入裝置，並且更改密碼確保安全。
+RegisterMailTitle: 會員註冊信件
+RegisterMailLine1: 請點擊下面的按鈕來驗證您的電子郵件地址。
+RegisterMailLine2: 如果您沒有建立帳戶，則無需採取進一步操作。
+RegisterMailAction1: 驗證
+HTTP_FORBIDDEN: 禁止
+ExpireTime: '過期時間: %timestamp%'
+EmailVerifiedListenerEmailTitle: '歡迎使用 %APP_NAME%'
+EmailVerifiedListenerEmailContent: "我們提供優質網路系統、伺服器代管、網站設計、資訊整合、網路攻擊防護、分流系統..."
+UserAccountBanMessage: '您的帳戶已被停用，因此您已被強制登出。'
+Unable_to_change_the_same_field: '無法更改相同的 %field%'
+FieldDataUpdatedSuccessfully: '%field% 的信息已成功更新'
+miss_method: '缺少方法'
+sendMailVerifyCodeNotEqualValue: '%validator_field_VerificationCode% 的值無效'
+CSRFVerificationFailed: 'CSRF 驗證失敗'
+DataReceivedSuccessfully: '數據已成功接收'
+GetLanguage: '獲取語言'
+registerDone: '註冊成功。請驗證您的電子郵件地址！驗證碼將在 1 小時內失效'
+validator_field_sendMailVerifyCodeToken: '電子郵件認證令牌'
+validator_field_VerificationCode: '驗證碼'
+ValidatorBuilderFailed: '驗證失敗'

@@ -14,7 +14,7 @@ class Pagination extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public I18N $i18N,
+        public I18N                 $i18N,
         public LengthAwarePaginator $elements
     )
     {
