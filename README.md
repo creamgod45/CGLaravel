@@ -23,7 +23,12 @@ main [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/larav
 
 ## 更新紀錄 Update Log
 
-- 整合分流 (#5) CreamGod45* 今天 上午12:51
+- 拉取合併 (#11) CreamGod45* 2024/6/24 下午11:05
+- Delete composer.lock CreamGod45* 2024/6/20 上午12:38
+- Update README.md CreamGod45* 2024/6/20 上午12:37
+- Update README.md CreamGod45* 2024/6/20 上午12:37
+- 更新 README.md (#10) CreamGod45* 2024/5/18 上午3:04
+- 整合分流 (#5) CreamGod45* 2024/5/18 上午12:51
 - 修復錯誤 (#4) CreamGod45* 2024/5/15 下午10:52
 - 最終合併(部署需求) (#3) CreamGod45* 2024/5/15 下午8:53
 - 最終合併 (#2) CreamGod45* 2024/5/11 上午12:16
