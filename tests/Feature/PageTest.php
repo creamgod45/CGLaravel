@@ -5,6 +5,8 @@ namespace Tests\Feature;
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Events\Notification;
 use App\Lib\I18N\ELanguageCode;
+use App\Lib\I18N\ELanguageText;
+use App\Lib\I18N\I18N;
 use App\Lib\Utils\RouteNameField;
 use App\Lib\Utils\Utilsv2;
 use App\Models\Member;
@@ -23,6 +25,14 @@ use Tests\TestCase;
 class PageTest extends TestCase
 {
     use RefreshDatabase;
+
+    public I18N $i18N;
+
+    public function __construct($name)
+    {
+        parent::__construct($name);
+        $this->i18N = new I18N(ELanguageCode::en_US, limitMode: [ELanguageCode::en_US, ELanguageCode::zh_TW]);
+    }
 
     public string $cache_Notification_value = "";
 
@@ -85,7 +95,7 @@ class PageTest extends TestCase
 
         //$response->dumpHeaders();
         //$response->dump();
-        $response->assertStatus(200)->assertJson(['message' => 'Data received successfully', 'raw' => Utilsv2::decodeContext($compress)]);
+        $response->assertStatus(200)->assertJson(['message' => $this->i18N->getLanguage(ELanguageText::DataReceivedSuccessfully), 'raw' => Utilsv2::decodeContext($compress)]);
     }
 
     public function test_the_application_language()
@@ -93,7 +103,7 @@ class PageTest extends TestCase
         $response = $this->postJson(route(RouteNameField::APILanguage->value), ['lang' => ELanguageCode::zh_CN->name]);
         //$response->dumpHeaders();
         //$response->dump();
-        $response->assertStatus(200)->assertJson(['message' => 'Data received successfully', 'lang' => ELanguageCode::zh_CN->name]);
+        $response->assertStatus(200)->assertJson(['message' => $this->i18N->getLanguage(ELanguageText::DataReceivedSuccessfully), 'lang' => ELanguageCode::zh_CN->name]);
         $response = $this->postJson(route(RouteNameField::APILanguage->value), ['lang' => "error"]);
         //$response->dumpHeaders();
         //$response->dump();

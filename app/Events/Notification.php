@@ -27,7 +27,7 @@ class Notification implements ShouldBroadcast
         try {
             Log::info("Notification Event trigger: " . new CGStringable($this->message));
         } catch (Exception $e) {
-            Log::info("App\\Events\\Notification:31:13 Exception = " . $e->getMessage());
+            Log::info("App\\Events\\Notification:30:13 Exception = " . $e->getMessage());
         }
     }
 
