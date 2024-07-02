@@ -44,8 +44,12 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $members = Member::paginate(30);
-        return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user])->toArrayable());
+        if ($user->administrator==="true") {
+            $members = Member::paginate(30);
+            return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user])->toArrayable());
+        }else{
+            return back();
+        }
     }
 
     public function emailVerify(Request $request)
@@ -55,9 +59,18 @@ class MemberController extends Controller
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
         $vb = new ValidatorBuilder($i18N, EValidatorType::EMAILVERIFICATION);
-        $v = $vb->validate($request->all());
+        $v = $vb->validate(["id"=>$request->route('id'), "hash"=>$request->route('hash')]);
         if($v instanceof MessageBag){
-            return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 1);
+            $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "%type%", "messages" => $v->all()]);
+            event((new UserNotification([
+                $alertView->render(),
+                "驗證錯誤",
+                "warning",
+                "10000"
+            ]))->delay(now()->addSeconds(15)));
+            return redirect(route(RouteNameField::PageHome->value))->with('custom_message', [
+                '驗證錯誤',$alertView->render(),'warning'
+            ]);
         }else{
             $user = Member::find($request->route('id'));
 
@@ -175,7 +188,7 @@ class MemberController extends Controller
         if (Cache::has($cacheKey)) {
             return redirect(route(RouteNameField::PageHome->value))->with('mail', false);
         } else {
-            $user->notify(new VerifyEmailNotification($i18N));
+            $user->notifyNow(new VerifyEmailNotification($i18N));
             Cache::put($cacheKey, true, now()->addSeconds(60));
             return redirect(route(RouteNameField::PageHome->value))->with('mail', true);
         }
@@ -284,7 +297,7 @@ class MemberController extends Controller
                 Log::info($user->username . ": mailing");
                 $instance = new VerifyEmailNotification($i18N);
                 $instance->delay(now()->addSeconds(5));
-                $user->notify($instance);
+                $user->notifyNow($instance);
                 Log::info($user->username . ": mailed");
                 Cache::put($cacheKey, true, now()->addHours(1));
                 Auth::login($user);
