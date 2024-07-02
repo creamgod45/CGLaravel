@@ -48,7 +48,7 @@ class MemberController extends Controller
             $members = Member::paginate(30);
             return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user])->toArrayable());
         }else{
-            return back();
+            return redirect()->route(RouteNameField::PageLogin->value);
         }
     }
 
