@@ -58,15 +58,18 @@ class MemberController extends Controller
         // 保证 ID 和 Hash 都是正确的
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
+        $fingerprint = $cgLCI->getFingerprint();
         $vb = new ValidatorBuilder($i18N, EValidatorType::EMAILVERIFICATION);
         $v = $vb->validate(["id"=>$request->route('id'), "hash"=>$request->route('hash')]);
+        $cache = Cache::get('guest_id' . $fingerprint);
         if($v instanceof MessageBag){
             $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "%type%", "messages" => $v->all()]);
             event((new UserNotification([
                 $alertView->render(),
                 $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
                 "warning",
-                "10000"
+                "10000",
+                $cache
             ]))->delay(now()->addSeconds(15)));
             return redirect(route(RouteNameField::PageHome->value));
         }else{
@@ -75,7 +78,8 @@ class MemberController extends Controller
                 $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
                 $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
                 "warning",
-                "10000"
+                "10000",
+                $cache
             ]))->delay(now()->addSeconds(15)));
             if($user === null){
                 return redirect(route(RouteNameField::PageHome->value));
