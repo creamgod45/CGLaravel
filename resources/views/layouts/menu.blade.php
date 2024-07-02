@@ -121,7 +121,7 @@
                             $user = Auth::user();
                         @endphp
                         @if(!$user->hasVerifiedEmail())
-                        <a href="{{RouteNameField::PageEmailReSendMailVerification->value}}" class="menu-btn btn-ripple">
+                        <a href="{{route(RouteNameField::PageEmailReSendMailVerification->value)}}" class="menu-btn btn-ripple">
                             <i class="fa-solid fa-paper-plane"></i>
                             <span>&nbsp;重新驗證</span>
                         </a>
