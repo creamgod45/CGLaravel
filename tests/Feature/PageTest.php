@@ -141,7 +141,7 @@ class PageTest extends TestCase
         $response = $this->actingAs($user, 'web')->get(route(RouteNameField::PageMembers->value));
         //$response->dumpHeaders();
         //$response->dump();
-        $response->assertStatus(200)->assertRedirectToRoute(RouteNameField::PageMembers->value);
+        $response->assertStatus(200);
 
         $response = $this->actingAs($user, 'web')->get(route(RouteNameField::PageEmailReSendMailVerification->value));
         //$response->dumpHeaders();
