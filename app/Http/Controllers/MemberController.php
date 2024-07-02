@@ -68,9 +68,7 @@ class MemberController extends Controller
                 "warning",
                 "10000"
             ]))->delay(now()->addSeconds(15)));
-            return redirect(route(RouteNameField::PageHome->value))->with('custom_message', [
-                $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),$alertView->render(),'warning'
-            ]);
+            return redirect(route(RouteNameField::PageHome->value));
         }else{
             $user = Member::find($request->route('id'));
             event((new UserNotification([
@@ -80,11 +78,7 @@ class MemberController extends Controller
                 "10000"
             ]))->delay(now()->addSeconds(15)));
             if($user === null){
-                return redirect(route(RouteNameField::PageHome->value))->with('custom_message', [
-                    $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
-                    $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
-                    'warning'
-                ]);
+                return redirect(route(RouteNameField::PageHome->value));
             }
 
             if (!hash_equals((string)$request->route('id'), (string)$user->getKey()) ||
