@@ -64,15 +64,28 @@ class MemberController extends Controller
             $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "%type%", "messages" => $v->all()]);
             event((new UserNotification([
                 $alertView->render(),
-                "驗證錯誤",
+                $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
                 "warning",
                 "10000"
             ]))->delay(now()->addSeconds(15)));
             return redirect(route(RouteNameField::PageHome->value))->with('custom_message', [
-                '驗證錯誤',$alertView->render(),'warning'
+                $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),$alertView->render(),'warning'
             ]);
         }else{
             $user = Member::find($request->route('id'));
+            event((new UserNotification([
+                $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
+                $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
+                "warning",
+                "10000"
+            ]))->delay(now()->addSeconds(15)));
+            if($user === null){
+                return redirect(route(RouteNameField::PageHome->value))->with('custom_message', [
+                    $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
+                    $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
+                    'warning'
+                ]);
+            }
 
             if (!hash_equals((string)$request->route('id'), (string)$user->getKey()) ||
                 !hash_equals((string)$request->route('hash'), sha1($user->getEmailForVerification()))) {
