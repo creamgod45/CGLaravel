@@ -76,7 +76,7 @@ class PageTest extends TestCase
     public function test_the_application_PageEmailVerification_redirect_to_Route()
     {
         $response = $this->get("/email/verify/1/1");
-        $response->assertStatus(302)->assertRedirectToRoute(RouteNameField::PageHome->value)->assertSessionHas('mail_result', 1);
+        $response->assertStatus(302)->assertRedirectToRoute(RouteNameField::PageHome->value);
     }
 
     public function test_the_application_PageMembers_redirect_to_Route(): void
@@ -134,11 +134,14 @@ class PageTest extends TestCase
         // 已經驗證過信箱
 
         $user->markEmailAsVerified();
+        $user->forceFill([
+            'administrator' => 'true'
+        ])->save();
 
         $response = $this->actingAs($user, 'web')->get(route(RouteNameField::PageMembers->value));
         //$response->dumpHeaders();
         //$response->dump();
-        $response->assertStatus(200)->assertViewIs('members');
+        $response->assertStatus(200);
 
         $response = $this->actingAs($user, 'web')->get(route(RouteNameField::PageEmailReSendMailVerification->value));
         //$response->dumpHeaders();

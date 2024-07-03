@@ -20,6 +20,7 @@
             <x-Notificationitem :title="session('custom_message')[0]"
                                 :description="session('custom_message')[1]"
                                 :type="session('custom_message')[2]"
+                                :millisecond="session('custom_message')[3]"
                                 :line=10/>
         @endif
     @endif

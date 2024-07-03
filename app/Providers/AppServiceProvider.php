@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 use Log;
@@ -23,18 +24,26 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        // 註冊任務處理成功的監聽器
+        Queue::after(function (JobProcessed $event) {
+            // 記錄成功的任務
+            Log::info('任務處理成功', [
+                'connectionName' => $event->connectionName,
+                'job' => $event->job->getName(),
+                'jobId' => $event->job->getJobId(),
+                'payload' => $event->job->payload()
+            ]);
+        });
+
+        // 註冊任務失敗的監聽器
         Queue::failing(function (JobFailed $event) {
-            // $event->connectionName
-            // $event->job
-            // $event->exception
-            Log::warning("Queue::failing(JobFailed): ", [
-                $event->job->getJobId(),
-                $event->job->getQueue(),
-                $event->job->getRawBody(),
-                $event->job->getConnectionName(),
-                $event->job->getName(),
-                $event->connectionName,
-                $event->exception->getMessage(),
+            // 記錄失敗的任務
+            Log::error('任務處理失敗', [
+                'connectionName' => $event->connectionName,
+                'job' => $event->job->getName(),
+                'jobId' => $event->job->getJobId(),
+                'exception' => $event->exception->getMessage(),
+                'payload' => $event->job->payload()
             ]);
         });
     }

@@ -44,8 +44,12 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $members = Member::paginate(30);
-        return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user])->toArrayable());
+        if ($user->administrator==="true") {
+            $members = Member::paginate(30);
+            return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user])->toArrayable());
+        }else{
+            return redirect()->route(RouteNameField::PageLogin->value);
+        }
     }
 
     public function emailVerify(Request $request)
@@ -54,12 +58,32 @@ class MemberController extends Controller
         // 保证 ID 和 Hash 都是正确的
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
+        $fingerprint = $cgLCI->getFingerprint();
         $vb = new ValidatorBuilder($i18N, EValidatorType::EMAILVERIFICATION);
-        $v = $vb->validate($request->all());
+        $v = $vb->validate(["id"=>$request->route('id'), "hash"=>$request->route('hash')]);
+        $cache = Cache::get('guest_id' . $fingerprint);
         if($v instanceof MessageBag){
-            return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 1);
+            $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "%type%", "messages" => $v->all()]);
+            event((new UserNotification([
+                $alertView->render(),
+                $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
+                "warning",
+                "10000",
+                $cache
+            ]))->delay(now()->addSeconds(15)));
+            return redirect(route(RouteNameField::PageHome->value));
         }else{
             $user = Member::find($request->route('id'));
+            event((new UserNotification([
+                $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
+                $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
+                "warning",
+                "10000",
+                $cache
+            ]))->delay(now()->addSeconds(15)));
+            if($user === null){
+                return redirect(route(RouteNameField::PageHome->value));
+            }
 
             if (!hash_equals((string)$request->route('id'), (string)$user->getKey()) ||
                 !hash_equals((string)$request->route('hash'), sha1($user->getEmailForVerification()))) {
@@ -175,7 +199,7 @@ class MemberController extends Controller
         if (Cache::has($cacheKey)) {
             return redirect(route(RouteNameField::PageHome->value))->with('mail', false);
         } else {
-            $user->notify(new VerifyEmailNotification($i18N));
+            $user->notifyNow(new VerifyEmailNotification($i18N));
             Cache::put($cacheKey, true, now()->addSeconds(60));
             return redirect(route(RouteNameField::PageHome->value))->with('mail', true);
         }
@@ -284,7 +308,7 @@ class MemberController extends Controller
                 Log::info($user->username . ": mailing");
                 $instance = new VerifyEmailNotification($i18N);
                 $instance->delay(now()->addSeconds(5));
-                $user->notify($instance);
+                $user->notifyNow($instance);
                 Log::info($user->username . ": mailed");
                 Cache::put($cacheKey, true, now()->addHours(1));
                 Auth::login($user);
