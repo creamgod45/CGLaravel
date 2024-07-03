@@ -13,7 +13,7 @@
 
 ### 分支建構狀態
 
-main [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml/badge.svg?branch=main)](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml)
+main [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml/badge.svg?branch=main)](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml) [![CodeQL](https://github.com/creamgod45/CGLaravel/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/creamgod45/CGLaravel/actions/workflows/github-code-scanning/codeql)
 
 20240702 [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml/badge.svg?branch=20240702)](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml)
 
@@ -25,6 +25,7 @@ main [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/larav
 
 ## 更新紀錄 Update Log
 
+- 更新 README.md CreamGod45* 2024/7/3 下午7:39
 - 20240702 更新 (#27) CreamGod45* 2024/7/3 下午7:36
 - 更新 README.md creamgod45 2024/6/24 下午11:10
 - 拉取合併 (#11) CreamGod45* 2024/6/24 下午11:05
