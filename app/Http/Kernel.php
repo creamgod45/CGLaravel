@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\CheckClientID;
 use App\Http\Middleware\EMiddleWareAliases;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -90,5 +91,6 @@ class Kernel extends HttpKernel
         EMiddleWareAliases::signed->name => ValidateSignature::class,
         EMiddleWareAliases::throttle->name => ThrottleRequests::class,
         EMiddleWareAliases::verified->name => EnsureEmailIsVerified::class,
+        'checkClientID' => CheckClientID::class,
     ];
 }

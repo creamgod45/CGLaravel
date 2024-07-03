@@ -67,6 +67,9 @@ class ValidatorBuilder
             case EValidatorType::Language:
                 $this->language();
                 break;
+            case EValidatorType::GETCLIENTID:
+                $this->getClientID();
+                break;
             case EValidatorType::NULL:
                 break;
         }
@@ -430,6 +433,16 @@ class ValidatorBuilder
             'lang' => ['string', Rule::in($languages)],
         ];
         $this->lastkey = 14;
+    }
+
+    private function getClientID()
+    {
+        $this->customMessages = $this->initMessage();
+        $this->atters = $this->initAtters();
+        $this->rules = [
+            'ID' => ['string','required'],
+        ];
+        $this->lastkey = 15;
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\I18N;
 use App\Lib\Utils\CGLaravelControllerInit;
+use App\Lib\Utils\Utilsv2;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -52,27 +53,14 @@ class Controller extends BaseController
             //dump(1);
         }
         $i18N = new I18N(ELanguageCode::valueof($lang), limitMode: [ELanguageCode::zh_TW, ELanguageCode::zh_CN, ELanguageCode::en_US, ELanguageCode::en_GB]);
-        $fingerprint = $this->fingerprint($request);
+        $fingerprint = self::fingerprint($request);
         return new CGLaravelControllerInit($i18N, $router, $request, $params, $fingerprint);
     }
 
-    /**
-     * 客戶端指紋
-     * @param Request $request
-     * @return string
-     */
-    public function fingerprint(Request $request)
+    public static function fingerprint(string $key="")
     {
-        return sha1($request->ip() . $request->getHost() . $request->userAgent());
+        return Utilsv2::getClientFingerprint($key);
     }
 
-    /**
-     * 客戶端指紋(靜態化)
-     * @param Request $request
-     * @return string
-     */
-    public static function fingerprintStaticable(Request $request)
-    {
-        return (new Controller)->fingerprint($request);
-    }
+
 }

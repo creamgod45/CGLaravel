@@ -7,11 +7,13 @@ use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\ELanguageText;
 use App\Lib\Type\String\CGStringable;
 use App\Lib\Utils\EValidatorType;
+use App\Lib\Utils\RouteNameField;
 use App\Lib\Utils\Utilsv2;
 use App\Lib\Utils\ValidatorBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
@@ -29,6 +31,29 @@ class InternalController extends Controller
         $secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
         $httponly = true;
         setrawcookie('lang', $lang, ['expires' => $cookie_expire, 'path' => $cookie_path, 'secure' => $secure, 'httponly' => $httponly]);
+    }
+
+    public function getClientID(Request $request)
+    {
+        return view('getClientID', Controller::baseControllerInit($request)->toArrayable());
+    }
+
+    public function getClientIDPost(Request $request)
+    {
+        $cgLCI = self::baseControllerInit($request, []);
+        $i18N = $cgLCI->getI18N();
+
+        $vb = new ValidatorBuilder($i18N, EValidatorType::GETCLIENTID);
+        $v = $vb->validate($request->all(), ['ID'],true);
+        if($v instanceof MessageBag && !Session::has("ClientID")){
+            return response()->json(['message'=>'failed']);
+        }else{
+            if (!Session::has('ClientID')) {
+
+                Session::push("ClientID", sha1($v['ID']));
+            }
+            return response()->json(['message'=>'ok']);
+        }
     }
 
     public function user(Request $request)
