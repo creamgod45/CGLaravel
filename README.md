@@ -2,7 +2,7 @@
 
 ## 介紹專案
 
-- 版本: 1.1.0
+- 版本: 1.1.1
 - 建立時間: 2024/04/15 下午 01:33
 - 作者: CreamGod45
 - 說明: 這是我第一次嘗試寫 laravel 專案，這將融合我所學習的知識，我會嘗試整合過去所有用過的套件與技術，這將是一個大的突破。這也是一個新的開始 😊
@@ -15,6 +15,8 @@
 
 main [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml/badge.svg?branch=main)](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml)
 
+20240702 [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml/badge.svg?branch=20240702)](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml)
+
 20240518 [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml/badge.svg?branch=20240518)](https://github.com/creamgod45/CGLaravel/actions/workflows/laravel.yml)
 
 ## 如果你也想要加入開發
@@ -23,6 +25,8 @@ main [![Laravel](https://github.com/creamgod45/CGLaravel/actions/workflows/larav
 
 ## 更新紀錄 Update Log
 
+- 20240702 更新 (#27) CreamGod45* 2024/7/3 下午7:36
+- 更新 README.md creamgod45 2024/6/24 下午11:10
 - 拉取合併 (#11) CreamGod45* 2024/6/24 下午11:05
 - Delete composer.lock CreamGod45* 2024/6/20 上午12:38
 - Update README.md CreamGod45* 2024/6/20 上午12:37
