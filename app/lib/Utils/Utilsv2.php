@@ -2,6 +2,7 @@
 
 namespace App\Lib\Utils;
 
+use Illuminate\Support\Facades\Request;
 use LZCompressor\LZString;
 
 class Utilsv2
@@ -246,5 +247,12 @@ class Utilsv2
         return [$newStr, $index, $shift_index];
     }
 
-
+    /**
+     * @param string $key
+     * @return string
+     */
+    public static function getClientFingerprint(string $key="")
+    {
+        return sha1(Request::ip().Request::getHost().Request::userAgent().$key);
+    }
 }

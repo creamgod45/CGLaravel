@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\I18N;
 use App\Lib\Utils\CGLaravelControllerInit;
+use App\Lib\Utils\ClientConfig;
+use App\Lib\Utils\EncryptedCache;
+use App\Lib\Utils\Utilsv2;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-
 
     public static function baseControllerInit(Request $request, array ...$params): CGLaravelControllerInit
     {
@@ -46,33 +48,18 @@ class Controller extends BaseController
             $pathParts = explode('/', $path);
             $router = array_filter($pathParts);
         }
-        $lang = App::getLocale();
-        if (isset($_COOKIE['lang'])) {
-            $lang = $_COOKIE['lang'];
-            //dump(1);
+        $config = EncryptedCache::get(Session::get("ClientID") . "_ClientConfig");
+        $lang = ELanguageCode::en_US;
+        if ($config instanceof ClientConfig) {
+            $lang = $config->getLanguageClass();
         }
-        $i18N = new I18N(ELanguageCode::valueof($lang), limitMode: [ELanguageCode::zh_TW, ELanguageCode::zh_CN, ELanguageCode::en_US, ELanguageCode::en_GB]);
-        $fingerprint = $this->fingerprint($request);
+        $i18N = new I18N($lang, limitMode: [ELanguageCode::zh_TW, ELanguageCode::zh_CN, ELanguageCode::en_US, ELanguageCode::en_GB]);
+        $fingerprint = self::fingerprint($request->session()->get('ClientID', ""));
         return new CGLaravelControllerInit($i18N, $router, $request, $params, $fingerprint);
     }
 
-    /**
-     * 客戶端指紋
-     * @param Request $request
-     * @return string
-     */
-    public function fingerprint(Request $request)
+    public static function fingerprint(string $key = "")
     {
-        return sha1($request->ip() . $request->getHost() . $request->userAgent());
-    }
-
-    /**
-     * 客戶端指紋(靜態化)
-     * @param Request $request
-     * @return string
-     */
-    public static function fingerprintStaticable(Request $request)
-    {
-        return (new Controller)->fingerprint($request);
+        return Utilsv2::getClientFingerprint($key);
     }
 }

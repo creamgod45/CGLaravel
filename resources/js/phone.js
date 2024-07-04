@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }else await console.log(res);
     }).catch((err)=>{
-        console.log(err);
+        //console.log(err);
         lang=en;
     });
     //console.log(lang);

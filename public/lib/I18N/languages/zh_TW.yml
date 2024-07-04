@@ -359,16 +359,18 @@ RegisterMailAction1: 驗證
 HTTP_FORBIDDEN: 禁止
 ExpireTime: '過期時間: %timestamp%'
 EmailVerifiedListenerEmailTitle: '歡迎使用 %APP_NAME%'
-EmailVerifiedListenerEmailContent: "我們提供優質網路系統、伺服器代管、網站設計、資訊整合、網路攻擊防護、分流系統..."
-UserAccountBanMessage: '您的帳戶已被停用，因此您已被強制登出。'
+EmailVerifiedListenerEmailContent: 我們提供優質網路系統、伺服器代管、網站設計、資訊整合、網路攻擊防護、分流系統...
+UserAccountBanMessage: 您的帳戶已被停用，因此您已被強制登出。
 Unable_to_change_the_same_field: '無法更改相同的 %field%'
 FieldDataUpdatedSuccessfully: '%field% 的信息已成功更新'
-miss_method: '缺少方法'
+miss_method: 缺少方法
 sendMailVerifyCodeNotEqualValue: '%validator_field_VerificationCode% 的值無效'
 CSRFVerificationFailed: 'CSRF 驗證失敗'
-DataReceivedSuccessfully: '數據已成功接收'
-GetLanguage: '獲取語言'
+DataReceivedSuccessfully: 數據已成功接收
+GetLanguage: 獲取語言
 registerDone: '註冊成功。請驗證您的電子郵件地址！驗證碼將在 1 小時內失效'
-validator_field_sendMailVerifyCodeToken: '電子郵件認證令牌'
-validator_field_VerificationCode: '驗證碼'
-ValidatorBuilderFailed: '驗證失敗'
+validator_field_sendMailVerifyCodeToken: 電子郵件認證令牌
+validator_field_VerificationCode: 驗證碼
+ValidatorBuilderFailed: 驗證失敗
+MailSalutation: 'by %appname%'
+ResetPasswordgreeting: 'Hello!! Dear.%username%'

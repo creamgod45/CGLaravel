@@ -372,3 +372,5 @@ registerDone: 'Registration is successful. Please verify your email address!! Ve
 validator_field_sendMailVerifyCodeToken: 'Email Authentication Token'
 validator_field_VerificationCode: 'Verification Code'
 ValidatorBuilderFailed: 'Verification failed'
+MailSalutation: 'by %appname%'
+ResetPasswordgreeting: 'Hello!! Dear.%username%'

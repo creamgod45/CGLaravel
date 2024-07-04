@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Lib\I18N\I18N;
 use App\Lib\Utils\EValidatorType;
 use App\Lib\Utils\ValidatorBuilder;
 use App\Models\Animal;
