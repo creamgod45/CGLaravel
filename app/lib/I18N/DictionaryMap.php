@@ -11,6 +11,8 @@ class DictionaryMap
     {
         $i = &$i18N;
         // A~Z
+        $i->setLanguagev2(ELanguageText::MailSalutation, "by %appname%");
+        $i->setLanguagev2(ELanguageText::ResetPasswordgreeting, "Hello!! Dear.%username%");
         $i->setLanguagev2(ELanguageText::Unable_to_change_the_same_field, "Unable to change the same %field%");
         $i->setLanguagev2(ELanguageText::FieldDataUpdatedSuccessfully, "The %field% has successfully updated its information");
         $i->setLanguagev2(ELanguageText::miss_method, "The method is missing");
@@ -245,6 +247,5 @@ class DictionaryMap
         $i->setLanguagev2(ELanguageText::welcome_test_placeholder, "placeholder here");
         $i->setLanguagev2(ELanguageText::welcome_title, "CGCenter %NCSP%");
         $i->setLanguagev2(ELanguageText::welcome_title_tooltip, "Network Center Service Provider");
-
     }
 }
