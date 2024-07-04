@@ -7,6 +7,7 @@ use App\Events\Notification;
 use App\Lib\I18N\ELanguageCode;
 use App\Lib\I18N\ELanguageText;
 use App\Lib\I18N\I18N;
+use App\Lib\Utils\EncryptedCache;
 use App\Lib\Utils\RouteNameField;
 use App\Lib\Utils\Utilsv2;
 use App\Models\Member;
@@ -20,6 +21,7 @@ use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use React\EventLoop\Factory;
 use React\Socket\Connector as ReactConnector;
+use Session;
 use Tests\TestCase;
 
 class PageTest extends TestCase
@@ -101,6 +103,7 @@ class PageTest extends TestCase
     public function test_the_application_language()
     {
         $response = $this->postJson(route(RouteNameField::APILanguage->value), ['lang' => ELanguageCode::zh_CN->name]);
+        //$response->dumpSession();
         //$response->dumpHeaders();
         //$response->dump();
         $response->assertStatus(200)->assertJson(['message' => $this->i18N->getLanguage(ELanguageText::DataReceivedSuccessfully), 'lang' => ELanguageCode::zh_CN->name]);

@@ -101,7 +101,7 @@ class InternalController extends Controller
                     $config->setLanguage($request['lang']);
                     $config->setLanguageClass(ELanguageCode::valueof($request['lang']));
                     EncryptedCache::put(Session::get("ClientID") . "_ClientConfig", $config, now()->addDays());
-                    return response()->json(['message' => $i18N->getLanguage(ELanguageText::DataReceivedSuccessfully), 'lang' => $language]);
+                    return response()->json(['message' => $i18N->getLanguage(ELanguageText::DataReceivedSuccessfully), 'lang' => $request['lang']]);
                 }
             }
             return response()->json(['message' => 'Error1'], ResponseHTTP::HTTP_BAD_REQUEST);
