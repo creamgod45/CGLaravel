@@ -7,7 +7,8 @@ REM DONT UPLOAD Unless File
 composer install --optimize-autoloader --no-dev
 php artisan key:generate
 php artisan optimize:clear
-php artisan config:clear &&  composer dump-autoload -o
+php artisan config:clear
+composer dump-autoload -o
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
