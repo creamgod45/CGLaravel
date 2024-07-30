@@ -1,2 +1,0 @@
-insert into cglaravel.sessions (id, user_id, ip_address, user_agent, payload, last_activity)
-values  ('udfB1r82uQkg95iFQuZY06rPSCYoXGIeTHCoGFaa', null, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiN1I3cWRDWU9TZTg0NmtLMTNWQlZPUnpac3F2cTZVQVk4ZWVEV0d4UCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1719237237);
