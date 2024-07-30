@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as ResponseHTTP;
 
 class InternalController extends Controller
@@ -32,6 +33,7 @@ class InternalController extends Controller
         setrawcookie('lang', $lang, ['expires' => $cookie_expire, 'path' => $cookie_path, 'secure' => $secure, 'httponly' => $httponly]);
     }
 
+    // Ref come in address link to validate done
     public function getClientID(Request $request)
     {
         return view('getClientID', Controller::baseControllerInit($request)->toArrayable());
@@ -71,7 +73,7 @@ class InternalController extends Controller
 
     public function browser(Request $request)
     {
-        $key = self::fingerprint($request->session()->get('ClientID'));
+        $key = self::fingerprint($request->session()->get('ClientID', Str::random(16)));
         return response()->json(['id' => $key]);
     }
 
