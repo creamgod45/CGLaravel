@@ -2,7 +2,6 @@
 
 namespace App\Lib\Type\String;
 
-use Exception;
 use Psy\Util\Json;
 
 class CGStringable

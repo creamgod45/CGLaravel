@@ -3,11 +3,11 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\CheckClientID;
 use App\Http\Middleware\EMiddleWareAliases;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
-use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\ValidateSignature;
@@ -40,7 +40,6 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
-        SetLocale::class,
         TrustProxies::class,
         HandleCors::class,
         PreventRequestsDuringMaintenance::class,
@@ -90,5 +89,6 @@ class Kernel extends HttpKernel
         EMiddleWareAliases::signed->name => ValidateSignature::class,
         EMiddleWareAliases::throttle->name => ThrottleRequests::class,
         EMiddleWareAliases::verified->name => EnsureEmailIsVerified::class,
+        'checkClientID' => CheckClientID::class,
     ];
 }

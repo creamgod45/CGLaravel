@@ -140,3 +140,103 @@ export function validatePhone(phone){
     var regex = /^\d{10,}$/;
     return regex.test(phone);
 }
+
+
+export async function getClientFingerprint() {
+    const fingerprintComponents = [];
+
+    // Canvas Fingerprint
+    function getCanvasFingerprint() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.textBaseline = 'top';
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#f60';
+        ctx.fillRect(125, 1, 62, 20);
+        ctx.fillStyle = '#069';
+        ctx.fillText('Hello, world!', 2, 15);
+        ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+        ctx.fillText('Hello, world!', 4, 17);
+        return canvas.toDataURL();
+    }
+    fingerprintComponents.push(getCanvasFingerprint());
+
+    // WebGL Fingerprint
+    function getWebGLFingerprint() {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return null;
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        return gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) + '~' + gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+    }
+    fingerprintComponents.push(getWebGLFingerprint());
+
+    // ClientRects Fingerprint
+    function getClientRectsFingerprint() {
+        const div = document.createElement('div');
+        div.style.cssText = 'width: 100px; height: 100px; overflow: scroll; position: absolute; top: -9999px;';
+        document.body.appendChild(div);
+        const rects = div.getClientRects();
+        document.body.removeChild(div);
+        return JSON.stringify(rects);
+    }
+    fingerprintComponents.push(getClientRectsFingerprint());
+
+    // Fonts Fingerprint
+    function getFontsFingerprint() {
+        const fonts = ['Arial', 'Verdana', 'Times New Roman', 'Courier New', 'Courier', 'Helvetica', 'Garamond', 'Georgia', 'Palatino'];
+        const detectedFonts = [];
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.textBaseline = 'top';
+        ctx.font = '72px monospace';
+        const reference = ctx.measureText('mmmmmmmmmmmmmlli').width;
+        fonts.forEach(font => {
+            ctx.font = `72px ${font}, monospace`;
+            const width = ctx.measureText('mmmmmmmmmmmmmlli').width;
+            if (width !== reference) {
+                detectedFonts.push(font);
+            }
+        });
+        return detectedFonts.join(',');
+    }
+    fingerprintComponents.push(getFontsFingerprint());
+
+    // Navigator Fingerprint
+    function getNavigatorFingerprint() {
+        return JSON.stringify({
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+            platform: navigator.platform,
+            hardwareConcurrency: navigator.hardwareConcurrency,
+            deviceMemory: navigator.deviceMemory
+        });
+    }
+    fingerprintComponents.push(getNavigatorFingerprint());
+
+    // Timezone Fingerprint
+    function getTimezoneFingerprint() {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    }
+    fingerprintComponents.push(getTimezoneFingerprint());
+
+    // Clipboard Fingerprint
+    //async function getClipboardFingerprint() {
+    //    try {
+    //        const text = await navigator.clipboard.readText();
+    //        return text;
+    //    } catch (e) {
+    //        return '';
+    //    }
+    //}
+    //fingerprintComponents.push(await getClipboardFingerprint());
+
+    // Random Fingerprint
+    //function getRandomFingerprint() {
+    //    return Math.random().toString(36).substring(2);
+    //}
+    //fingerprintComponents.push(getRandomFingerprint());
+
+    const fingerprint = fingerprintComponents.join('~');
+    return encodeContext(fingerprint)['compress'];
+}

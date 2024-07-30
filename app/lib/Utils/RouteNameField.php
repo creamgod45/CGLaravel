@@ -21,6 +21,8 @@ enum RouteNameField: string
     case PageRegisterPost = 'root.member.register.post';
     case PageLogin = 'root.member.login';
     case PageLoginPost = 'root.member.login.post';
+    case PageGetClientID = 'root.ClientID';
+    case PageGetClientIDPost =  'root.ClientID.post';
 
     // API
     case APIEncodeJson = 'root.api.EncodeJson';

@@ -17,12 +17,16 @@ use App\Notifications\VerifyEmailNotification;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
@@ -44,10 +48,10 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        if ($user->administrator==="true") {
+        if ($user->administrator === "true") {
             $members = Member::paginate(30);
             return view('members', $this::baseGlobalVariable($request, ['members' => $members, 'user' => $user])->toArrayable());
-        }else{
+        } else {
             return redirect()->route(RouteNameField::PageLogin->value);
         }
     }
@@ -60,9 +64,9 @@ class MemberController extends Controller
         $i18N = $cgLCI->getI18N();
         $fingerprint = $cgLCI->getFingerprint();
         $vb = new ValidatorBuilder($i18N, EValidatorType::EMAILVERIFICATION);
-        $v = $vb->validate(["id"=>$request->route('id'), "hash"=>$request->route('hash')]);
-        $cache = Cache::get('guest_id' . $fingerprint);
-        if($v instanceof MessageBag){
+        $v = $vb->validate(["id" => $request->route('id'), "hash" => $request->route('hash')]);
+        $cache = $fingerprint;
+        if ($v instanceof MessageBag) {
             $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "%type%", "messages" => $v->all()]);
             event((new UserNotification([
                 $alertView->render(),
@@ -70,9 +74,9 @@ class MemberController extends Controller
                 "warning",
                 "10000",
                 $cache
-            ]))->delay(now()->addSeconds(15)));
+            ])));
             return redirect(route(RouteNameField::PageHome->value));
-        }else{
+        } else {
             $user = Member::find($request->route('id'));
             event((new UserNotification([
                 $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
@@ -80,8 +84,8 @@ class MemberController extends Controller
                 "warning",
                 "10000",
                 $cache
-            ]))->delay(now()->addSeconds(15)));
-            if($user === null){
+            ])));
+            if ($user === null) {
                 return redirect(route(RouteNameField::PageHome->value));
             }
 
@@ -98,7 +102,7 @@ class MemberController extends Controller
             $user->markEmailAsVerified();
 
             // 触发邮箱验证成功的事件
-            event(new \Illuminate\Auth\Events\Verified($request->user()));
+            event(new Verified($request->user()));
 
             // 返回验证成功的响应
             return redirect(route(RouteNameField::PageHome->value))->with('mail_result', 2);
@@ -160,6 +164,7 @@ class MemberController extends Controller
     {
         $cgLCI = self::baseControllerInit($request);
         $i18N = $cgLCI->getI18N();
+        $fingerprint = $cgLCI->getFingerprint();
 
         $vb = new ValidatorBuilder($i18N, EValidatorType::FORGOTPASSWORD);
 
@@ -172,8 +177,48 @@ class MemberController extends Controller
         } else {
             $cacheKey = $validate['email'] . ":forgetpassword";
             if (Cache::has($cacheKey)) {
-                return redirect(route(RouteNameField::PageHome->value))->with('mail', false);
+                event((new UserNotification([
+                    $i18N->getLanguage(ELanguageText::passwords_sent),
+                    $i18N->getLanguage(ELanguageText::ResetPasswordAction1),
+                    "info",
+                    "10000",
+                    $fingerprint
+                ])));
+                return redirect(route(RouteNameField::PageHome->value));
             } else {
+                ResetPassword::toMailUsing(function (Member $member, $token) use ($fingerprint, $cgLCI) {
+                    Log::info("run1");
+                    $i18N = $cgLCI->getI18N();
+                    $m = (new MailMessage)
+                        ->success()
+                        ->subject($i18N->getLanguage(ELanguageText::ResetPasswordAction1))
+                        ->line($i18N->getLanguage(ELanguageText::ResetPasswordLine1))
+                        ->action(
+                            $i18N->getLanguage(ELanguageText::ResetPasswordAction1),
+                            url(
+                                route(
+                                    RouteNameField::PagePasswordReset->value,
+                                    ['token' => $token, 'email' => $member->email],
+                                    false
+                                )
+                            )
+                        )
+                        ->greeting($i18N->getLanguage(ELanguageText::ResetPasswordgreeting, true)
+                            ->placeholderParser("username", $member->username)
+                            ->toString())
+                        ->salutation($i18N->getLanguage(ELanguageText::MailSalutation, true)
+                            ->placeholderParser("appname", Config::get('app.name'))
+                            ->toString())
+                        ->line($i18N->getLanguage(ELanguageText::ResetPasswordLine2));
+                    event((new UserNotification([
+                        $i18N->getLanguage(ELanguageText::passwords_sent),
+                        $i18N->getLanguage(ELanguageText::ResetPasswordAction1),
+                        "info",
+                        "10000",
+                        $fingerprint
+                    ])));
+                    return $m;
+                });
                 $status = Password::sendResetLink(
                     ['email' => $validate['email']]
                 );
@@ -222,7 +267,7 @@ class MemberController extends Controller
             $i18N->getLanguage(ELanguageText::logout_title),
             "warning",
             10000,
-            Cache::get('guest_id' . $fingerprint)
+            $fingerprint
         ]))->delay(now()->addSeconds(3)));
         Auth::logout();
         return view('logout', $this::baseControllerInit($request)->toArrayable());
@@ -256,7 +301,7 @@ class MemberController extends Controller
                 $i18N->getLanguage(ELanguageText::ValidatorBuilderFailed),
                 "error",
                 "10000",
-                Cache::get("guest_id" . $fingerprint)
+                $fingerprint
             ])));
             $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "%type%", "messages" => $v->all()]);
             $CSRF->reset();
@@ -297,7 +342,7 @@ class MemberController extends Controller
                     $i18N->getLanguage(ELanguageText::notification_email_verifyTitle),
                     "warning",
                     "5000",
-                    Cache::get("guest_id" . $fingerprint)
+                    $fingerprint
                 ])));
                 return response()->json([
                     'type' => true,
@@ -317,7 +362,7 @@ class MemberController extends Controller
                     $i18N->getLanguage(ELanguageText::notification_email_verifyTitle),
                     "success",
                     "5000",
-                    Cache::get("guest_id" . $fingerprint)
+                    $fingerprint
                 ])));
                 return response()->json([
                     'type' => true,
@@ -340,14 +385,14 @@ class MemberController extends Controller
             "password"
         ], true);
         $CSRF = new CSRF(RouteNameField::PageLoginPost->value);
-        if($v instanceof MessageBag) {
+        if ($v instanceof MessageBag) {
             Log::info($request->ip() . ": " . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
             event((new UserNotification([
                 $i18N->getLanguage(ELanguageText::notification_login_failed),
                 $i18N->getLanguage(ELanguageText::notification_login_title),
                 "error",
                 "10000",
-                Cache::get("guest_id" . $fingerprint)
+                $fingerprint
             ])));
             $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "warning", "messages" => $v->all()]);
             $CSRF->reset();
@@ -357,14 +402,14 @@ class MemberController extends Controller
                 "message" => $alertView->render(),
                 "error_keys" => $v->keys(),
             ], ResponseHTTP::HTTP_OK);
-        }else{
+        } else {
             if ($v['token'] !== ($CSRF)->get()) {
                 event((new UserNotification([
                     $i18N->getLanguage(ELanguageText::CSRFVerificationFailed),
                     $i18N->getLanguage(ELanguageText::notification_login_title),
                     "error",
                     "10000",
-                    Cache::get("guest_id" . $fingerprint)
+                    $fingerprint
                 ])));
                 $errors = new MessageBag;
                 $errors->add('token', $i18N->getLanguage(ELanguageText::CSRFVerificationFailed));
@@ -392,7 +437,7 @@ class MemberController extends Controller
                             $i18N->getLanguage(ELanguageText::notification_login_title),
                             "warning",
                             10000,
-                            Cache::get('guest_id' . $fingerprint)
+                            $fingerprint
                         ])));
                         $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "danger", "messages" => $errors->all()]);
                         Auth::logout();
@@ -408,7 +453,7 @@ class MemberController extends Controller
                         $i18N->getLanguage(ELanguageText::notification_login_title),
                         "success",
                         10000,
-                        Cache::get('guest_id' . $fingerprint)
+                        $fingerprint
                     ])));
                     return response()->json([
                         'type' => true,
@@ -422,13 +467,13 @@ class MemberController extends Controller
                         ->Replace("%validator_field_password%", $i18N->getLanguage(ELanguageText::validator_field_password))
                         ->toString();
                     $errors = new MessageBag;
-                    $errors->add('username',$msg);
+                    $errors->add('username', $msg);
                     event((new UserNotification([
                         $msg,
                         $i18N->getLanguage(ELanguageText::notification_login_title),
                         "warning",
                         10000,
-                        Cache::get('guest_id' . $fingerprint)
+                        $fingerprint
                     ])));
                     $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "warning", "messages" => $errors->all()]);
                     Log::info($request->ip() . ": " . PHP_EOL . "    ValidationException=asd," . PHP_EOL . "    Request(Json)=" . Json::encode($request->all()));
@@ -445,7 +490,7 @@ class MemberController extends Controller
                     ->toString();
 
                 $errors = new MessageBag;
-                $errors->add('username',$msg);
+                $errors->add('username', $msg);
                 $alertView = \Illuminate\Support\Facades\View::make('components.alert', ["type" => "danger", "messages" => $errors->all()]);
 
                 return response()->json([
