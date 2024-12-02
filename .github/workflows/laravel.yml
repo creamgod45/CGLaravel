@@ -18,15 +18,6 @@ jobs:
       APP_ENV: testing
 
     services:
-      apache:
-        image: httpd:2.4
-        ports:
-          - 80:80 # 將容器內部的 80 端口映射到主機的 8080 端口
-        options: >-
-          --health-cmd="curl --fail http://localhost:80 || exit 1"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
       mysql:
         image: mysql:5.7
         env:
@@ -43,16 +34,6 @@ jobs:
           --health-retries=3
 
     steps:
-      - name: Configure Apache
-        run: |
-          echo "<VirtualHost *:80>
-          DocumentRoot /home/runner/work/creamgod45/CGLaravel
-          <Directory /home/runner/work/creamgod45/CGLaravel>
-              Options Indexes FollowSymLinks
-              AllowOverride All
-              Require all granted
-          </Directory>
-          </VirtualHost>" > /usr/local/apache2/conf/httpd.conf
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: '8.2'
@@ -98,11 +79,15 @@ jobs:
 
       - name: build Vite Assets
         run: npm run build
-
+        
+      - name: run PHP server
+        run: php artisan serve --host=0.0.0.0 --port=80
+        
       - name: Test with phpunit 🧐
         run: |
           php artisan test --profile
           cat storage/logs/laravel.log
+          
       - name: Dastardly Scan Action
         uses: PortSwigger/dastardly-github-action@v1.0.0
         continue-on-error: true                        # This allows subsequent steps to run even if this step fails
