@@ -1,0 +1,19 @@
+name: dastardly-github-action
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  dastardly-github-action:
+    name: Build and Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v5
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+      - name: Dastardly Scan Action
+        uses: PortSwigger/dastardly-github-action@v1.0.0
