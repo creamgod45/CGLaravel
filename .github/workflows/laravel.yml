@@ -81,7 +81,7 @@ jobs:
         run: npm run build
         
       - name: run PHP server
-        run: php artisan serve --host=0.0.0.0 --port=80
+        run: php artisan serve --host=0.0.0.0 --port=8000
         
       - name: Test with phpunit 🧐
         run: |
@@ -92,7 +92,7 @@ jobs:
         uses: PortSwigger/dastardly-github-action@v1.0.0
         continue-on-error: true                        # This allows subsequent steps to run even if this step fails
         with:
-          target-url: 'http://localhost'
+          target-url: 'http://localhost:8000'
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
         if: success() || failure() # always run even if the previous step fails
