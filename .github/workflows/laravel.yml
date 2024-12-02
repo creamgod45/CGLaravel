@@ -18,6 +18,15 @@ jobs:
       APP_ENV: testing
 
     services:
+      apache:
+        image: httpd:2.4
+        ports:
+          - 80:80 # 將容器內部的 80 端口映射到主機的 8080 端口
+        options: >-
+          --health-cmd="curl --fail http://localhost:80 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
       mysql:
         image: mysql:5.7
         env:
@@ -34,6 +43,16 @@ jobs:
           --health-retries=3
 
     steps:
+      - name: Configure Apache
+        run: |
+          echo "<VirtualHost *:80>
+          DocumentRoot /home/runner/work/creamgod45/CGLaravel
+          <Directory /home/runner/work/creamgod45/CGLaravel>
+              Options Indexes FollowSymLinks
+              AllowOverride All
+              Require all granted
+          </Directory>
+          </VirtualHost>" > /usr/local/apache2/conf/httpd.conf
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: '8.2'
